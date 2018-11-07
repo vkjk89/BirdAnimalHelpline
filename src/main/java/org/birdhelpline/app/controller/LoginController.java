@@ -127,14 +127,14 @@ public class LoginController {
         }
         if (action != null) {
             user.setImage(file.getBytes());
-            if (action.equals("preview")) {
+            if (action.equals("Preview")) {
                 return "RequestRegistration/Preview";
             }
         }
 
         userService.saveUser(user);
         status.setComplete();
-        return "RequestRegistration/RegComplete";
+        return "RequestRegistration/reg-complete";
     }
 
     private String handleStep2(@ModelAttribute("user") User user, BindingResult result) {

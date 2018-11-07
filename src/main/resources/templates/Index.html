@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html>
+
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,11 +9,11 @@
     <title>Bird & Animal Helpline</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/index.css">
-    <link rel="stylesheet" href="/static/css/basic-template.css">
-    <link rel="shortcut icon" href="/static/favicon.ico?r=31241" type='image/x-icon'>
-    <link rel="manifest" href="/static/manifest.json">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/index.css}" href="/static/css/index.css">
+    <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
+    <link rel="shortcut icon" th:href="@{/favicon.ico}" href="/static/favicon.ico?r=31241" type='image/x-icon'>
+    <link rel="manifest" th:href="@{/manifest.json}" href="/static/manifest.json">
 </head>
 
 <body>
@@ -19,11 +21,11 @@
     
     <main id = "main">
         <div>
-            <button class = "info-btn"><a onclick="aboutus();"><img src = "/static/img/aboutus.png" style = "width: 100%; height: auto; padding: 0;" alt = "About Us"></a></button>
+            <button class = "info-btn"><a onclick="aboutus();"><img th:src="@{/img/aboutus.png}" src = "/static/img/aboutus.png" style = "width: 100%; height: auto; padding: 0;" alt = "About Us"></a></button>
         </div>
         <div id = "div1">
             <div>
-                <img src="/static/img/Logo1.png" class = "logoImage" alt = "Logo"><br><br>
+                <img th:src="@{/img/Logo1.png}" src="/static/img/Logo1.png" class = "logoImage" alt = "Logo"><br><br>
             </div>
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     <!--<label class="btn btn-dark active" onclick="window.location.assign('/templates/RequestRegistration/step1.html');" style="font-size: 1.2em;">-->

@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Request Registration</title>
-    <link rel="stylesheet" href="/static/css/basic-template.css">
-    <link rel="stylesheet" href="/static/css/RequestRegistration/step2.css">
+    <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
+    <link rel="stylesheet" th:href="@{/css/RequestRegistration/Step2.css}" href="/static/css/RequestRegistration/step2.css">
     
 </head>
 <body>
@@ -64,7 +64,7 @@
     </main>
 
     <div id="bottom-nav-bar" class="bottom-nav-bar" style = "margin-top: 0;">
-        <a th:href="@{/registration}" href = "step1.html"><img src = "/static/img/previous-button-1.png" id = "step1" alt="Previous"></a>
+        <a th:href="@{/registration}" href = "step1.html"><img th:src="@{/img/previous-button-1.png}" src = "/static/img/previous-button-1.png" id = "step1" alt="Previous"></a>
         <input type = "submit" id = "next" value="Submit" form = "first-form" >
         <!--<inpu type = "submit" id = "next" value="Submit" form = "first-form" onclick=" '/templates/RequestRegistration/step3.html' ">-->
     </div>

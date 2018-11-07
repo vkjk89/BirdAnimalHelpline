@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Request Registration</title>
-    <link rel="stylesheet" href="/static/css/basic-template.css">
-    <link rel="stylesheet" href="/static/css/RequestRegistration/step1.css">
+    <link rel="stylesheet"  th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
+    <link rel="stylesheet" th:href="@{/css/RequestRegistration/Step1.css} " href="/static/css/RequestRegistration/Step1.css">
     
 </head>
 <body>
-
+s
     <!--- div class="bg"></div -->
     
     <div class = "heading">
@@ -37,14 +37,14 @@
                     <input type="submit" name="role" value="Volunteer" th:field="*{role}">
                     <!--<a name="role" data-th-value="Volunteer" value="Volunteer" th:field="*{role}" th:href="@{/registration(page=1)}">-->
                         <li>
-                            <img src = "/static/img/Volunteer-11.png" alt = "Volunteer" id = "Volunteer">
+                            <img src = "/img/Volunteer-11.png" alt = "Volunteer" id = "Volunteer">
                             <div>Volunteer</div>
                         </li>
                     </a>
                     <input type="submit" name="role" value="Doctor" th:field="*{role}">
                     <!--<a th:href="@{/registration(page=1)}">-->
                         <li>
-                            <img src = "/static/img/Doctor-11.png" alt = "Doctor" id = "Doctor">
+                            <img src = "/img/Doctor-11.png" alt = "Doctor" id = "Doctor">
                             <div>Doctor</div>
                         </li>
                     </a>
@@ -53,13 +53,13 @@
                     <input type="submit" name="role" value="Doctor" th:field="*{role}">
                     <!--<a th:href="@{/registration(page=1)}">-->
                         <li>
-                            <img src = "/static/img/Driver-11.png" alt = "Driver" id = "Driver">
+                            <img src = "/img/Driver-11.png" alt = "Driver" id = "Driver">
                                 <div>Driver</div>
                         </li>
                     </a>
                     <a href="#" onclick="animation()" id = "options-2" class = "">
                         <li>
-                            <img src = "/static/img/options11.png" alt = "Others" id = "options">
+                            <img src = "/img/options11.png" alt = "Others" id = "options">
                                 <div>Others</div>
                         </li>
                     </a>
@@ -68,14 +68,14 @@
                     <input type="submit" name="role" value="Doctor" th:field="*{role}">
                     <!--<a th:href="@{/registration(page=1)}" id = "Receptionist" style="display: none;">-->
                         <li>
-                            <img src = "/static/img/Call Attender-11.png" alt = "Call-Attender" id = "Call-Attender">
+                            <img src = "/img/Call Attender-11.png" alt = "Call-Attender" id = "Call-Attender">
                                 <div>Receptionist</div>                        
                         </li>
                     </a>
                     <input type="submit" name="role" value="Doctor" th:field="*{role}">
                     <!--<a th:href="@{/registration(page=1)}" id = "Fosterer" style="display: none">-->
                         <li>
-                            <img src = "/static/img/Fosterer-11.png" alt = "Fosterer" id = "Fosterer">
+                            <img src = "/img/Fosterer-11.png" alt = "Fosterer" id = "Fosterer">
                                 <div>Fosterer</div>                        
                         </li>
                     </a>
@@ -84,7 +84,7 @@
         </div> 
 
         <div class = "footer">
-            <button><a th:href="@{/}" href = "Index.html"><img src = "/static/img/home-1.png"></a></button>
+            <button><a th:href="@{/}" href = "Index.html"><img src = "/img/home-1.png"></a></button>
         </div>
             <input type="hidden" name="page" value="1">
         </form>

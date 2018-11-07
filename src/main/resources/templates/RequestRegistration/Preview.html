@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-
 <html  lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Request Registration</title>
-    <link rel="stylesheet" href="/static/css/basic-template.css">
-    <link rel="stylesheet" href="/static/css/RequestRegistration/preview.css">
+    <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
+    <link rel="stylesheet" th:href="@{/css/RequestRegistration/preview.css}" href="/static/css/RequestRegistration/preview.css">
     
 </head>
 <body>
@@ -20,12 +19,12 @@
 
     <main>
         <div id = "step1">
-        <img src = "/static/img/edit.png" onclick="window.location = '/registration' ">
+        <img th:src="@{/img/edit.png}" src = "/static/img/edit.png" onclick="window.location = '/registration' ">
         <label>I am a: </label>
             <div th:text="*{role}" th:field="*{role}" style = "display: inline-block" id = "volrole-selected">#volrole</div>
         </div>
         <div id = "step2">
-            <img src = "/static/img/edit.png" onclick="window.location = '/registration?page=1' ">
+            <img th:src="@{/img/edit.png}" src = "/static/img/edit.png" onclick="window.location = '/registration?page=1' ">
             <div th:text="*{firstName}" th:field="*{firstName}" id = "first-name">#firstname</div>
             <div th:text="*{lastName}" th:field="*{lastName}" id = "last-name">#lastname</div><br>
             <Label>Date of Birth: </Label>
@@ -43,7 +42,7 @@
         <div id = "step3">
             <!--th:text="*{password}" th:field="*{password}"-->
             <!--th:text="*{image}" th:field="*{image}"-->
-            <img src = "/static/img/edit.png" onclick="window.location = '/registration?page=2' ">
+            <img th:src="@{/img/edit.png}" src = "/static/img/edit.png" onclick="window.location = '/registration?page=2' ">
             <!--onclick="window.location = '/templates/RequestRegistration/Step3.html' "-->
             <div  id = "profilepic"><img src = "" th:src="*{'data:image/png;base64,'+getEncodedImage()}" ></div>
             <div th:text="*{userName}" th:field="*{userName}" id = "usernasme">#username</div><br>

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Request Registration</title>
-    <link rel="stylesheet" href="/static/css/basic-template.css">
-    <link rel="stylesheet" href="/static/css/RequestRegistration/reg-complete.css">
+    <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
+    <link rel="stylesheet" th:href="@{/css/RequestRegistration/reg-complete.css}" href="/static/css/RequestRegistration/reg-complete.css">
     
 </head>
 <body>
@@ -15,7 +15,7 @@
 
     <main> 
         <div class="thankyou-div" id="thankyou-div">
-            <img src="/static/img/form-submitted.png"><br><br><br>
+            <img th:src="@{/img/form-submitted.png}" src="/static/img/form-submitted.png"><br><br><br>
             Thank you.<br>
             The form has been submitted.
         </div>
