@@ -1,0 +1,169 @@
+.heading {
+    padding: 5vw;
+    text-align: start;
+    background-color: #374047;
+    color: white;
+    font-size: 1.5em;
+    z-index: 2;
+  }
+  
+.progress-bar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 0;
+    margin-top: 2vh;
+    margin-left: 2vw;
+    background-color: transparent;
+    width: 50vw;
+    height: 10vw;
+    z-index: 2;
+    text-align: center;
+    font-size: 1.2em;
+    margin-left: 25vw;
+}
+  
+.progress-bar div {
+    border: 1px solid #374047;
+}
+  
+#progress-bar-1, #progress-bar-3, #progress-bar-5 {
+    border-radius: 100%;
+    color: white;
+    line-height: 10vw;
+}
+
+#progress-bar-3, #progress-bar-5 {
+    animation: Progressbar1 0.5s forwards 0s ease-in-out;
+}
+
+#progress-bar-5 {
+    animation: Progressbar2 0.5s forwards 0s ease-in-out;
+}
+  
+#progress-bar-2, #progress-bar-4 {
+    margin-top: 49%;
+    height: 2px;
+    border-left: none;
+    border-right: none;
+}
+  
+#progress-bar-4 {
+    animation: Progressbar1 0.5s forwards 0s ease-in-out;
+}
+  
+.progress-bar-status {
+    background-color: #374047;
+    animation: Progressbar 0.5s forwards 0s ease-in-out;
+}
+  
+@keyframes Progressbar{
+    0%{
+        transform: translateX(-70px); opacity: 0.1;
+        }
+    100%{
+        transform: translateX(0); opacity: 1;
+        }
+}
+  
+@keyframes Progressbar1{
+    0%{
+        transform: translateX(-60px); opacity: 0.1;
+        }
+    100%{
+        transform: translateX(0); opacity: 1;
+        }
+}
+
+@keyframes Progressbar2{
+    0%{
+        transform: translateX(-50px); opacity: 0.1;
+        }
+    100%{
+        transform: translateX(0); opacity: 1;
+        }
+}
+
+/* ------------------------------------------------------------------------------------------------------------------*/
+
+
+#step3 {
+    display: block;
+    text-align: center;
+    z-index: 2;
+}
+
+main div img{
+    width : 20vh;        
+}
+
+input[type = "text"], input[type = "password"]{
+    box-sizing: border-box;
+    margin-top: 3vh;
+    display: block;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    margin-left: 20vw;
+    padding: 3vw;
+    width: 60vw;
+    letter-spacing: 0.6vw;
+}
+
+input[type = "password"]{
+    margin-top: 1vh;
+}
+
+#warning {
+    margin: 3vw;
+    padding: 3vw;
+    outline: rgb(0, 128, 0);
+    background-color: rgba(144, 238, 144, 0.7);
+    color: rgb(0, 0, 0);
+}
+
+.footer-btns .btn-group {
+    float: right;
+    margin-top: 2vh;
+    margin-right: 5vw;
+}
+
+#previous {
+    box-sizing: border-box;
+    width: 15vw;
+    margin-top: 1vh;
+    margin-left: -30vw;
+}
+
+.active {
+    background-color: rgb(55,64,71);
+}
+
+/*main * {
+    border: 1px solid green;
+}*/
+
+@media only screen and (max-width: 360px){
+    main div img{
+        width : 20vh;        
+    }
+    input[type = "submit"]{
+        font-size: 0.8em;
+    }
+    input[type = "text"]{
+        font-size: 0.9em;
+    }
+    input[type = "password"]{
+        font-size: 0.9em;
+    }
+    #warning {
+        font-size: 0.6em;
+    }    
+}
+
+@media only screen and (min-width: 520px){
+    main {
+        font-size: 1.5em;
+    }  
+    .footer-btns .btn-group label {
+        font-size: 1.7em;
+    }
+}

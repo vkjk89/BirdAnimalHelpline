@@ -1,0 +1,142 @@
+input[type="text"] {
+  color: #1f1f1f;
+  letter-spacing: 0.5vh;
+  padding: 3vw;
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+}
+
+input[type="password"] {
+  margin-top: 1vh;
+  color: #1f1f1f;
+  letter-spacing: 0.5vh;
+  padding: 3vw;
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+}
+
+input[type = "submit"] {
+  margin-top: 1vh;
+  color: floralwhite;
+  background-color: #374047;
+  cursor: pointer;
+  padding: 1.6vh;
+  letter-spacing: 0.3vh;
+  box-shadow: 5px 5px 20px grey;
+}
+
+.footer1 {
+  margin-top: 4vh;
+}
+
+.info-btn {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  padding: 1.6vh;
+  letter-spacing: 0.3vh;
+  position: absolute;
+  top: 2vh;
+  right: 2vw;
+  width: 13vw;
+}
+
+/* ----------------------------------------------------------------------------------------------------------------------------------------*/
+#aboutus {
+  display: none; 
+  width: 100%; 
+  height:100%; 
+  background-color: #37404769; 
+  text-align: center; 
+  opacity: 0.9; 
+  position: absolute; 
+  z-index: 1000; 
+  padding-bottom: 10%;
+}
+
+#aboutus-info{
+  margin-left:8%; 
+  margin-top:30%; 
+  margin-right: 8%;
+  background-color: #374047; 
+  color: white; 
+  text-align: start; 
+  font-size: 1.2em; 
+  padding: 5%; 
+  letter-spacing: 0.1em;
+}
+
+#backbutton {
+  margin-top: 1vh;
+  outline:none;
+  border: none;
+  position: absolute;
+  bottom: 20vh;
+  right: 8%;
+  padding: 0.8em;
+  background-color: rgb(230,230,230);
+  font-size: 1em;
+  letter-spacing: 0.1em;
+}
+/*--------------------------------------------------------------------------------------------------------------------------------------*/
+
+@media only screen and (min-width: 1025px) {
+  body {
+    font-size: 1.2vw;
+  }
+  .logoImage {
+    max-width: 20vw;
+    height: auto;
+  }
+  input[type="text"] {
+    width: 40%;
+  }
+  input[type="password"] {
+    width: 40%;
+  }
+  .logo {
+    padding-top: 10vh;
+  }
+  input[type="text"], input[type="password"] {
+    padding: 1vw;
+  }  
+}
+
+@media only screen and (max-width: 1024px) {
+  body {
+    font-size: 2vh;
+  }
+  .logoImage {
+    max-width: 60vw;
+    height: auto;
+  }
+  input[type="text"] {
+    font-size: 2.5vh;
+    width: 60%;
+  }
+  input[type="password"] {
+    font-size: 2.5vh;
+    width: 60%;
+  }
+  .loginButton {
+    margin-left: 20%;
+    font-size: 3vW;
+  }
+  .logo {
+    padding-top: 15vh;
+  }
+  .footer1 {
+    font-size: 4vw;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  input[type="text"], input[type="password"] {
+    padding: 3vw;
+  }  
+  .logoImage {
+    max-width: 50vw;
+    height: auto;
+  }
+}

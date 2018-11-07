@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profile Completion</title>
+    <link rel="stylesheet" href="/static/css/basic-template.css">
+    <link rel="stylesheet" href="/static/css/Profile-Completion/profile-completion.css">
+</head>
+<body>
+
+    <p id = "header">
+        We need a few more details.
+    </p>
+    <main>
+        <div id = "work-address">
+            <form action="">
+                <p class = "title">Work Address:</p>
+
+                <label for="address-line1">Full Name
+                <input type = "text" name = "full-name" placeholder="Full Name" autofocus></label>        
+                <label for="address-line2">Street Address
+                <input type = "text" name = "address-line1" placeholder="Address Line 1">
+                <input type = "text" name = "address-line2" placeholder="Adderss Line 2">
+                <input type = "number" name = "pincode" placeholder="Pincode" required></label>
+                <label for="contact-number">Contact Number<br>
+                <select name="number-prefix" class="number-prefix">
+                        <option value="022">022</option>
+                    <option value="+91">+91</option>
+                </select>
+                <input type = "number" name = "contact-number" placeholder=""><br></label>
+                <input type = "submit" id = "next" onclick="" alt="next">
+            </form>
+        </div>
+    </main>
+
+
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#ffffff">
+    <title>Bird & Animal Helpline</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/css/basic-template.css">
+    <link rel="shortcut icon" href="/static/favicon.ico?r=31241" type='image/x-icon'>
+    <link rel="manifest" href="/static/manifest.json">
+</head>
+
+<body>
+    <!--- div class="bg"></div --->
+    
+    <main id = "main">
+        <div>
+            <button class = "info-btn"><a onclick="aboutus();"><img src = "/static/img/aboutus.png" style = "width: 100%; height: auto; padding: 0;" alt = "About Us"></a></button>
+        </div>
+        <div id = "div1">
+            <div>
+                <img src="/static/img/Logo1.png" class = "logoImage" alt = "Logo"><br><br>
+            </div>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <!--<label class="btn btn-dark active" onclick="window.location.assign('/templates/RequestRegistration/step1.html');" style="font-size: 1.2em;">-->
+                    <label class="btn btn-dark active" onclick="window.location.assign('/registration');" style="font-size: 1.2em;">
+                        <input type="radio" name="options" id="option1" autocomplete="off" checked>Create an Account
+                    </label>
+                    <!--<label class="btn btn-dark" onclick="window.location.assign('/templates/signIn.html');" style="font-size: 1.2em;">-->
+                    <label class="btn btn-dark" onclick="window.location.assign('/signIn');" style="font-size: 1.2em;">
+                        <input type="radio" name="options" id="option2" autocomplete="off"> Sign In
+                    </label>
+            </div>
+        </div>  
+    </main>
+
+    <div id = "aboutus">
+            <div id = "aboutus-info">
+                Helpling Birds and Animals in distress is our Business.<br>
+                We cover most of Mumbai with the help of various other Ngo's.<br> <br>
+                Call on - 8655370005 for HELP !!<br>            
+            </div>
+            <button type = "button" id = "backbutton" onclick="gohome()" class = "btn">Back</button>
+    </div>
+
+    <script>
+        function aboutus(){
+            document.getElementById('main').style.display = "none";
+            document.getElementById('aboutus').style.display = "block";
+        }
+        function gohome(){
+            document.getElementById('aboutus').style.display = "none";
+            document.getElementById('main').style.display = "block";
+        }
+    </script>
+</body>
+</html>

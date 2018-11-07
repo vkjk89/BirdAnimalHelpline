@@ -1,0 +1,45 @@
+#------------------------------------------------------------------------------#
+# Application YAML #
+# inside ./src/main/resources/application.yml
+#------------------------------------------------------------------------------#
+debug: false
+spring:
+  resources:
+    static-locations: file:///Users/vimjain/Desktop/git_projects/Bird-Animal-Helpline/src/main/resources/static/
+
+  ## H2 Servlet setting
+
+#  security:
+#    user:
+#      name: abc
+#      password: abc
+
+  thymeleaf:
+    mode: HTML
+    cache: false
+  queries :
+    users-query : select user_name, password, enabled from user where user_name = ?
+    roles-query : select u.user_id,a.authority_name from user u, user_authority ua , authority a where  u.user_id=ua.user_id and ua.authority_id = a.authority_id and u.user_name = ?
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      enabled: false
+
+#  mvc:
+#    view:
+#      suffix: .html
+#      prefix: /static
+# Turn off Security for Actuator:
+#management:
+#  security:
+#    enabled: false
+
+##---------------------------------------------------------------------------##
+server:
+  port: 8080
+  tomcat:
+    accesslog:
+      enabled: true
+    resource:
+      cache-ttl:

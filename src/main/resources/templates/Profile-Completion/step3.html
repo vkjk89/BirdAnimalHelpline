@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profile Completion</title>
+    <link rel="stylesheet" href="/static/css/basic-template.css">
+    <link rel="stylesheet" href="/static/css/Profile-Completion/step3.css">
+</head>
+<body>
+
+    <p id = "header">
+        We need a few more details.
+    </p>
+    <main>
+        <form action="" name = "pincode" id = "pincode">
+            <div class="pincode" id="pincode">
+                <p id = "title">Your preffered pick-up locations:</p>
+
+                <input type = "search" id = "search-pincode" name = "search-pincode" placeholder="Search Pincode" autocomplete="off" onkeyup="search()" value="" >
+                    <div id = "search-results-list">
+                        <div onclick = "confirmpincode('li-div1')" id="li-div1" class = "pin-div">400004 - C.P. Tank</div>
+                        <div onclick = "confirmpincode('li-div2')" id="li-div2" class = "pin-div">400006 - Walkeshwar</div>
+                        <div onclick = "confirmpincode('li-div3')" id="li-div3" class = "pin-div">400002 - Fort</div>
+                        <div onclick = "confirmpincode('li-div4')" id="li-div4" class = "pin-div">400003 - Cloth Market</div>
+                        <div onclick = "confirmpincode('li-div5')" id="li-div5" class = "pin-div">400029 - A I staff colony</div>
+                        <div onclick = "confirmpincode('li-div6')" id="li-div6" class = "pin-div">400065 - Aareymilk Colony</div>
+                        <div onclick = "confirmpincode('li-div7')" id="li-div7" class = "pin-div">400011 - Agripada</div>
+                    </div>
+                <div class="selected-pincodes" id="selected-pincodes">
+                    <p style = "font-size: 1.1em; border-bottom: 1px solid #CCCCCC; width: 60vw;">Selected Pincodes:</p>
+                    <div id = "selected-pin-content"></div>
+                </div>            
+                <input type = "submit" id = "next" onclick="" alt="next" value="Submit">
+            </div>
+        </form>
+    </main>
+    
+
+<script>
+    document.getElementById('search-pincode').autofocus;
+
+    function search() {
+        var input, filter, div, i;
+        input = document.getElementById('search-pincode');
+        filter = input.value.toUpperCase();
+        div = document.getElementsByClassName('pin-div');
+        document.getElementById('search-results-list').style.display = "block";
+
+        for (i = 0; i < div.length; i++) {
+            if (filter != ""){
+                if (div[i].innerHTML.toUpperCase().indexOf(filter) > -1) { 
+                    div[i].style.display = "";
+                } else {
+                    div[i].style.display = "none";
+                }
+            }
+            else document.getElementById('search-results-list').style.display = "none";
+        }
+    }
+
+    function confirmpincode(id) {
+        document.getElementById('selected-pin-content').innerHTML += "<div class = \"selected-pin-content-list-div\">" + document.getElementById(id).innerHTML + "<br>" + "<input type = \"checkbox\" id = \"specify-timings-checkbox\" name = \"Specify Timings:\" onclick = \"specifytimings()\">" + "<label style = \"font-size:0.7em\" onclick = \"specifytimings()\"> Specify Timings </label>" + "<select id = \"select-timings\" form = \"pincode\"> <option> 09:00-10:00</option><option> 10:00-11:00</option><option> 11:00-12:00</option> </select>" + "<select id = \"select-timings-am-pm\" form = \"pincode\"> <option>AM</option> <option>PM</option> </select>" + "</div>";
+        document.getElementById(id).style.display = "none";
+        document.getElementById(id).innerHTML = "";    
+        document.getElementById('search-results-list').style.display = "none";       
+        document.getElementById('selected-pincodes').style.border = "1px solid #CCCCCC"; 
+    }
+
+    function specifytimings() {
+        document.getElementById('specify-timings-checkbox').checked = "true";
+        document.getElementById('select-timings').style.display = "inline";
+        document.getElementById('select-timings-am-pm').style.display = "inline";
+    }
+</script>
+
+</body>
+</html>

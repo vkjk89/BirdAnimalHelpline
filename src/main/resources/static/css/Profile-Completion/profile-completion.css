@@ -1,0 +1,108 @@
+#home-address{
+    box-sizing: border-box;
+    text-align: start;
+    padding: 10vw;
+    width: 100vw;
+    animation: home-work-address 1s forwards 0s ease-in-out;
+}
+
+#work-address{
+    box-sizing: border-box;
+    text-align: start;
+    padding: 10vw;
+    width: 100vw;
+    animation: home-work-address 1s forwards 0s ease-in-out;
+}
+
+#header {
+    margin: 0;   
+    padding: 3vh;
+    color: white;
+    background-color: #374047;
+    font-size: 1.2em;
+}
+
+#home-address p:first-child, #work-address p:first-child{
+    width: calc(70vw + 3vh);
+    border-bottom: 1px solid #374047;
+    font-size: 1.2em;
+    margin-top: 0;
+}
+
+input[type = "text"], input[type = "number"], input[name = "contact-number-91"] {
+    box-sizing: border-box;
+    display: block;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    padding: 1.5vh;
+    width: 70vw;
+}
+
+input[type = "text"]:focus, input[type = "number"]:focus {
+    border: 1px solid black;
+}
+
+
+input[name = "address-line1"], input[name = "address-line2"] {
+    margin-bottom: 0vw;
+    margin-top: 1vw;
+}
+
+input[name = "address-line1"] {
+    margin-top: 2vh;
+}
+
+input[name = "pincode"] {
+    width: 35vw;
+    margin-top: 1vw;
+}
+
+input[name = "contact-number"] {
+    box-sizing: border-box;
+    display: inline-block;
+    width: 48.8vw;
+}
+
+select[name = "number-prefix"] {
+    box-sizing: border-box;
+    display: inline-block;
+    width: 20vw;
+    background: transparent;
+    border-radius: 5px;
+    padding: 1.5vh;
+    border: 1px solid #CCC;
+    color: black;
+}
+
+input[type = "text"]:focus {
+    border: 1px solid black;
+}
+
+   /* body * {
+      border: 1px solid burlywood;
+    }*/
+
+input[id = "next"] {
+    box-sizing: border-box;
+    background: url('/static/img/next-button21.png') no-repeat;
+    background-size: 11.5vw;
+    margin-top: 3vh;
+    padding: 0vw 0vw 12vw 1.2vw;
+    /*border: 1px solid #cccccc;*/
+    color: transparent;
+    float: right;
+}
+
+/*------------------------------------------------------------------------------------------------*/
+
+@keyframes home-work-address{
+    0%{
+        transform: scale(0) translateX(500vw);
+        }
+    100%{
+        transform: scale(1) translateX(0);
+        }
+}
+/*------------------------------------------------------------------------------------------------*/

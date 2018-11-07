@@ -1,0 +1,67 @@
+.heading {
+    padding: 5vw;
+    text-align: start;
+    background-color: #374047;
+    color: white;
+    font-size: 1.5em;
+    z-index: 2;
+}
+
+main {
+    box-sizing: border-box;
+    padding-left: 5vw;
+    text-align: start;
+}
+
+/*main * {
+    border: 1px solid black;
+}*/
+
+#step1, #step2, #step3 {
+    margin-right: 5vw;
+}
+
+#step1 div {
+    font-size: 1.3em;
+}
+
+#step1 img, #step2 img, #step3 img {
+    height: 7vw;
+    width: 5vw;
+    float: right;
+}
+
+#step1 div, #step1 label, #step2 div, #step2 label {
+    display: inline-block;
+}
+
+#step1 *, #step2 *, #step3 * {
+    margin-top: 5vw;
+}
+
+#profilepic img{
+    position: absolute;
+    top: 10vh;
+    right: 15vw;
+    width: 15vw;
+    height: auto;
+}
+
+#next {
+    height: auto;
+    bottom: 7vw;
+    width: 20vw;
+    float: right;
+    margin-left: 75vw;
+    margin-top: 5vh;
+    background-color: #374047;
+}
+
+input[type = "submit"] {
+    background-color: #374047;
+    color: floralwhite;
+    border: none;
+    outline: none;
+    padding: 3vw;
+    letter-spacing: 0.2em;
+}

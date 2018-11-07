@@ -1,0 +1,194 @@
+body {
+    overflow: ;
+}
+
+.heading {
+    box-sizing: border-box;
+    padding: 5vw;
+    text-align: start;
+    background-color: #374047;
+    color: white;
+    font-size: 1.5em;
+    z-index: 2;
+  }
+  
+.progress-bar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 0;
+    margin-top: 2vh;
+    margin-left: 2vw;
+    background-color: transparent;
+    width: 50vw;
+    height: 10vw;
+    z-index: 2;
+    text-align: center;
+    font-size: 1.2em;
+    margin-left: 25vw;
+}
+  
+.progress-bar div {
+    border: 1px solid #374047;
+}
+  
+#progress-bar-1, #progress-bar-3, #progress-bar-5 {
+    border-radius: 100%;
+    color: white;
+    line-height: 10vw;
+}
+  
+#progress-bar-5 {
+    color: #374047;
+}
+
+#progress-bar-3 {
+    animation: Progressbar1 0.5s forwards 0s ease-in-out;
+}
+  
+#progress-bar-2, #progress-bar-4 {
+    margin-top: 49%;
+    height: 2px;
+    border-left: none;
+    border-right: none;
+}
+  
+#progress-bar-4 {
+    animation: Progressbar1 0.5s forwards 0s ease-in-out;
+}
+  
+.progress-bar-status {
+    background-color: #374047;
+    animation: Progressbar 0.5s forwards 0s ease-in-out;
+}
+  
+@keyframes Progressbar{
+    0%{
+        transform: translateX(-70px); opacity: 0.1;
+        }
+    100%{
+        transform: translateX(0); opacity: 1;
+        }
+}
+  
+@keyframes Progressbar1{
+    0%{
+        transform: translateX(-50px); opacity: 0.1;
+        }
+    100%{
+        transform: translateX(0); opacity: 1;
+        }
+}
+/* ------------------------------------------------------------------------------------------------------------------*/
+
+        /*body * {
+            border: 1px solid red;
+        }*/
+
+#step2 {
+    text-align: start;
+    padding: 2vw;
+    padding-top: 0;
+    padding-left: 10vw;
+    z-index: 2;
+    font-size: 0.9em;
+}
+
+input[type = "text"], input[name = "securityanswer"], input[name = "email"], input[name = "contact-number-2"], select, input[type = "date"], input[type = "radio"] {
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    padding: 3vw;
+    background: transparent;
+    margin-bottom: 2vh;
+}
+
+input[type = "text"]:focus, input[name = "securityanswer"]:focus, input[name = "email"]:focus, input[name = "contact-number-2"]:focus, select:focus, input[type = "date"]:focus {
+    border: 1px solid black;
+}
+
+input[name = "first-name"], input[name = "last-name"] {
+    display: inline-block;
+    margin-top: 3vh;
+    width: 37vw;
+    box-sizing: border-box;
+}
+
+label[name = "birthdate"] label {
+    box-sizing: border-box;
+    font-size: 4vw;
+}
+
+input[type = "date"] {
+    box-sizing: border-box;
+    margin-left: 11.5vw;
+    width: 37vw;
+    padding: 3vw;
+}
+
+input[name = "contact-number-1"] {
+    box-sizing: border-box;
+    width: 15vw;
+}
+
+input[name = "contact-number-2"] {
+    box-sizing: border-box;
+    width: 56.5vw;
+}
+
+input[type = "email"] {
+    box-sizing: border-box;
+    width: 74.5vw;
+    margin-bottom: 0;
+}
+
+p[id = "security-question"] {
+    box-sizing: border-box;
+    width: 74.5vw;
+    font-size: 1.3em;
+    border-bottom: 1px solid #374047;
+    margin-top: 2vh;
+}
+
+p[id = "security-para"] {
+    box-sizing: border-box;
+    margin-top: 0; 
+    width: 74.5vw;
+}
+
+select {
+    padding: 2vw;
+}
+
+input[name = "security-answer"] {
+    box-sizing: border-box;
+    padding: 2vw;
+    padding-left: 3vw;
+    width: 74.5vw;
+    margin-bottom: 2vh;
+}
+
+input[id = "next"] {
+    box-sizing: border-box;
+    background: url('/img/next-button11.png') no-repeat;
+    background-size: 10vw;
+    padding: 0vw 5vw 6vw 5vw;
+    min-height: 60px;
+    float: right;
+    color: transparent;
+}
+
+#step1 {
+    width: 10vw; 
+    height: auto;
+    float: left;
+    margin-left: 5vw;
+    position: absolute;
+}
+
+@media only screen and (max-width: 340px) {
+    input[type = "date"] {
+        font-size: 0.9em;
+    }
+    body {
+        overflow-x: hidden;
+    }
+}

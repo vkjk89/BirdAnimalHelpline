@@ -1,0 +1,61 @@
+.heading {
+    padding-top: 3vw;
+    padding-left: 3vw;
+    text-align: start;
+    font-size: 1.4em;
+    z-index: 2;
+}
+  
+.progress-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 0;
+    margin-top: 2vh;
+    margin-left: 2vw;
+    background-color: transparent;
+    height: 1vh;
+    width: 96vw;
+    z-index: 2;
+}
+
+.progress-bar div {
+    border: 1px solid black;
+}
+
+.progress-bar-status {
+    background-color: #333333;
+}
+
+input[type = "submit"] {
+    background-color: #374047;
+    color: floralwhite;
+    border: 3px solid white;
+    outline: none;
+    padding: 3vw;
+    font-size: 0.9em;
+    letter-spacing: 0.2em;
+    border-radius: 8px;
+}
+
+#next {
+    height: auto;
+    right: 3vh;
+    bottom: 3vh;
+    position: absolute; 
+}
+
+main img {
+    width: 20vw;
+    height: auto;
+}
+
+body {
+    background-color: #374047;
+    letter-spacing: 0.5vw;
+}
+
+#thankyou-div {
+    margin-top: 40vh;
+    padding-bottom: 10vw;
+    color: white;
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Request Registration</title>
+    <link rel="stylesheet" href="/static/css/basic-template.css">
+    <link rel="stylesheet" href="/static/css/RequestRegistration/step1.css">
+    
+</head>
+<body>
+
+    <!--- div class="bg"></div -->
+    
+    <div class = "heading">
+        Join Us
+    </div>
+    <div id="progress-bar" class="progress-bar">
+        <div id = "progress-bar-1" class="progress-bar-status">1</div>
+        <div id = "progress-bar-2" class="progress-bar-status"></div>
+        <div id = "progress-bar-3">2</div>
+        <div id = "progress-bar-4"></div>
+        <div id = "progress-bar-5">3</div>        
+    </div>
+    <main>
+        <form action="#" th:action="@{/registration}" th:object="${user}" method="post">
+        <!-- STEP 1 -->
+        <div id = "step1">
+            <div id="volrole" class="volrole">
+                I am a
+            </div>
+            <div id = "volrole-selector" class = "volrole-selector">
+                <ul>
+                    <input type="submit" name="role" value="Volunteer" th:field="*{role}">
+                    <!--<a name="role" data-th-value="Volunteer" value="Volunteer" th:field="*{role}" th:href="@{/registration(page=1)}">-->
+                        <li>
+                            <img src = "/static/img/Volunteer-11.png" alt = "Volunteer" id = "Volunteer">
+                            <div>Volunteer</div>
+                        </li>
+                    </a>
+                    <input type="submit" name="role" value="Doctor" th:field="*{role}">
+                    <!--<a th:href="@{/registration(page=1)}">-->
+                        <li>
+                            <img src = "/static/img/Doctor-11.png" alt = "Doctor" id = "Doctor">
+                            <div>Doctor</div>
+                        </li>
+                    </a>
+                </ul>
+                <ul>
+                    <input type="submit" name="role" value="Doctor" th:field="*{role}">
+                    <!--<a th:href="@{/registration(page=1)}">-->
+                        <li>
+                            <img src = "/static/img/Driver-11.png" alt = "Driver" id = "Driver">
+                                <div>Driver</div>
+                        </li>
+                    </a>
+                    <a href="#" onclick="animation()" id = "options-2" class = "">
+                        <li>
+                            <img src = "/static/img/options11.png" alt = "Others" id = "options">
+                                <div>Others</div>
+                        </li>
+                    </a>
+                </ul>
+                <ul>
+                    <input type="submit" name="role" value="Doctor" th:field="*{role}">
+                    <!--<a th:href="@{/registration(page=1)}" id = "Receptionist" style="display: none;">-->
+                        <li>
+                            <img src = "/static/img/Call Attender-11.png" alt = "Call-Attender" id = "Call-Attender">
+                                <div>Receptionist</div>                        
+                        </li>
+                    </a>
+                    <input type="submit" name="role" value="Doctor" th:field="*{role}">
+                    <!--<a th:href="@{/registration(page=1)}" id = "Fosterer" style="display: none">-->
+                        <li>
+                            <img src = "/static/img/Fosterer-11.png" alt = "Fosterer" id = "Fosterer">
+                                <div>Fosterer</div>                        
+                        </li>
+                    </a>
+                </ul>
+            </div>
+        </div> 
+
+        <div class = "footer">
+            <button><a th:href="@{/}" href = "Index.html"><img src = "/static/img/home-1.png"></a></button>
+        </div>
+            <input type="hidden" name="page" value="1">
+        </form>
+    </main>
+
+    <script>
+        function animation(){
+            document.getElementById('Receptionist').style.display = "inline-block";
+            document.getElementById('Receptionist').classList.add('receptionist');
+            document.getElementById('Fosterer').style.display = "inline-block";
+            document.getElementById('Fosterer').classList.add('fosterer');
+            document.getElementById('options-2').classList.add('option-btn-end');
+        }
+    </script>
+</body>
+</html>

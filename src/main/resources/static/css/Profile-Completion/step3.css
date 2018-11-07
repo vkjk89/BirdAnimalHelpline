@@ -1,0 +1,105 @@
+#header {
+    box-sizing: border-box;
+    width: 100vw;
+    margin: 0;   
+    padding: 3vh;
+    color: white;
+    background-color: #374047;
+    font-size: 1.2em;
+}
+
+main {
+    box-sizing: border-box;
+    text-align: start;
+    padding: 10vw;
+    padding-top: 5vw;
+    animation: pincode-start 1s forwards 0s ease-in-out;
+}
+
+    /*body * {
+        border: 1px solid salmon;
+    }*/
+
+input[type = "search"] {
+    background-size: 5vw 5vw;
+    background-image: url(/static/img/search-1.png);
+    background-position: 3vw 4vw; 
+    background-repeat: no-repeat;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    padding: 4vw;
+    padding-left: 11vw;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    width: 48vw;
+}
+
+input[type = "search"]:focus {
+    width: 65vw;
+    border: 1px solid black;
+}
+
+#search-results-list {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: none;
+    list-style: none;
+    margin-top: 2vh;
+    padding: 3vw;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    max-height: 100px;
+    width: 70vw;
+}
+
+#search-results-list div {
+    margin-top: 5px;
+}
+
+#selected-pincodes {
+    margin-top: 2vh;
+    padding-left: 3vw;
+    padding-bottom: 2vh;
+    padding-right: 2vw;
+    border-radius: 5px;
+}
+
+.selected-pincodes-list-div {
+    font-size: 0.9em;
+}
+
+input[id = "next"] {
+    margin-top: 10vh;
+    font-size: 1em;
+    color: white;
+    border-radius: 5px;
+    letter-spacing: 0.5vw;
+    float: right;
+}
+
+#select-timings, #select-timings-am-pm {
+    display: none; 
+    background:transparent; 
+    border-radius:50px; 
+    margin-left:2vw;
+}
+
+@keyframes pincode-start{
+    0%{
+        transform: scale(0) translateX(500vw);
+        }
+    100%{
+        transform: scale(1) translateX(0);
+        }
+}
+
+/*---------------------------------------------------------------------------------------------------------------------*/
+
+@media only screen and (min-width: 520px){
+    body {
+        font-size: 1.5em;
+    }
+    input, select {
+        font-size: 1.2em;
+    }
+}

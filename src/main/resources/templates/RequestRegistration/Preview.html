@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Request Registration</title>
+    <link rel="stylesheet" href="/static/css/basic-template.css">
+    <link rel="stylesheet" href="/static/css/RequestRegistration/preview.css">
+    
+</head>
+<body>
+
+    <!-- div class="bg"></div -->
+    <form enctype="multipart/form-data" th:object="${user}" method="post" action="/registration">
+    <div class = "heading">
+        Join Us
+    </div>
+
+    <main>
+        <div id = "step1">
+        <img src = "/static/img/edit.png" onclick="window.location = '/registration' ">
+        <label>I am a: </label>
+            <div th:text="*{role}" th:field="*{role}" style = "display: inline-block" id = "volrole-selected">#volrole</div>
+        </div>
+        <div id = "step2">
+            <img src = "/static/img/edit.png" onclick="window.location = '/registration?page=1' ">
+            <div th:text="*{firstName}" th:field="*{firstName}" id = "first-name">#firstname</div>
+            <div th:text="*{lastName}" th:field="*{lastName}" id = "last-name">#lastname</div><br>
+            <Label>Date of Birth: </Label>
+                <div th:text="*{dob}" th:field="*{dob}" id = "DOB">#DOB</div><br>
+            <div id = "+91">+91</div>-
+            <div th:text="*{mobile}" th:field="*{mobile}" id = "mobileno">#mobileno</div><br>
+            <label>Gender: </label>
+                <div th:text="*{gender}" th:field="*{gender}" id = "gender">#gender</div><br>
+            <label>Email ID: </label>
+                <div th:text="*{email}" th:field="*{email}" id = "emailID">#email</div><br>
+            <label style = "font-size: 1.1em; font-weight: 700;">Security Question:</label><br>
+                <div th:text="*{securityQId}" th:field="*{securityQId}" id = "secquestion">#secquestion</div><br>
+                <div th:text="*{securityQAns}" th:field="*{securityQAns}" id = "secresponse">#secanswer</div><br>
+        </div>
+        <div id = "step3">
+            <!--th:text="*{password}" th:field="*{password}"-->
+            <!--th:text="*{image}" th:field="*{image}"-->
+            <img src = "/static/img/edit.png" onclick="window.location = '/registration?page=2' ">
+            <!--onclick="window.location = '/templates/RequestRegistration/Step3.html' "-->
+            <div  id = "profilepic"><img src = "" th:src="*{'data:image/png;base64,'+getEncodedImage()}" ></div>
+            <div th:text="*{userName}" th:field="*{userName}" id = "usernasme">#username</div><br>
+            <div  id = "password">#passsword</div><br>
+        </div>
+
+    </main>
+
+    <div id="footer-btns" class="footer-btns">
+        <div style="display:inline-block;">
+            <input type = "submit" name = "SubmitApplication" id = "next" value = "Submit" >
+            <!--<input type = "submit" name = "SubmitApplication" id = "next" value = "Submit" onclick="window.location.assign('/templates/RequestRegistration/reg-complete.html');">-->
+        </div>
+    </div>
+
+        <input type="hidden" name="page" value="3">
+    </form>
+</body>
+</html>

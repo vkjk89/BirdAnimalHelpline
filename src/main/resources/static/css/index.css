@@ -1,0 +1,76 @@
+.logoImage {
+    margin-top: 35vw;
+    max-width: 60vw;
+    height: auto;
+}
+.btn-group {
+    margin-top: 10vw;
+}
+
+.info-btn {
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    padding: 1.6vh;
+    letter-spacing: 0.3vh;
+    position: absolute;
+    top: 2vh;
+    right: 2vw;
+    width: 13vw;
+}
+#aboutus {
+    display: none; 
+    width: 100%; 
+    height:100%; 
+    background-color: #37404769; 
+    text-align: center; 
+    opacity: 0.9; 
+    position: absolute; 
+    z-index: 1000; 
+    padding-bottom: 10%;
+  }
+  
+  #aboutus-info{
+    margin-left:8%; 
+    margin-top:30%; 
+    margin-right: 8%;
+    background-color: #374047; 
+    color: white; 
+    text-align: start; 
+    font-size: 1.2em; 
+    padding: 5%; 
+  }
+  
+#backbutton {
+    margin-top: 10vw;
+    margin-right: 8%;
+    float: right;
+    background-color: rgb(230,230,230);
+}   
+
+@media only screen and (min-width: 1024px){
+    .logoImage {
+        margin-top: 5vw;
+        max-width: 30vw;
+        height: auto;
+    }
+    .btn-group {
+        margin-top: 5vw;
+    }
+    .info-btn {
+        width: 5vw;
+    }
+}
+
+@media only screen and (max-width: 320px){
+    .btn-group {
+        font-size: 0.8em;
+    }
+    #aboutus-info {
+        font-size: 0.8em;
+    }
+    .logoImage {
+        margin-top: 25vw;
+    }
+}

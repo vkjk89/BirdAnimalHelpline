@@ -1,0 +1,201 @@
+body {
+  overflow: hidden;
+}
+
+.heading {
+  padding: 5vw;
+  text-align: start;
+  background-color: #374047;
+  color: white;
+  font-size: 1.5em;
+  z-index: 2;
+}
+
+.progress-bar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 0;
+  margin-top: 2vh;
+  margin-left: 2vw;
+  background-color: transparent;
+  width: 50vw;
+  height: 10vw;
+  z-index: 2;
+  text-align: center;
+  font-size: 1.2em;
+  margin-left: 25vw;
+}
+
+.progress-bar div {
+  border: 1px solid #374047;
+}
+
+#progress-bar-1, #progress-bar-3, #progress-bar-5 {
+  border-radius: 100%;
+  color: white;
+  line-height: 10vw;
+}
+
+#progress-bar-3, #progress-bar-5 {
+  color: #374047;
+  animation: Progressbar1 0.5s forwards 0s ease-in-out;
+}
+
+#progress-bar-2, #progress-bar-4 {
+  margin-top: 49%;
+  height: 2px;
+  border-left: none;
+  border-right: none;
+}
+
+#progress-bar-4 {
+  animation: Progressbar1 0.5s forwards 0s ease-in-out;
+}
+
+.progress-bar-status {
+  background-color: #374047;
+  animation: Progressbar 0.5s forwards 0s ease-in-out;
+}
+
+@keyframes Progressbar{
+  0%{
+      transform: translateX(-70px); opacity: 0.1;
+      }
+  100%{
+      transform: translateX(0); opacity: 1;
+      }
+}
+
+@keyframes Progressbar1{
+  0%{
+      transform: translateX(-50px); opacity: 0.2;
+      }
+  100%{
+      transform: translateX(0); opacity: 1;
+      }
+}
+/* ------------------------------------------------------------------------------------------------------------------*/
+
+#step1 {
+  display: block;
+}
+
+.volrole {
+  margin-top: 3.8vh;
+  font-size: 2em;
+}
+
+.volrole-selector {
+  margin-top: 5vh;
+}
+
+main div:nth-child(2) img, #options {
+  margin-top: 5vw;
+  width: 20vw;
+  height: auto;
+}
+
+main div:nth-child(2) li {
+  margin-top: 3vh;
+  list-style: none;
+  width: 40vw;
+  border-radius: 25px;
+  box-shadow: 10px 10px 10px grey;
+  padding-bottom: 5vw;
+}
+
+main div:nth-child(2) ul {
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.volrole-selector ul li div {
+  font-size: 1em;
+}
+
+.footer button {
+  border: none;
+  outline: none;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  background-color: transparent;
+}
+
+@media only screen and (max-width: 420px){
+  .heading {
+    padding: 3vw;
+  }
+
+  .progress-bar {
+    font-size: 1em;
+  }
+  main div:nth-child(2) img{
+    width: 12vw;
+    height: auto;
+    padding: 0;
+  }
+  .volrole {
+    margin-top: 1vh;
+    font-size: 1.5em;
+    text-align: center;
+    margin-bottom: 0;
+  }
+  .volrole-selector {
+    margin-top: 0;
+  }
+  .volrole-selector div {
+    font-size: 1.1em;
+  }
+
+  .volrole-selector ul {
+    margin-top: 0;
+    margin-bottom: 0em;
+  }
+
+  main div:nth-child(2) li {
+    height: 18vh;
+    width: 35vw;
+    padding: 0vw 2vw;
+    padding-bottom: 2vw;
+    max-height: 100px;
+  }
+
+  .footer button img {
+    max-width: 35px;
+  }
+}
+
+/*-----------------------------------------------------------------------------------------------------------*/
+
+@keyframes Fosterer{
+  0%{
+      transform: scale(0.1) translateX(2000px);
+      }
+  100%{
+      transform: scale(1) translateX(0vw);
+      }
+}
+
+.fosterer {
+  animation: Fosterer 0.8s forwards 0s ease-in-out;
+}
+
+
+@keyframes Receptionist{
+  0%{
+      transform: scale(0.1) translateX(-2000px);
+      }
+  100%{
+      transform: scale(1) translateX(0vw);
+      }
+}
+
+.receptionist {
+  animation: Receptionist 0.8s forwards 0s ease-in-out;
+}
+/*-----------------------------------------------------------------------------------------------------------*/
+
+
+/*-----------------------------------------------------------------------------------------------------------*/

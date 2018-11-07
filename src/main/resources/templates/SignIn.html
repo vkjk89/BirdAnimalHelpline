@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bird & Animal Helpline</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/static/css/basic-template.css">
+    <link rel="stylesheet" href="/static/css/signIn.css">
+</head>
+
+<body>
+    <!-- div class="bg"></div -->
+    
+    <main id = "main">
+        <div>
+            <button class = "info-btn"><a onclick="aboutus();"><img src = "/static/img/aboutus.png" style = "width: 100%; height: auto; padding: 0vw;" alt = "About Us"></a></button>
+        </div>
+        <form name = "FirstForm" method="post" action="#" th:action="@{/login}"  >
+        <!--<form name = "FirstForm" action="" method="">-->
+            <div class = "logo">
+                <div>
+                    <img src="/static/img/Logo1.png" class = "logoImage" alt = "Logo"><br><br>
+                </div>
+                <div th:text="${error}" id = "invalid"></div><br>
+                <div>
+                    <input type = "text" placeholder="Username" name = "username" autofocus autocomplete="off"><br><br>
+                    <input type = "password" placeholder= "Password" name = "password" autocomplete="off"><br><br>
+                </div>    
+            </div>
+
+        <div>
+            <input type = "submit" name = "login" value = "Sign In">
+            <!--<input type = "submit" name = "login" value = "Sign In" onclick="admin()">-->
+        </div>
+        </form>
+        <div class = "footer1">
+            <a href = "/forgotPassword">Forgot Password</a><br><br>
+            <a href = "contact-us.html" id = "ContactUs">Contact Us</a>
+        </div>
+    </main>
+
+    <div id = "aboutus">
+        <div id = "aboutus-info">
+            Helpling Birds and Animals in distress is our Business.<br>
+            We cover most of Mumbai with the help of various other Ngo's.<br> <br>
+            Call on - 8655370005 for HELP !!<br>            
+        </div>
+        <button type = "button" id = "backbutton" onclick="gohome()" class = "btn">Back</button>
+    </div>
+    
+    <script src="/static/js/index.js"></script>
+    <script>
+        function aboutus(){
+            document.getElementById('main').style.display = "none";
+            document.getElementById('aboutus').style.display = "block";
+        }
+        function gohome(){
+            document.getElementById('aboutus').style.display = "none";
+            document.getElementById('main').style.display = "block";
+        }
+
+    </script>
+</body>
+</html>
