@@ -97,9 +97,9 @@
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>org.glassfish</groupId>-->
-            <!--<artifactId>javax.el</artifactId>-->
-            <!--<version></version>-->
+        <!--<groupId>org.glassfish</groupId>-->
+        <!--<artifactId>javax.el</artifactId>-->
+        <!--<version></version>-->
         <!--</dependency>-->
         <!-- https://mvnrepository.com/artifact/com.sun.xml.security/xml-security-impl -->
         <dependency>
@@ -107,19 +107,23 @@
             <artifactId>xml-security-impl</artifactId>
             <version>1.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>5.2.1</version>
+        </dependency>
     </dependencies>
 
     <!--<dependencyManagement>-->
-        <!--<dependencies>-->
-            <!--<dependency>-->
-                <!--<groupId>org.springframework.cloud</groupId>-->
-                <!--<artifactId>spring-cloud-dependencies</artifactId>-->
-                <!--<version>${spring-cloud.version}</version>-->
-                <!--<type>pom</type>-->
-                <!--<scope>import</scope>-->
-            <!--</dependency>-->
-        <!--</dependencies>-->
+    <!--<dependencies>-->
+    <!--<dependency>-->
+    <!--<groupId>org.springframework.cloud</groupId>-->
+    <!--<artifactId>spring-cloud-dependencies</artifactId>-->
+    <!--<version>${spring-cloud.version}</version>-->
+    <!--<type>pom</type>-->
+    <!--<scope>import</scope>-->
+    <!--</dependency>-->
+    <!--</dependencies>-->
     <!--</dependencyManagement>-->
 
     <build>

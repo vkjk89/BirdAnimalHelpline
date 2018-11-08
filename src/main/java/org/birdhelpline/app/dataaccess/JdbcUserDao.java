@@ -14,10 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.io.ByteArrayInputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,8 +28,8 @@ public class JdbcUserDao implements UserDao {
     private Map<String,Integer> userRoleVsRoleId = new HashMap<>();
     private Map<Integer,String> securityQIdVSSecurityQ = new HashMap<>();
 
-    //@Autowired
-    //private DataSource dataSource;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @PostConstruct
     private  void init() {
@@ -163,6 +160,22 @@ public class JdbcUserDao implements UserDao {
     public boolean getUserByUserName(String userName) {
         int count = jdbcOperations.queryForObject("select count(1) from user where user_name = ?",Integer.class,userName);
         return count > 0 ? true:false;
+    }
+
+    public Timestamp getLastLoginByUserName(String name) {
+        return jdbcOperations.queryForObject("select last_login_date from user u , user_info ui where u.user_id = ui.user_id and u.user_name = ?", Timestamp.class,name);
+    }
+
+    public void insertLastLoginDate(String name) {
+        this.jdbcOperations.update(new PreparedStatementCreator() {
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(
+                        "update user_info ui, user u set ui.last_login_date =  now() where u.user_id = ui.user_id and u.user_name=?");
+
+                ps.setString(1, name);
+                return ps;
+            }
+        });
     }
 
     static class UserRowMapper implements RowMapper<User> {

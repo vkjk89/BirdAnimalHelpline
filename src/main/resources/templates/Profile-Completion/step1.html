@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Profile Completion</title>
-    <link rel="stylesheet" href="/static/css/basic-template.css">
-    <link rel="stylesheet" href="/static/css/Profile-Completion/profile-completion.css">
+    <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
+    <link rel="stylesheet" th:href="@{/css/Profile-Completion/profile-completion.css}" href="/static/css/Profile-Completion/profile-completion.css">
 </head>
 <body>
     
@@ -31,7 +31,7 @@
                     <option value="022">022</option>
                 </select>
                 <input type = "number" name = "alternate-number" placeholder=""><br>
-                <input type = "submit" id = "next" onclick="" alt="next" form="home-address-form">
+                <input type = "submit" id = "next"  alt="next" form="home-address-form">
             </form>
         </div>
     </main>
