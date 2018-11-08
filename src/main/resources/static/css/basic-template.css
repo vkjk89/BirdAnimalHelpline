@@ -26,9 +26,9 @@ main {
 button, input[type = "submit"]{
   border: none;
   outline: none;
-  background-color: #374047;
   color: white;
   padding: 3vw 5vw;
+  background-color: transparent;
 }
 
 input[type = "text"], input[type = "number"], input[type = "search"], input[type = "email"], input[type = "password"] {

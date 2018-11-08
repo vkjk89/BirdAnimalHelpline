@@ -86,127 +86,63 @@
 
 #role-row-1, #role-row-2 {
   display: flex;
-}
-
-input [name = "role"]{
-  display: none;
-}
-
-li {
-  list-style: none;
-  margin-top: 5vh;
-  box-shadow: 10px 10px 10px 2px #BBBBBB;
-  border-top-left-radius: 10%;
-  border-top-right-radius: 10%;
-  max-width: 40vw;
-  margin-right: 5vw;
-  margin-left: -2vw;
-}
-
-label {
-  display: inline-block;
-  box-sizing: border-box;
-  border-bottom-left-radius: 20%;
-  border-bottom-right-radius: 20%;
-  background-color: #374047;
-  color: white;
-  width: 37vw;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
-  box-shadow: 10px 10px 10px 2px #BBBBBB;
-}
-
-#role-tile-1 {
-  box-sizing: border-box;
-  background-color: transparent;
-  background-image: url('/static/img/Volunteer-11.png');
-  background-size: 14vw;
-  background-position: 50% 100%;
-  background-repeat: no-repeat;
-  width: 25vw;
-  height: auto;
-  padding-top: 8vw;
-  color: transparent;
-}
-
-#role-tile-2 {
-  box-sizing: border-box;
-  background-color: transparent;
-  background-image: url('/static/img/Doctor-11.png');
-  background-size: 14vw;
-  background-position: 50% 100%;
-  background-repeat: no-repeat;
-  width: 25vw;
-  height: auto;
-  padding-top: 8vw;
-  color: transparent;
-}
-
-#role-tile-3 {
-  box-sizing: border-box;
-  background-color: transparent;
-  background-image: url('/static/img/Driver-11.png');
-  background-size: 16vw;
-  background-position: 50% 200%;
-  background-repeat: no-repeat;
-  width: 25vw;
-  height: auto;
-  padding-top: 8.2vw;
-  color: transparent;
-}
-
-#role-tile-4 {
-  box-sizing: border-box;
-  background-color: transparent;
-  background-image: url('/static/img/options11.png');
-  background-size: 16vw;
-  background-position: 50% 75%;
-  background-repeat: no-repeat;
-  width: 25vw;
-  height: auto;
-  padding-top: 8vw;
-  color: transparent;
-}
-
-#role-tile-5 {
-  box-sizing: border-box;
-  background-color: transparent;
-  background-image: url('/static/img/Call\ Attender-11.png');
-  background-size: 16vw;
-  background-position: 50% 30%;
-  background-repeat: no-repeat;
-  width: 25vw;
-  height: auto;
-  padding-top: 10vw;
-  color: transparent;
-}
-
-#role-tile-6 {
-  box-sizing: border-box;
-  background-color: transparent;
-  background-image: url('/static/img/Fosterer-11.png');
-  background-size: 16vw;
-  background-position: 50% 150%;
-  background-repeat: no-repeat;
-  width: 25vw;
-  height: auto;
-  padding-top: 8vw;
-  color: transparent;
+  justify-content: space-evenly; 
 }
 
 #role-row-1 {
   margin-top: -2.5vh;
 }
 
+input [name = "role"]{
+  display: none;
+}
+
+span {
+  list-style: none;
+  margin-top: 5vh;
+  box-shadow: 10px 10px 10px 2px #CCC;
+  border-radius: 15px;
+  width: 38vw;
+  margin-bottom: -2vh;
+}
+
+#volrole-selector img {
+  height: 8vh;
+  width: auto;
+}
+
+label {
+  display: block;
+  margin-top: 1vh;
+  margin-bottom: -2vh;
+  width: 38vw;
+  margin-left: -5vw;
+  height: 4vh;
+  padding: 2vw 0vw 0vw 0vw;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background-color: #374047;
+  color: white;
+  box-shadow: 10px 10px 10px 1px #CCC;
+}
+
+button {
+  color: #374047;
+  width: 100%;
+}
+
+#Fosterer, #Receptionist {
+  display: none;
+}
+
 .footer button {
   border: none;
   outline: none;
-  float: right;
-  margin-top: 2vh;
-  background-color: transparent;
+  margin-top: 5vh;
+  padding-left: 80vw;
 }
 
-@media only screen and (max-width: 420px){
+@media only screen and (max-width: 360px){
   .heading {
     padding: 3vw;
   }
@@ -214,8 +150,8 @@ label {
     font-size: 1em;
   }
   main div:nth-child(2) img{
-    width: 12vw;
-    height: auto;
+    width: auto;
+    height: 5vh;
     padding: 0;
   }
   .volrole {
@@ -250,7 +186,7 @@ label {
 
 @keyframes Fosterer{
   0%{
-      transform: scale(0.1) translateX(2000px);
+      transform: scale(0) translateX(2000px);
       }
   100%{
       transform: scale(1) translateX(0vw);
@@ -261,10 +197,22 @@ label {
   animation: Fosterer 0.8s forwards 0s ease-in-out;
 }
 
+@keyframes Fosterer-end{
+  0%{
+      transform: rotate(0) scale(1);
+      }
+  100%{
+      transform: rotate(720deg) scale(0);
+      }
+}
+
+.fosterer-end {
+  animation: Fosterer-end 0.8s forwards 0s ease-in-out;
+}
 
 @keyframes Receptionist{
   0%{
-      transform: scale(0.1) translateX(-2000px);
+      transform: scale(0) translateX(-2000px);
       }
   100%{
       transform: scale(1) translateX(0vw);
@@ -273,6 +221,19 @@ label {
 
 .receptionist {
   animation: Receptionist 0.8s forwards 0s ease-in-out;
+}
+
+@keyframes Receptionist-end{
+  0%{
+      transform: rotate(0) scale(1);
+      }
+  100%{
+      transform: rotate(720deg) scale(0);
+      }
+}
+
+.receptionist-end {
+  animation: Receptionist-end 0.8s forwards 0s ease-in-out;
 }
 /*-----------------------------------------------------------------------------------------------------------*/
 

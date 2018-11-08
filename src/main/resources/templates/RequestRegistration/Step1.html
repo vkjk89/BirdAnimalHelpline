@@ -30,36 +30,48 @@
                 I am a
             </div>
             <div id = "volrole-selector" class = "volrole-selector">
-                <ul id="role-row-1">
-                    <li>
-                        <input type="submit" name="role" value="Volunteer" id="role-tile-1" th:field="*{role}"><br><br>
-                        <label for="role-tile-1">Volunteer</label>
-                    </li>
-                    <li>
-                        <input type="submit" name="role" value="Doctor" id="role-tile-2" th:field="*{role}"><br><br>
-                        <label for="role-tile-2">Doctor</label>
-                    </li>   
-                </ul>
-                <ul id="role-row-2">
-                    <li>
-                        <input type="submit" name="role" value="Driver" id="role-tile-3" th:field="*{role}"><br><br>
-                        <label for="role-tile-3">Driver</label>
-                    </li>
-                    <li>
-                        <input type="submit" name="role" value="" id="role-tile-4"><br><br>
-                        <label for="role-tile-4">Others</label>
-                    </li>
-                </ul>
-                <ul id="role-row-2">
-                    <li>
-                        <input type="submit" name="role" value="Receptionist" id="role-tile-5" th:field="*{role}"><br><br>
-                        <label for="role-tile-5">Receptionist</label>
-                    </li>
-                    <li>
-                        <input type="submit" name="role" value="Fosterer" id="role-tile-6" th:field="*{role}"><br><br>
-                        <label for="role-tile-6">Fosterer</label>
-                    </li>
-                </ul>
+                <div id="role-row-1">
+                    <span>
+                        <button type="submit">
+                            <img src="/static/img/Volunteer-11.png" alt="Volunteer" id="role-btn-1">
+                            <label id = "btn-label-1">Volutneer</label>
+                        </button>
+                    </span>
+                    <span>
+                        <button type="submit">
+                            <img src="/static/img/Driver-11.png" alt="Driver" id="role-btn-2">
+                            <label id = "btn-label-2">Driver</label>
+                        </button>
+                    </span>   
+                </div>
+                <div id="role-row-2">
+                    <span>
+                        <button type="submit">
+                            <img src="/static/img/Doctor-11.png" alt="Doctor" id="role-btn-3">
+                            <label id = "btn-label-3">Doctor</label>
+                        </button>
+                    </span>
+                    <span onclick="others()" id="options-2">
+                        <button type="button">
+                            <img src="/static/img/options11.png" alt="Others" id="role-btn-4">
+                            <label id = "btn-label-4">Others</label>
+                        </button>
+                    </span>
+                </div>
+                <div id="role-row-2">
+                    <span id="Receptionist">
+                        <button type = "submit">
+                            <img src="/static/img/Call Attender-11.png" alt="Receptionist" id="role-btn-5">
+                            <label id = "btn-label-5">Receptionist</label>
+                        </button>
+                    </span>
+                    <span id="Fosterer">
+                        <button type = "submit">
+                            <img src="/static/img/Fosterer-11.png" alt="Fosterer" id="role-btn-6">
+                            <label id = "btn-label-6">Fosterer</label>
+                        </button>
+                    </span>
+                </div>
             </div>
         </div> 
 
@@ -71,12 +83,26 @@
     </main>
 
     <script>
-        function animation(){
-            document.getElementById('Receptionist').style.display = "inline-block";
-            document.getElementById('Receptionist').classList.add('receptionist');
-            document.getElementById('Fosterer').style.display = "inline-block";
-            document.getElementById('Fosterer').classList.add('fosterer');
-            document.getElementById('options-2').classList.add('option-btn-end');
+        var anim_state = 10;
+        function others(){
+            alert(anim_state);
+            if (anim_state % 2 == 0){
+                document.getElementById('Receptionist').style.display = "inline";
+                document.getElementById('Receptionist').classList.add('receptionist');
+                document.getElementById('Fosterer').style.display = "inline";
+                document.getElementById('Fosterer').classList.add('fosterer');
+                document.getElementById('role-btn-4').setAttribute("src","/static/img/options11-2.png");
+            }  
+            else {
+                document.getElementById('Receptionist').classList.add('receptionist-end');
+                document.getElementById('Fosterer').classList.add('fosterer-end');
+                setTimeout(function(){
+                document.getElementById('Receptionist').style.display = "none";
+                document.getElementById('Fosterer').style.display = "none";
+                document.getElementById('role-btn-4').setAttribute("src","/static/img/options11.png");
+                }, 800);
+            }
+            anim_state++;
         }
     </script>
 </body>
