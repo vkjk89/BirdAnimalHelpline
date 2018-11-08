@@ -1,7 +1,3 @@
-body {
-    overflow: ;
-}
-
 .heading {
     box-sizing: border-box;
     padding: 5vw;
@@ -10,7 +6,7 @@ body {
     color: white;
     font-size: 1.5em;
     z-index: 2;
-  }
+}
   
 .progress-bar {
     display: grid;
@@ -119,7 +115,7 @@ label[name = "birthdate"] label {
 
 input[type = "date"] {
     box-sizing: border-box;
-    margin-left: 11.5vw;
+    margin-left: 12vw;
     width: 37vw;
     padding: 3vw;
 }
@@ -168,12 +164,14 @@ input[name = "security-answer"] {
 
 input[id = "next"] {
     box-sizing: border-box;
-    background: url('/img/next-button11.png') no-repeat;
+    background: url('/static/img/next-button11.png') no-repeat;
+    /*border: 1px solid burlywood;*/
     background-size: 10vw;
     padding: 0vw 5vw 6vw 5vw;
-    min-height: 60px;
+    margin-right: 5vw;
+    min-height: 40px;
     float: right;
-    color: transparent;
+    color: black;
 }
 
 #step1 {

@@ -19,8 +19,8 @@
 
     <main>
         <div id = "step1">
-        <img th:src="@{/img/edit.png}" src = "/static/img/edit.png" onclick="window.location = '/registration' ">
-        <label>I am a: </label>
+            <img th:src="@{/img/edit.png}" src = "/static/img/edit.png" onclick="window.location = '/registration' ">
+            <label>I am a: </label>
             <div th:text="*{role}" th:field="*{role}" style = "display: inline-block" id = "volrole-selected">#volrole</div>
         </div>
         <div id = "step2">

@@ -11,10 +11,7 @@
     <link rel="stylesheet" th:href="@{/css/RequestRegistration/Step1.css} " href="/static/css/RequestRegistration/Step1.css">
     
 </head>
-<body>
-s
-    <!--- div class="bg"></div -->
-    
+<body>    
     <div class = "heading">
         Join Us
     </div>
@@ -33,58 +30,41 @@ s
                 I am a
             </div>
             <div id = "volrole-selector" class = "volrole-selector">
-                <ul>
-                    <input type="submit" name="role" value="Volunteer" th:field="*{role}">
-                    <!--<a name="role" data-th-value="Volunteer" value="Volunteer" th:field="*{role}" th:href="@{/registration(page=1)}">-->
-                        <li>
-                            <img src = "/img/Volunteer-11.png" alt = "Volunteer" id = "Volunteer">
-                            <div>Volunteer</div>
-                        </li>
-                    </a>
-                    <input type="submit" name="role" value="Doctor" th:field="*{role}">
-                    <!--<a th:href="@{/registration(page=1)}">-->
-                        <li>
-                            <img src = "/img/Doctor-11.png" alt = "Doctor" id = "Doctor">
-                            <div>Doctor</div>
-                        </li>
-                    </a>
+                <ul id="role-row-1">
+                    <li>
+                        <input type="submit" name="role" value="Volunteer" id="role-tile-1" th:field="*{role}"><br><br>
+                        <label for="role-tile-1">Volunteer</label>
+                    </li>
+                    <li>
+                        <input type="submit" name="role" value="Doctor" id="role-tile-2" th:field="*{role}"><br><br>
+                        <label for="role-tile-2">Doctor</label>
+                    </li>   
                 </ul>
-                <ul>
-                    <input type="submit" name="role" value="Doctor" th:field="*{role}">
-                    <!--<a th:href="@{/registration(page=1)}">-->
-                        <li>
-                            <img src = "/img/Driver-11.png" alt = "Driver" id = "Driver">
-                                <div>Driver</div>
-                        </li>
-                    </a>
-                    <a href="#" onclick="animation()" id = "options-2" class = "">
-                        <li>
-                            <img src = "/img/options11.png" alt = "Others" id = "options">
-                                <div>Others</div>
-                        </li>
-                    </a>
+                <ul id="role-row-2">
+                    <li>
+                        <input type="submit" name="role" value="Driver" id="role-tile-3" th:field="*{role}"><br><br>
+                        <label for="role-tile-3">Driver</label>
+                    </li>
+                    <li>
+                        <input type="submit" name="role" value="" id="role-tile-4"><br><br>
+                        <label for="role-tile-4">Others</label>
+                    </li>
                 </ul>
-                <ul>
-                    <input type="submit" name="role" value="Doctor" th:field="*{role}">
-                    <!--<a th:href="@{/registration(page=1)}" id = "Receptionist" style="display: none;">-->
-                        <li>
-                            <img src = "/img/Call Attender-11.png" alt = "Call-Attender" id = "Call-Attender">
-                                <div>Receptionist</div>                        
-                        </li>
-                    </a>
-                    <input type="submit" name="role" value="Doctor" th:field="*{role}">
-                    <!--<a th:href="@{/registration(page=1)}" id = "Fosterer" style="display: none">-->
-                        <li>
-                            <img src = "/img/Fosterer-11.png" alt = "Fosterer" id = "Fosterer">
-                                <div>Fosterer</div>                        
-                        </li>
-                    </a>
+                <ul id="role-row-2">
+                    <li>
+                        <input type="submit" name="role" value="Receptionist" id="role-tile-5" th:field="*{role}"><br><br>
+                        <label for="role-tile-5">Receptionist</label>
+                    </li>
+                    <li>
+                        <input type="submit" name="role" value="Fosterer" id="role-tile-6" th:field="*{role}"><br><br>
+                        <label for="role-tile-6">Fosterer</label>
+                    </li>
                 </ul>
             </div>
         </div> 
 
         <div class = "footer">
-            <button><a th:href="@{/}" href = "Index.html"><img src = "/img/home-1.png"></a></button>
+            <button><a th:href="@{/}" href = "Index.html"><img src = "/static/img/home-1.png"></a></button>
         </div>
             <input type="hidden" name="page" value="1">
         </form>

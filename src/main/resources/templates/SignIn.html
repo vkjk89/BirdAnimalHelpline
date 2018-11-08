@@ -7,7 +7,7 @@
     <title>Bird & Animal Helpline</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
-    <link rel="stylesheet" th:href="@{/css/signIn.css}" href="/static/css/signIn.css">
+     <link rel="stylesheet" th:href="@{/css/signIn.css}" href="/static/css/signIn.css">
 </head>
 
 <body>
@@ -15,13 +15,13 @@
     
     <main id = "main">
         <div>
-            <button class = "info-btn"><a onclick="aboutus();"><img th:src="@{/img/aboutus.png}" src = "/static/img/aboutus.png" style = "width: 100%; height: auto; padding: 0vw;" alt = "About Us"></a></button>
+                <button class = "info-btn"><a onclick="aboutus();"><img th:src="@{/img/aboutus.png}" src = "/static/img/aboutus.png" style = "width: 100%; height: auto; padding: 0vw;" alt = "About Us"></a></button>
         </div>
         <form name = "FirstForm" method="post" action="#" th:action="@{/login}"  >
         <!--<form name = "FirstForm" action="" method="">-->
             <div class = "logo">
                 <div>
-                    <img th:src="@{/img/Logo1.png}" src="/static/img/Logo1.png" class = "logoImage" alt = "Logo"><br><br>
+                        <img th:src="@{/img/Logo1.png}" src="/static/img/Logo1.png" class = "logoImage" alt = "Logo"><br><br>
                 </div>
                 <div th:text="${error}" id = "invalid"></div><br>
                 <div>

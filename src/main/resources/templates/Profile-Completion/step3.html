@@ -14,7 +14,7 @@
         We need a few more details.
     </p>
     <main>
-        <form action="" name = "pincode" id = "pincode">
+        <form action="" name = "pincode" id = "pincode" method="POST">
             <div class="pincode" id="pincode">
                 <p id = "title">Your preffered pick-up locations:</p>
 
@@ -61,15 +61,17 @@
     }
 
     function confirmpincode(id) {
-        document.getElementById('selected-pin-content').innerHTML += "<div class = \"selected-pin-content-list-div\">" + document.getElementById(id).innerHTML + "<br>" + "<input type = \"checkbox\" id = \"specify-timings-checkbox\" name = \"Specify Timings:\" onclick = \"specifytimings()\">" + "<label style = \"font-size:0.7em\" onclick = \"specifytimings()\"> Specify Timings </label>" + "<select id = \"select-timings\" form = \"pincode\"> <option> 09:00-10:00</option><option> 10:00-11:00</option><option> 11:00-12:00</option> </select>" + "<select id = \"select-timings-am-pm\" form = \"pincode\"> <option>AM</option> <option>PM</option> </select>" + "</div>";
+        var x = 2408, y = 1;
+        document.getElementById('selected-pin-content').innerHTML += "<div class = \"selected-pin-content-list-div\">" + document.getElementById(id).innerHTML + "<br>" + "<input type = \"checkbox\" id = \"x\" name = \"Specify Timings:\" onclick = \"specifytimings(x)\">" + "<label style = \"font-size:0.7em\" for = \"x\"> Specify Timings </label>" + "<select id = \"select-timings\" form = \"pincode\"> <option> 09:00-10:00</option><option> 10:00-11:00</option><option> 11:00-12:00</option> </select>" + "<select id = \"select-timings-am-pm\" form = \"pincode\"> <option>AM</option> <option>PM</option> </select>" + "</div>";
+        x++;
         document.getElementById(id).style.display = "none";
         document.getElementById(id).innerHTML = "";    
         document.getElementById('search-results-list').style.display = "none";       
         document.getElementById('selected-pincodes').style.border = "1px solid #CCCCCC"; 
     }
 
-    function specifytimings() {
-        document.getElementById('specify-timings-checkbox').checked = "true";
+    function specifytimings(x) {
+        document.getElementById('x').checked = "true";
         document.getElementById('select-timings').style.display = "inline";
         document.getElementById('select-timings-am-pm').style.display = "inline";
     }

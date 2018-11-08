@@ -1,8 +1,5 @@
-body {
-  overflow: hidden;
-}
-
 .heading {
+  box-sizing: border-box;
   padding: 5vw;
   text-align: start;
   background-color: #374047;
@@ -16,14 +13,13 @@ body {
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 0;
   margin-top: 2vh;
-  margin-left: 2vw;
   background-color: transparent;
   width: 50vw;
   height: 10vw;
   z-index: 2;
   text-align: center;
   font-size: 1.2em;
-  margin-left: 25vw;
+  margin-left: 27vw;
 }
 
 .progress-bar div {
@@ -79,47 +75,134 @@ body {
 #step1 {
   display: block;
 }
+    /*body * {
+      border: 1px solid burlywood;
+    }*/
 
 .volrole {
   margin-top: 3.8vh;
   font-size: 2em;
 }
 
-.volrole-selector {
-  margin-top: 5vh;
-}
-
-main div:nth-child(2) img, #options {
-  margin-top: 5vw;
-  width: 20vw;
-  height: auto;
-}
-
-main div:nth-child(2) li {
-  margin-top: 3vh;
-  list-style: none;
-  width: 40vw;
-  border-radius: 25px;
-  box-shadow: 10px 10px 10px grey;
-  padding-bottom: 5vw;
-}
-
-main div:nth-child(2) ul {
-  padding: 0;
+#role-row-1, #role-row-2 {
   display: flex;
-  justify-content: space-around;
 }
 
-.volrole-selector ul li div {
-  font-size: 1em;
+input [name = "role"]{
+  display: none;
+}
+
+li {
+  list-style: none;
+  margin-top: 5vh;
+  box-shadow: 10px 10px 10px 2px #BBBBBB;
+  border-top-left-radius: 10%;
+  border-top-right-radius: 10%;
+  max-width: 40vw;
+  margin-right: 5vw;
+  margin-left: -2vw;
+}
+
+label {
+  display: inline-block;
+  box-sizing: border-box;
+  border-bottom-left-radius: 20%;
+  border-bottom-right-radius: 20%;
+  background-color: #374047;
+  color: white;
+  width: 37vw;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  box-shadow: 10px 10px 10px 2px #BBBBBB;
+}
+
+#role-tile-1 {
+  box-sizing: border-box;
+  background-color: transparent;
+  background-image: url('/static/img/Volunteer-11.png');
+  background-size: 14vw;
+  background-position: 50% 100%;
+  background-repeat: no-repeat;
+  width: 25vw;
+  height: auto;
+  padding-top: 8vw;
+  color: transparent;
+}
+
+#role-tile-2 {
+  box-sizing: border-box;
+  background-color: transparent;
+  background-image: url('/static/img/Doctor-11.png');
+  background-size: 14vw;
+  background-position: 50% 100%;
+  background-repeat: no-repeat;
+  width: 25vw;
+  height: auto;
+  padding-top: 8vw;
+  color: transparent;
+}
+
+#role-tile-3 {
+  box-sizing: border-box;
+  background-color: transparent;
+  background-image: url('/static/img/Driver-11.png');
+  background-size: 16vw;
+  background-position: 50% 200%;
+  background-repeat: no-repeat;
+  width: 25vw;
+  height: auto;
+  padding-top: 8.2vw;
+  color: transparent;
+}
+
+#role-tile-4 {
+  box-sizing: border-box;
+  background-color: transparent;
+  background-image: url('/static/img/options11.png');
+  background-size: 16vw;
+  background-position: 50% 75%;
+  background-repeat: no-repeat;
+  width: 25vw;
+  height: auto;
+  padding-top: 8vw;
+  color: transparent;
+}
+
+#role-tile-5 {
+  box-sizing: border-box;
+  background-color: transparent;
+  background-image: url('/static/img/Call\ Attender-11.png');
+  background-size: 16vw;
+  background-position: 50% 30%;
+  background-repeat: no-repeat;
+  width: 25vw;
+  height: auto;
+  padding-top: 10vw;
+  color: transparent;
+}
+
+#role-tile-6 {
+  box-sizing: border-box;
+  background-color: transparent;
+  background-image: url('/static/img/Fosterer-11.png');
+  background-size: 16vw;
+  background-position: 50% 150%;
+  background-repeat: no-repeat;
+  width: 25vw;
+  height: auto;
+  padding-top: 8vw;
+  color: transparent;
+}
+
+#role-row-1 {
+  margin-top: -2.5vh;
 }
 
 .footer button {
   border: none;
   outline: none;
-  right: 0;
-  bottom: 0;
-  position: absolute;
+  float: right;
+  margin-top: 2vh;
   background-color: transparent;
 }
 
@@ -127,7 +210,6 @@ main div:nth-child(2) ul {
   .heading {
     padding: 3vw;
   }
-
   .progress-bar {
     font-size: 1em;
   }
@@ -148,12 +230,10 @@ main div:nth-child(2) ul {
   .volrole-selector div {
     font-size: 1.1em;
   }
-
   .volrole-selector ul {
     margin-top: 0;
     margin-bottom: 0em;
   }
-
   main div:nth-child(2) li {
     height: 18vh;
     width: 35vw;
@@ -161,7 +241,6 @@ main div:nth-child(2) ul {
     padding-bottom: 2vw;
     max-height: 100px;
   }
-
   .footer button img {
     max-width: 35px;
   }

@@ -59,7 +59,7 @@ input[name = "pincode"] {
     margin-top: 1vw;
 }
 
-input[name = "contact-number"] {
+input[name = "alternate-number"] {
     box-sizing: border-box;
     display: inline-block;
     width: 48.8vw;
@@ -76,11 +76,11 @@ select[name = "number-prefix"] {
     color: black;
 }
 
-input[type = "text"]:focus {
-    border: 1px solid black;
+select * {
+    background-color: transparent;
 }
 
-   /* body * {
+    /*body * {
       border: 1px solid burlywood;
     }*/
 

@@ -24,6 +24,7 @@
   
 .progress-bar div {
     border: 1px solid #374047;
+    box-shadow: 3px 3px 3px #CCC;
 }
   
 #progress-bar-1, #progress-bar-3, #progress-bar-5 {
@@ -45,6 +46,7 @@
     height: 2px;
     border-left: none;
     border-right: none;
+    box-shadow: 3px 3px 3px #CCC;
 }
   
 #progress-bar-4 {
@@ -92,8 +94,46 @@
     z-index: 2;
 }
 
+        /*body * {
+            border: 1px solid green;
+        }*/
+
+ul {
+    list-style: none;
+    padding: 0;
+    display: block;
+    margin-top: 2vh;
+    margin-left: 2vw;
+    margin: 0;
+}
+
+ul li {
+    color: rgb(255,0,0,0.8);
+    padding: 2vw;
+    font-size: 0.73em;
+    margin-left: 20vw;
+    width: 70vw;
+}
+
 main div img{
-    width : 20vh;        
+    margin-top: 1.5vh;
+    width : 15vh;    
+}
+
+#dp-label-2 {
+    font-size: 1em; 
+    display: block; 
+    font-size: 0.9em;
+}
+
+#dp-error {
+    display: none; 
+    color: red;
+    border: red;
+}
+
+main div {
+    position: relative;
 }
 
 input[type = "text"], input[type = "password"]{
@@ -102,10 +142,11 @@ input[type = "text"], input[type = "password"]{
     display: block;
     border: 1px solid #cccccc;
     border-radius: 5px;
-    margin-left: 20vw;
-    padding: 3vw;
+    padding: 2vw;
     width: 60vw;
-    letter-spacing: 0.6vw;
+    margin-left: 25vw;
+    letter-spacing: 1px;
+    font-size: 0.9em;
 }
 
 input[type = "password"]{
@@ -120,30 +161,47 @@ input[type = "password"]{
     color: rgb(0, 0, 0);
 }
 
-.footer-btns .btn-group {
+.btn-group {
+    top: -1.25vh;
+    left: 2vw;
     float: right;
-    margin-top: 2vh;
+    margin-top: 3vh;
     margin-right: 5vw;
+    font-size: 0.9em;
+}
+
+.btn-group button {
+    float: right;
+    width: 20vw;
+    padding: 2vw;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.btn-group button:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.btn-group button:nth-child(2) {
+    background-color: black;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 #previous {
     box-sizing: border-box;
-    width: 15vw;
+    width: 12vw;
     margin-top: 1vh;
-    margin-left: -30vw;
+    margin-left: -35vw;
 }
-
-.active {
-    background-color: rgb(55,64,71);
-}
-
-/*main * {
-    border: 1px solid green;
-}*/
 
 @media only screen and (max-width: 360px){
     main div img{
-        width : 20vh;        
+        width : 11vh;      
+    }
+    #dp-label-2 {
+        font-size: 0.7em;
     }
     input[type = "submit"]{
         font-size: 0.8em;
@@ -155,8 +213,11 @@ input[type = "password"]{
         font-size: 0.9em;
     }
     #warning {
-        font-size: 0.6em;
+        font-size: 0.65em;
     }    
+    .btn-group {
+        font-size: 0.8em;
+    }
 }
 
 @media only screen and (min-width: 520px){
@@ -165,5 +226,12 @@ input[type = "password"]{
     }  
     .footer-btns .btn-group label {
         font-size: 1.7em;
+    }
+}
+
+@media only screen and (min-height: 520px){
+    main div img{
+        margin-top: 4vh;
+        width : 12vh;      
     }
 }

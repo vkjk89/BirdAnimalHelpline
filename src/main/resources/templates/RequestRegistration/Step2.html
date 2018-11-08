@@ -27,46 +27,45 @@
         </div>
     <form id = "first-form" class = "first-form"  name = "step2" method="post" action="#" th:action="@{/registration}" th:object="${user}" >
     <main>
+        <div id="step2" class = "step2" name = "step2">
+            <ul th:if="${#fields.hasErrors('*')}" hidden>
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+            </ul>
+            <input th:field="*{firstName}" type = "text" placeholder="First Name" name = "first-name" autofocus required autocomplete="off" pattern="[A-Za-z]{0,}" title="Your First Name">
+            <input th:field="*{lastName}" type = "text" placeholder="Last Name" name = "last-name" required autocomplete="off" pattern="[A-Za-z]{0,}" title="Your Last Name"><br>
 
-        <!--<form id = "first-form" class = "first-form" name = "step2" method="post" action=""> -->
-            <div id="step2" class = "step2" name = "step2">
-                <ul th:if="${#fields.hasErrors('*')}">
-                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
-                </ul>
-                <input th:field="*{firstName}" type = "text" placeholder="First Name" name = "first-name" autofocus required>
-                <input th:field="*{lastName}" type = "text" placeholder="Last Name" name = "last-name" required><br>
+            <label name = "birthdate" id = "DOB">Date of Birth: </label>
+            <input th:field="*{dob}" type="date" name="birthdate" id = "birthdate" min="1930-01-01" max="2010-12-31" required autocomplete="off"><br>
+            
+            <input type = "text" value="+91" name = "contact-number-1" disabled style="color:black;"> -
+            <input th:field="*{mobile}" type = "number" placeholder="Mobile Number" name = "contact-number-2" required min="5000000000" max="9999999999" title="Ten digit mobile no. without any code"><br>
 
-                <label name = "birthdate"><label id = "DOB">Date of Birth:</label> 
-                <input th:field="*{dob}" type="date" name="birthdate" id = "birthdate" required></label><br>
-                
-                <input type = "text" value="+91" name = "contact-number-1" disabled style="color:black;"> -
-                <input th:field="*{mobile}" type = "number" placeholder="Mobile Number" name = "contact-number-2" required><br>
+            <label name = "gender">Gender: </label>
+            <input th:field="*{gender}" type = "radio" id = "gender-1" name="gender" value="M">
+                <label for="gender-1"> Male</label>
+            <input th:field="*{gender}" type = "radio" id = "gender-2" name="gender" value="F">
+                <label for="gender-2"> Female</label>
+            <input th:field="*{gender}" type = "radio" id = "gender-3" name="gender" value="O">
+            <label for="gender-3"> Others</label><br>
 
-                <label name = "gender">Gender: 
-                <input th:field="*{gender}" type = "radio" id = "gender-1" value="M">Male
-                <input th:field="*{gender}" type = "radio" id = "gender-2" value="F">Female
-                <input th:field="*{gender}" type = "radio" id = "gender-3" value="O">Others</label><br>
+            <input th:field="*{email}" type = "email" name = "email" placeholder="E-mail Address" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter valid email addresss" required autocomplete="off" >
 
-                <input th:field="*{email}" type = "email" name = "email" placeholder="E-mail Address" required>
-
-                <p id="security-question">Security Question</p>
-                <p id="security-para">We will be using this question in case you forget your password, so choose wisely.</p>
-                <select th:field="*{securityQId}" name = "securityquestion" id = "securityquestion" required>
-                        <option value="1">1. What is your favourite Sport?</option>
-                        <option value="2">2. Which floor do you live on?</option>
-                        <option value="3">3. What is your Place of Birth?</option>
-                </select>
-                <input th:field="*{securityQAns}" type = "text" placeholder="Your response" name = "security-answer" required>
-                <input type="hidden" name="page" value="2">
-            </div> 
-
+            <p id="security-question">Security Question</p>
+            <p id="security-para">We will be using this question in case you forget your password, so choose wisely.</p>
+            <select th:field="*{securityQId}" name = "securityquestion" id = "securityquestion" required>
+                    <option value="1">1. What is your favourite Sport?</option>
+                    <option value="2">2. Which floor do you live on?</option>
+                    <option value="3">3. What is your Place of Birth?</option>
+            </select>
+            <input th:field="*{securityQAns}" type = "text" placeholder="Your response" name = "security-answer" required>
+            <input type="hidden" name="page" value="2">
+        </div> 
 
     </main>
 
     <div id="bottom-nav-bar" class="bottom-nav-bar" style = "margin-top: 0;">
         <a th:href="@{/registration}" href = "step1.html"><img th:src="@{/img/previous-button-1.png}" src = "/static/img/previous-button-1.png" id = "step1" alt="Previous"></a>
-        <input type = "submit" id = "next" value="Submit" form = "first-form" >
-        <!--<inpu type = "submit" id = "next" value="Submit" form = "first-form" onclick=" '/templates/RequestRegistration/step3.html' ">-->
+        <input th:href="@{/registration}" type = "submit" id = "next" value="" form = "first-form" id="next">
     </div>
     </form>
 
