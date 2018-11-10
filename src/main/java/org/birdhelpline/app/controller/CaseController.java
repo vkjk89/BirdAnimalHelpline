@@ -1,12 +1,8 @@
 package org.birdhelpline.app.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-
-@Controller
-@RequestMapping("/admin/tasks")
-public class TaskController {
+//@Controller
+//@RequestMapping("/admin/tasks")
+public class CaseController {
 
 
 /*
@@ -24,8 +20,8 @@ public class TaskController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("task", new Task());
 		modelAndView.addObject("tasks", taskService.findAll());
-		modelAndView.addObject("auth", getUser());
-		modelAndView.addObject("control", getUser().getRole().getRole());
+		modelAndView.addObject("auth", findUserByMobile());
+		modelAndView.addObject("control", findUserByMobile().getRole().getRole());
 		modelAndView.addObject("mode", "MODE_NEW");
 		modelAndView.setViewName("task");
 		return modelAndView;
@@ -36,8 +32,8 @@ public class TaskController {
 		task.setDateCreated(new Date());
 		taskService.save(task);
 		ModelAndView modelAndView = new ModelAndView("redirect:/admin/tasks/all");
-		modelAndView.addObject("auth", getUser());
-		modelAndView.addObject("control", getUser().getRole().getRole());
+		modelAndView.addObject("auth", findUserByMobile());
+		modelAndView.addObject("control", findUserByMobile().getRole().getRole());
 		return modelAndView;
 	}
 
@@ -47,8 +43,8 @@ public class TaskController {
 		modelAndView.addObject("rule", new Task());
 		//POINT=7 http://stackoverflow.com/questions/22364886/neither-bindingresult-nor-plain-target-object-for-bean-available-as-request-attr
 		modelAndView.addObject("tasks", taskService.findAll());
-		modelAndView.addObject("auth", getUser());
-		modelAndView.addObject("control", getUser().getRole().getRole());
+		modelAndView.addObject("auth", findUserByMobile());
+		modelAndView.addObject("control", findUserByMobile().getRole().getRole());
 		modelAndView.addObject("mode", "MODE_ALL");
 		modelAndView.setViewName("task");
 		return modelAndView;
@@ -59,8 +55,8 @@ public class TaskController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("rule", new Task());
 		modelAndView.addObject("task", taskService.findTask(id));
-		modelAndView.addObject("auth", getUser());
-		modelAndView.addObject("control",getUser().getRole().getRole());
+		modelAndView.addObject("auth", findUserByMobile());
+		modelAndView.addObject("control",findUserByMobile().getRole().getRole());
 		modelAndView.addObject("mode", "MODE_UPDATE");
 		modelAndView.setViewName("task");
 		return modelAndView;
@@ -70,8 +66,8 @@ public class TaskController {
 	public ModelAndView deleteTask(@RequestParam int id) {
 		ModelAndView modelAndView = new ModelAndView("redirect:/admin/tasks/all");
 		modelAndView.addObject("rule", new Task());
-		modelAndView.addObject("auth", getUser());
-		modelAndView.addObject("control", getUser().getRole().getRole());
+		modelAndView.addObject("auth", findUserByMobile());
+		modelAndView.addObject("control", findUserByMobile().getRole().getRole());
 		taskService.delete(id);
 		return modelAndView;
 	}
@@ -82,14 +78,14 @@ public class TaskController {
 		modelAndView.addObject("rule", new Task());
 		modelAndView.addObject("task", taskService.findTask(id));
 		modelAndView.addObject("usertasks", userTaskService.findByTask(taskService.findTask(id)));
-		modelAndView.addObject("auth", getUser());
-		modelAndView.addObject("control", getUser().getRole().getRole());
+		modelAndView.addObject("auth", findUserByMobile());
+		modelAndView.addObject("control", findUserByMobile().getRole().getRole());
 		modelAndView.addObject("mode", "MODE_INF");
 		modelAndView.setViewName("task");
 		return modelAndView;
 	}
 
-	private User getUser(){
+	private User findUserByMobile(){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
 		return user;

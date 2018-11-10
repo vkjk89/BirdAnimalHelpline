@@ -1,24 +1,20 @@
 package org.birdhelpline.app.controller;
 
 import org.birdhelpline.app.model.User;
-import org.birdhelpline.app.service.RoleService;
-import org.birdhelpline.app.service.TaskService;
+import org.birdhelpline.app.service.CaseService;
 import org.birdhelpline.app.service.UserService;
-import org.birdhelpline.app.service.UserTaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -38,13 +34,7 @@ public class LoginController {
     private UserService userService;
 
     @Autowired
-    private RoleService roleService;
-
-    @Autowired
-    private TaskService taskService;
-
-    @Autowired
-    private UserTaskService userTaskService;
+    private CaseService caseService;
 
     @RequestMapping(value = {"/", "/error"}, method = RequestMethod.GET)
     public ModelAndView welcome(HttpSession session) {
@@ -90,7 +80,8 @@ public class LoginController {
                               final @ModelAttribute("user") User user, BindingResult result,
                               final HttpSession session,
                               SessionStatus status,
-                              @RequestParam(name = "action", required = false) String action) throws IOException {
+                              @RequestParam(name = "action", required = false) String action,
+                              Model model) throws IOException {
         logger.info(" vkj inside reg : " + user + " " + currentPage);
         logger.info("vkj action : " + action);
         if (currentPage == null) {
@@ -100,6 +91,7 @@ public class LoginController {
             case 0:
                 return "RequestRegistration/Step1";
             case 1:
+                model.addAttribute("securityQs" , userService.getSecurityQs());
                 return "RequestRegistration/Step2";
             case 2:
                 return handleStep2(user, result);
@@ -127,8 +119,14 @@ public class LoginController {
             }
         }
 
-        userService.saveUser(user);
-        status.setComplete();
+        long userId = userService.saveUser(user);
+        if(userId == 0) {
+            return "Error";
+        }
+        else {
+            status.setComplete();
+        }
+
         return "RequestRegistration/reg-complete";
     }
 
@@ -139,7 +137,7 @@ public class LoginController {
             return "RequestRegistration/Step2";
         }
 
-        if (userService.getUser(mobile)) {
+        if (userService.findUserByMobile(mobile)) {
             result.rejectValue("mobile", "mobile.already.registred", "Mobile no is already registered");
             return "RequestRegistration/Step2";
         }
@@ -155,7 +153,12 @@ public class LoginController {
         return "RequestRegistration/Step3";
     }
 
-    @RequestMapping(path = "/profileCompletion", method = RequestMethod.POST)
+    @ModelAttribute("user")
+    private User getUserObj() {
+        return new User();
+    }
+
+    @RequestMapping(path = "/profileCompletion", method =  { RequestMethod.POST,RequestMethod.GET})
     public ModelAndView processProfileCompletionPage(@RequestParam(name = "page", required = false) final Integer currentPage,
                               final @ModelAttribute("user") User user, BindingResult result,
                               final HttpSession session,
@@ -165,6 +168,7 @@ public class LoginController {
         logger.info("vkj action : " + action);
         ModelAndView modelAndView = new ModelAndView();
         if (currentPage == null) {
+            //modelAndView.setViewName("Vol-dashboard");
             modelAndView.setViewName("Profile-Completion/step1");
             return modelAndView;
         }
@@ -196,10 +200,10 @@ public class LoginController {
     }
 
     @RequestMapping(path = "/forgotPassword", method = {RequestMethod.GET})
-    public String forgotPassword() throws IOException {
+    public String forgotPassword(Model model) throws IOException {
         logger.info(" vkj inside forgot password ");
-        //user.setImage(file.getBytes());
-        return "ForgotPassword";
+        model.addAttribute("securityQs" , userService.getSecurityQs());
+        return "forgot-password";
     }
 
  @RequestMapping(value = "/access-denied", method = RequestMethod.GET)
@@ -211,15 +215,14 @@ public class LoginController {
 
 
     @RequestMapping(path = "/profilePicUpload", method = RequestMethod.POST)
-    public @ResponseBody String profilePicUpload(@RequestParam(name = "image", required = false) MultipartFile file,
-                                   @RequestPart(name = "image" , required = false) MultipartFile file1,
+    public @ResponseBody String profilePicUpload(@RequestParam(name = "dp-image", required = false) MultipartFile file,
+                                   @RequestPart(name = "dp-image" , required = false) MultipartFile file1,
                               final HttpSession session, final @ModelAttribute("user") User user, BindingResult result
                               ) throws IOException {
        logger.info("Received data 1 : "+file);
        logger.info("Received data  2: "+file1);
-       file1.getBytes();
-       //return file.getBytes();
-        user.setImage(file.getBytes());
+
+       user.setImage(file.getBytes());
        return Base64.getEncoder().encodeToString(file.getBytes());
     }
 }

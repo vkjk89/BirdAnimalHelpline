@@ -7,7 +7,7 @@ import javax.transaction.Transactional;
 
 @Service
 @Transactional
-public class TaskService {
+public class CaseService {
 
 /*
 	private final TaskRepository taskRepository;

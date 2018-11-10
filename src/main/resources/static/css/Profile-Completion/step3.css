@@ -22,7 +22,7 @@ main {
 
 input[type = "search"] {
     background-size: 5vw 5vw;
-    background-image: url(/static/img/search-1.png);
+    background-image: url(/img/search-1.png);
     background-position: 3vw 4vw; 
     background-repeat: no-repeat;
     border: 1px solid #cccccc;

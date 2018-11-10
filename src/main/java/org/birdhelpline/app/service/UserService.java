@@ -1,41 +1,64 @@
 package org.birdhelpline.app.service;
 
-import org.birdhelpline.app.dataaccess.JdbcUserDao;
+import org.birdhelpline.app.dataaccess.UserDao;
+import org.birdhelpline.app.model.PinCodeLandmarkInfo;
 import org.birdhelpline.app.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 @Service("userService")
 public class UserService {
+    Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
-    private JdbcUserDao userDao;
+    private UserDao userDao;
+
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
-    public void saveUser(User user) {
+    public long saveUser(User user) {
         user.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         try {
-            userDao.createUser(user);
+            return userDao.createUser(user);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(),e);
+            return 0;
         }
 
-    }
-
-    public void getSecurityQs(User user) {
-        //TODO vimal
-        // userDao.getSecurityQs()
 
     }
 
-    public boolean getUser(long mobile) {
+    public Map<Integer,String> getSecurityQs() {
+        return userDao.getSecurityQs();
+
+    }
+
+    public Map<Long,List<String>> getPinCodeVsLandMarks(){
+        return userDao.getPinCodeVsLandMarks();
+    }
+
+    public List<PinCodeLandmarkInfo> getPinCodeLandMarks(String term){
+        List<PinCodeLandmarkInfo> list = userDao.getPinCodeLandMarks();
+        List<PinCodeLandmarkInfo> listToRet = new ArrayList<>();
+        for(PinCodeLandmarkInfo p : list) {
+            if(p.getLandmark().indexOf(term) >=0) {
+                listToRet.add(p);
+            }
+        }
+        return  listToRet;
+    }
+
+    public boolean findUserByMobile(long mobile) {
         return userDao.getUserByMobile(mobile);
     }
 
@@ -43,9 +66,10 @@ public class UserService {
         return userDao.getUserByUserName(userName);
     }
 
-    public boolean firstTimeLogin(String name) {
-        Timestamp lastLoginDate = userDao.getLastLoginByUserName(name);
-        if(lastLoginDate == null) {
+    public boolean isFirstTimeLogin(String name) {
+        //Timestamp lastLoginDate = userDao.getLastLoginByUserName(name);
+        User user = findUserByUserName(name);
+        if(user == null || user.getLastLoginDate() == null) {
             return true;
         }
         userDao.insertLastLoginDate(name);
@@ -53,53 +77,4 @@ public class UserService {
     }
 
 
-//    public UserService(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
-
-//    public List<User> findAll() {
-//        List<User> users = new ArrayList<>();
-//        users = userRepository.findAll();
-//        return users;
-//    }
-
-//    public User findUser(int id) {
-//        return userRepository.findOne(id);
-//    }
-
-//    public void delete(int id) {
-//        userRepository.delete(id);
-//
-//    }
-
-    /*public void save(User user) {
-        userRepository.save(user);
-    }
-
-
-    public User findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-
-    public void saveUser(User user) {
-
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        //user.setActive(1);
-        Role userRole = roleRepository.findByRole("USER");
-        //user.setRole(userRole);
-        userRepository.save(user);
-    }
-
-    public List<User> findUserbyRole(Role role) {
-        return userRepository.findByRole(role);
-    }
-
-    public User findUser(int id) {
-
-        return null;
-    }
-
-    public void delete(int id) {
-    }*/
 }

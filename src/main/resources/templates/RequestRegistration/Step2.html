@@ -37,7 +37,8 @@
                 </div>
                 
                 <input type = "text" value="+91" name = "contact-number-1" disabled style="color:black;"> -
-                <input  th:field="*{mobile}" type = "number" placeholder="Mobile Number" name = "contact-number-2" required min="5000000000" max="9999999999" title="Ten digit mobile no. without any code"><br>
+                <input   th:value="*{mobile}" th:field="*{mobile}" type = "number" placeholder="Mobile Number" name = "contact-number-2" required min="5000000000" max="9999999999" title="Ten digit mobile no. without any code"><br>
+                <!--<input  th:if="${user.mobile !=0 }" th:field="*{mobile}" type = "number" placeholder="Mobile Number" name = "contact-number-2" required min="5000000000" max="9999999999" title="Ten digit mobile no. without any code"><br>-->
 
                 <label name = "gender">Gender: </label>
                 <input th:field="*{gender}" type = "radio" id = "gender-1" name="gender" value="M">
@@ -51,10 +52,11 @@
 
                 <p id="security-question">Security Question</p>
                 <p id="security-para">We will be using this question in case you forget your password, so choose wisely.</p>
-                <select th:field="*{securityQId}" name = "securityquestion" id = "securityquestion" required>
-                        <option value="1">1. What is your favourite Sport?</option>
-                        <option value="2">2. Which floor do you live on?</option>
-                        <option value="3">3. What is your Place of Birth?</option>
+                <select  th:field="*{securityQId}" name = "securityquestion" id = "securityquestion" required>
+                        <!--<option value="1">1. What is your favourite Sport?</option>-->
+                        <option th:each ="o : ${securityQs}" th:text="${o.getValue()}" th:value="${o.getKey()}" value="1">1. What is your favourite Sport?</option>
+                        <!--<option value="2">2. Which floor do you live on?</option>-->
+                        <!--<option value="3">3. What is your Place of Birth?</option>-->
                 </select>
                 <input th:field="*{securityQAns}" type = "text" placeholder="Your response" name = "security-answer" required>
                 <input type="hidden" name="page" value="2">
@@ -63,7 +65,7 @@
         </main>
 
         <div id="bottom-nav-bar" class="bottom-nav-bar">
-            <a href="Step1.html"><img src="/static/img/previous-button-1.png" th:src="@{/img/previous-button-1.png}" id="previous"></button>
+            <a th:href="@{/registration}" href="Step1.html"><img src="/static/img/previous-button-1.png" th:src="@{/img/previous-button-1.png}" id="previous"></button>
             <button  type="submit"><img src="/static/img/next-button11.png" th:src="@{/img/next-button11.png}" id="next"></a>
         </div>
     </form>

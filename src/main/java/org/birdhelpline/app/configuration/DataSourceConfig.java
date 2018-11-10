@@ -31,31 +31,17 @@ public class DataSourceConfig {
 
     @Bean(name = "dataSource")
     public DataSource dataSource() {
-        System.out.println("VKJ DB : "+jdbcURL+"\t"+userName+"\t"+password);
+        logger.info("VKJ DB : "+jdbcURL+"\t"+userName+"\t"+password);
         config = new HikariConfig();
         config.setJdbcUrl(jdbcURL);
         config.setUsername(userName);
         config.setPassword(password);
-        config.setMaximumPoolSize(2);
+        config.setMaximumPoolSize(5);
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
         dataSource = new HikariDataSource(config);
         return dataSource;
     }
-
-//    /**
-//     * DataSource PostConstruct call-back
-//     * @throws SQLException
-//     */
-//    @PostConstruct
-//    public void dataSourceInitialization() {
-//        // h2 admin via hsql Database Manager
-////        DatabaseManagerSwing.main(new String[] { "--url", "jdbc:h2:mem:dataSource", "--user", "sa", "--password", "" });
-//    }
-//
-//    @PreDestroy()
-//    public void dataSourceDestroy() throws SQLException {
-//    }
 
 }

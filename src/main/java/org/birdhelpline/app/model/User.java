@@ -6,26 +6,16 @@ import javax.security.auth.Subject;
 import java.io.Serializable;
 import java.security.Principal;
 import java.sql.Timestamp;
-import java.util.Arrays;
 import java.util.List;
 
-//@Entity
-//@Table(name = "user")
 public class User implements Principal, Serializable {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    @Column(name="user_id")
+
     private long userId;
-    //@Column(name="user_name")
     private String userName;
-    //@Column(name="password")
     private String password;
     private String encryptedPassword;
-    //@Column(name="mobile")
     private Long mobile;
-   // @Column(name="email")
     private String email;
-   // @Column(name="enabled")
     private boolean enabled;
     private String firstName;
     private String lastName;
@@ -122,14 +112,16 @@ public class User implements Principal, Serializable {
     }
 
     public String getEncodedImage() {
-        return Base64.encode(image);
-   }
+        if (image != null)
+            return Base64.encode(image);
+        return null;
+    }
 
     public void setImage(byte[] image) {
         this.image = image;
     }
 
-   public Long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 

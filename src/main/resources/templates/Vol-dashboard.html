@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,34 +8,46 @@
     <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
     <link rel="stylesheet" th:href="@{/css/Vol-dashboard.css}" href="/static/css/Vol-dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
 </head>
-<body>
+<body >
+
+<!--<body th:object="${user}">-->
     <nav id="top-nav">
         <span id="profile-options" onclick="openSideNav();">&#9776;</span>
-        <span id="navbar-username">#Username</span>
-        <button type="button" id="user-dp"><img src="/static/img/display-picture11.png" th:src="@{/img/display-picture11.png}" width="auto" height="25vw" alt="User-Display-Picture"></button>
+        <span id="navbar-username" th:text="${user.userName}">#Username</span>
+        <button type="button" id="user-dp">
+            <img th:if="${user.image == null}"  th:src="@{/img/display-picture11.png}" src="/static/img/display-picture11.png"  width="auto" height="25vw" alt="User-Display-Picture">
+            <img th:if="${user.image != null}"  th:src="${'data:image/png;base64,'+user.getEncodedImage()}" src="/static/img/display-picture11.png"  width="auto" height="25vw" alt="User-Display-Picture">
+        </button>
     </nav>
 
     <nav id="side-nav">
         <section id="top-part">
             <div id="background-img">
-                <img src="/static/img/side-nav-background-nav.png" th:src="@{/img/}" alt="Side-Nav-Background" width="75vw" id="bg-image">
+                <img src="/static/img/side-nav-background-nav.png" th:src="@{/img/side-nav-background-nav.png}" alt="Side-Nav-Background" width="75vw" id="bg-image">
             </div>
             <span id="close-btn" onclick="closeSideNav();">&times;</span>
             <div id="side-nav-user-dp">
-                <img src="/static/img/display-picture1.png" width="" height="auto" alt="Side-Nav-Display-Picture">
+                <img th:if="${user.image == null}" th:src="@{/img/display-picture1.png}" src="/static/img/display-picture1.png" width="" height="auto" alt="Side-Nav-Display-Picture">
+                <img th:if="${user.image != null}" th:src="${'data:image/png;base64,'+user.getEncodedImage()}" src="/static/img/display-picture1.png" width="" height="auto" alt="Side-Nav-Display-Picture">
             </div>
-            <span id="user_name">#First_Last_Name</span>
-            <span id="user_role">#User_Role</span>
+            <span id="user_name" th:text="${user.firstName} +' '+ ${user.lastName}">#First_Last_Name</span>
+            <span id="user_role" th:text="${user.role}">#User_Role</span>
         </section>
         <section id="profile-links">
-            <button><a href="#" th:href="@{}">Profile</a></button>
-            <button><a href="#" th:href="@{}">Selected Pincodes and Addresses</a></button>
+            <button><a href="#" >Profile</a></button>
+            <!--<button><a href="#" th:href="@{}">Profile</a></button>-->
+            <button><a href="#" >Selected Pincodes and Addresses</a></button>
+            <!--<button><a href="#" th:href="@{}">Selected Pincodes and Addresses</a></button>-->
         </section>
         <section id="profile-changes">
-            <button><a href="#" th:href="@{}">Change PIN</a></button>
-            <button><a href="#" th:href="@{}">Change Mobile No.</a></button>
-            <button><a href="#" th:href="@{}">Change Email Address</a></button>
+            <button><a href="#" >Change PIN</a></button>
+            <!--<button><a href="#" th:href="@{}">Change PIN</a></button>-->
+            <button><a href="#" >Change Mobile No.</a></button>
+            <!--<button><a href="#" th:href="@{}">Change Mobile No.</a></button>-->
+            <button><a href="#" >Change Email Address</a></button>
+            <!--<button><a href="#" th:href="@{}">Change Email Address</a></button>-->
         </section>
         <section id="social-links">
             <div style="font-size:1.3em; letter-spacing:0.75px">Spread the word!</div><br>
@@ -46,8 +58,7 @@
     </nav>
 
     <section id="page-heading">
-        <h1>Welome, <span id="#user_full_name">#First_Last_Name</span></h1>
-        <span id="cases-rejected">172</span>
+        <h1>Welome, <span th:text="${user.firstName} +' '+ ${user.lastName}" id="#user_full_name">#First_Last_Name</span></h1>
         <span id="cases-accepted">246</span>
     </section>
 
@@ -98,7 +109,23 @@
         <button type="button" class="action-bar-home-btn" id="contact-us"><img src="/static/img/contact-us-white.png" th:src="@{/img/contact-us-white.png}" alt="contact-us"></button>
     </section>
 
+<!--<table>-->
+    <!--<tr th:each="var : ${#vars}">-->
+        <!--<td th:text="${var.key}"></td>-->
+        <!--<td th:text="${var.value}"></td>-->
+    <!--</tr>-->
+<!--</table>-->
+
 <script>
+    $("#logout").on("click",function (e) {
+        e.preventDefault();
+        window.location.assign("/logout");
+        // $.ajax({
+        //     url: "/logout",
+        //     method : "GET"
+        //     }
+        // )
+    })
     document.getElementById('results-tab-active').onclick = function active_active(){
         this.classList.add('active-active');
         document.getElementById('results-tab-recent').classList.remove('active-recent');

@@ -7,6 +7,16 @@
     <title>Profile Completion</title>
     <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
     <link rel="stylesheet" th:href="@{/css/Profile-Completion/step3.css}" href="/static/css/Profile-Completion/step3.css">
+    <link rel="stylesheet" th:href="@{/css/jquery/jquery-ui.theme.min.css}" href="/static/css/jquery/jquery-ui.theme.min.css">
+    <link rel="stylesheet" th:href="@{/css/jquery/jquery-ui.structure.min.css}" href="/static/css/jquery/jquery-ui.structure.min.css">
+    <link rel="stylesheet" th:href="@{/css/jquery/jquery-ui.min.css}" href="/static/css/jquery/jquery-ui.min.css">
+    <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script src="/static/js/jquery.iframe-transport.js" th:src="@{/js/jquery.iframe-transport.js}"></script>
+    <!--<script src="/static/js/jquery.ui.widget.js" th:src="@{/js/jquery.ui.widget.js}"></script>-->
+    <script src="/static/js/jquery-ui.min.js" th:src="@{/js/jquery-ui.min.js}"></script>
+
+
+
 </head>
 <body>
 
@@ -14,32 +24,37 @@
         We need a few more details.
     </p>
     <main>
-        <form action="" name = "pincode" id = "pincode" method="POST">
-            <div class="pincode" id="pincode">
-                <p id = "title">Your preffered pick-up locations:</p>
+        <form th:action="@{/profileCompletion}" action="" name = "pincode" id = "pincode" method="POST">
+            <div class="ui-widget" id="1pincode">
+                <label for="search-pincode" id = "title">Your preffered pick-up locations:</label>
 
-                <input type = "search" id = "search-pincode" name = "search-pincode" placeholder="Search Pincode" autocomplete="off" onkeyup="search()" value="" >
-                    <div id = "search-results-list">
-                        <div onclick = "confirmpincode('li-div1')" id="li-div1" class = "pin-div">400004 - C.P. Tank</div>
-                        <div onclick = "confirmpincode('li-div2')" id="li-div2" class = "pin-div">400006 - Walkeshwar</div>
-                        <div onclick = "confirmpincode('li-div3')" id="li-div3" class = "pin-div">400002 - Fort</div>
-                        <div onclick = "confirmpincode('li-div4')" id="li-div4" class = "pin-div">400003 - Cloth Market</div>
-                        <div onclick = "confirmpincode('li-div5')" id="li-div5" class = "pin-div">400029 - A I staff colony</div>
-                        <div onclick = "confirmpincode('li-div6')" id="li-div6" class = "pin-div">400065 - Aareymilk Colony</div>
-                        <div onclick = "confirmpincode('li-div7')" id="li-div7" class = "pin-div">400011 - Agripada</div>
-                    </div>
-                <div class="selected-pincodes" id="selected-pincodes">
-                    <p style = "font-size: 1.1em; border-bottom: 1px solid #CCCCCC; width: 60vw;">Selected Pincodes:</p>
-                    <div id = "selected-pin-content"></div>
-                </div>            
+                <!--<input   type = "search" id = "search-pincode" name = "search-pincode" placeholder="Search Pincode" autocomplete="off"  value="" >-->
+                <input class ="ui-autocomplete-input" type = "search" id = "search-pincode" name = "search-pincode" placeholder="Search Pincode" >
+                <span id="search-pincode-results" class="ui-front">
+                </span>
+                <!--<input class ="ui-autocomplete-input ui-corner-all" type = "search" id = "search-pincode" name = "search-pincode" placeholder="Search Pincode" autocomplete="off" onkeyup="search()" value="" >-->
+                    <!--<div id = "search-results-list">-->
+                        <!--<div onclick = "confirmpincode('li-div1')" id="li-div1" class = "pin-div">400004 - C.P. Tank</div>-->
+                        <!--<div onclick = "confirmpincode('li-div2')" id="li-div2" class = "pin-div">400006 - Walkeshwar</div>-->
+                        <!--<div onclick = "confirmpincode('li-div3')" id="li-div3" class = "pin-div">400002 - Fort</div>-->
+                        <!--<div onclick = "confirmpincode('li-div4')" id="li-div4" class = "pin-div">400003 - Cloth Market</div>-->
+                        <!--<div onclick = "confirmpincode('li-div5')" id="li-div5" class = "pin-div">400029 - A I staff colony</div>-->
+                        <!--<div onclick = "confirmpincode('li-div6')" id="li-div6" class = "pin-div">400065 - Aareymilk Colony</div>-->
+                        <!--<div onclick = "confirmpincode('li-div7')" id="li-div7" class = "pin-div">400011 - Agripada</div>-->
+                    <!--</div>-->
+                <!--<div class="selected-pincodes" id="selected-pincodes">-->
+                    <!--<p style = "font-size: 1.1em; border-bottom: 1px solid #CCCCCC; width: 60vw;">Selected Pincodes:</p>-->
+                    <!--<div id = "selected-pin-content"></div>-->
+                <!--</div>-->
                 <button type = "submit" form="pincode" id="next">Submit</button>
             </div>
+            <input type="hidden" name="page" value="3">
         </form>
     </main>
     
 
 <script>
-    document.getElementById('search-pincode').autofocus;
+    // document.getElementById('search-pincode').autofocus;
 
     function search() {
         var input, filter, div, i;
@@ -75,6 +90,46 @@
         document.getElementById('select-timings').style.display = "inline";
         document.getElementById('select-timings-am-pm').style.display = "inline";
     }
+
+    $(document).ready(function() {
+
+        $("#search-pincode").autocomplete({
+            appendTo  : "#search-pincode-results",
+            minLength: 1,
+            delay: 500,
+            //define callback to format results
+            source: function (request, response) {
+                $.getJSON("/getPinCodeLandMark", request, function(result) {
+                    response($.map(result, function(item) {
+                        return {
+                            // following property gets displayed in drop down
+                            label: item.landmark+"-"+item.pincode,
+                            // following property gets entered in the textbox
+                            value: item.landmark+"-"+item.pincode,
+                            // following property is added for our own use
+                            landmarks: item.landmark,
+                            pincode:item.pincode
+                        }
+
+                    }));
+                });
+            },
+
+            //define select handler
+            select : function(event, ui) {
+                if (ui.item) {
+                    event.preventDefault();
+                    $("#selected_tags span").append('<a href=' + ui.item.tag_url + ' class="btn-metadata2">'+ ui.item.label +'</a>');
+                    //$("#tagQuery").value = $("#tagQuery").defaultValue
+                    var defValue = $("#tagQuery").prop('defaultValue');
+                    $("#tagQuery").val(defValue);
+                    $("#tagQuery").blur();
+                    return false;
+                }
+            }
+
+        });
+    });
 </script>
 
 </body>

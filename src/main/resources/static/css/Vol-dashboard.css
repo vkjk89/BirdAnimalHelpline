@@ -191,7 +191,7 @@ h1 {
 input[type="search"]{
     box-sizing: border-box;
     padding: 4vw;
-    background-image: url('/static/img/search-1.png');
+    background-image: url('/img/search-1.png');
     background-repeat: no-repeat;
     background-position: 3vw 2.5vw;
     background-size: 7vw;

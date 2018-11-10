@@ -1,7 +1,5 @@
 package org.birdhelpline.app.model;
 
-import java.sql.Timestamp;
-
 public class UserServiceTimeInfo {
     private long userId;
     private long pincode;

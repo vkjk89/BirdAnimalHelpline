@@ -25,20 +25,20 @@ public class DefaultController {
 
     @GetMapping(value = "/default")
     public ModelAndView handleLogin(HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView("Volunteer");
+        ModelAndView modelAndView = new ModelAndView("Error");
         Principal principal = request.getUserPrincipal();
-        System.out.println(request.getUserPrincipal());
         logger.info("Inside handleLogin for user : "+ principal.getName());
         User user = userService.findUserByUserName(principal.getName());
         if(user == null) {
-            modelAndView.setViewName("Error");
+            //modelAndView.setViewName("Error");
             return modelAndView;
         }
-
+        modelAndView.addObject("user", user);
+        logger.info("VKJ user is : "+user);
         if(user.getLastLoginDate() == null) {
             logger.info("User login for first time so redirecting to profile completion page");
-            modelAndView.addObject("user", user);
-            modelAndView.setViewName("Profile-Completion/step1");
+            modelAndView.setViewName("Vol-dashboard");
+            //modelAndView.setViewName("Profile-Completion/step1");
             return modelAndView;
         }
 
@@ -46,6 +46,15 @@ public class DefaultController {
         for(GrantedAuthority authority : auth) {
             if(authority.getAuthority().equalsIgnoreCase("ADMIN")){
                 modelAndView.setViewName("Admin");
+                break;
+            }
+            else if(authority.getAuthority().equalsIgnoreCase("RECEPTIONIST")) {
+                modelAndView.setViewName("Receptionist");
+                break;
+            }
+            else {
+                modelAndView.setViewName("Vol-dashboard");
+                break;
             }
         }
         return  modelAndView;
