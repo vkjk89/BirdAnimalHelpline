@@ -83,28 +83,31 @@
     </main>
 
     <script>
-        var anim_state = 10;
+        var anim_start = false;
         function others(){
-            alert(anim_state);
-            if (anim_state % 2 == 0){
-                document.getElementById('Receptionist').style.display = "inline";
+            anim_start = !anim_start;
+            if (anim_start === true){
+                document.getElementById('Receptionist').classList.remove('receptionist-end');
+                document.getElementById('Fosterer').classList.remove('fosterer-end');
                 document.getElementById('Receptionist').classList.add('receptionist');
-                document.getElementById('Fosterer').style.display = "inline";
+                document.getElementById('Receptionist').style.display = "inline";
                 document.getElementById('Fosterer').classList.add('fosterer');
-                document.getElementById('role-btn-4').setAttribute("src","/static/img/options11-2.png");
-                document.getElementById('role-btn-4').setAttribute("th:src","@{/img/options11-2.png}");
+                document.getElementById('Fosterer').style.display = "inline";
+                setTimeout(function(){
+                    document.getElementById('role-btn-4').setAttribute("src","/static/img/options11-2.png");
+                    document.getElementById('role-btn-4').setAttribute("th:src","@{/img/options11-2.png}");
+                }, 500);
             }
             else {
+                document.getElementById('Receptionist').classList.remove('receptionist');
+                document.getElementById('Fosterer').classList.remove('fosterer');
                 document.getElementById('Receptionist').classList.add('receptionist-end');
                 document.getElementById('Fosterer').classList.add('fosterer-end');
                 setTimeout(function(){
-                document.getElementById('Receptionist').style.display = "none";
-                document.getElementById('Fosterer').style.display = "none";
                 document.getElementById('role-btn-4').setAttribute("src","/static/img/options11.png");
                 document.getElementById('role-btn-4').setAttribute("th:src","@{/img/options11.png}");
-                }, 800);
+                }, 500);
             }
-            anim_state++;
         }
     </script>
 </body>

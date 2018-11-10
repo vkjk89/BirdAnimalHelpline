@@ -207,7 +207,7 @@ button {
 }
 
 .fosterer-end {
-  animation: Fosterer-end 0.8s forwards 0s ease-in-out;
+  animation: Fosterer-end 0.7s forwards 0s ease-in-out;
 }
 
 @keyframes Receptionist{
@@ -233,7 +233,7 @@ button {
 }
 
 .receptionist-end {
-  animation: Receptionist-end 0.8s forwards 0s ease-in-out;
+  animation: Receptionist-end 0.7s forwards 0s ease-in-out;
 }
 /*-----------------------------------------------------------------------------------------------------------*/
 
