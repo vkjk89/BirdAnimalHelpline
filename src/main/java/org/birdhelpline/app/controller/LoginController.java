@@ -127,7 +127,7 @@ public class LoginController {
         }
         if (action != null) {
             user.setImage(file.getBytes());
-            if (action.equals("Preview")) {
+            if (action.equalsIgnoreCase("preview")) {
                 return "RequestRegistration/Preview";
             }
         }
