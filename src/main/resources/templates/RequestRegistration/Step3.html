@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="/static/css/RequestRegistration/step3.css" th:href="@{/css/RequestRegistration/step3.css}">
 </head>
 <body>
+
+
+
+
     <div class = "heading">
         Join Us
     </div>
@@ -21,9 +25,9 @@
             <div id = "progress-bar-5" class="progress-bar-status">3</div>
     </div>
     <!--<form id = "first-form" class = "first-form"  name = "step2"  >-->
-    <form enctype="multipart/form-data"  id="step3" name="step3" method="post" action="#" th:action="@{/registration}" th:object="${user}">
-        
-        <main> 
+    <form enctype="multipart/form-data"  id ="step3" name="step3" method="post" action="#" th:action="@{/registration}" th:object="${user}">
+
+        <main>
             <div id="step3" class = "step3">
                     <label for = "Upload your profile picture" id = "dp-label"><img th:src="@{/img/display-picture11.png}" src="/static/img/display-picture11.png" id ="dp-img"></label>
                     <label for="Upload your profile picture" id="dp-error">Select valid Profile picture.</label>
@@ -63,6 +67,9 @@
                     document.getElementById('dp-img').style.border = "3px dashed red";
                     document.getElementById('dp-label-2').style.display = "none";
                 }
+            });
+            $('[name=image]').change(function(){
+                //alert("A file has been selected.");
             });
         });
     </script>
