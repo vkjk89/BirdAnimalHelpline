@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html  lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -10,11 +9,7 @@
     <link rel="stylesheet" href="/static/css/basic-template.css" th:href="@{/css/basic-template.css}">
     <link rel="stylesheet" href="/static/css/RequestRegistration/step3.css" th:href="@{/css/RequestRegistration/step3.css}">
 </head>
-<body>    
-
-
-
-
+<body>
     <div class = "heading">
         Join Us
     </div>
@@ -23,10 +18,10 @@
             <div id = "progress-bar-2" class="progress-bar-status"></div>
             <div id = "progress-bar-3" class="progress-bar-status">2</div>
             <div id = "progress-bar-4" class="progress-bar-status"></div>
-            <div id = "progress-bar-5" class="progress-bar-status">3</div>        
+            <div id = "progress-bar-5" class="progress-bar-status">3</div>
     </div>
     <!--<form id = "first-form" class = "first-form"  name = "step2"  >-->
-    <form enctype="multipart/form-data"  id = "step3" name = "step3" method="post" action="#" th:action="@{/registration}" th:object="${user}">
+    <form enctype="multipart/form-data"  id="step3" name="step3" method="post" action="#" th:action="@{/registration}" th:object="${user}">
         
         <main> 
             <div id="step3" class = "step3">
