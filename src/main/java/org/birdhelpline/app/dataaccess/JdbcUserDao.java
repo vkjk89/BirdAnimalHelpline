@@ -6,14 +6,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.*;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.orm.ObjectRetrievalFailureException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
 import java.io.ByteArrayInputStream;
+import java.security.acl.Owner;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,31 +27,34 @@ public class JdbcUserDao implements UserDao {
     private static final RowMapper<User> USER_MAPPER = new UserRowMapper();
     private final JdbcOperations jdbcOperations;
     //private final JdbcTemplate jdbcTemplate;
-    private Map<String,Integer> userRoleVsRoleId = new HashMap<>();
-    private Map<Integer,String> securityQIdVSSecurityQ = new HashMap<>();
+    private Map<String, Integer> userRoleVsRoleId = new HashMap<>();
+    private Map<Integer, String> securityQIdVSSecurityQ = new HashMap<>();
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     @PostConstruct
-    private  void init() {
+    private void init() {
         jdbcOperations.query("select authority_name,authority_id from authority", new RowCallbackHandler() {
             @Override
             public void processRow(ResultSet resultSet) throws SQLException {
-                userRoleVsRoleId.put(resultSet.getString("authority_name"),resultSet.getInt("authority_id"));
+                userRoleVsRoleId.put(resultSet.getString("authority_name"), resultSet.getInt("authority_id"));
             }
         });
 
-        logger.info("VKJ : "+userRoleVsRoleId);
+        logger.info("VKJ : " + userRoleVsRoleId);
 
         jdbcOperations.query("select authority_name,authority_id from authority", new RowCallbackHandler() {
             @Override
             public void processRow(ResultSet resultSet) throws SQLException {
-                userRoleVsRoleId.put(resultSet.getString("authority_name"),resultSet.getInt("authority_id"));
+                userRoleVsRoleId.put(resultSet.getString("authority_name"), resultSet.getInt("authority_id"));
             }
         });
 
-        logger.info("VKJ : "+userRoleVsRoleId);
+        logger.info("VKJ : " + userRoleVsRoleId);
 
     }
 
@@ -103,7 +108,7 @@ public class JdbcUserDao implements UserDao {
                 );
 
                 ps.setLong(1, userId);
-                ps.setInt(2,userRoleVsRoleId.get(role));
+                ps.setInt(2, userRoleVsRoleId.get(role));
                 return ps;
             }
         });
@@ -153,17 +158,29 @@ public class JdbcUserDao implements UserDao {
     }
 
     public boolean getUserByMobile(long mobile) {
-        int count = jdbcOperations.queryForObject("select count(1) from user where mobile = ?",Integer.class,mobile);
-        return count > 0 ? true:false;
+        int count = jdbcOperations.queryForObject("select count(1) from user where mobile = ?", Integer.class, mobile);
+        return count > 0 ? true : false;
     }
 
-    public boolean getUserByUserName(String userName) {
-        int count = jdbcOperations.queryForObject("select count(1) from user where user_name = ?",Integer.class,userName);
-        return count > 0 ? true:false;
+    public User getUserByUserName(String userName) {
+        User user = null;
+        try {
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("userName", userName);
+            user = namedParameterJdbcTemplate.queryForObject(
+                    "select * from user where user_name = :userName",
+                    params, new UserRowMapper()
+            );
+        } catch (EmptyResultDataAccessException ex) {
+            //throw new ObjectRetrievalFailureException(User.class, userName);
+            return null;
+        }
+        return user;
+        //return jdbcOperations.queryForObject("select * from user where user_name = ?",User.class, userName,new UserRowMapper());
     }
 
     public Timestamp getLastLoginByUserName(String name) {
-        return jdbcOperations.queryForObject("select last_login_date from user u , user_info ui where u.user_id = ui.user_id and u.user_name = ?", Timestamp.class,name);
+        return jdbcOperations.queryForObject("select last_login_date from user u , user_info ui where u.user_id = ui.user_id and u.user_name = ?", Timestamp.class, name);
     }
 
     public void insertLastLoginDate(String name) {
@@ -184,7 +201,7 @@ public class JdbcUserDao implements UserDao {
             user.setUserId(rs.getLong("user_id"));
             user.setEmail(rs.getString("email"));
             user.setPassword(rs.getString("password"));
-            user.setMobile(rs.getInt("mobile"));
+            user.setMobile(rs.getLong("mobile"));
             return user;
         }
     }

@@ -8,6 +8,51 @@
     <link rel="stylesheet" href="/static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" href="/static/css/basic-template.css" th:href="@{/css/basic-template.css}">
     <link rel="stylesheet" href="/static/css/RequestRegistration/step3.css" th:href="@{/css/RequestRegistration/step3.css}">
+    <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script src="/static/js/jquery.iframe-transport.js" th:src="@{/js/jquery.iframe-transport.js}"></script>
+    <script src="/static/js/jquery.ui.widget.js" th:src="@{/js/jquery.ui.widget.js}"></script>
+    <script src="/static/js/jquery.fileupload.js" th:src="@{/js/jquery.fileupload.js}"></script>
+    <script>
+        $(document).ready( function () {
+            $("#preview").click(function(){
+                if(document.getElementById("image").files.length == 0 ){
+                    document.getElementById('dp-error').style.display = "block";
+                    document.getElementById('image').style.border = "3px dashed red";
+                    document.getElementById('dp-label-2').style.display = "none";
+                }
+            });
+
+
+            $('#image').change(function () {
+                var formData = new FormData();
+                formData.append('image', this.files[0]);
+                $.ajax({
+                url: 'profilePicUpload',
+                type: 'POST',
+                data: formData,
+                enctype: 'multipart/form-data',
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                success: function (data) {
+                    console.log(data);
+                    $('#dp-img').attr('src', "data:image/png;base64," + data);//data:image/png;base64,${data}');
+                    $('#dp-error').text("")//data:image/png;base64,${data}');
+                    //alert(data);
+                },
+                    error: function(e) {
+                    console.log(e);
+                        $('#dp-error').text(e.responseJSON.message);
+                        $('#dp-error').show();
+                    }
+
+            });
+        });
+        });
+
+
+
+
+    </script>
 </head>
 <body>
 
@@ -25,17 +70,17 @@
             <div id = "progress-bar-5" class="progress-bar-status">3</div>
     </div>
     <!--<form id = "first-form" class = "first-form"  name = "step2"  >-->
-    <form enctype="multipart/form-data"  id ="step3" name="step3" method="post" action="#" th:action="@{/registration}" th:object="${user}">
+    <form enctype="multipart/form-data"  id ="step3Form" name="step3" method="post" action="#" th:action="@{/registration}" th:object="${user}">
 
         <main>
             <div id="step3" class = "step3">
-                    <label for = "Upload your profile picture" id = "dp-label"><img th:src="@{/img/display-picture11.png}" src="/static/img/display-picture11.png" id ="dp-img"></label>
-                    <label for="Upload your profile picture" id="dp-error">Select valid Profile picture.</label>
-                    <label for="Upload your profile picture" id="dp-label-2">Upload your profile picture</label>
+                    <label for = "image" id = "dp-label"><img th:src="@{/img/display-picture11.png}" src="/static/img/display-picture11.png" id ="dp-img"></label>
+                    <label for="image" id="dp-error">Select valid Profile picture.</label>
+                    <label for="image" id="dp-label-2">Upload your profile picture</label>
                     <div id = "warning">
                         <b>Please make sure that the picture you choose to upload doesn't contain any quotes or any picture other than yourself, as this picture will be used for further identifiction and verification.</b>
                     </div>
-                    <input type = "file" name = "dp-image" id = "Upload your profile picture" style = "display:none; top: 0; right: 0; position: absolute;" accept = "image/*" required>
+                    <input type = "file" name="dimage" id = "image" style = "display:none; top: 0; right: 0; position: absolute;" accept = "image/*" required>
                     <input th:field="*{userName}" type = "text" name = "username-selection" placeholder="Username" pattern="[A-Za-z]{4}" title="Select valid username" autocomplete="off" required>
                     <ul th:if="${#fields.hasErrors('userName')}">
                         <li th:each="err : ${#fields.errors('userName')}" th:text="${err}">That username is taken. Try another. </li>
@@ -50,28 +95,14 @@
                 <button type="submit"><img src="/static/img/previous-button-1.png" th:src="@{/img/previous-button-1.png}" id="previous"></button>
                 
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <button type = "submit" name="preview" id="preview" value="Preview">Preview</button>
-                        <button type="submit" name="submit" id="submit">Submit</button>
+                        <button type = "submit" name="action" id="preview" value="preview">Preview</button>
+                        <button type="submit" name="action" id="submit" value="submit">Submit</button>
                 </div>
             </div>
             <input type="hidden" name="page" value="3">
         </main>
     </form>
 
-    <script src="/static/js/jquery-3.3.1.slim.min.js" th:src="@{/js/jquery-3.3.1.slim.min.js}"></script>
-    <script>
-        $(document).ready(function(){
-            $("#preview").click(function(){
-                if(document.getElementById("Upload your profile picture").files.length == 0 ){
-                    document.getElementById('dp-error').style.display = "block";
-                    document.getElementById('dp-img').style.border = "3px dashed red";
-                    document.getElementById('dp-label-2').style.display = "none";
-                }
-            });
-            $('[name=image]').change(function(){
-                //alert("A file has been selected.");
-            });
-        });
-    </script>
+
 </body>
 </html>

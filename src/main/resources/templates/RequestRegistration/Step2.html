@@ -25,7 +25,7 @@
     <form id = "first-form" class = "first-form"  name = "step2" method="post" action="#" th:action="@{/registration}" th:object="${user}" >
         <main>
             <div id="step2" class = "step2" name = "step2">
-                <ul th:if="${#fields.hasErrors('*')}" hidden>
+                <ul th:if="${#fields.hasErrors('*')}" >
                     <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
                 </ul>
                 <input th:field="*{firstName}" type = "text" placeholder="First Name" name = "first-name" autofocus required autocomplete="off" pattern="[A-Za-z]{0,}" title="Your First Name">
@@ -35,7 +35,8 @@
                 <input th:field="*{dob}" type="date" name="birthdate" id = "birthdate" min="1930-01-01" max="2010-12-31" required autocomplete="off"><br>
                 
                 <input type = "text" value="+91" name = "contact-number-1" disabled style="color:black;"> -
-                <input th:field="*{mobile}" type = "number" placeholder="Mobile Number" name = "contact-number-2" required min="5000000000" max="9999999999" title="Ten digit mobile no. without any code"><br>
+                <!--<input  th:if="${user.mobile} == 0"  type = "number" placeholder="Mobile Number" name = "contact-number-2" required min="5000000000" max="9999999999" title="Ten digit mobile no. without any code"><br>-->
+                <input  th:field="*{mobile}" type = "number" placeholder="Mobile Number" name = "contact-number-2" required min="5000000000" max="9999999999" title="Ten digit mobile no. without any code"><br>
 
                 <label name = "gender">Gender: </label>
                 <input th:field="*{gender}" type = "radio" id = "gender-1" name="gender" value="M">
@@ -61,8 +62,8 @@
         </main>
 
         <div id="bottom-nav-bar" class="bottom-nav-bar">
-            <button type="submit"><img src="/static/img/previous-button-1.png" th:src="@{/img/previous-button-1.png}" id="previous"></button>
-            <button type="submit"><img src="/static/img/next-button11.png" th:src="@{/img/next-button11.png}" id="next"></button>
+            <a th:href="@{/registration}"> <img src="/static/img/previous-button-1.png" th:src="@{/img/previous-button-1.png}" id="previous"></a>
+            <button  type="submit"><img src="/static/img/next-button11.png" th:src="@{/img/next-button11.png}" id="next"></button>
         </div>
     </form>
 

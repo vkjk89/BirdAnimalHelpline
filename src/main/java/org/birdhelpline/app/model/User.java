@@ -1,16 +1,13 @@
 package org.birdhelpline.app.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
-import javax.persistence.*;
 import javax.security.auth.Subject;
 import java.io.Serializable;
 import java.security.Principal;
-import java.sql.Blob;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.List;
 
 //@Entity
 //@Table(name = "user")
@@ -25,7 +22,7 @@ public class User implements Principal, Serializable {
     private String password;
     private String encryptedPassword;
     //@Column(name="mobile")
-    private long mobile;
+    private Long mobile;
    // @Column(name="email")
     private String email;
    // @Column(name="enabled")
@@ -41,6 +38,60 @@ public class User implements Principal, Serializable {
     private int securityQId;
     private String securityQAns;
     private byte[] image;
+    private UserAddressInfo homeAddr;
+    private UserAddressInfo officeAddr;
+    private List<UserServiceTimeInfo> userServiceTimeInfos;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", encryptedPassword='" + encryptedPassword + '\'' +
+                ", mobile=" + mobile +
+                ", email='" + email + '\'' +
+                ", enabled=" + enabled +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", gender='" + gender + '\'' +
+                ", dob='" + dob + '\'' +
+                ", creationDate=" + creationDate +
+                ", lastLoginDate=" + lastLoginDate +
+                ", role='" + role + '\'' +
+                ", securityQId=" + securityQId +
+                ", securityQAns='" + securityQAns + '\'' +
+                ", image=" + (image == null ? "empty" : "nonEmpty") +
+                ", homeAddr=" + homeAddr +
+                ", officeAddr=" + officeAddr +
+                ", userServiceTimeInfos=" + userServiceTimeInfos +
+                '}';
+    }
+
+    public UserAddressInfo getHomeAddr() {
+        return homeAddr;
+    }
+
+    public void setHomeAddr(UserAddressInfo homeAddr) {
+        this.homeAddr = homeAddr;
+    }
+
+    public UserAddressInfo getOfficeAddr() {
+        return officeAddr;
+    }
+
+    public void setOfficeAddr(UserAddressInfo officeAddr) {
+        this.officeAddr = officeAddr;
+    }
+
+    public List<UserServiceTimeInfo> getUserServiceTimeInfos() {
+        return userServiceTimeInfos;
+    }
+
+    public void setUserServiceTimeInfos(List<UserServiceTimeInfo> userServiceTimeInfos) {
+        this.userServiceTimeInfos = userServiceTimeInfos;
+    }
 
     public int getSecurityQId() {
         return securityQId;
@@ -102,11 +153,11 @@ public class User implements Principal, Serializable {
         this.password = password;
     }
 
-    public long getMobile() {
+    public Long getMobile() {
         return mobile;
     }
 
-    public void setMobile(long mobile) {
+    public void setMobile(Long mobile) {
         this.mobile = mobile;
     }
 
@@ -200,27 +251,4 @@ public class User implements Principal, Serializable {
         this.role = role;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", encryptedPassword='" + encryptedPassword + '\'' +
-                ", mobile=" + mobile +
-                ", email='" + email + '\'' +
-                ", enabled=" + enabled +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
-                ", gender='" + gender + '\'' +
-                ", dob='" + dob + '\'' +
-                ", creationDate=" + creationDate +
-                ", lastLoginDate=" + lastLoginDate +
-                ", role='" + role + '\'' +
-                ", securityQId='" + securityQId + '\'' +
-                ", securityQAns='" + securityQAns + '\'' +
-                ", image=" + (image == null ? "empty":"NotEmpty" )+
-                '}';
-    }
 }

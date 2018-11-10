@@ -1,20 +1,13 @@
 package org.birdhelpline.app.service;
 
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-
 import org.birdhelpline.app.dataaccess.JdbcUserDao;
-import org.birdhelpline.app.model.Role;
 import org.birdhelpline.app.model.User;
-import org.birdhelpline.app.repository.RoleRepository;
-import org.birdhelpline.app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.sql.SQLException;
+import java.sql.Timestamp;
 
 
 @Service("userService")
@@ -25,9 +18,6 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public User findUserByEmail(String email) {
-        return  null;
-    }
 
     public void saveUser(User user) {
         user.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -49,7 +39,7 @@ public class UserService {
         return userDao.getUserByMobile(mobile);
     }
 
-    public boolean findUserByUserName(String userName) {
+    public User findUserByUserName(String userName) {
         return userDao.getUserByUserName(userName);
     }
 
