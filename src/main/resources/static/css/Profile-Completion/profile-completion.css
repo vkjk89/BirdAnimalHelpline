@@ -84,15 +84,15 @@ select * {
       border: 1px solid burlywood;
     }*/
 
-input[id = "next"] {
-    box-sizing: border-box;
-    background: url('/static/img/next-button21.png') no-repeat;
-    background-size: 11.5vw;
-    margin-top: 3vh;
-    padding: 0vw 0vw 12vw 1.2vw;
-    /*border: 1px solid #cccccc;*/
-    color: transparent;
+#next img {
+    width: 10vw;
+}
+
+#next {
     float: right;
+    padding: 0;
+    margin: 0;
+    margin-top: 2vh;
 }
 
 /*------------------------------------------------------------------------------------------------*/

@@ -31,13 +31,13 @@
         <main> 
             <div id="step3" class = "step3">
                     <label for = "Upload your profile picture" id = "dp-label"><img th:src="@{/img/display-picture11.png}" src="/static/img/display-picture11.png" id ="dp-img"></label>
-                    <div id="dp-error">Select valid Profile picture.</div>
+                    <label for="Upload your profile picture" id="dp-error">Select valid Profile picture.</label>
                     <label for="Upload your profile picture" id="dp-label-2">Upload your profile picture</label>
                     <div id = "warning">
                         <b>Please make sure that the picture you choose to upload doesn't contain any quotes or any picture other than yourself, as this picture will be used for further identifiction and verification.</b>
                     </div>
                     <input type = "file" name = "dp-image" id = "Upload your profile picture" style = "display:none; top: 0; right: 0; position: absolute;" accept = "image/*" required>
-                    <input th:field="*{userName}" type = "text" name = "username-selection" placeholder="Username" autocomplete="off" required>
+                    <input th:field="*{userName}" type = "text" name = "username-selection" placeholder="Username" pattern="[A-Za-z]{4}" title="Select valid username" autocomplete="off" required>
                     <ul th:if="${#fields.hasErrors('userName')}">
                         <li th:each="err : ${#fields.errors('userName')}" th:text="${err}">That username is taken. Try another. </li>
                     </ul>
@@ -48,24 +48,25 @@
             </div>
 
             <div id="footer-btns" class="footer-btns">
-                <a href = "/registration"><img src="/static/img/previous-button1.png" th:src="@{/img/previous-button1.png}" alt = "back" id = "previous"></a>
+                <button type="submit"><img src="/static/img/previous-button-1.png" th:src="@{/img/previous-button-1.png}" id="previous"></button>
                 
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <button type = "submit" name="options" id="option1" value="Preview">Preview</button>
-                        <button type="submit" name="options" id="option2">Submit</button>
+                        <button type = "submit" name="preview" id="preview" value="Preview">Preview</button>
+                        <button type="submit" name="submit" id="submit">Submit</button>
                 </div>
             </div>
             <input type="hidden" name="page" value="3">
         </main>
     </form>
 
-    <script src="/static/js/jquery-3.3.1.slim.min.js"></script>
+    <script src="/static/js/jquery-3.3.1.slim.min.js" th:src="@{/js/jquery-3.3.1.slim.min.js}"></script>
     <script>
         $(document).ready(function(){
-            $("#option1").click(function(){
+            $("#preview").click(function(){
                 if(document.getElementById("Upload your profile picture").files.length == 0 ){
                     document.getElementById('dp-error').style.display = "block";
                     document.getElementById('dp-img').style.border = "3px dashed red";
+                    document.getElementById('dp-label-2').style.display = "none";
                 }
             });
         });

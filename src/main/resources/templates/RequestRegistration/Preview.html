@@ -40,12 +40,8 @@
                 <div th:text="*{securityQAns}" th:field="*{securityQAns}" id = "secresponse">#secanswer</div><br>
         </div>
         <div id = "step3">
-            <!--th:text="*{password}" th:field="*{password}"-->
-            <!--th:text="*{image}" th:field="*{image}"-->
             <img th:src="@{/img/edit.png}" src = "/static/img/edit.png" onclick="window.location = '/registration?page=2' ">
-            <!--onclick="window.location = '/templates/RequestRegistration/Step3.html' "-->
-            <div  id = "profilepic"><img src = "" th:src="*{'data:image/png;base64,'+getEncodedImage()}" ></div>
-            <div th:text="*{userName}" th:field="*{userName}" id = "usernasme">#username</div><br>
+            <div th:text="*{userName}" th:field="*{userName}" id = "usernasme">#username</div>
             <div  id = "password">#passsword</div><br>
         </div>
 

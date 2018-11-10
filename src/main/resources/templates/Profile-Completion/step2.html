@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Profile Completion</title>
-    <link rel="stylesheet" href="/static/css/basic-template.css">
-    <link rel="stylesheet" href="/static/css/Profile-Completion/profile-completion.css">
+    <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
+    <link rel="stylesheet" th:href="@{/css/Profile-Completion/profile-completion.css}" href="/static/css/Profile-Completion/profile-completion.css">
 </head>
 <body>
 
@@ -26,7 +26,7 @@
                 <input type = "number" name = "pincode" placeholder="Pincode" required min="400000" max="450000">
                 <label for="">Nature of Business</label>
                 <input type = "text" name = "nature-of-business" placeholder="Eg. - Textiles" required>
-                <input type = "submit" id = "next" onclick="" alt="next">
+                <button type = "submit" form="home-address-form" id = "next"><img th:src="@{/img/next-button21.png}" src="/static/img/next-button21.png" alt="next" ></button>
             </form>
         </div>
     </main>

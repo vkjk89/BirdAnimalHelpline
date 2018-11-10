@@ -76,10 +76,6 @@
 }
 /* ------------------------------------------------------------------------------------------------------------------*/
 
-        /*body * {
-            border: 1px solid red;
-        }*/
-
 #step2 {
     text-align: start;
     padding: 2vw;
@@ -142,6 +138,7 @@ p[id = "security-question"] {
     font-size: 1.3em;
     border-bottom: 1px solid #374047;
     margin-top: 2vh;
+    margin-bottom: 0;
 }
 
 p[id = "security-para"] {
@@ -159,20 +156,35 @@ input[name = "security-answer"] {
     padding: 2vw;
     padding-left: 3vw;
     width: 74.5vw;
-    margin-bottom: 2vh;
+    margin-bottom: -1vh;
 }
-
+/*
 input[id = "next"] {
     box-sizing: border-box;
     background: url('/static/img/next-button11.png') no-repeat;
-    /*border: 1px solid burlywood;*/
+    /*border: 1px solid burlywood;*//*
     background-size: 10vw;
     padding: 0vw 5vw 6vw 5vw;
     margin-right: 5vw;
     min-height: 40px;
     float: right;
     color: black;
+}*/
+
+#previous {
+    width: 10vw;
+    padding-top: 2vh;
 }
+
+#next {
+    width: 10vw;
+    margin-left: 55vw;
+    padding-top: 2vh;
+}
+        
+        /*body * {
+            border: 1px solid red;
+        }*/
 
 #step1 {
     width: 10vw; 
@@ -183,10 +195,22 @@ input[id = "next"] {
 }
 
 @media only screen and (max-width: 340px) {
+    .heading {
+        padding: 3vw;
+        font-size: 1.2em;
+    }
     input[type = "date"] {
         font-size: 0.9em;
     }
     body {
         overflow-x: hidden;
+        font-size: 0.8em;
+    }
+    #previous {
+        padding-top: 0vh;
+    }
+    
+    #next {
+        padding-top: 0vh;
     }
 }

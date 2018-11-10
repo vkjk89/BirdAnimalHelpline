@@ -13,10 +13,6 @@ main {
     text-align: start;
 }
 
-/*main * {
-    border: 1px solid black;
-}*/
-
 #step1, #step2, #step3 {
     margin-right: 5vw;
 }
@@ -36,32 +32,26 @@ main {
 }
 
 #step1 *, #step2 *, #step3 * {
-    margin-top: 5vw;
-}
-
-#profilepic img{
-    position: absolute;
-    top: 10vh;
-    right: 15vw;
-    width: 15vw;
-    height: auto;
+    margin-top: 2.8vh;
 }
 
 #next {
-    height: auto;
+    box-sizing: border-box;
     bottom: 7vw;
-    width: 20vw;
+    width: 25vw;
     float: right;
-    margin-left: 75vw;
-    margin-top: 5vh;
-    background-color: #374047;
+    margin-left: 70vw;
 }
 
 input[type = "submit"] {
     background-color: #374047;
-    color: floralwhite;
-    border: none;
-    outline: none;
+    color: white;
+    border-radius: 5px;
     padding: 3vw;
-    letter-spacing: 0.2em;
+    letter-spacing: 2px;
+    font-size: 1em;
 }
+
+        /*body * {
+            border: 1px solid burlywood;
+        }*/

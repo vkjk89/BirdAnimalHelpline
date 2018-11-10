@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Profile Completion</title>
-    <link rel="stylesheet" href="/static/css/basic-template.css">
-    <link rel="stylesheet" href="/static/css/Profile-Completion/step3.css">
+    <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
+    <link rel="stylesheet" th:href="@{/css/Profile-Completion/step3.css}" href="/static/css/Profile-Completion/step3.css">
 </head>
 <body>
 
@@ -32,7 +32,7 @@
                     <p style = "font-size: 1.1em; border-bottom: 1px solid #CCCCCC; width: 60vw;">Selected Pincodes:</p>
                     <div id = "selected-pin-content"></div>
                 </div>            
-                <input type = "submit" id = "next" onclick="" alt="next" value="Submit">
+                <button type = "submit" form="pincode" id="next">Submit</button>
             </div>
         </form>
     </main>

@@ -16,9 +16,9 @@ main {
     animation: pincode-start 1s forwards 0s ease-in-out;
 }
 
-    /*body * {
+    body * {
         border: 1px solid salmon;
-    }*/
+    }
 
 input[type = "search"] {
     background-size: 5vw 5vw;
@@ -68,13 +68,16 @@ input[type = "search"]:focus {
     font-size: 0.9em;
 }
 
-input[id = "next"] {
-    margin-top: 10vh;
-    font-size: 1em;
-    color: white;
-    border-radius: 5px;
-    letter-spacing: 0.5vw;
+#next {
+    all: unset;
+    margin-top: 5vh;
     float: right;
+    color: white;
+    background-color: #374047;
+    padding: 3vw;
+    border-radius: 5px;
+    letter-spacing: 2px;
+    font-size: 0.9em;
 }
 
 #select-timings, #select-timings-am-pm {

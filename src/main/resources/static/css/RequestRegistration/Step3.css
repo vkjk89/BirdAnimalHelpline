@@ -94,10 +94,6 @@
     z-index: 2;
 }
 
-        /*body * {
-            border: 1px solid green;
-        }*/
-
 ul {
     list-style: none;
     padding: 0;
@@ -159,26 +155,32 @@ input[type = "password"]{
     outline: rgb(0, 128, 0);
     background-color: rgba(144, 238, 144, 0.7);
     color: rgb(0, 0, 0);
+    font-weight: 400;
+    font-size: 0.85em;
 }
 
 .btn-group {
-    top: -1.25vh;
-    left: 2vw;
     float: right;
-    margin-top: 3vh;
-    margin-right: 5vw;
-    font-size: 0.9em;
+    top: 1vh;
+    right: 3vw;
+}
+
+button {
+    padding: 0;
+    margin: 0;
 }
 
 .btn-group button {
-    float: right;
     width: 20vw;
     padding: 2vw;
+    padding-right: 18.5vw;
     margin: 0;
     letter-spacing: 1px;
+    font-weight: 300;
 }
 
 .btn-group button:first-child {
+    background-color: #374047c9;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
@@ -191,32 +193,40 @@ input[type = "password"]{
 
 #previous {
     box-sizing: border-box;
-    width: 12vw;
+    width: 10vw;
     margin-top: 1vh;
     margin-left: -35vw;
 }
 
-@media only screen and (max-width: 360px){
+        /*body * {
+            border: 1px solid green;
+        }*/
+
+@media only screen and (max-width: 320px){
     main div img{
-        width : 11vh;      
+        padding-top: 1vh;
+        width : 10vh;      
     }
     #dp-label-2 {
         font-size: 0.7em;
     }
     input[type = "submit"]{
-        font-size: 0.8em;
+        font-size: 0.7em;
     }
     input[type = "text"]{
-        font-size: 0.9em;
+        font-size: 0.8em;
     }
     input[type = "password"]{
-        font-size: 0.9em;
+        font-size: 0.7em;
     }
     #warning {
         font-size: 0.65em;
     }    
     .btn-group {
         font-size: 0.8em;
+    }
+    #previous {
+        margin-top: 0vh;
     }
 }
 
