@@ -32,42 +32,42 @@
             <div id = "volrole-selector" class = "volrole-selector">
                 <div id="role-row-1">
                     <span>
-                        <button type="submit" th:field="*{role}" th:href="@{/registration(page=1)">
-                            <img src="/static/img/Volunteer-11.png" alt="Volunteer" id="role-btn-1">
+                        <button type="submit" th:field="*{role}" th:href="@{/registration(page=1)}">
+                            <img th:src="@{/img/Volunteer-11.png}" src="/static/img/Volunteer-11.png" alt="Volunteer" id="role-btn-1">
                             <label id = "btn-label-1">Volutneer</label>
                         </button>
                     </span>
                     <span>
-                        <button type="submit" th:field="*{role}" th:href="@{/registration(page=1)">
-                            <img src="/static/img/Driver-11.png" alt="Driver" id="role-btn-2">
+                        <button type="submit" th:field="*{role}" th:href="@{/registration(page=1)}">
+                            <img th:src="@{/img/Driver-11.png}" src="/static/img/Driver-11.png" alt="Driver" id="role-btn-2">
                             <label id = "btn-label-2">Driver</label>
                         </button>
                     </span>   
                 </div>
                 <div id="role-row-2">
                     <span>
-                        <button type="submit" th:field="*{role}" th:href="@{/registration(page=1)">
-                            <img src="/static/img/Doctor-11.png" alt="Doctor" id="role-btn-3">
+                        <button type="submit" th:field="*{role}" th:href="@{/registration(page=1)}">
+                            <img th:src="@{/img/Doctor-11.png}" src="/static/img/Doctor-11.png" alt="Doctor" id="role-btn-3">
                             <label id = "btn-label-3">Doctor</label>
                         </button>
                     </span>
                     <span onclick="others()" id="options-2">
                         <button type="button">
-                            <img src="/static/img/options11.png" alt="Others" id="role-btn-4">
+                            <img th:src="@{/img/options11.png}" src="/static/img/options11.png" alt="Others" id="role-btn-4">
                             <label id = "btn-label-4">Others</label>
                         </button>
                     </span>
                 </div>
                 <div id="role-row-2">
                     <span id="Receptionist">
-                        <button type = "submit" th:field="*{role}" th:href="@{/registration(page=1)">
-                            <img src="/static/img/Call Attender-11.png" alt="Receptionist" id="role-btn-5">
+                        <button type = "submit" th:field="*{role}" th:href="@{/registration(page=1)}">
+                            <img th:src="@{/img/Call Attender-11.png}" src="/static/img/Call Attender-11.png" alt="Receptionist" id="role-btn-5">
                             <label id = "btn-label-5">Receptionist</label>
                         </button>
                     </span>
                     <span id="Fosterer">
-                        <button type = "submit" th:field="*{role}" th:href="@{/registration(page=1)">
-                            <img src="/static/img/Fosterer-11.png" alt="Fosterer" id="role-btn-6">
+                        <button type = "submit" th:field="*{role}" th:href="@{/registration(page=1)}">
+                            <img th:src="@{/img/Fosterer-11.png}" src="/static/img/Fosterer-11.png" alt="Fosterer" id="role-btn-6">
                             <label id = "btn-label-6">Fosterer</label>
                         </button>
                     </span>
@@ -76,7 +76,7 @@
         </div> 
 
         <div class = "footer">
-            <button><a th:href="@{/}" href = "Index.html"><img src = "/static/img/home-1.png"></a></button>
+            <button><a th:href="@{/img/home-1.png}" href = "Index.html"><img th:src="@{/img/home-1.png}" src = "/static/img/home-1.png"></a></button>
         </div>
             <input type="hidden" name="page" value="1">
         </form>
@@ -92,7 +92,8 @@
                 document.getElementById('Fosterer').style.display = "inline";
                 document.getElementById('Fosterer').classList.add('fosterer');
                 document.getElementById('role-btn-4').setAttribute("src","/static/img/options11-2.png");
-            }  
+                document.getElementById('role-btn-4').setAttribute("th:src","@{/img/options11-2.png}");
+            }
             else {
                 document.getElementById('Receptionist').classList.add('receptionist-end');
                 document.getElementById('Fosterer').classList.add('fosterer-end');
@@ -100,6 +101,7 @@
                 document.getElementById('Receptionist').style.display = "none";
                 document.getElementById('Fosterer').style.display = "none";
                 document.getElementById('role-btn-4').setAttribute("src","/static/img/options11.png");
+                document.getElementById('role-btn-4').setAttribute("th:src","@{/static/img/options11.png}");
                 }, 800);
             }
             anim_state++;

@@ -1,6 +1,7 @@
 package org.birdhelpline.app.service;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -50,6 +51,15 @@ public class UserService {
 
     public boolean findUserByUserName(String userName) {
         return userDao.getUserByUserName(userName);
+    }
+
+    public boolean firstTimeLogin(String name) {
+        Timestamp lastLoginDate = userDao.getLastLoginByUserName(name);
+        if(lastLoginDate == null) {
+            return true;
+        }
+        userDao.insertLastLoginDate(name);
+        return false;
     }
 
 
