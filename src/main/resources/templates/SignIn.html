@@ -7,7 +7,7 @@
     <title>Bird & Animal Helpline</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
-     <link rel="stylesheet" th:href="@{/css/signIn.css}" href="/static/css/signIn.css">
+    <link rel="stylesheet" th:href="@{/css/signIn.css}" href="/static/css/signIn.css">
 </head>
 
 <body>
@@ -23,7 +23,9 @@
                 <div>
                         <img th:src="@{/img/Logo1.png}" src="/static/img/Logo1.png" class = "logoImage" alt = "Logo"><br><br>
                 </div>
-                <div th:text="${error}" id = "invalid"></div><br>
+                <div th:text="${error}" id = "invalid">
+                    Invalid Credentials
+                </div><br>
                 <div>
                     <input type = "text" placeholder="Username" name = "username" autofocus autocomplete="off"><br><br>
                     <input type = "password" placeholder= "Password" name = "password" autocomplete="off"><br><br>
