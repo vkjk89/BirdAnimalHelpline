@@ -11,10 +11,7 @@
     <link rel="stylesheet" th:href="@{/css/RequestRegistration/Step2.css}" href="/static/css/RequestRegistration/step2.css">
     
 </head>
-<body>
-
-    <!-- div class="bg"></div --->
-    
+<body>    
     <div class = "heading">
         Join Us
     </div>
@@ -48,7 +45,7 @@
                 <input th:field="*{gender}" type = "radio" id = "gender-3" name="gender" value="O">
                 <label for="gender-3"> Others</label><br>
 
-                <input th:field="*{email}" type = "email" name = "email" placeholder="E-mail Address" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{4,}$" title="Please enter valid email addresss" required autocomplete="off" >
+                <input th:field="*{email}" type = "email" name = "email" placeholder="E-mail Address" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{3,}$" title="Please enter valid email addresss" required autocomplete="off" >
 
                 <p id="security-question">Security Question</p>
                 <p id="security-para">We will be using this question in case you forget your password, so choose wisely.</p>
@@ -63,7 +60,7 @@
 
         </main>
 
-        <div id="bottom-nav-bar" class="bottom-nav-bar" style = "margin-top: 0;">
+        <div id="bottom-nav-bar" class="bottom-nav-bar">
             <button type="submit"><img src="/static/img/previous-button-1.png" th:src="@{/img/previous-button-1.png}" id="previous"></button>
             <button type="submit"><img src="/static/img/next-button11.png" th:src="@{/img/next-button11.png}" id="next"></button>
         </div>
