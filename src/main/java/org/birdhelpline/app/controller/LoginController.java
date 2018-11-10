@@ -66,7 +66,7 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
         session.setAttribute("user", user);
-        modelAndView.setViewName("index");
+        modelAndView.setViewName("Index");
         return modelAndView;
     }
 
