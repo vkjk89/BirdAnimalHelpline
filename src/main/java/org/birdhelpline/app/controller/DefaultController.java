@@ -37,8 +37,8 @@ public class DefaultController {
         logger.info("VKJ user is : "+user);
         if(user.getLastLoginDate() == null) {
             logger.info("User login for first time so redirecting to profile completion page");
-            modelAndView.setViewName("Vol-dashboard");
-            //modelAndView.setViewName("Profile-Completion/step1");
+            //modelAndView.setViewName("Vol-dashboard");
+            modelAndView.setViewName("Profile-Completion/step1");
             return modelAndView;
         }
 

@@ -95,7 +95,7 @@
 
         $("#search-pincode").autocomplete({
             appendTo  : "#search-pincode-results",
-            minLength: 1,
+            minLength: 2,
             delay: 500,
             //define callback to format results
             source: function (request, response) {
@@ -124,7 +124,9 @@
                     var defValue = $("#tagQuery").prop('defaultValue');
                     $("#tagQuery").val(defValue);
                     $("#tagQuery").blur();
-                    return false;
+                    document.getElementById("search-pincode-results").innerHTML += "<br>" + ui.item.label;
+                    $("#search-pincode").autocomplete("close");
+                        return false;
                 }
             }
 
