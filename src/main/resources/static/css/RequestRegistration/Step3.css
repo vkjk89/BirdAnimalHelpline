@@ -94,6 +94,10 @@
     z-index: 2;
 }
 
+main {
+    margin-left: 5vw;
+}
+
 ul {
     list-style: none;
     padding: 0;
@@ -104,16 +108,16 @@ ul {
 }
 
 ul li {
+    position: relative;
     color: rgb(255,0,0,0.8);
     padding: 2vw;
     font-size: 0.73em;
-    margin-left: 15vw;
-    width: 70vw;
+    padding-left: 12vw;
 }
 
 main div img{
     margin-top: 1.5vh;
-    width : 15vh;    
+    width : 15vh;
 }
 
 #dp-label-2 {
@@ -125,11 +129,11 @@ main div img{
 #dp-error {
     display: none; 
     color: red;
-    border: red;
-}
+    border: red;}
 
 main div {
     position: relative;
+    text-align: center;
 }
 
 input[type = "text"], input[type = "password"]{
@@ -150,6 +154,7 @@ input[type = "password"]{
 }
 
 #warning {
+    box-sizing: border-box;
     margin: 3vw;
     padding: 3vw;
     outline: rgb(0, 128, 0);
@@ -157,6 +162,10 @@ input[type = "password"]{
     color: rgb(0, 0, 0);
     font-weight: 400;
     font-size: 0.85em;
+}
+
+.footer-btns {
+    margin-top: 5vh;
 }
 
 .btn-group {
@@ -200,9 +209,9 @@ button {
     margin-left: -35vw;
 }
 
-        /*body * {
+        body * {
             border: 1px solid green;
-        }*/
+        }
 
 @media only screen and (max-width: 320px){
     main div img{
@@ -229,6 +238,9 @@ button {
     }
     #previous {
         margin-top: 0vh;
+    }
+    .footer-btns {
+        margin-top: 2vh;
     }
 }
 

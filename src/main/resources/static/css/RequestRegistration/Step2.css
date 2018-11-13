@@ -164,6 +164,10 @@ input[name = "security-answer"] {
     margin-bottom: -1vh;
 }
 
+#bottom-nav-bar {
+    padding-left: 2vw;
+}
+
 #previous {
     width: 10vw;
 }
@@ -174,9 +178,9 @@ input[name = "security-answer"] {
     margin-left: 55vw;
 }
 
-    body * {
+    /*body * {
         border: 1px solid burlywood;
-    }
+    }*/
 
 @media only screen and (max-width: 340px) {
     .heading {
