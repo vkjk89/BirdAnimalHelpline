@@ -41,6 +41,7 @@
         </div>
         <div id = "step3">
             <img th:src="@{/img/edit.png}" src = "/static/img/edit.png" onclick="window.location = '/registration?page=2' ">
+            <div  id = "profilepic"><img src = "" th:src="*{'data:image/png;base64,'+getEncodedImage()}" ></div>
             <div th:text="*{userName}" th:field="*{userName}" id = "usernasme">#username</div>
             <div  id = "password">#passsword</div><br>
         </div>

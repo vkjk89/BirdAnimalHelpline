@@ -32,13 +32,13 @@
             <div id = "volrole-selector" class = "volrole-selector">
                 <div id="role-row-1">
                     <span>
-                        <button type="submit" th:field="*{role}" th:href="@{/registration(page=1)}">
+                        <button name="role" value="Volutneer" type="submit" th:field="*{role}" th:href="@{/registration}">
                             <img th:src="@{/img/Volunteer-11.png}" src="/static/img/Volunteer-11.png" alt="Volunteer" id="role-btn-1">
                             <label id = "btn-label-1">Volutneer</label>
                         </button>
                     </span>
                     <span>
-                        <button type="submit" th:field="*{role}" th:href="@{/registration(page=1)}">
+                        <button name="role" value="Driver" type="submit" th:field="*{role}" th:href="@{/registration}">
                             <img th:src="@{/img/Driver-11.png}" src="/static/img/Driver-11.png" alt="Driver" id="role-btn-2">
                             <label id = "btn-label-2">Driver</label>
                         </button>
@@ -46,7 +46,7 @@
                 </div>
                 <div id="role-row-2">
                     <span>
-                        <button type="submit" th:field="*{role}" th:href="@{/registration(page=1)}">
+                        <button name="role" value="Doctor" type="submit" th:field="*{role}" th:href="@{/registration}">
                             <img th:src="@{/img/Doctor-11.png}" src="/static/img/Doctor-11.png" alt="Doctor" id="role-btn-3">
                             <label id = "btn-label-3">Doctor</label>
                         </button>
@@ -60,13 +60,13 @@
                 </div>
                 <div id="role-row-2">
                     <span id="Receptionist">
-                        <button type = "submit" th:field="*{role}" th:href="@{/registration(page=1)}">
+                        <button name="role" value="Receptionist" type = "submit" th:field="*{role}" th:href="@{/registration}">
                             <img th:src="@{/img/Call Attender-11.png}" src="/static/img/Call Attender-11.png" alt="Receptionist" id="role-btn-5">
                             <label id = "btn-label-5">Receptionist</label>
                         </button>
                     </span>
                     <span id="Fosterer">
-                        <button type = "submit" th:field="*{role}" th:href="@{/registration(page=1)}">
+                        <button name="role" value="Fosterer" type = "submit" th:field="*{role}" th:href="@{/registration}">
                             <img th:src="@{/img/Fosterer-11.png}" src="/static/img/Fosterer-11.png" alt="Fosterer" id="role-btn-6">
                             <label id = "btn-label-6">Fosterer</label>
                         </button>
@@ -76,7 +76,7 @@
         </div> 
 
         <div class = "footer">
-            <button><a th:href="@{/img/home-1.png}" href = "/templates/Index.html"><img th:src="@{/img/home-1.png}" src = "/static/img/home-1.png"></a></button>
+            <button><a th:href="@{/}" href = "/templates/Index.html"><img th:src="@{/img/home-1.png}"  src = "/static/img/home-1.png"></a></button>
         </div>
             <input type="hidden" name="page" value="1">
         </form>

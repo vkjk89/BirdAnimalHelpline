@@ -1,14 +1,6 @@
 package org.birdhelpline.app.controller;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
-import com.mysql.jdbc.Blob;
-import org.birdhelpline.app.model.Role;
-import org.birdhelpline.app.model.Task;
 import org.birdhelpline.app.model.User;
-import org.birdhelpline.app.model.UserTask;
 import org.birdhelpline.app.service.RoleService;
 import org.birdhelpline.app.service.TaskService;
 import org.birdhelpline.app.service.UserService;
@@ -29,10 +21,9 @@ import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Base64;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,10 +31,9 @@ import java.util.regex.Pattern;
 @SessionAttributes({"user"})
 public class LoginController {
 
-    Logger logger = LoggerFactory.getLogger(LoginController.class);
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-
+    Logger logger = LoggerFactory.getLogger(LoginController.class);
     @Autowired
     private UserService userService;
 
@@ -86,14 +76,16 @@ public class LoginController {
     }
 
 
-    @Bean
-    public MultipartResolver multipartResolver() {
-        return new CommonsMultipartResolver();
-    }
+
+
+//    @Bean
+//    public MultipartResolver multipartResolver() {
+//        return new CommonsMultipartResolver();
+//    }
 
     @RequestMapping(path = "/registration", method = {RequestMethod.GET, RequestMethod.POST})
     public String processPage(@RequestParam(name = "page", required = false) final Integer currentPage,
-                              @RequestParam(name = "image", required = false) MultipartFile file,
+                              @RequestParam(name = "dp-image", required = false) MultipartFile file,
 //                              MultipartFile file,
                               final @ModelAttribute("user") User user, BindingResult result,
                               final HttpSession session,
@@ -105,6 +97,8 @@ public class LoginController {
             return "RequestRegistration/Step1";
         }
         switch (currentPage) {
+            case 0:
+                return "RequestRegistration/Step1";
             case 1:
                 return "RequestRegistration/Step2";
             case 2:
@@ -121,12 +115,13 @@ public class LoginController {
     private String handleStep3(MultipartFile file,  User user, SessionStatus status, String action, BindingResult result) throws IOException {
 
         String userName = user.getUserName();
-        if(userService.findUserByUserName(userName)) {
+        User fromDb = userService.findUserByUserName(userName);
+        if(fromDb != null) {
             result.rejectValue("userName", "userName.invalid", "UserName is already taken up");
             return "RequestRegistration/Step3";
         }
         if (action != null) {
-            user.setImage(file.getBytes());
+            //user.setImage(file.getBytes());
             if (action.equalsIgnoreCase("preview")) {
                 return "RequestRegistration/Preview";
             }
@@ -160,80 +155,54 @@ public class LoginController {
         return "RequestRegistration/Step3";
     }
 
-    @RequestMapping(path = "/registrationPreview", method = {RequestMethod.GET})
-    public String registrationPreview(@RequestParam(name = "page", required = false) final Integer currentPage,
-                                      @RequestParam(name = "image", required = false) MultipartFile file,
-                                      final @ModelAttribute("user") User user, BindingResult result,
-                                      final HttpSession session,
-                                      SessionStatus status) throws IOException {
-        logger.info(" vkj inside reg preview : " + user + " " + currentPage);
-        user.setImage(file.getBytes());
-        return "RequestRegistration/Preview";
+    @RequestMapping(path = "/profileCompletion", method = RequestMethod.POST)
+    public ModelAndView processProfileCompletionPage(@RequestParam(name = "page", required = false) final Integer currentPage,
+                              final @ModelAttribute("user") User user, BindingResult result,
+                              final HttpSession session,
+                              SessionStatus status,
+                              @RequestParam(name = "action", required = false) String action) throws IOException {
+        logger.info("vkj inside reg : " + user + " " + currentPage);
+        logger.info("vkj action : " + action);
+        ModelAndView modelAndView = new ModelAndView();
+        if (currentPage == null) {
+            modelAndView.setViewName("Profile-Completion/step1");
+            return modelAndView;
+        }
+        switch (currentPage) {
+            case 1:
+                handleProfileStep1(modelAndView,user, result); break;
+            case 2:
+                handleProfileStep2(modelAndView,user, result); break;
+            case 3:
+                handleProfileStep3(modelAndView,user, status, action,result); break;
+            //TODO create this page
+            default:
+                modelAndView.setViewName("Error");
+
+        }
+        return modelAndView;
+    }
+
+    private void handleProfileStep1(ModelAndView modelAndView, User user, BindingResult result) {
+        modelAndView.setViewName("Profile-Completion/step2");
+    }
+
+    private void handleProfileStep2(ModelAndView modelAndView, User user, BindingResult result) {
+        modelAndView.setViewName("Profile-Completion/step3");
+    }
+
+    private void handleProfileStep3(ModelAndView modelAndView, User user, SessionStatus status, String action, BindingResult result) {
+        modelAndView.setViewName("Admin");
     }
 
     @RequestMapping(path = "/forgotPassword", method = {RequestMethod.GET})
-    public String registrationPreview() throws IOException {
+    public String forgotPassword() throws IOException {
         logger.info(" vkj inside forgot password ");
         //user.setImage(file.getBytes());
         return "ForgotPassword";
     }
 
-//    @RequestMapping(value = "/registration1", method = RequestMethod.GET)
-//    public ModelAndView registration1(HttpSession session) {
-//        logger.info("vkj session 1 " + session.getId());
-//        ModelAndView modelAndView = new ModelAndView();
-//        User user = new User();
-//        modelAndView.addObject("user", user);
-//        modelAndView.setViewName("RequestRegistration/Step1");
-//        session.setAttribute("user", user);
-//        return modelAndView;
-//    }
-//
-//
-//    @RequestMapping(value = "/registration2", method = RequestMethod.GET)
-//    public ModelAndView registration2(@Valid User user2, @RequestParam String role, HttpSession session, ModelAndView modelAndView) {
-//        logger.info("vkjs2 " + session.getId());
-//        User user = (User) session.getAttribute("user");
-//        logger.info("vkj : " + role);
-//        //user.getUserInfo().setRole(role);
-//        logger.info(String.valueOf(user));
-//        logger.info(String.valueOf(user2));
-//        modelAndView.addObject("user", user);
-//        modelAndView.setViewName("RequestRegistration/Step2");
-//        logger.info("model " + modelAndView.getModel().get("user"));
-//        return modelAndView;
-//    }
-//
-//    @RequestMapping(value = "/registration3", method = RequestMethod.GET)
-//    public ModelAndView registration3(@Valid User user2, ModelAndView modelAndView, HttpSession session) {
-//        logger.info("vkjs2 " + session.getId());
-//        User user = (User) session.getAttribute("user");
-//        logger.info(String.valueOf(user));
-//        logger.info(String.valueOf(user2));
-//        modelAndView.setViewName("RequestRegistration/Step3");
-//        modelAndView.addObject("user", user);
-//        logger.info("model " + modelAndView.getModel().get("user"));
-//        return modelAndView;
-//    }
-//
-//    //@RequestMapping(value = "/registration", method = RequestMethod.POST)
-//    public ModelAndView createNewUser(@Valid User user2, HttpSession session) {
-//        User user = (User) session.getAttribute("user");
-//        logger.info(String.valueOf(user));
-//        logger.info(String.valueOf(user2));
-//        ModelAndView modelAndView = new ModelAndView();
-//        User userExists = userService.findUserByEmail(user.getEmail());
-//
-//        userService.saveUser(user);
-//        modelAndView.addObject("successMessage", "Registration Successful.");
-//        modelAndView.addObject("user", new User());
-//        modelAndView.setViewName("index");
-//
-//        return modelAndView;
-//    }
-
-
-    @RequestMapping(value = "/access-denied", method = RequestMethod.GET)
+ @RequestMapping(value = "/access-denied", method = RequestMethod.GET)
     public ModelAndView test() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("403");
@@ -241,34 +210,16 @@ public class LoginController {
     }
 
 
-    /*@RequestMapping(value = "/home", method = RequestMethod.GET)
-    public ModelAndView home() {
-        ModelAndView modelAndView = new ModelAndView();
-        Role role = new Role();
-        Role role2 = new Role();
-        role = roleService.findRole("ADMIN");
-        role2 = roleService.findRole("USER");
-        List<User> users = new ArrayList<>();
-        List<User> users2 = new ArrayList<>();
-        users = userService.findUserbyRole(role);
-        users2 = userService.findUserbyRole(role2);
-        List<Task> tasks = new ArrayList<>();
-        tasks = taskService.findAll();
-        int taskCount = tasks.size();
-        int adminCount = users.size();
-        int userCount = users2.size();
-        modelAndView.addObject("adminCount", adminCount);//Authentication for NavBar
-        modelAndView.addObject("userCount", userCount);//Authentication for NavBar
-        modelAndView.addObject("taskCount", taskCount);//Authentication for NavBar
-        //-----------------------------------------
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User loginUser = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("control", loginUser.getRole().getRole());//Authentication for NavBar
-        modelAndView.addObject("auth", loginUser);
-        List<UserTask> userTasks = new ArrayList<>();
-        userTasks = userTaskService.findByUser(loginUser);
-        modelAndView.addObject("userTaskSize", userTasks.size());
-        modelAndView.setViewName("home");
-        return modelAndView;
-    }*/
+    @RequestMapping(path = "/profilePicUpload", method = RequestMethod.POST)
+    public @ResponseBody String profilePicUpload(@RequestParam(name = "image", required = false) MultipartFile file,
+                                   @RequestPart(name = "image" , required = false) MultipartFile file1,
+                              final HttpSession session, final @ModelAttribute("user") User user, BindingResult result
+                              ) throws IOException {
+       logger.info("Received data 1 : "+file);
+       logger.info("Received data  2: "+file1);
+       file1.getBytes();
+       //return file.getBytes();
+        user.setImage(file.getBytes());
+       return Base64.getEncoder().encodeToString(file.getBytes());
+    }
 }

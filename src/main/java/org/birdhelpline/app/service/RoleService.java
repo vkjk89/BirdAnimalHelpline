@@ -1,11 +1,5 @@
 package org.birdhelpline.app.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.birdhelpline.app.model.Role;
-import org.birdhelpline.app.repository.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("roleService")

@@ -1,16 +1,15 @@
 package org.birdhelpline.app.controller;
 
+import org.birdhelpline.app.model.User;
 import org.birdhelpline.app.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -25,22 +24,30 @@ public class DefaultController {
     UserService userService;
 
     @GetMapping(value = "/default")
-    public String handleLogin(HttpServletRequest request) {
+    public ModelAndView handleLogin(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("Volunteer");
         Principal principal = request.getUserPrincipal();
-        logger.info("Inside handleLogin for user : "+ principal.getName());
-        if(userService.firstTimeLogin(principal.getName())) {
-            logger.info("User login for first time so redirecting to profile completion page");
-            return "Profile-Completion/step1";
-        }
         System.out.println(request.getUserPrincipal());
-        //if(request.isUserInRole())
+        logger.info("Inside handleLogin for user : "+ principal.getName());
+        User user = userService.findUserByUserName(principal.getName());
+        if(user == null) {
+            modelAndView.setViewName("Error");
+            return modelAndView;
+        }
+
+        if(user.getLastLoginDate() == null) {
+            logger.info("User login for first time so redirecting to profile completion page");
+            modelAndView.addObject("user", user);
+            modelAndView.setViewName("Profile-Completion/step1");
+            return modelAndView;
+        }
+
         Collection<? extends GrantedAuthority> auth = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
         for(GrantedAuthority authority : auth) {
             if(authority.getAuthority().equalsIgnoreCase("ADMIN")){
-                return "Admin";
+                modelAndView.setViewName("Admin");
             }
         }
-
-        return "Volunteer";
+        return  modelAndView;
     }
 }
