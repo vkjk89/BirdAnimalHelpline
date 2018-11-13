@@ -142,6 +142,10 @@ button {
   padding-left: 80vw;
 }
 
+.footer img {
+  width: 10vw;
+}
+
 @media only screen and (max-width: 360px){
   .heading {
     padding: 3vw;

@@ -174,9 +174,9 @@ input[name = "security-answer"] {
     margin-left: 55vw;
 }
 
-    /*body * {
+    body * {
         border: 1px solid burlywood;
-    }*/
+    }
 
 @media only screen and (max-width: 340px) {
     .heading {
