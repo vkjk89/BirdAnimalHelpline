@@ -66,5 +66,14 @@
         </div>
     </form>
 
+    <script>
+        var d = new Date();
+        var maxyear = d.getFullYear() - 10;
+        document.getElementById('birthdate').setAttribute('max', maxyear + '-12-31' );
+
+        var minyear = d.getFullYear() - 100;
+        document.getElementById('birthdate').setAttribute('min', minyear + '-01-01' );
+    </script>
+
 </body>
 </html>

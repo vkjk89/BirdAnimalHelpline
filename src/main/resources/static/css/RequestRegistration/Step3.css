@@ -140,7 +140,7 @@ input[type = "text"], input[type = "password"]{
     border-radius: 5px;
     padding: 2vw;
     width: 60vw;
-    margin-left: 25vw;
+    margin-left: 20vw;
     letter-spacing: 1px;
     font-size: 0.9em;
 }
@@ -183,12 +183,14 @@ button {
     background-color: #374047c9;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
+    color: white;
 }
 
 .btn-group button:nth-child(2) {
     background-color: black;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+    color: white;
 }
 
 #previous {

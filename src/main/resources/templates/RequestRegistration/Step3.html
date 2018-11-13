@@ -11,9 +11,6 @@
 </head>
 <body>
 
-
-
-
     <div class = "heading">
         Join Us
     </div>
@@ -36,7 +33,7 @@
                         <b>Please make sure that the picture you choose to upload doesn't contain any quotes or any picture other than yourself, as this picture will be used for further identifiction and verification.</b>
                     </div>
                     <input type = "file" name = "dp-image" id = "Upload your profile picture" style = "display:none; top: 0; right: 0; position: absolute;" accept = "image/*" required>
-                    <input th:field="*{userName}" type = "text" name = "username-selection" placeholder="Username" pattern="[A-Za-z]{4}" title="Select valid username" autocomplete="off" required>
+                    <input th:field="*{userName}" type = "text" name = "username-selection" placeholder="Username" pattern="[A-Za-z0-9+@+\]{4,}" title="4 characters minimum" autocomplete="off" required>
                     <ul th:if="${#fields.hasErrors('userName')}">
                         <li th:each="err : ${#fields.errors('userName')}" th:text="${err}">That username is taken. Try another. </li>
                     </ul>
@@ -47,12 +44,13 @@
             </div>
 
             <div id="footer-btns" class="footer-btns">
-                <button type="submit"><img src="/static/img/previous-button-1.png" th:src="@{/img/previous-button-1.png}" id="previous"></button>
+                <button type="button"><img src="/static/img/previous-button-1.png" th:src="@{/img/previous-button-1.png}" id="previous"></button>
                 
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <button type = "submit" name="preview" id="preview" value="Preview">Preview</button>
-                        <button type="submit" name="submit" id="submit">Submit</button>
+                    <button type = "submit" name="preview" id="preview" value="Preview">Preview</button>
+                    <button type="submit" name="submit" id="submit">Submit</button>
                 </div>
+
             </div>
             <input type="hidden" name="page" value="3">
         </main>
@@ -61,16 +59,25 @@
     <script src="/static/js/jquery-3.3.1.slim.min.js" th:src="@{/js/jquery-3.3.1.slim.min.js}"></script>
     <script>
         $(document).ready(function(){
-            $("#preview").click(function(){
+            $('#preview, #submit').click(dp_error);
+            $('input[name="dp-image"]').change(dp_error);
+            function dp_error(){
                 if(document.getElementById("Upload your profile picture").files.length == 0 ){
                     document.getElementById('dp-error').style.display = "block";
                     document.getElementById('dp-img').style.border = "3px dashed red";
                     document.getElementById('dp-label-2').style.display = "none";
                 }
-            });
-            $('[name=image]').change(function(){
-                //alert("A file has been selected.");
-            });
+                else if(document.getElementById("Upload your profile picture").files.length == 1 ){
+                    document.getElementById('dp-error').style.display = "none";
+                    document.getElementById('dp-img').style.border = "none";
+                    document.getElementById('dp-label-2').style.display = "block";
+                }
+                else {
+                    document.getElementById('dp-error').style.display = "block";
+                    document.getElementById('dp-img').style.border = "3px dashed red";
+                    document.getElementById('dp-label-2').style.display = "none";
+                }
+            }
         });
     </script>
 </body>
