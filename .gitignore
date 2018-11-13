@@ -334,7 +334,6 @@ ASALocalRun/
 dist
 BirdHelplineUI
 *.css.map
-*.json
 target/
 
 # Elastic Beanstalk Files

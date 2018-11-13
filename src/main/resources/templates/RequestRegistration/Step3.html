@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Request Registration</title>
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" href="/static/css/basic-template.css" th:href="@{/css/basic-template.css}">
-    <link rel="stylesheet" href="/static/css/RequestRegistration/step3.css" th:href="@{/css/RequestRegistration/step3.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
+    <link rel="stylesheet" th:href="@{/css/RequestRegistration/step3.css}" href="/static/css/RequestRegistration/Step3.css">
     <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <script src="/static/js/jquery.iframe-transport.js" th:src="@{/js/jquery.iframe-transport.js}"></script>
     <script src="/static/js/jquery.ui.widget.js" th:src="@{/js/jquery.ui.widget.js}"></script>
     <script src="/static/js/jquery.fileupload.js" th:src="@{/js/jquery.fileupload.js}"></script>
     <script>
-            $('#image').change(function () {
+            $('#Upload your profile picture').change(function () {
                 var formData = new FormData();
-                formData.append('image', this.files[0]);
+                formData.append('Upload your profile picture', this.files[0]);
                 $.ajax({
                 url: 'profilePicUpload',
                 type: 'POST',
@@ -37,7 +37,6 @@
 
             });
         });
-        });
     </script>
 </head>
 <body>
@@ -57,9 +56,9 @@
 
         <main>
             <div id="step3" class = "step3">
-                    <label for = "image" id = "dp-label"><img th:src="@{/img/display-picture11.png}" src="/static/img/display-picture11.png" id ="dp-img"></label>
-                    <label for="image" id="dp-error">Select valid Profile picture.</label>
-                    <label for="image" id="dp-label-2">Upload your profile picture</label>
+                    <label for = "Upload your profile picture" id = "dp-label"><img th:src="@{/img/display-picture11.png}" src="/static/img/display-picture11.png" id ="dp-img"></label>
+                    <label for="Upload your profile picture" id="dp-error">Select valid Profile picture.</label>
+                    <label for="Upload your profile picture" id="dp-label-2">Upload your profile picture</label>
                     <div id = "warning">
                         <b>Please make sure that the picture you choose to upload doesn't contain any quotes or any picture other than yourself, as this picture will be used for further identifiction and verification.</b>
                     </div>
