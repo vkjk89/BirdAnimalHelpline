@@ -105,8 +105,14 @@ input[type = "text"]:focus, input[name = "securityanswer"]:focus, input[name = "
 input[name = "first-name"], input[name = "last-name"] {
     display: inline-block;
     margin-top: 3vh;
-    width: 37vw;
+    width: 36.75vw;
     box-sizing: border-box;
+}
+
+#birth-date-div {
+    box-sizing: border-box;
+    width: 74.5vw;
+    display: inline-block;
 }
 
 label[name = "birthdate"] label {
@@ -116,7 +122,7 @@ label[name = "birthdate"] label {
 
 input[type = "date"] {
     box-sizing: border-box;
-    margin-left: 12vw;
+    float: right;
     width: 37vw;
     padding: 3vw;
 }
@@ -154,11 +160,11 @@ p[id = "security-para"] {
 
 select {
     padding: 2vw;
+    width: 74.5vw;
 }
 
 input[name = "security-answer"] {
     box-sizing: border-box;
-    padding: 2vw;
     padding-left: 3vw;
     width: 74.5vw;
     margin-bottom: -1vh;
@@ -170,12 +176,13 @@ input[name = "security-answer"] {
 
 #previous {
     width: 10vw;
+    margin-left: 7vw;
 }
 
 #next {
     width: 10vw;
     margin-top: 2vh;
-    margin-left: 55vw;
+    margin-left: 50vw;
 }
 
     /*body * {

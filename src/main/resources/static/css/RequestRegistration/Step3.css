@@ -103,33 +103,35 @@ ul {
     padding: 0;
     display: block;
     margin-top: 2vh;
-    margin-left: 2vw;
     margin: 0;
+    margin-left: 10vw;
 }
 
 ul li {
+    box-sizing: border-box;
     position: relative;
+    width: 70vw;
     color: rgb(255,0,0,0.8);
     padding: 2vw;
     font-size: 0.73em;
-    padding-left: 12vw;
 }
 
-main div img{
+main div img {
     margin-top: 1.5vh;
     width : 15vh;
 }
 
 #dp-label-2 {
-    font-size: 1em; 
-    display: block; 
+    font-size: 1em;
+    display: block;
     font-size: 0.9em;
 }
 
 #dp-error {
-    display: none; 
+    display: none;
     color: red;
-    border: red;}
+    border: red;
+}
 
 main div {
     position: relative;
@@ -138,13 +140,13 @@ main div {
 
 input[type = "text"], input[type = "password"]{
     box-sizing: border-box;
+    width: 60vw;
     margin-top: 3vh;
     display: block;
     border: 1px solid #cccccc;
     border-radius: 5px;
     padding: 2vw;
-    width: 60vw;
-    margin-left: 20vw;
+    margin-left: 15vw;
     letter-spacing: 1px;
     font-size: 0.9em;
 }
@@ -209,14 +211,14 @@ button {
     margin-left: -35vw;
 }
 
-        body * {
+        /*body * {
             border: 1px solid green;
-        }
+        }*/
 
 @media only screen and (max-width: 320px){
-    main div img{
+    main div img {
         padding-top: 1vh;
-        width : 10vh;      
+        width : 10vh;
     }
     #dp-label-2 {
         font-size: 0.7em;
@@ -232,7 +234,7 @@ button {
     }
     #warning {
         font-size: 0.65em;
-    }    
+    }
     .btn-group {
         font-size: 0.8em;
     }

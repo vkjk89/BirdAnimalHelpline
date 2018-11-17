@@ -31,11 +31,12 @@
                 <input th:field="*{firstName}" type = "text" placeholder="First Name" name = "first-name" autofocus required autocomplete="off" pattern="[A-Za-z]{0,}" title="Your First Name">
                 <input th:field="*{lastName}" type = "text" placeholder="Last Name" name = "last-name" required autocomplete="off" pattern="[A-Za-z]{0,}" title="Your Last Name"><br>
 
+                <div class="birth-date-div" id="birth-date-div">
                 <label name = "birthdate" id = "DOB">Date of Birth: </label>
-                <input th:field="*{dob}" type="date" name="birthdate" id = "birthdate" min="1930-01-01" max="2010-12-31" required autocomplete="off"><br>
+                <input th:field="*{dob}" type="date" name="birthdate" id = "birthdate" min="1930-01-01" max="2010-12-31" required autocomplete="off">
+                </div>
                 
                 <input type = "text" value="+91" name = "contact-number-1" disabled style="color:black;"> -
-                <!--<input  th:if="${user.mobile} == 0"  type = "number" placeholder="Mobile Number" name = "contact-number-2" required min="5000000000" max="9999999999" title="Ten digit mobile no. without any code"><br>-->
                 <input  th:field="*{mobile}" type = "number" placeholder="Mobile Number" name = "contact-number-2" required min="5000000000" max="9999999999" title="Ten digit mobile no. without any code"><br>
 
                 <label name = "gender">Gender: </label>
@@ -62,8 +63,8 @@
         </main>
 
         <div id="bottom-nav-bar" class="bottom-nav-bar">
-            <button type="button" th:href="@{/registration}"><img src="/static/img/previous-button-1.png" th:src="@{/img/previous-button-1.png}" id="previous"></button>
-            <button  type="submit"><img src="/static/img/next-button11.png" th:src="@{/img/next-button11.png}" id="next"></button>
+            <a href="Step1.html"><img src="/static/img/previous-button-1.png" th:src="@{/img/previous-button-1.png}" id="previous"></button>
+            <button  type="submit"><img src="/static/img/next-button11.png" th:src="@{/img/next-button11.png}" id="next"></a>
         </div>
     </form>
 

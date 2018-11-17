@@ -5,8 +5,174 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
+    <link rel="stylesheet" th:href="@{/css/Vol-dashboard.css}" href="/static/css/Vol-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    
+    <nav id="top-nav">
+        <span id="profile-options" onclick="openSideNav();">&#9776;</span>
+        <span id="navbar-username">#Username</span>
+        <button type="button" id="user-dp"><img src="/static/img/display-picture11.png" th:src="@{/img/display-picture11.png}" width="auto" height="25vw" alt="User-Display-Picture"></button>
+    </nav>
+
+    <nav id="side-nav">
+        <section id="top-part">
+            <span id="close-btn" onclick="closeSideNav();">&times;</span>
+            <div id="background-img">
+                <img src="/static/img/side-nav-background-nav.png" th:src="@{/img/}" width="308vw" height="auto" alt="Side-Nav-Background">
+            </div>
+            <div id="side-nav-user-dp">
+                <img src="/static/img/display-picture1.png" width="80px" height="auto" alt="Side-Nav-Display-Picture">
+            </div>
+            <span id="user_name">#First_Last_Name</span>
+            <span id="user_role">#User_Role</span>
+        </section>
+        <section id="profile-links">
+            <button><a href="#" th:href="@{}">Profile</a></button>
+            <button><a href="#" th:href="@{}">Selected Pincodes and Addresses</a></button>
+        </section>
+        <section id="profile-changes">
+            <button><a href="#" th:href="@{}">Change PIN</a></button>
+            <button><a href="#" th:href="@{}">Change Mobile No.</a></button>
+            <button><a href="#" th:href="@{}">Change Email Address</a></button>
+        </section>
+        <section id="social-links">
+            <div style="font-size:1.3em; letter-spacing:0.75px">Spread the word!</div><br>
+            <a class="fa fa-facebook" href="https://www.facebook.com/birdhelpline/"></a>
+            <a class="fa fa-whatsapp"></a>
+            <a class="fa fa-twitter"></a>
+        </section>
+    </nav>
+
+    <section id="page-heading">
+        <h1>Welome, <span id="#user_full_name">#First_Last_Name</span></h1>
+        <span id="cases-accepted">246</span>
+    </section>
+
+    <section id="my-cases">
+        <div class="search-case" id="search-case">
+            <input type="search" placeholder="Search Case..." id="search-case-input" name="search-case-input">
+            <div id="search-results-div">
+                <div id="results-tab-div">
+                    <span id="results-tab-active" class="active-active">Active</span>
+                    <span id="results-tab-recent">Recent</span>
+                    <span id="results-tab-closed">Closed</span>
+                </div>
+                <div id="results-content">
+                    <div id="results-content-active" class="results-content-animation">#Active Cases</div>
+                    <div id="results-content-recent">#Recent Cases</div>
+                    <div id="results-content-closed">#Closed Cases</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="accept-case" id="accept-case">
+        <div id="heading-accept-case">Accept Case</div>
+        <div id="case-details">
+            <div id="case-id">#Case-ID</div>
+            <span id="animal-type">#Animal_Type</span>
+            <span id="animal-name">#Animal_Name</span>
+            <div id="case-condition">Condition: Eg: Broken leg.</div>
+            <div id="contact-info">
+                <span onclick="case_details();">Contact Information</span><span id="downward-arrow-animation" onclick="case_details();">&#x25BC;</span><br>
+                <span>Name: </span><span id="contact-name">#Name</span><br>
+                <span>Contact Number: </span><span id="contact-number">#Contact_Number</span><br>
+                <span>Location: </span><span id="contact-location">#Location</span>
+            </div>
+            <div id="accept-decline">
+                <button type="submit" id="accept">Accept</button>
+                <button type="submit" id="decline">I am helpless</button>
+                <span id="celebrations"><img src="/static/img/pigeon.jpg" th:src="@{/img/pigeon.png}" width="45vw" alt="Case-animal/bird"> Thank you! You just saved my life!</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="bottom-action-bar">
+        <button type="button" class="action-bar-home-btn" id="home"><img src="/static/img/home-white.png" th:src="@{/img/home-white.png}" alt="home"></button>
+        <button type="button" class="action-bar-home-btn" id="logout"><img src="/static/img/logout-white.png" th:src="@{/img/logout-white.png}" alt="logout"></button>
+        <button type="button" class="action-bar-home-btn" id="contact-us"><img src="/static/img/contact-us-white.png" th:src="@{/img/contact-us-white.png}" alt="contact-us"></button>
+    </section>
+
+<script>
+    document.getElementById('results-tab-active').onclick = function active_active(){
+        this.classList.add('active-active');
+        document.getElementById('results-tab-recent').classList.remove('active-recent');
+        document.getElementById('results-tab-closed').classList.remove('active-closed');
+
+        document.getElementById('results-content-active').style.display = "block";
+        document.getElementById('results-content-recent').style.display = "none";
+        document.getElementById('results-content-closed').style.display = "none";
+
+        document.getElementById('results-content-active').classList.add('results-content-animation');
+        document.getElementById('results-content-recent').classList.remove('results-content-animation');
+        document.getElementById('results-content-closed').classList.remove('results-content-animation');
+    }
+    document.getElementById('results-tab-recent').onclick = function recent_active(){
+        this.classList.add('active-recent');
+        document.getElementById('results-tab-active').classList.remove('active-active');
+        document.getElementById('results-tab-closed').classList.remove('active-closed');
+
+        document.getElementById('results-content-recent').style.display = "block";
+        document.getElementById('results-content-active').style.display = "none";
+        document.getElementById('results-content-closed').style.display = "none";
+
+        document.getElementById('results-content-active').classList.remove('results-content-animation');
+        document.getElementById('results-content-recent').classList.add('results-content-animation');
+        document.getElementById('results-content-closed').classList.remove('results-content-animation');
+    }
+    document.getElementById('results-tab-closed').onclick = function closed_active(){
+        this.classList.add('active-closed');
+        document.getElementById('results-tab-active').classList.remove('active-active');
+        document.getElementById('results-tab-recent').classList.remove('active-recent');
+
+        document.getElementById('results-content-closed').style.display = "block";
+        document.getElementById('results-content-active').style.display = "none";
+        document.getElementById('results-content-recent').style.display = "none";
+
+        document.getElementById('results-content-active').classList.remove('results-content-animation');
+        document.getElementById('results-content-recent').classList.remove('results-content-animation');
+        document.getElementById('results-content-closed').classList.add('results-content-animation');
+    }
+
+    var anim_state = false;
+    function case_details(){
+        anim_state = !anim_state;
+        if(anim_state === true){
+            document.getElementById('case-details').style.height = "auto";
+            window.scrollTo(0, document.body.scrollHeight);
+            document.getElementById('downward-arrow-animation').innerHTML = "&#x25B2;";
+        }
+        else {
+            document.getElementById('case-details').style.height = "100px";
+            document.getElementById('downward-arrow-animation').innerHTML = "&#x25BC;";
+        }
+    }
+
+    document.getElementById('accept').onclick = function accept(){
+        document.getElementById('celebrations').style.display = "block";
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    document.getElementById('decline').onclick = function decline(){
+        document.getElementById('celebrations').style.display = "none";
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    if(document.getElementById('cases-accepted').innerHTML > 200) {
+        document.getElementById('cases-accepted').style.color = "burlywood";
+    }
+
+    function openSideNav(){
+        document.getElementById('side-nav').style.display = "block";
+        document.getElementById('side-nav').classList.add('side-nav-anim');
+    }
+
+    function closeSideNav(){
+        document.getElementById('side-nav').classList.remove('side-nav-anim');
+        document.getElementById('side-nav').style.display = "none";
+    }
+</script>
 </body>
 </html>
