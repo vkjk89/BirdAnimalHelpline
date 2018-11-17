@@ -5,7 +5,7 @@ body {
 
 a {
     color: white;
-    font-size: 1.3em;
+    font-size: 1.1em;
     letter-spacing: 1px;
 }
 
@@ -86,68 +86,70 @@ a {
 
 #close-btn {
     position: absolute;
-    font-size: 3em;
-    font-weight: 600;
-    top: -15px;
-    left: 5px;
+    font-size: 4em;
+    top: -5vw;
+    left: 2vw;
     color: black;
     z-index: 11;
-    /*transition: 0.3s;*/
+}
+
+#bg-image {
+    width: 75vw;
 }
 
 #side-nav-user-dp {
-    position: absolute;
-    top: 30vw;
-    left: 3vw;
-    width: 80px;
-    height: 80px;
+    position: relative;
+    width: 20vw;
+    height: 20vw;
     border-radius: 50%;
     background-color: white;
     border: 1px solid white;
-    /*transition: 0.3s;*/
+    top: -8vw;
+    left: 3vw;
+}
+
+#side-nav-user-dp img {
+    width: 20vw;
 }
 
 #user_name {
-    position: absolute;
-    top: 36vw;
-    left: calc(3vw + 80px + 3vw);
+    position: relative;
+    display: block;
+    top: -20vw;
+    float: right;
+    margin-right: 3vw;
     font-size: 1.2em;
-    line-height: 5vw;
-    /*transition: 0.3s;*/
 }
 
 #user_role {
-    position: absolute;
-    top: calc(36vw + 7vw);
-    right: 3vw;
+    position: relative;
+    display: block;
+    top: -13vw;
+    right: -34.5vw;
+    float: right;
     font-size: 1.2em;
-    /*transition: 0.3s;*/
 }
 #top-part {
-    height: calc(36vw + 8vw + 10vw);
     border-bottom: 1px solid white;
-    /*transition: 0.3s;*/
 }
 
 #profile-links {
+    position: relative;
     text-align: center;
-    width: 100%;
     border-bottom: 1px solid white;
-    /*transition: 0.3s;*/
+    top: -2vh;
 }
 
 #profile-changes {
+    position: relative;
     border-bottom: 1px solid white;
-    /*transition: 0.3s;*/
 }
 
 #social-links {
     box-sizing: border-box;
-    position: absolute;
-    padding: 5vw;
-    bottom: 15vw;
-    width: 65vw;
-    /*transition: 0.3s;*/
+    position: relative;
+    padding: 7vw;
+    padding-top: 10vw;
 }
 
 .fa {
@@ -170,9 +172,11 @@ h1 {
     display: inline-block;
 }
 
-#cases-accepted{
+#cases-accepted, #cases-rejected {
+    color: burlywood;
     float: right;
     font-weight: 500;
+    margin-left: 2vw;
 }
 /*-----------------------SECTION-CASE-ACCEPTANCE--------------------*/
 #my-cases{
@@ -180,12 +184,13 @@ h1 {
 }
 
 #search-case {
+    border-radius: 5px;
     box-shadow: 10px 10px 20px #BBB;
 }
 
 input[type="search"]{
     box-sizing: border-box;
-    padding: 3vw;
+    padding: 4vw;
     background-image: url('/static/img/search-1.png');
     background-repeat: no-repeat;
     background-position: 3vw 2.5vw;
@@ -222,7 +227,7 @@ input[type="search"]::placeholder {
 
 #results-tab-div span {
     box-sizing: border-box;
-    width: 28.34vw;
+    width: 28.33vw;
     background-color: #333333;
     padding: 2vw;
     text-align: center;
@@ -230,13 +235,19 @@ input[type="search"]::placeholder {
     letter-spacing: 1px;
 }
 
-.active-active {    
+.active-active {
+    font-weight: 900;
+    font-size: 1.2em;
 }
 
 .active-recent{
+    font-weight: 900;
+    font-size: 1.2em;
 }
 
 .active-closed{
+    font-weight: 900;
+    font-size: 1.2em;
 }
 
 #results-content {
@@ -279,6 +290,7 @@ input[type="search"]::placeholder {
 }
 
 .accept-case-shadow {
+    border-radius: 5px;
     box-shadow: 10px 10px 20px #BBB; 
 }
 
