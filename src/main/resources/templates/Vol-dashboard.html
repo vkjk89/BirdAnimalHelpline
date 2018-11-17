@@ -69,22 +69,24 @@
     </section>
 
     <section class="accept-case" id="accept-case">
-        <div id="heading-accept-case">Accept Case</div>
-        <div id="case-details">
-            <div id="case-id">#Case-ID</div>
-            <span id="animal-type">#Animal_Type</span>
-            <span id="animal-name">#Animal_Name</span>
-            <div id="case-condition">Condition: Eg: Broken leg.</div>
-            <div id="contact-info">
-                <span onclick="case_details();">Contact Information</span><span id="downward-arrow-animation" onclick="case_details();">&#x25BC;</span><br>
-                <span>Name: </span><span id="contact-name">#Name</span><br>
-                <span>Contact Number: </span><span id="contact-number">#Contact_Number</span><br>
-                <span>Location: </span><span id="contact-location">#Location</span>
-            </div>
-            <div id="accept-decline">
-                <button type="submit" id="accept">Accept</button>
-                <button type="submit" id="decline">I am helpless</button>
-                <span id="celebrations"><img src="/static/img/pigeon.jpg" th:src="@{/img/pigeon.png}" width="45vw" alt="Case-animal/bird"> Thank you! You just saved my life!</span>
+        <div class="accept-case-shadow">
+            <div id="heading-accept-case">Accept Case</div>
+            <div id="case-details">
+                <div id="case-id">#Case-ID</div>
+                <span id="animal-type">#Animal_Type</span>
+                <span id="animal-name">#Animal_Name</span>
+                <div id="case-condition">Condition: Eg: Broken leg.</div>
+                <div id="contact-info">
+                    <span onclick="case_details();">Contact Information</span><span id="downward-arrow-animation" onclick="case_details();">&#x25BC;</span><br>
+                    <span>Name: </span><span id="contact-name">#Name</span><br>
+                    <span>Contact Number: </span><span id="contact-number">#Contact_Number</span><br>
+                    <span>Location: </span><span id="contact-location">#Location</span>
+                </div>
+                <div id="accept-decline">
+                    <button type="submit" id="accept">Accept</button>
+                    <button type="submit" id="decline">I am helpless</button>
+                    <span id="celebrations"><img src="/static/img/pigeon.jpg" th:src="@{/img/pigeon.png}" width="45vw" alt="Case-animal/bird"> Thank you! You just saved my life!</span>
+                </div>
             </div>
         </div>
     </section>
@@ -167,11 +169,19 @@
     function openSideNav(){
         document.getElementById('side-nav').style.display = "block";
         document.getElementById('side-nav').classList.add('side-nav-anim');
+        document.getElementById('top-nav').style.opacity = "0.1";
+        document.getElementById('page-heading').style.opacity = "0.1";
+        document.getElementById('my-cases').style.opacity = "0.1";
+        document.getElementById('accept-case').style.opacity = "0.1";
     }
 
     function closeSideNav(){
         document.getElementById('side-nav').classList.remove('side-nav-anim');
         document.getElementById('side-nav').style.display = "none";
+        document.getElementById('page-heading').style.opacity = "1";
+        document.getElementById('top-nav').style.opacity = "1";
+        document.getElementById('my-cases').style.opacity = "1";
+        document.getElementById('accept-case').style.opacity = "1";
     }
 </script>
 </body>
