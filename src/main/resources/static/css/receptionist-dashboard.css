@@ -1,0 +1,152 @@
+/*-----------------------------GLOBAL-------------------------*/
+
+
+/*----------------------------TOP-NAV-------------------------*/
+#top-nav {
+    box-sizing: border-box;
+    height: 6vh;
+    background-color: #333;
+    padding: 0;
+    color: white;
+}
+
+#left-side {
+    float: left;
+    margin-left: 1vw;
+}
+
+#home-btn {
+    box-sizing: border-box;
+    padding: 0;
+    color: white;
+    height: 6vh;
+}
+
+#home-btn img {
+    box-sizing: border-box;
+    width: 4vh;
+}
+
+#home-btn-txt {
+    position: relative;
+    box-sizing: border-box;
+    font-size: 1em;
+    height: 3vh;
+    top: -1vh;
+    margin-left: 0.2vw;
+}
+
+#right-side {
+    box-sizing: border-box;
+    float: right;
+    height: 6vh;
+    margin-right: 1vw;
+}
+
+#user-dp-btn {
+    box-sizing: border-box;
+    padding: 0;
+    background-color: white;
+    border: 2px solid white;
+    border-radius: 5px;
+    margin-top: 1vh;
+    height: 4vh;
+}
+
+#user-dp-btn img {
+    width: 3vh;
+}
+
+#user-name {
+    position: relative;
+    box-sizing: border-box;
+    padding: 0;
+    color: white;
+    padding: 1vh;
+    top: -0.5vh;
+    margin: 0vw 0.25vw;
+}
+
+#more-btn {
+    position: relative;
+    box-sizing: border-box;
+    top: -0.5vh;
+}
+
+#home-btn, #home-btn-txt, #user-dp-btn, #user-name, #more-btn {
+    opacity: 0.8;
+}
+
+#home-btn:hover, #home-btn-txt:hover, #user-dp-btn:hover, #user-name:hover, #more-btn:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+/*----------------------------MAIN-------------------------*/
+main {
+    display: inline-block;
+    box-sizing: border-box;
+    height: 83.0vh;
+    width: 70vw;
+    margin: 5vh;
+    border: 1px solid #CCC;
+    border-radius: 10px;
+    text-align: left;
+    background-color: rgb(248,248,248);
+}
+
+#heading-raise-a-case, #heading-my-cases, #heading-user-data-change-approvals {
+    position: relative;
+    box-sizing: border-box;
+    padding: 1vw;
+    height: 6vh;
+    background-color: #333;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: white;
+    width: 70vw;
+}
+
+#heading-my-cases, #heading-user-data-change-approvals {
+    display: none;
+}
+
+#heading-raise-a-case span, #heading-my-cases span, #heading-user-data-change-approvals span {
+    position: relative;
+    box-sizing: border-box;
+    color: white;
+    padding-left: 0.5vw;
+}
+
+#raise-a-case-content, #my-cases-content, #user-data-change-approvals-content {
+    position: absolute;
+    box-sizing: border-box;
+    display: block;
+    color: black;
+    padding-left: 1.5vw;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    padding-right: 1.5vw;
+}
+
+#my-cases-content, #user-data-change-approvals-content {
+    display: none;
+}
+
+/*------------------------CARDS-RIGHT-SIDE-----------------------*/
+#card-right-side {
+    display: inline-block;
+    border: 1px solid #CCC;
+    height: 83vh;
+    width: calc(100vw - 70vw - 6vh - 15vh);
+    margin: 5vh;
+    border-radius: 10px;
+    margin-left: 0;
+    text-align: left;
+}
+
+
+
+        /*body * {
+            border: 1px solid burlywood;
+        }*/

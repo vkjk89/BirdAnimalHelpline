@@ -62,7 +62,6 @@ a {
     position: absolute;
     top: 0;
     right: 0;
-    height: 100vh;
     background-color: #1fc8db;
     background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5ed 75%);
     color: white;
@@ -161,8 +160,12 @@ a {
 
 /*------------------------------HEADING-----------------------------*/
 #page-heading {
-    padding: 5vw;
+    box-sizing: border-box;
+    margin-left: 7.5vw;
+    width: 85vw;
+    padding: 5vw 0vw;
     border-bottom: 1px solid #374047;
+    font-size: 0.8em;
 }
 
 h1 {
@@ -177,6 +180,7 @@ h1 {
     float: right;
     font-weight: 500;
     margin-left: 2vw;
+    font-size: 1.2em;
 }
 /*-----------------------SECTION-CASE-ACCEPTANCE--------------------*/
 #my-cases{
@@ -410,5 +414,11 @@ input[type="search"]::placeholder {
 @media only screen and (max-width: 360px) {
     body {
         font-size: 0.8em;
+    }
+}
+
+@media only screen and (min-width: 361px) {
+    #side-nav {
+        height: 100vh;
     }
 }
