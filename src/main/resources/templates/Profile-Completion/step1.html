@@ -20,10 +20,10 @@
                 <p class = "title">Home Address:</p>
 
                 <label for="address-line1">Full Name</label>
-                <input th:field="*{homeAddr.fullName}" type = "text" name = "full-name" placeholder="Full Name" autofocus>
+                <input th:field="*{homeAddr.fullName}" id="address-line1" type = "text" name = "full-name" placeholder="Full Name" autofocus>
                 <label for="address-line2">Street Address</label>
-                <input th:field="*{homeAddr.addrLine1}" type = "text" name = "address-line1" placeholder="Address Line 1">
-                <input th:field="*{homeAddr.addrLine2}" type = "text" name = "address-line2" placeholder="Adderss Line 2">
+                <input th:field="*{homeAddr.addrLine1}" id="address-line1" type = "text" name = "address-line1" placeholder="Address Line 1">
+                <input th:field="*{homeAddr.addrLine2}" id="address-line1" type = "text" name = "address-line2" placeholder="Adderss Line 2">
                 <input th:field="*{homeAddr.pincode}" type = "number" name = "pincode" placeholder="Pincode" required min="400000" max="450000">
                 <label for="contact-number">Alternate Number</label><br>
                 <select th:field="*{homeAddr.contactPrefix}" name="number-prefix" class="number-prefix">
