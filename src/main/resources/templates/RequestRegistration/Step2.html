@@ -37,7 +37,8 @@
                 </div>
                 
                 <input type = "text" value="+91" name = "contact-number-1" disabled style="color:black;"> -
-                <input   th:value="*{mobile}" th:field="*{mobile}" type = "number" placeholder="Mobile Number" name = "contact-number-2" required min="5000000000" max="9999999999" title="Ten digit mobile no. without any code"><br>
+                    <input  th:field="*{mobile}"  type = "number" placeholder="Mobile Number" name = "contact-number-2" required min="5000000000" max="9999999999" title="Ten digit mobile no. without any code"><br>
+
                 <!--<input  th:if="${user.mobile !=0 }" th:field="*{mobile}" type = "number" placeholder="Mobile Number" name = "contact-number-2" required min="5000000000" max="9999999999" title="Ten digit mobile no. without any code"><br>-->
 
                 <label name = "gender">Gender: </label>

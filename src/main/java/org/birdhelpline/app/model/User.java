@@ -10,13 +10,13 @@ import java.util.List;
 
 public class User implements Principal, Serializable {
 
-    private long userId;
+    private Long userId;
     private String userName;
     private String password;
     private String encryptedPassword;
     private Long mobile;
     private String email;
-    private boolean enabled;
+    private Boolean enabled;
     private String firstName;
     private String lastName;
     private String address;
@@ -25,7 +25,7 @@ public class User implements Principal, Serializable {
     private Timestamp creationDate;
     private Timestamp lastLoginDate;
     private String role;
-    private int securityQId;
+    private Integer securityQId;
     private String securityQAns;
     private byte[] image;
     private UserAddressInfo homeAddr;
@@ -83,9 +83,6 @@ public class User implements Principal, Serializable {
         this.userServiceTimeInfos = userServiceTimeInfos;
     }
 
-    public int getSecurityQId() {
-        return securityQId;
-    }
 
     public void setSecurityQId(int securityQId) {
         this.securityQId = securityQId;
@@ -161,7 +158,7 @@ public class User implements Principal, Serializable {
         this.email = email;
     }
 
-    public boolean isEnabled() {
+    public Boolean isEnabled() {
         return enabled;
     }
 
@@ -243,4 +240,23 @@ public class User implements Principal, Serializable {
         this.role = role;
     }
 
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Integer getSecurityQId() {
+        return securityQId;
+    }
+
+    public void setSecurityQId(Integer securityQId) {
+        this.securityQId = securityQId;
+    }
 }

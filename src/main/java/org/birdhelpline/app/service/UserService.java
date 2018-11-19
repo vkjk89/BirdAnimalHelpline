@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service("userService")
@@ -49,13 +50,8 @@ public class UserService {
 
     public List<PinCodeLandmarkInfo> getPinCodeLandMarks(String term){
         List<PinCodeLandmarkInfo> list = userDao.getPinCodeLandMarks();
-        List<PinCodeLandmarkInfo> listToRet = new ArrayList<>();
-        for(PinCodeLandmarkInfo p : list) {
-            if(p.getLandmark().indexOf(term) >=0) {
-                listToRet.add(p);
-            }
-        }
-        return  listToRet;
+        return list.stream().filter(p ->  p.getLandmark().indexOf(term) >=0 ).collect(Collectors.toList());
+
     }
 
     public boolean findUserByMobile(long mobile) {
