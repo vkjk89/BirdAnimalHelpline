@@ -24,6 +24,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private DataSource dataSource;
 
+	@Autowired
+    private MySimpleUrlAuthenticationSuccessHandler successHandler;
+
+	@Autowired
+    private MyLogoutSuccessHandler logoutSuccessHandler;
+
 	@Value("${queries.users-query}")
 	private String usersQuery;
 	
@@ -53,6 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/registration**").permitAll()
 				.antMatchers("/forgotPassword").permitAll()
 				.antMatchers("/profilePicUpload").permitAll()
+				.antMatchers("/enableUser").permitAll()
 				//.antMatchers("/css/**").permitAll()
 				//.antMatchers("/img/**").permitAll()
 				//.antMatchers("/js/**").permitAll()
@@ -65,9 +72,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/default",true)
 				.usernameParameter("username")
 				.passwordParameter("password")
+                //.successHandler(successHandler)
+
 				.and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/").and().exceptionHandling()
+				.logoutSuccessUrl("/")
+                //.logoutSuccessHandler(logoutSuccessHandler)
+                .and().exceptionHandling()
 				.accessDeniedPage("/access-denied");
 			
 	}

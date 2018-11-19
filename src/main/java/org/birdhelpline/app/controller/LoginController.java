@@ -30,6 +30,7 @@ public class LoginController {
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     Logger logger = LoggerFactory.getLogger(LoginController.class);
+
     @Autowired
     private UserService userService;
 
@@ -155,7 +156,7 @@ public class LoginController {
 
     @ModelAttribute("user")
     private User getUserObj() {
-        return new User();
+            return new User();
     }
 
     @RequestMapping(path = "/profileCompletion", method =  { RequestMethod.POST,RequestMethod.GET})

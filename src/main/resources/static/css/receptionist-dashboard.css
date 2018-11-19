@@ -266,7 +266,7 @@ form {
     width: 66.5vw;
     border-radius: 0;
     padding: 1vw;
-    background-image: url("/static/img/search-1.png");
+    background-image: url("/img/search-1.png");
     background-repeat: no-repeat;
     background-position: 1vw 0.5vw;
     background-size: 2vw;
