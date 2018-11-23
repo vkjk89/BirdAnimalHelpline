@@ -17,8 +17,8 @@
         <span id="profile-options" onclick="openSideNav();">&#9776;</span>
         <span id="navbar-username" th:text="${user.userName}">#Username</span>
         <button type="button" id="user-dp">
-            <img th:if="${user.image == null}"  th:src="@{/img/display-picture11.png}" src="/static/img/display-picture11.png"  width="auto" height="25vw" alt="User-Display-Picture">
-            <img th:if="${user.image != null}"  th:src="${'data:image/png;base64,'+user.getEncodedImage()}" src="/static/img/display-picture11.png"  width="auto" height="25vw" alt="User-Display-Picture">
+            <img th:if="${user.image == null}"  th:src="@{/img/display-picture11.png}" src="/static/img/display-picture11.png"  width="" height="" alt="User-Display-Picture">
+            <img th:if="${user.image != null}" th:src="${'data:image/png;base64,'+user.getEncodedImage()}" src="/static/img/display-picture11.png" width="auto" height="" alt="User-Display-Picture">
         </button>
     </nav>
 

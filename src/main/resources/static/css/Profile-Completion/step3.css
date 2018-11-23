@@ -80,9 +80,11 @@ input[type = "search"]:focus {
     font-size: 0.9em;
 }
 
-#search-pincode-results {
-    z-index: 100000000001;
+#search-pincode-result {
+    z-index: 10000001;
     display: block;
+    margin-top: 100vh;
+    color: black;
 }
 
 #select-timings, #select-timings-am-pm {

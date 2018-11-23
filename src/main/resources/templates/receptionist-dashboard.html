@@ -10,53 +10,291 @@
 </head>
 <body>
 
-    <nav id="top-nav">
-        <span id="left-side">
-            <button id="home-btn" type="button"><img src="/static/img/home-white.png" th:src="@{/img/home-white.png}" width="" height="" alt="Home"></button><span id="home-btn-txt"> Home</span>
+    <nav id="top-nav" class="no-select">
+        <span id="left-side" class="no-select">
+            <button id="home-btn" type="button" class="no-select"><img src="/static/img/home-white.png" th:src="@{/img/home-white.png}" width="" height="" alt="Home"></button><span id="home-btn-txt" class="no-select"> Home</span>
         </span>
-        <span id="right-side">
+        <span id="right-side" class="no-select">
             <button id="user-dp-btn" type="button"><img src="/static/img/display-picture11.png" th:src="@{/img/display-picture11.png}" width="" height="" alt="DP"></button>
-            <span id="user-name">#User_Name</span><span id="more-btn">&#x25BC;</span>
+            <span id="user-name">#User_Name</span>
+            <span id="more-btn">&#x25BC;</span>
         </span>
+        <div id="dropdown-menu" class="no-select" style="display: none;">
+            <button><a href="#">Profile</a></button>
+            <button><a href="#">Change PIN</a></button>
+            <button><a href="#">Change Mobile No.</a></button>
+            <button><a href="#">Change Address</a></button>
+            <button><a href="#">Logout</a></button>
+        </div>
     </nav>
 
     <main>
         <div id="heading-raise-a-case">
-            <span>Raise a Case</span>
+            <span id="rac-heading-animation">Raise a Case</span>
         </div>
         <div id="heading-my-cases">
-            <span>My Cases</span>
+            <span id="myc-heading-animation">My Cases</span>
         </div>
         <div id="heading-user-data-change-approvals">
-            <span>User Modification Approvals</span>
+            <span id="usdca-heading-animation">User Modification Approvals</span>
+        </div>
+<!-------------------------------- RAISE-A-CASE-------------------------------------------->
+        <div id="raise-a-case-content">
+            <form action="" id="raise-a-case-form">
+                <div id="form-left-side">
+                    <div>Animal/Bird Information</div>
+                    <hr style="width: 80%;">
+                    <label for="case-id">Case ID: </label>
+                    <input type="number" id="case-id" name="case-id" disabled placeholder="" required autocomplete="off"><br>
+                    <label for="animal-type">Animal type: </label>
+                    <select name="animal-type" id="animal-type" required autocomplete="off">
+                        <option value="Default">Choose an Animal Type</option>
+                    </select><br>
+                    <label for="animal-name">Animal name:</label>
+                    <input type="text" name="animal-name" id="animal-name" placeholder="Eg: Rufus" autocomplete="off"><br>
+                    <label for="condition">Condition</label>
+                    <input type="text" name="condition" id="condition" placeholder="Eg: Broken Leg" autocomplete="off">
+                </div>
+                <div id="form-right-side">
+                    <div>Contact Information</div>
+                    <hr style="width: 80%;">
+                    <label for="contact-name">Name: </label>
+                    <input type="text" name="contact-name" id="contact-name" autocomplete="off"><br>
+                    <label for="contact-name">Contact Number: </label>
+                    <input type="number" name="contact-number" id="contact-number" required autocomplete="off"><br>
+                    <label for="contact-name">Location: </label><br>
+                    <input type="text" name="location" id="location">
+                    <input type="number" name="location-pincode" id="location-pincode" required autocomplete="off">
+                </div>
+            </form>
+            <div id="cta-btns">
+                <button type="submit" id="submit-raise-case" form="raise-a-case-form">Raise Case</button>
+                <button type="reset" id="reset-raise-case" form="raise-a-case-form">Clear All</button>
+            </div>
         </div>
 
-        <div id="raise-a-case-content">
-            asd
-        </div>
+<!-------------------------------- MY-CASES-------------------------------------------->
         <div id="my-cases-content">
-            asd
+            <input type="search" placeholder="Search my Cases..." id="search-case-input" name="search-case-input">
+            <div id="tab-header">
+                <span id="active-tab-header" style="border-right: 1px solid #CCCCCC72;border-left: 1px solid #007AEA;">Active</span>
+                <span id="recent-tab-header" style="border-right: 1px solid #CCCCCC72;border-left: 1px solid #CCCCCC72;">Recent</span>
+                <span id="closed-tab-header" style="border-right: 1px solid #007AEA;border-left: 1px solid #CCCCCC72;">Closed</span>
+            </div>
+            <div id="tab-content">
+                <div id="active-tab-content">
+                    <div class="content-table" id="active-content-table">
+                        <div style="display: flex; position: fixed; width: 71.5vw; font-size: 1.2em; background-color: rgb(248,248,248); font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC;">
+                            <div class="sr-no-div">Sr. No.</div>
+                            <div class="case-id-div">Case ID</div>
+                            <div class="case-status-div">Case Status</div>
+                            <div class="date-div">Date</div>
+                            <div class="animal-type-div">Animal/Bird Type</div>
+                            <div class="case-name-div">Animal/Bird Name</div>
+                        </div>
+                        <div class="my-cases-result" id="table1">
+                            <div class ="row row1"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>
+                            <div class ="row row1"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>
+                            <div class ="row row1"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>
+                            <div class ="row row1"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="recent-tab-content">
+                    <div class="content-table" id="recent-content-table">
+                        <div style="display: flex; position: fixed; width: 71.5vw; font-size: 1.2em; background-color: rgb(248,248,248); font-weight: 500; padding-bottom: 0.5vh;border-bottom: 1px solid #CCC;">
+                            <div class="sr-no-div">Sr. No.</div>
+                            <div class="case-id-div">Case ID</div>
+                            <div class="case-status-div">Case Status</div>
+                            <div class="date-div">Date</div>
+                            <div class="animal-type-div">Animal/Bird Type</div>
+                            <div class="case-name-div">Animal/Bird Name</div>
+                        </div>
+                        <div class="my-cases-result" id="table1">
+                            <div class ="row row1"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>
+                            <div class ="row row1"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="closed-tab-content">
+                    <div class="content-table" id="closed-content-table">
+                        <div style="display: flex; position: fixed; width: 71.5vw; font-size: 1.2em; background-color: rgb(248,248,248); font-weight: 500; padding-bottom: 0.5vh;border-bottom: 1px solid #CCC;">
+                            <div class="sr-no-div">Sr. No.</div>
+                            <div class="case-id-div">Case ID</div>
+                            <div class="case-status-div">Case Status</div>
+                            <div class="date-div">Date</div>
+                            <div class="animal-type-div">Animal/Bird Type</div>
+                            <div class="case-name-div">Animal/Bird Name</div>
+                        </div>
+                        <div class="my-cases-result" id="table1">
+                            <div class ="row row1"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+<!-------------------------------- USER-DATA-CHANGE-APPROVALS--------------------------------------->
         <div id="user-data-change-approvals-content">
-            asd
+            TEST!
         </div>
     </main>
 
     <section id="card-right-side">
         <div id="raise-a-case-side-card">
-            asdasd
+            <div id="rac-body">
+                <img src="/static/img/raise-a-case.png" alt="Raise a Case" class="right-side-card-img" width="" height="">
+                <label for="right-side-card-img">Raise a Case</label>
+            </div>
         </div>
         <div id="my-cases-side-card">
-            asdasd
+            <div id="myc-body">
+                <img src="/static/img/my-cases1.png" alt="Raise a Case" class="right-side-card-img" width="" height="" style="left:-1.5vh;">
+                <label for="right-side-card-img">My Cases</label>
+            </div>
         </div>
         <div id="user-data-change-approvals-side-card">
-
+            <div id="usdca-body">
+                <img src="/static/img/user-data-change-approvals.png" alt="Raise a Case" class="right-side-card-img" width="" height="">
+                <label for="right-side-card-img">Data Change Approvals</label>
+            </div>
         </div>
     </section>
 
     <section>
 
     </section>
+
+    <script>
+
+//------Right-Side-Cards-Toggle-Display--------------------------------------------------------------------------------------
+        document.getElementById('rac-body').onclick = function(){ 
+            this.classList.add('right-side-card-rotate');
+            document.getElementById('myc-body').classList.remove('right-side-card-rotate');
+            document.getElementById('usdca-body').classList.remove('right-side-card-rotate');
+            setTimeout(function(){ document.getElementById('rac-body').classList.remove('right-side-card-rotate'); }, 600);
+            
+            document.getElementById('raise-a-case-content').style.display = "block";
+            document.getElementById('my-cases-content').style.display = "none";
+            document.getElementById('user-data-change-approvals-content').style.display = "none";
+            document.getElementById('heading-raise-a-case').style.display = "block";
+            document.getElementById('heading-my-cases').style.display = "none";
+            document.getElementById('heading-user-data-change-approvals').style.display = "none";
+        }
+        document.getElementById('myc-body').onclick = function(){ 
+            this.classList.add('right-side-card-rotate');
+            document.getElementById('rac-body').classList.remove('right-side-card-rotate');
+            document.getElementById('usdca-body').classList.remove('right-side-card-rotate');
+            setTimeout(function(){ document.getElementById('myc-body').classList.remove('right-side-card-rotate'); }, 600);
+
+            document.getElementById('active-tab-header').classList.add('active-header');
+            document.getElementById('raise-a-case-content').style.display = "none";
+            document.getElementById('my-cases-content').style.display = "block";
+            document.getElementById('user-data-change-approvals-content').style.display = "none";
+            document.getElementById('heading-raise-a-case').style.display = "none";
+            document.getElementById('heading-my-cases').style.display = "block";
+            document.getElementById('heading-user-data-change-approvals').style.display = "none";
+        }
+        document.getElementById('usdca-body').onclick = function(){
+            this.classList.add('right-side-card-rotate');
+            document.getElementById('rac-body').classList.remove('right-side-card-rotate');
+            document.getElementById('myc-body').classList.remove('right-side-card-rotate'); 
+            setTimeout(function(){ document.getElementById('usdca-body').classList.remove('right-side-card-rotate'); }, 600);
+
+            document.getElementById('raise-a-case-content').style.display = "none";
+            document.getElementById('my-cases-content').style.display = "none";
+            document.getElementById('user-data-change-approvals-content').style.display = "block";
+            document.getElementById('heading-raise-a-case').style.display = "none";
+            document.getElementById('heading-my-cases').style.display = "none";
+            document.getElementById('heading-user-data-change-approvals').style.display = "block";
+        }
+
+//------Active-Recent-Closed-Tabs-JS--------------------------------------------------------------------------------
+        document.getElementById('active-tab-header').onclick = function search_results(){
+            this.classList.add('active-header');
+            document.getElementById('recent-tab-header').classList.remove('active-header');
+            document.getElementById('closed-tab-header').classList.remove('active-header');
+            document.getElementById('recent-tab-header').classList.remove('tab-header-animation');
+            document.getElementById('closed-tab-header').classList.remove('tab-header-animation');
+            document.getElementById('active-tab-header').classList.add('tab-header-animation');
+            document.getElementById('active-tab-content').classList.add('tab-content-animation');
+            document.getElementById('recent-tab-content').classList.remove('tab-content-animation');
+            document.getElementById('closed-tab-content').classList.remove('tab-content-animation');
+            document.getElementById('active-tab-content').style.display = "block";
+            document.getElementById('recent-tab-content').style.display = "none";
+            document.getElementById('closed-tab-content').style.display = "none";
+        }
+
+        document.getElementById('recent-tab-header').onclick = function search_results(){
+            this.classList.add('active-header');
+            document.getElementById('active-tab-header').classList.remove('active-header');
+            document.getElementById('closed-tab-header').classList.remove('active-header');
+            document.getElementById('active-tab-header').classList.remove('tab-header-animation');
+            document.getElementById('recent-tab-header').classList.add('tab-header-animation');
+            document.getElementById('closed-tab-header').classList.remove('tab-header-animation');
+            document.getElementById('active-tab-header').classList.remove('tab-content-animation');
+            document.getElementById('active-tab-content').classList.remove('tab-content-animation');
+            document.getElementById('recent-tab-content').classList.add('tab-content-animation');
+            document.getElementById('recent-tab-content').style.display = "block";
+            document.getElementById('closed-tab-content').style.display = "none";
+            document.getElementById('active-tab-content').style.display = "none";
+        }
+
+        document.getElementById('closed-tab-header').onclick = function search_results(){
+            this.classList.add('active-header');
+            document.getElementById('active-tab-header').classList.remove('active-header');
+            document.getElementById('recent-tab-header').classList.remove('active-header');
+            document.getElementById('active-tab-header').classList.remove('tab-header-animation');
+            document.getElementById('recent-tab-header').classList.remove('tab-header-animation');
+            document.getElementById('closed-tab-header').classList.add('tab-header-animation');
+            document.getElementById('active-tab-content').classList.remove('tab-content-animation');
+            document.getElementById('recent-tab-content').classList.remove('tab-content-animation');
+            document.getElementById('closed-tab-content').classList.add('tab-content-animation');
+            document.getElementById('closed-tab-content').style.display = "block";
+            document.getElementById('active-tab-content').style.display = "none";
+            document.getElementById('recent-tab-content').style.display = "none";
+        }
+
+//------DropDown-Menu-JS--------------------------------------------------------------------------------
+        var dropdown_menu_state = true;
+        document.getElementById("more-btn").onclick = function dropdown_menu(){
+            dropdown_menu_state = !dropdown_menu_state;
+            if(dropdown_menu_state === true){
+                alert("block");
+                document.getElementById("dropdown-menu").style.display = "none";
+            } else {
+                alert("none");
+                document.getElementById("dropdown-menu").style.display = "block";
+            }
+        };
+        setTimeout(function(){ 
+            document.body.onclick = function(){
+                document.getElementById("dropdown-menu").style.display = "none";
+            };
+        }, 200);
+
+//------Search-Focus--Clear-Table-on-Search---------------------------------------------------------------------------------------------
+        document.getElementById('search-case-input').onfocus = function(){            
+                document.getElementById('tab-header').style.display = "none";
+                hideresults();
+        };
+        document.getElementById('search-case-input').addEventListener("focusout", function(){
+            document.getElementById('tab-header').style.display = "";
+            showresults();
+        });
+
+        function hideresults(){
+            for (var i = 0; i < document.getElementsByClassName('row').length; i++){
+            document.getElementsByClassName('row')[i].style.display = "none";
+            }
+        }
+
+        function showresults(){
+            for (var i = 0; i < document.getElementsByClassName('row').length; i++){
+            document.getElementsByClassName('row')[i].style.display = "";
+            }
+        }
+    </script>
 
 </body>
 </html>

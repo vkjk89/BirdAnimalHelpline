@@ -1,6 +1,16 @@
 /*-----------------------------GLOBAL-------------------------*/
+.no-select, .no-select * {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
 
-
+input {
+    all: unset;
+}
 /*----------------------------TOP-NAV-------------------------*/
 #top-nav {
     box-sizing: border-box;
@@ -55,6 +65,7 @@
 
 #user-dp-btn img {
     width: 3vh;
+    border-radius: 5px;
 }
 
 #user-name {
@@ -73,6 +84,28 @@
     top: -0.5vh;
 }
 
+#dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 6vh;
+    background-color: #333;
+    right: 0.8vw;
+    z-index: 2;
+}
+
+#dropdown-menu button {
+    width: 12vw;
+    padding: 2vh;
+    display: block;
+    border-bottom: 1px solid #CCCCCC44;
+    cursor: pointer;
+}
+
+#dropdown-menu button a {
+    display: block;
+    color: white;
+}
+
 #home-btn, #home-btn-txt, #user-dp-btn, #user-name, #more-btn {
     opacity: 0.8;
 }
@@ -84,15 +117,15 @@
 
 /*----------------------------MAIN-------------------------*/
 main {
+    position: absolute;
     display: inline-block;
     box-sizing: border-box;
-    height: 83.0vh;
-    width: 70vw;
+    height: 84vh;
+    width: 75vw;
     margin: 5vh;
-    border: 1px solid #CCC;
-    border-radius: 10px;
     text-align: left;
     background-color: rgb(248,248,248);
+    box-shadow: 00px 00px 40px #999;
 }
 
 #heading-raise-a-case, #heading-my-cases, #heading-user-data-change-approvals {
@@ -101,10 +134,8 @@ main {
     padding: 1vw;
     height: 6vh;
     background-color: #333;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
     color: white;
-    width: 70vw;
+    width: 75vw;
 }
 
 #heading-my-cases, #heading-user-data-change-approvals {
@@ -115,18 +146,20 @@ main {
     position: relative;
     box-sizing: border-box;
     color: white;
-    padding-left: 0.5vw;
+    font-size: 1.2em;
+    letter-spacing: 0.75px;
+    top: -0.75vh;
 }
 
 #raise-a-case-content, #my-cases-content, #user-data-change-approvals-content {
-    position: absolute;
+    position: relative;
     box-sizing: border-box;
     display: block;
     color: black;
-    padding-left: 1.5vw;
-    padding-top: 2vh;
-    padding-bottom: 2vh;
-    padding-right: 1.5vw;
+    margin-left: 1.75vw;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    margin-right: 1.75vw;
 }
 
 #my-cases-content, #user-data-change-approvals-content {
@@ -134,19 +167,239 @@ main {
 }
 
 /*------------------------CARDS-RIGHT-SIDE-----------------------*/
+
 #card-right-side {
+    position: absolute;
     display: inline-block;
-    border: 1px solid #CCC;
-    height: 83vh;
-    width: calc(100vw - 70vw - 6vh - 15vh);
+    height: 83.79vh;
+    width: calc(100vw - 75vw - 15vh);
     margin: 5vh;
-    border-radius: 10px;
+    left: calc(5vh + 75vw + 5vh);
     margin-left: 0;
-    text-align: left;
+    text-align: center;
+}
+
+#raise-a-case-side-card, #my-cases-side-card, #user-data-change-approvals-side-card {
+    position: relative;
+    box-sizing: border-box;
+    box-shadow: 00px 00px 30px #999;
+}
+
+#raise-a-case-side-card:hover, #my-cases-side-card:hover, #user-data-change-approvals-side-card:hover {
+    box-shadow: 00px 00px 40px #888;
+    cursor: pointer;
+    transform: scale(1.03);
+    transition: all 0.2s;
+}
+
+label:hover {
+    cursor: pointer;
+}
+
+.right-side-card-rotate {
+    backface-visibility: hidden;
+    transform: rotateY(360deg);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#rac-body, #myc-body, #usdca-body {
+    box-sizing: border-box;
+    padding-top: 1.5vh;
+    color: black;
+    height: 24.64vh;
+    margin-bottom: 5vh;
+}
+
+#usdca-body {
+    margin-bottom: 0;
+}
+
+.right-side-card-img {
+    box-sizing: border-box;
+    position: relative;
+    height: 13vh;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3vh;
+}
+
+#rac-body label, #myc-body label {
+    position: relative;
+    font-size: 1.3em;
+}
+
+/*---------------------------------------------MAIN-CONTENT-----------------------------------------*/
+
+/*--------------------RAISE-A-CASE--------------------*/
+form, form * {
+    /*border: 1px solid green;*/
+}
+
+form {
+    display: flex;
+}
+
+#form-left-side {
+    width: 50%;
+    font-size: 1.4em;
+}
+#form-right-side {
+    width: 50%;
+    font-size: 1.4em;
+}
+
+#case-id {
+    width: 3vw;
+    padding: 0.5vw;
+    padding-top: 0.5vw;
+    padding-bottom: 0.5vw;
+    margin-left: 2vw;
+}
+
+#cta-btns {
+    display: block;
+}
+
+/*--------------------MY-CASES--------------------*/
+#search-case-input {
+    width: 66.5vw;
+    border-radius: 0;
+    padding: 1vw;
+    background-image: url("/static/img/search-1.png");
+    background-repeat: no-repeat;
+    background-position: 1vw 0.5vw;
+    background-size: 2vw;
+    padding-left: 4vw;
+    font-size: 1.05em;
+    box-shadow: 0px 0px 20px #BBB;
+    border: none;
+    margin-bottom: 1vh;
+}
+
+input[type="search"]:focus {
+    border: unset;
+}
+
+input[type="search"]:focus::placeholder {
+    color: #CCC;
+}
+
+#tab-header {
+    display: flex;
+    margin-top: 2vh;
+    background-color: #007AEA;
+    color: white;
+    justify-content: space-around;
+    border: none;
+    font-weight: 400;
+}
+
+.active-header {
+    font-size: 200px;
+    font-weight: 900;
+}
+
+.content-table {
+    width: 71.5vw;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+#tab-header span {
+    font-size: 1.05em;
+    padding: 0.75vw 0vw;
+    width: 100vw;
+    text-align: center;
+    cursor: pointer;
+}
+
+#tab-content {
+    display: flex;
+}
+
+#recent-tab-content, #closed-tab-content {
+    display: none;
+}
+
+.my-cases-result {
+    border-collapse: collapse;
+    width: 71.5vw;
+    counter-reset: section;
+    margin-top: 4.1vh;
+}
+
+#active-content-table, #recent-content-table, #closed-content-table {
+    max-height: 55vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.sr-no-div {width: 8vw;} .case-id-div {width: 15vw;} .case-status-div {width: 15vw;} .date-div {width: 14vw;} .animal-type-div {width: 28vw;} .case-name-div {width: 19vw;}
+.sr-no {width: 8vw;} .case-id {width: 15vw;} .case-status {width: 15vw;} .date {width: 13vw;} .animal-type {width: 28vw;} .case-name {width: 19vw;}
+
+li {
+    list-style-type: none;
+}
+
+li::before {
+    counter-increment: section;
+    content: counters(section,".") ". ";
+}
+
+.row {
+    display: flex;
+    font-size: 1.05em;
+    letter-spacing: 0.5px;
+    padding-top: 1.5vh;
+    padding-bottom: 1.5vh;
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.row:hover {
+    color: #007AEA;
+    cursor: pointer;
+}
+
+.row:first-child {
+    border-top: none;
 }
 
 
 
-        /*body * {
+.tab-header-animation {
+    animation: tab-header 0.5s forwards 0s cubic-bezier(0.175, 0.885, 0.32, 1.20);
+}
+
+@keyframes tab-header {
+    0% {
+        transform: scale(0) translateX(50px); 
+    }
+    100% {
+        transform: scale(1) translateX(0);
+    }
+}
+
+.tab-content-animation {
+    animation: tab-content 0.5s forwards 0s ease-in-out;
+}
+
+@keyframes tab-content {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/*--------------------USER-DATA-CHANGE-APPROVALS--------------------*/
+
+
+
+
+
+        /*#card-right-side * {
             border: 1px solid burlywood;
         }*/

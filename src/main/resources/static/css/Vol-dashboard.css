@@ -49,10 +49,18 @@ a {
     padding: 0;
     float: right;
     border-radius: 50%;
-    padding: 1.5vw;
-    margin: 1.5vw 3vw;
     background-color: rgb(248,248,248);
-    border: 2px solid rgb(248,248,248);
+    border: 1px solid rgb(248,248,248);
+    width: 12vw;
+    height: 12vw;
+    overflow: hidden;
+    text-align: center;
+}
+
+#user-dp img {
+    border-radius: 50%;
+    width: 12vw;
+    height: 12vw;
 }
 
 /*------------------------------SIDE-NAV-----------------------------*/
@@ -80,6 +88,7 @@ a {
     100%{
         opacity: 1;
         width: 75vw;
+        height: 100vh;
     }
 }
 
@@ -101,14 +110,17 @@ a {
     width: 20vw;
     height: 20vw;
     border-radius: 50%;
-    background-color: white;
     border: 1px solid white;
     top: -8vw;
     left: 3vw;
+    overflow: hidden;
+    text-align: center;
 }
 
 #side-nav-user-dp img {
     width: 20vw;
+    height: 20vw;
+    border-radius: 50%;
 }
 
 #user_name {
@@ -232,7 +244,7 @@ input[type="search"]::placeholder {
 #results-tab-div span {
     box-sizing: border-box;
     width: 28.33vw;
-    background-color: #333333;
+    background-color: #374047;
     padding: 2vw;
     text-align: center;
     color: white;

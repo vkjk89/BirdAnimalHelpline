@@ -28,7 +28,7 @@
                 <ul th:if="${#fields.hasErrors('*')}" >
                     <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
                 </ul>
-                <input th:field="*{firstName}" type = "text" placeholder="First Name" name = "first-name" autofocus required autocomplete="off" pattern="[A-Za-z]{0,}" title="Your First Name">
+                <input th:field="*{firstName}" type = "text" placeholder="First Name" name = "first-name" autofocus required autocomplete="off" pattern="[A-Za-z]{0,}" title="Your First Name" id="fname">
                 <input th:field="*{lastName}" type = "text" placeholder="Last Name" name = "last-name" required autocomplete="off" pattern="[A-Za-z]{0,}" title="Your Last Name"><br>
 
                 <div class="birth-date-div" id="birth-date-div">

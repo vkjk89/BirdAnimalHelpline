@@ -32,20 +32,6 @@
                 <input class ="ui-autocomplete-input" type = "search" id = "search-pincode" name = "search-pincode" placeholder="Search Pincode" >
                 <span id="search-pincode-results" class="ui-front">
                 </span>
-                <!--<input class ="ui-autocomplete-input ui-corner-all" type = "search" id = "search-pincode" name = "search-pincode" placeholder="Search Pincode" autocomplete="off" onkeyup="search()" value="" >-->
-                    <!--<div id = "search-results-list">-->
-                        <!--<div onclick = "confirmpincode('li-div1')" id="li-div1" class = "pin-div">400004 - C.P. Tank</div>-->
-                        <!--<div onclick = "confirmpincode('li-div2')" id="li-div2" class = "pin-div">400006 - Walkeshwar</div>-->
-                        <!--<div onclick = "confirmpincode('li-div3')" id="li-div3" class = "pin-div">400002 - Fort</div>-->
-                        <!--<div onclick = "confirmpincode('li-div4')" id="li-div4" class = "pin-div">400003 - Cloth Market</div>-->
-                        <!--<div onclick = "confirmpincode('li-div5')" id="li-div5" class = "pin-div">400029 - A I staff colony</div>-->
-                        <!--<div onclick = "confirmpincode('li-div6')" id="li-div6" class = "pin-div">400065 - Aareymilk Colony</div>-->
-                        <!--<div onclick = "confirmpincode('li-div7')" id="li-div7" class = "pin-div">400011 - Agripada</div>-->
-                    <!--</div>-->
-                <!--<div class="selected-pincodes" id="selected-pincodes">-->
-                    <!--<p style = "font-size: 1.1em; border-bottom: 1px solid #CCCCCC; width: 60vw;">Selected Pincodes:</p>-->
-                    <!--<div id = "selected-pin-content"></div>-->
-                <!--</div>-->
                 <button type = "submit" form="pincode" id="next">Submit</button>
             </div>
             <input type="hidden" name="page" value="3">
@@ -80,9 +66,9 @@
         document.getElementById('selected-pin-content').innerHTML += "<div class = \"selected-pin-content-list-div\">" + document.getElementById(id).innerHTML + "<br>" + "<input type = \"checkbox\" id = \"x\" name = \"Specify Timings:\" onclick = \"specifytimings(x)\">" + "<label style = \"font-size:0.7em\" for = \"x\"> Specify Timings </label>" + "<select id = \"select-timings\" form = \"pincode\"> <option> 09:00-10:00</option><option> 10:00-11:00</option><option> 11:00-12:00</option> </select>" + "<select id = \"select-timings-am-pm\" form = \"pincode\"> <option>AM</option> <option>PM</option> </select>" + "</div>";
         x++;
         document.getElementById(id).style.display = "none";
-        document.getElementById(id).innerHTML = "";    
-        document.getElementById('search-results-list').style.display = "none";       
-        document.getElementById('selected-pincodes').style.border = "1px solid #CCCCCC"; 
+        document.getElementById(id).innerHTML = "";
+        document.getElementById('search-results-list').style.display = "none";
+        document.getElementById('selected-pincodes').style.border = "1px solid #CCCCCC";
     }
 
     function specifytimings(x) {
