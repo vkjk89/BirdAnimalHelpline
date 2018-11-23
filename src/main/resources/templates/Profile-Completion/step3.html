@@ -11,8 +11,8 @@
     <link rel="stylesheet" th:href="@{/css/jquery/jquery-ui.structure.min.css}" href="/static/css/jquery/jquery-ui.structure.min.css">
     <link rel="stylesheet" th:href="@{/css/jquery/jquery-ui.min.css}" href="/static/css/jquery/jquery-ui.min.css">
     <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
-    <script src="/static/js/jquery.iframe-transport.js" th:src="@{/js/jquery.iframe-transport.js}"></script>
-    <!--<script src="/static/js/jquery.ui.widget.js" th:src="@{/js/jquery.ui.widget.js}"></script>-->
+    <!--<script src="/static/js/jquery.iframe-transport.js" th:src="@{/js/jquery.iframe-transport.js}"></script>-->
+    <script src="/static/js/jquery.ui.widget.js" th:src="@{/js/jquery.ui.widget.js}"></script>
     <script src="/static/js/jquery-ui.min.js" th:src="@{/js/jquery-ui.min.js}"></script>
 
 
@@ -30,8 +30,25 @@
 
                 <!--<input   type = "search" id = "search-pincode" name = "search-pincode" placeholder="Search Pincode" autocomplete="off"  value="" >-->
                 <input class ="ui-autocomplete-input" type = "search" id = "search-pincode" name = "search-pincode" placeholder="Search Pincode" >
-                <span id="search-pincode-results" class="ui-front">
-                </span>
+
+                <div class="ui-widget" style="margin-top:2em; font-family:Arial">
+                    Result:
+                    <div id="log" style="height: 200px; width: 300px; overflow: auto;" class="ui-widget-content"></div>
+                </div>
+                <!--<input class ="ui-autocomplete-input ui-corner-all" type = "search" id = "search-pincode" name = "search-pincode" placeholder="Search Pincode" autocomplete="off" onkeyup="search()" value="" >-->
+                    <!--<div id = "search-results-list">-->
+                        <!--<div onclick = "confirmpincode('li-div1')" id="li-div1" class = "pin-div">400004 - C.P. Tank</div>-->
+                        <!--<div onclick = "confirmpincode('li-div2')" id="li-div2" class = "pin-div">400006 - Walkeshwar</div>-->
+                        <!--<div onclick = "confirmpincode('li-div3')" id="li-div3" class = "pin-div">400002 - Fort</div>-->
+                        <!--<div onclick = "confirmpincode('li-div4')" id="li-div4" class = "pin-div">400003 - Cloth Market</div>-->
+                        <!--<div onclick = "confirmpincode('li-div5')" id="li-div5" class = "pin-div">400029 - A I staff colony</div>-->
+                        <!--<div onclick = "confirmpincode('li-div6')" id="li-div6" class = "pin-div">400065 - Aareymilk Colony</div>-->
+                        <!--<div onclick = "confirmpincode('li-div7')" id="li-div7" class = "pin-div">400011 - Agripada</div>-->
+                    <!--</div>-->
+                <!--<div class="selected-pincodes" id="selected-pincodes">-->
+                    <!--<p style = "font-size: 1.1em; border-bottom: 1px solid #CCCCCC; width: 60vw;">Selected Pincodes:</p>-->
+                    <!--<div id = "selected-pin-content"></div>-->
+                <!--</div>-->
                 <button type = "submit" form="pincode" id="next">Submit</button>
             </div>
             <input type="hidden" name="page" value="3">
@@ -78,9 +95,17 @@
     }
 
     $(document).ready(function() {
+        var container = $(document.createElement('div')).css({
+            padding: '5px', margin: '20px', width: '170px', border: '1px dashed',
+            borderTopColor: '#999', borderBottomColor: '#999',
+            borderLeftColor: '#999', borderRightColor: '#999'
+        });
 
+        var a = '<input type = "checkbox" id = "x" name = "Specify Timings:" onclick = "specifytimings(x)">';
+        var b = '<label style = "font-size:0.7em" for = "x"> Specify Timings </label> ';
+        var c = '<select id = "select-timings" form = "pincode"> <option> 00:00-06:00</option><option> 06:00-12:00</option><option> 12:00-18:00</option> </select>'
         $("#search-pincode").autocomplete({
-            appendTo  : "#search-pincode-results",
+            //appendTo  : "#search-pincode-results",
             minLength: 2,
             delay: 500,
             //define callback to format results
@@ -103,16 +128,19 @@
 
             //define select handler
             select : function(event, ui) {
+                var iCnt = 0;
+                console.log(ui.item);
                 if (ui.item) {
-                    event.preventDefault();
-                    $("#selected_tags span").append('<a href=' + ui.item.tag_url + ' class="btn-metadata2">'+ ui.item.label +'</a>');
-                    //$("#tagQuery").value = $("#tagQuery").defaultValue
-                    var defValue = $("#tagQuery").prop('defaultValue');
-                    $("#tagQuery").val(defValue);
-                    $("#tagQuery").blur();
-                    document.getElementById("search-pincode-results").innerHTML += "<br>" + ui.item.label;
+                    iCnt = iCnt + 1;
+
+                    // ADD TEXTBOX.
+                    $(container).append(a).append(b).append(c);
+                    $("#log").after(container);
+                    $( "#log" ).scrollTop( 0 );
                     $("#search-pincode").autocomplete("close");
-                        return false;
+                    // $( "<span>" ).text( ui.item.label ).appendTo( "#log" );
+                    // $( "#log" ).scrollTop( 0 );
+                    return false;
                 }
             }
 
