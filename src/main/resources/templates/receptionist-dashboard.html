@@ -53,22 +53,22 @@
                             <label for="case-id">Case ID </label>
                             <input type="number" id="case-id" name="case-id" disabled placeholder="" required autocomplete="off">
                             <div>
-                                <input type="radio" name="bird-or-animal" id="bird-or-animal1" value="Animal" required>
+                                <input type="radio" name="bird-or-animal" id="bird-or-animal1" value="Animal" required tabindex="1">
                                     <label for="bird-or-animal1" id="bird-option"><img src="/static/img/bird1.png" alt="Bird" width="50vw"></label>
-                                <input type="radio" name="bird-or-animal" id="bird-or-animal2" value="Bird">
+                                <input type="radio" name="bird-or-animal" id="bird-or-animal2" value="Bird" tabindex="2">
                                     <label for="bird-or-animal2" id="animal-option"><img src="/static/img/animal.png" width="50vw" alt="Animal"></label>
                             </div>
                         </div>
-                        <label for="animal-type">Animal type: </label>
-                        <select name="animal-type" id="animal-type" required autocomplete="off" tabindex="1">
-                            <option value="Default" th:each="o : ${birdAnimals}" th:text="${o}" th:value="${o}">Choose an Animal Type</option>
+                        <label for="animal-type" id="animal-type-js">Animal/Bird type: </label>
+                        <select name="animal-type" id="animal-type" required autocomplete="off" tabindex="3">
+                            <option value="" th:each="o : ${birdAnimals}" th:text="${o}" th:value="${o}" id="select-default">Choose Bird/Animal Type</option>
                         </select><br>
-                        <label for="animal-name">Animal name: </label>
-                        <input type="text" name="animal-name" id="animal-name" placeholder="Eg: Rufus" autocomplete="off" tabindex="2"><br>
+                        <label for="animal-name" id="animal-name-js">Animal/Bird name: </label>
+                        <input type="text" name="animal-name" id="animal-name" placeholder="Eg: Rufus (Optional)" autocomplete="off" tabindex="4"><br>
                         <label for="condition">Condition: </label>
-                        <input type="text" name="condition" id="condition" placeholder="Eg: Broken Leg" autocomplete="off" tabindex="3">
+                        <input type="text" name="condition" id="condition" placeholder="Eg: Broken Leg (Recommended)" autocomplete="off" tabindex="5">
                         <label for="case-photos">Upload Photos</label>
-                        <input type="file" name="case-photos" id="case-photos">
+                        <input type="file" name="case-photos" id="case-photos" accept = "image/*" multiple>
                     </div>
                 </div>
                 <div id="form-right-side">
@@ -76,14 +76,17 @@
                     <hr>
                     <div id="body-form-right-side">
                         <label for="contact-name">Name: </label>
-                        <input type="text" name="contact-name" id="contact-name" autocomplete="off" tabindex="4"><br>
+                        <input type="text" name="contact-name" id="contact-name" autocomplete="off" tabindex="6"><br>
                         <label for="contact-name">Contact Number: </label>
-                        <input type="number" placeholder="+91" id="nine-one" name ="nine-one" disabled>
-                        <input type="number" name="contact-number" id="contact-number" placeholder="10 digit Mobile No. without prefix" required autocomplete="off" tabindex="5"><br>
+                        <select id="nine-one" name ="nine-one">
+                            <option value="+91">+91</option>
+                            <option value="022">022</option>
+                        </select>
+                        <input type="number" name="contact-number" id="contact-number" placeholder="10 digit Mobile No. without prefix" required min="5000000000" max="9999999999" title="Ten digit mobile no. without any code" autocomplete="off" tabindex="7"><br>
                         <label for="location">Location: </label>
-                        <textarea rows="1" cols="50" name="location" id="location" tabindex="6"></textarea>
-                        <input type="text" name="location-landmark" id="location-landmark" placeholder="Eg: Near Regal Cinema" autocomplete="off" tabindex="">
-                        <input type="number" name="location-pincode" id="location-pincode" required autocomplete="off" tabindex="7">
+                        <textarea rows="2" cols="50" name="location" id="location" tabindex="8"></textarea>
+                        <input type="text" name="location-landmark" id="location-landmark" placeholder="Landmark - Eg: Near Regal Cinema" autocomplete="off" tabindex="9">
+                        <input type="number" name="location-pincode" id="location-pincode" placeholder="Pincode - Eg: 400002" required autocomplete="off" tabindex="10">
                     </div>
                 </div>
                 <div>
@@ -92,8 +95,8 @@
 
             </form>
             <div id="cta-btns">
-                <button type="reset" id="reset-raise-case" form="raise-a-case-form" tabindex="9">Clear All</button>
-                <button type="submit" id="submit-raise-case" form="raise-a-case-form" tabindex="8">Raise Case</button>
+                <button type="reset" id="reset-raise-case" form="raise-a-case-form" tabindex="12">Clear All</button>
+                <button type="submit" id="submit-raise-case" form="raise-a-case-form" tabindex="11">Raise Case</button>
             </div>
         </div>
 
@@ -297,7 +300,7 @@
             };
         }, 200);
 
-//------Search-Focus--Clear-Table-on-Search---------------------------------------------------------------------------------------------
+//------Search-Focus-&-Clear-Table-on-Search---------------------------------------------------------------------------------------------
         document.getElementById('search-case-input').onfocus = function(){            
                 document.getElementById('tab-header').style.display = "none";
                 hideresults();
@@ -319,7 +322,24 @@
             }
         }
 
+//------Bird-or-Animal-Affected-Changes-------------------------------------------------------------------------------------------------
+        document.getElementById('bird-or-animal1').onclick = function(){
+            document.getElementById('header-form-left-side').innerHTML = "Bird Information";
+            document.getElementById('animal-type-js').innerHTML = "Bird Type";
+            document.getElementById('animal-name-js').innerHTML = "Bird Name";
+            document.getElementById('select-default').innerHTML = "Choose Bird Type";
+            document.getElementById('animal-name').setAttribute("placeholder", "Eg: Cannary (Optional)");
+        }
 
+        document.getElementById('bird-or-animal2').onclick = function(){
+            document.getElementById('header-form-left-side').innerHTML = "Animal Information";
+            document.getElementById('animal-type-js').innerHTML = "Animal Type";
+            document.getElementById('animal-name-js').innerHTML = "Animal Name";
+            document.getElementById('select-default').innerHTML = "Choose Animal Type";
+            document.getElementById('animal-name').setAttribute("placeholder", "Eg: Rufus (Optional)");
+        }
+
+//------BACKEND-INTEGRATION-------------------------------------------------------------------------------------------------------------
         $(document).ready(function () {
             $('#myc-body').click(
                 function() {
