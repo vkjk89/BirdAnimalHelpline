@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -167,8 +168,9 @@ public class LoginController {
                                                      final HttpSession session,
                                                      SessionStatus status,
                                                      @RequestParam(name = "action", required = false) String action,
-                                                     HttpServletRequest request) throws IOException {
-        logger.info("vkj inside reg : " + user + " " + currentPage);
+                                                     HttpServletRequest request,
+                                                     RedirectAttributes redirectAttrs) throws IOException {
+        logger.info("vkj inside profile comple : " + user + " " + currentPage);
         logger.info("vkj action : " + action);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -183,7 +185,8 @@ public class LoginController {
             case 2:
                 handleProfileStep2(modelAndView,user, result); break;
             case 3:
-                handleProfileStep3(modelAndView,user, status, action,result,request); break;
+                handleProfileStep3(modelAndView,user, status, action,result,request,redirectAttrs);
+                break;
             //TODO create this page
             default:
                 modelAndView.setViewName("Error");
@@ -200,7 +203,8 @@ public class LoginController {
         modelAndView.setViewName("Profile-Completion/step3");
     }
 
-    private void handleProfileStep3(ModelAndView modelAndView, User user, SessionStatus status, String action, BindingResult result, HttpServletRequest request) {
+    private void
+    handleProfileStep3(ModelAndView modelAndView, User user, SessionStatus status, String action, BindingResult result, HttpServletRequest request, RedirectAttributes redirectAttrs) {
         logger.info("vkj request 1: "+ request.getParameterMap().keySet());
         logger.info("vkj request 2: "+ request.getParameterMap().values());
         for(Map.Entry<String,String[]> entry : request.getParameterMap().entrySet()) {
@@ -208,6 +212,7 @@ public class LoginController {
         }
         populateUserServiceTimeInfo(user,request);
         userService.saveUserAddrPinDetails(user);
+        redirectAttrs.addFlashAttribute("profileCompleted",true);
         modelAndView.setViewName("redirect:/default");
     }
 
@@ -248,7 +253,9 @@ public class LoginController {
         logger.info(" vkj inside valiate forgot password ");
         User user = userService.validateForgotPasswdDetails(dob,mobile,securityQ,securityA);
         logger.info("User is : "+user);
-        session.setAttribute("userId",user.getUserId());
+        if(user != null) {
+            session.setAttribute("userId", user.getUserId());
+        }
         //return user != null && user.isEnabled() ? "Valid" : "Invalid";
         return user != null ? "valid" : "invalid";
     }

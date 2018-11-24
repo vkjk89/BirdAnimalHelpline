@@ -3,6 +3,7 @@ package org.birdhelpline.app.dataaccess;
 import org.apache.commons.io.IOUtils;
 import org.birdhelpline.app.model.PinCodeLandmarkInfo;
 import org.birdhelpline.app.model.User;
+import org.birdhelpline.app.model.UserServiceTimeInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -251,8 +252,65 @@ public class UserDao {
         return securityQIdVSSecurityQ;
     }
 
+    @Transactional
     public void saveUserAddrPinDetails(User user) {
-        //TODO
+
+        jdbcTemplate.update((Connection con) -> {
+            PreparedStatement ps = con.prepareStatement(
+                    "insert into user_addr_info (user_id,full_name,address_line1,address_line2,pincode,alternate_contact,address_type,nature_business) values (?,?,?,?,?,?,?,?)"
+            );
+
+            ps.setLong(1, user.getUserId());
+            ps.setString(2, user.getHomeAddr().getFullName());
+            ps.setString(3, user.getHomeAddr().getAddrLine1());
+            ps.setString(4, user.getHomeAddr().getAddrLine2());
+            ps.setLong(5, user.getHomeAddr().getPincode());
+            ps.setString(6, user.getHomeAddr().getContactPrefix() + "-" + user.getHomeAddr().getContact());
+            ps.setString(7, "H");
+            ps.setString(8, "");
+            return ps;
+        });
+
+        jdbcTemplate.update((Connection con) -> {
+            PreparedStatement ps = con.prepareStatement(
+                    "insert into user_addr_info (user_id,full_name,address_line1,address_line2,pincode,alternate_contact,address_type,nature_business) values (?,?,?,?,?,?,?,?)"
+            );
+
+            ps.setLong(1, user.getUserId());
+            ps.setString(2, user.getOfficeAddr().getFullName());
+            ps.setString(3, user.getOfficeAddr().getAddrLine1());
+            ps.setString(4, user.getOfficeAddr().getAddrLine2());
+            ps.setLong(5, user.getOfficeAddr().getPincode());
+            ps.setString(6, "");
+           // ps.setString(6, user.getOfficeAddr().getContactPrefix() + "-" + user.getOfficeAddr().getContact());
+            ps.setString(7, "O");
+            ps.setString(8, user.getOfficeAddr().getNatureBusiness());
+            return ps;
+        });
+
+        for (UserServiceTimeInfo serviceTimeInfo : user.getUserServiceTimeInfos()) {
+            jdbcTemplate.update((Connection con) -> {
+                PreparedStatement ps = con.prepareStatement(
+                        "insert into user_service_time_info (user_id,pin_land_id,from_time,to_time) values (?,?,?,?)"
+                );
+                ps.setLong(1, user.getUserId());
+                ps.setLong(2, serviceTimeInfo.getPincodeId());
+                ps.setInt(3, serviceTimeInfo.getFromTime());
+                ps.setInt(4,serviceTimeInfo.getToTime());
+                return ps;
+            });
+        }
+
+
+
+            jdbcTemplate.update((Connection con) -> {
+                PreparedStatement ps = con.prepareStatement(
+                        "update user_info u set u.last_login_date = now() where u.user_id = ?"
+                );
+                ps.setLong(1, user.getUserId());
+                return ps;
+            });
+
 
     }
 

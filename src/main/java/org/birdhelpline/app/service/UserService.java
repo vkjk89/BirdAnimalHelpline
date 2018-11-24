@@ -85,6 +85,7 @@ public class UserService {
     }
 
     public void saveUserAddrPinDetails(User user) {
+        logger.info(" vkj : "+user);
         userDao.saveUserAddrPinDetails(user);
     }
 
