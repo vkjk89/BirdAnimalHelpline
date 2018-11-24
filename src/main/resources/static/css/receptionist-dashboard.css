@@ -7,10 +7,6 @@
           -ms-user-select: none; /* Internet Explorer/Edge */
               user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
-
-input {
-    all: unset;
-}
 /*----------------------------TOP-NAV-------------------------*/
 #top-nav {
     box-sizing: border-box;
@@ -232,9 +228,9 @@ label:hover {
 /*---------------------------------------------MAIN-CONTENT-----------------------------------------*/
 
 /*--------------------RAISE-A-CASE--------------------*/
-form, form * {
-    /*border: 1px solid green;*/
-}
+/*form, form * {
+    border: 1px solid green;
+}*/
 
 form {
     display: flex;
@@ -242,23 +238,104 @@ form {
 
 #form-left-side {
     width: 50%;
-    font-size: 1.4em;
+    font-size: 1em;
 }
 #form-right-side {
     width: 50%;
-    font-size: 1.4em;
+    font-size: 1em;
+}
+
+#header-form-left-side, #header-form-right-side {
+    font-size: 1.3em;
+    font-weight: 500;
+    padding-left: 1vw;
+}
+
+hr {
+    margin-bottom: 5vh;
+    margin-left: 0;
+    width: 90%;
+}
+
+#body-form-left-side, #body-form-right-side {
+    padding-left: 1vw;
+}
+
+input[type="text"], input[type="number"], select, textarea {
+    margin: 0vh 0vh;
+    border-radius: 0px;
+    font-size: 0.8em;
+    padding: 0.75vw;
+    padding-left: 0.75vw;
+    width: 73%;
+    margin-bottom: 2vh;
+}
+
+select {
+    width: 78%;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5vw;
+}
+
+#id-and-bird-type {
+    display: flex;
+}
+
+#id-and-bird-type label {
+    display: inline;
+}
+
+#bird-option img, #animal-option img {
+    vertical-align: middle;
+    padding: 0vw 1vw;
+    height: 3.5vw;
 }
 
 #case-id {
-    width: 3vw;
-    padding: 0.5vw;
-    padding-top: 0.5vw;
-    padding-bottom: 0.5vw;
-    margin-left: 2vw;
+    width: 5vw;
+    margin: 0vw 1vw 1vh 1vw;
+    height: 1vh;
+}
+
+#nine-one {
+    width: 2.5vw;
+}
+
+#contact-number {
+    width: 60.5%;
 }
 
 #cta-btns {
     display: block;
+    position: absolute;
+    right: 0;
+    bottom: -10vh;
+}
+
+#submit-raise-case, #reset-raise-case {
+    border: 1px solid #CCC;
+    padding: 2vw;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+    letter-spacing: 1px;
+    color: white;
+    font-size: 1.1em;
+}
+
+#submit-raise-case {
+    background-color: rgb(0, 160, 0);
+}
+
+#reset-raise-case {
+    background-color: #333333;
+    margin-right: 2vh;
+}
+
+#submit-raise-case:hover, #reset-raise-case:hover, #submit-raise-case:focus, #reset-raise-case:focus {
+    box-shadow: 0px 0px 30px #AAA;
 }
 
 /*--------------------MY-CASES--------------------*/
