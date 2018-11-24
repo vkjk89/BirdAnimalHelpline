@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.Collection;
 
@@ -33,12 +34,22 @@ public class DefaultController {
             //modelAndView.setViewName("Error");
             return modelAndView;
         }
+        HttpSession session = request.getSession();
+        logger.info("vkj s 1"+session.isNew());
+        logger.info("vkj s 2"+session.getAttribute("user"));
+
         modelAndView.addObject("user", user);
+        session.setAttribute("user",user);
+        logger.info("vkj s 3"+session.getAttribute("user"));
+
+        modelAndView.addObject("birdAnimals" , userService.getListBirdAnimals());
         logger.info("VKJ user is : "+user);
         if(user.getLastLoginDate() == null) {
             logger.info("User login for first time so redirecting to profile completion page");
-            modelAndView.setViewName("Vol-dashboard");
+            modelAndView.setViewName("receptionist-dashboard");
+            // modelAndView.setViewName("Vol-dashboard");
             //modelAndView.setViewName("Profile-Completion/step1");
+
             return modelAndView;
         }
 

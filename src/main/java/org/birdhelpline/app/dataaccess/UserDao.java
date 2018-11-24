@@ -28,13 +28,21 @@ public class UserDao {
     private Map<String, Integer> userRoleVsRoleId = new HashMap<>();
     private Map<Integer, String> securityQIdVSSecurityQ = new LinkedHashMap<>();
     private Map<Long, List<String>> pinCodeVsLandMarks = new HashMap<>();
-    private List<PinCodeLandmarkInfo> listPincodeLandMarks=new ArrayList<>();
+    private List<PinCodeLandmarkInfo> listPincodeLandMarks = new ArrayList<>();
+    private List<String> listBirdAnimals = new ArrayList<>();
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    private String insertUserInfoQ;
+    private String insertUserQ;
+    private String getUsersByMobileQ;
+    private String getUserByUserNameQ;
+    private String updateLastLoginQ;
+    private String enableUserQ;
 
     @PostConstruct
     private void init() {
@@ -56,10 +64,10 @@ public class UserDao {
                     List<String> landMarks = pinCodeVsLandMarks.get(pinCode);
                     if (landMarks == null) {
                         landMarks = new ArrayList<>();
-                        pinCodeVsLandMarks.put(pinCode,landMarks);
+                        pinCodeVsLandMarks.put(pinCode, landMarks);
                     }
                     landMarks.add(landMark);
-                    listPincodeLandMarks.add(new PinCodeLandmarkInfo(pinCode,landMark));
+                    listPincodeLandMarks.add(new PinCodeLandmarkInfo(pinCode, landMark));
                 }
         );
 
@@ -76,7 +84,17 @@ public class UserDao {
 
         logger.info("VKJ : " + securityQIdVSSecurityQ);
 
+        listBirdAnimals = jdbcTemplate.queryForList("select bird_animal_name from bird_animal", String.class);
+
+        logger.info("VKJ : " + listBirdAnimals);
+
     }
+
+    public List<String> getListBirdAnimals() {
+        return listBirdAnimals;
+    }
+
+
 
     public Map<Long, List<String>> getPinCodeVsLandMarks() {
         return pinCodeVsLandMarks;
@@ -105,7 +123,7 @@ public class UserDao {
         if (userToAdd == null) {
             throw new IllegalArgumentException("userToAdd cannot be null");
         }
-        if (userToAdd.getUserId() != 0) {
+        if (userToAdd.getUserId() != null && userToAdd.getUserId() != 0) {
             throw new IllegalArgumentException("userToAdd.getId() must be null when creating a " + User.class.getName());
         }
 
@@ -116,17 +134,17 @@ public class UserDao {
         return userId;
     }
 
-    private void insertUserAuthority(long userId, String role) {
-        this.jdbcTemplate.update(new PreparedStatementCreator() {
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(
-                        "insert into user_authority (user_id,authority_id) values (?,?)"
-                );
 
-                ps.setLong(1, userId);
-                ps.setInt(2, userRoleVsRoleId.get(role));
-                return ps;
-            }
+    public void insertUserAuthority(long userId, String role) {
+        this.jdbcTemplate.update((Connection connection) -> {
+            PreparedStatement ps = connection.prepareStatement(
+                    "insert into user_authority (user_id,authority_id) values (?,?)"
+            );
+
+            ps.setLong(1, userId);
+            ps.setInt(2, userRoleVsRoleId.get(role));
+            return ps;
+
         });
 
 
@@ -134,47 +152,46 @@ public class UserDao {
 
     private void insertUserInfo(long userId, User userToAdd) throws SQLException {
 
-        this.jdbcTemplate.update(new PreparedStatementCreator() {
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(
-                        "insert into user_info (user_id,first_name,last_name,address,gender,dob,role,image,security_id,security_ans) values (?,?, ?,?,?,?,?,?,?,?)"
-                );
+        this.jdbcTemplate.update((Connection con) -> {
+            insertUserInfoQ = "insert into user_info (user_id,first_name,last_name,address,gender,dob,role,image,security_id,security_ans) values (?,?, ?,?,?,?,?,?,?,?)";
+            PreparedStatement ps = con.prepareStatement(
+                    insertUserInfoQ
+            );
 
-                ps.setLong(1, userId);
-                ps.setString(2, userToAdd.getFirstName());
-                ps.setString(3, userToAdd.getLastName());
-                ps.setString(4, userToAdd.getAddress());
-                ps.setString(5, userToAdd.getGender());
-                ps.setString(6, userToAdd.getDob());
-                ps.setString(7, userToAdd.getRole());
-                ps.setBlob(8, new ByteArrayInputStream(userToAdd.getImage()));
-                ps.setInt(9, userToAdd.getSecurityQId());
-                ps.setString(10, userToAdd.getSecurityQAns());
-                return ps;
-            }
+            ps.setLong(1, userId);
+            ps.setString(2, userToAdd.getFirstName());
+            ps.setString(3, userToAdd.getLastName());
+            ps.setString(4, userToAdd.getAddress());
+            ps.setString(5, userToAdd.getGender());
+            ps.setString(6, userToAdd.getDob());
+            ps.setString(7, userToAdd.getRole());
+            ps.setBlob(8, new ByteArrayInputStream(userToAdd.getImage()));
+            ps.setInt(9, userToAdd.getSecurityQId());
+            ps.setString(10, userToAdd.getSecurityQAns());
+            return ps;
         });
 
     }
 
     private long insertUser(User userToAdd, KeyHolder keyHolder) throws SQLException {
-        this.jdbcTemplate.update(new PreparedStatementCreator() {
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(
-                        "insert into user (user_name,password,email,mobile) values (?,?, ?, ?)",
-                        new String[]{"user_id"});
+        this.jdbcTemplate.update((connection -> {
+            insertUserQ = "insert into user (user_name,password,email,mobile) values (?,?,?,?)";
+            PreparedStatement ps = connection.prepareStatement(
+                    insertUserQ,
+                    new String[]{"user_id"});
 
-                ps.setString(1, userToAdd.getUserName());
-                ps.setString(2, userToAdd.getEncryptedPassword());
-                ps.setString(3, userToAdd.getEmail());
-                ps.setLong(4, userToAdd.getMobile());
-                return ps;
-            }
-        }, keyHolder);
+            ps.setString(1, userToAdd.getUserName());
+            ps.setString(2, userToAdd.getEncryptedPassword());
+            ps.setString(3, userToAdd.getEmail());
+            ps.setLong(4, userToAdd.getMobile());
+            return ps;
+        }), keyHolder);
         return keyHolder.getKey().longValue();
     }
 
     public boolean getUserByMobile(long mobile) {
-        int count = jdbcTemplate.queryForObject("select count(1) from user where mobile = ?", Integer.class, mobile);
+        getUsersByMobileQ = "select count(1) from user where mobile = ?";
+        int count = jdbcTemplate.queryForObject(getUsersByMobileQ, Integer.class, mobile);
         return count > 0 ? true : false;
     }
 
@@ -183,8 +200,9 @@ public class UserDao {
         try {
             Map<String, Object> params = new HashMap<String, Object>();
             params.put("userName", userName);
+            getUserByUserNameQ = "select * from user u , user_info ui where u.user_name = :userName and u.user_id = ui.user_id";
             user = namedParameterJdbcTemplate.queryForObject(
-                    "select * from user u , user_info ui where u.user_name = :userName and u.user_id = ui.user_id",
+                    getUserByUserNameQ,
                     params, new UserRowMapper()
             );
         } catch (EmptyResultDataAccessException ex) {
@@ -195,20 +213,29 @@ public class UserDao {
         //return jdbcOperations.queryForObject("select * from user where user_name = ?",User.class, userName,new UserRowMapper());
     }
 
-    public Timestamp getLastLoginByUserName(String name) {
-        return jdbcTemplate.queryForObject("select last_login_date from user u , user_info ui where u.user_id = ui.user_id and u.user_name = ?", Timestamp.class, name);
+
+    public void updateLastLoginDate(String name) {
+        this.jdbcTemplate.update(connection -> {
+                    updateLastLoginQ = "update user_info ui, user u set ui.last_login_date =  now() where u.user_id = ui.user_id and u.user_name=?";
+                    PreparedStatement ps = connection.prepareStatement(
+                            updateLastLoginQ);
+
+                    ps.setString(1, name);
+                    return ps;
+                }
+        );
     }
 
-    public void insertLastLoginDate(String name) {
-        this.jdbcTemplate.update(new PreparedStatementCreator() {
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(
-                        "update user_info ui, user u set ui.last_login_date =  now() where u.user_id = ui.user_id and u.user_name=?");
+    public void enableUser(User user) {
+        this.jdbcTemplate.update(connection -> {
+                    enableUserQ = "update user u set enabled =  1 where u.user_name=?";
+                    PreparedStatement ps = connection.prepareStatement(
+                            enableUserQ);
 
-                ps.setString(1, name);
-                return ps;
-            }
-        });
+                    ps.setString(1, user.getUserName());
+                    return ps;
+                }
+        );
     }
 
     public Map<Integer, String> getSecurityQs() {
@@ -225,9 +252,12 @@ public class UserDao {
             user.setUserName(rs.getString("user_name"));
             user.setFirstName(rs.getString("first_name"));
             user.setLastName(rs.getString("last_name"));
+            user.setAddress(rs.getString("address"));
+            user.setGender(rs.getString("gender"));
+            user.setDob(rs.getString("dob"));
             user.setCreationDate(rs.getTimestamp("create_date"));
+            user.setLastLoginDate(rs.getTimestamp("last_login_date"));
             user.setRole(rs.getString("role"));
-            //user.set
             try {
                 Blob image = rs.getBlob("image");
                 if (image != null) {
@@ -236,6 +266,9 @@ public class UserDao {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            user.setSecurityQId(rs.getInt("security_id"));
+            user.setSecurityQAns(rs.getString("security_ans"));
+
             return user;
         }
     }

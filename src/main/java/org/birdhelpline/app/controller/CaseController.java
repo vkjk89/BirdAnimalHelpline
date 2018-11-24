@@ -1,94 +1,50 @@
 package org.birdhelpline.app.controller;
 
-//@Controller
-//@RequestMapping("/admin/tasks")
+import org.birdhelpline.app.model.CaseInfo;
+import org.birdhelpline.app.model.User;
+import org.birdhelpline.app.service.CaseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
+import java.util.List;
+
+@Controller
 public class CaseController {
 
+    Logger logger = LoggerFactory.getLogger(CaseController.class);
 
-/*
-	@Autowired
-	private TaskService taskService;
-	
-	@Autowired
-	private UserTaskService userTaskService;
+    @Autowired
+    private CaseService caseService;
 
-	@Autowired
-	private UserService userService;
+    @RequestMapping(value = "/addNewCase", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
+    public @ResponseBody
+    String addANewCase(@ModelAttribute CaseInfo caseInfo, HttpSession session) {
+        logger.info("vkj : got " + caseInfo);
+        User user = getUser(session);
+        if (user == null) {
+            return "Error";
+        }
+        caseInfo.setUserIdOpened(user.getUserId());
+        caseInfo.setCurrentUserId(user.getUserId());
+        return String.valueOf(caseService.save(caseInfo));
 
-	@RequestMapping(value="/new", method = RequestMethod.GET)
-	public ModelAndView newTask(){
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("task", new Task());
-		modelAndView.addObject("tasks", taskService.findAll());
-		modelAndView.addObject("auth", findUserByMobile());
-		modelAndView.addObject("control", findUserByMobile().getRole().getRole());
-		modelAndView.addObject("mode", "MODE_NEW");
-		modelAndView.setViewName("task");
-		return modelAndView;
-	}
+    }
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public ModelAndView saveTask(@Valid Task task, BindingResult bindingResult) {
-		task.setDateCreated(new Date());
-		taskService.save(task);
-		ModelAndView modelAndView = new ModelAndView("redirect:/admin/tasks/all");
-		modelAndView.addObject("auth", findUserByMobile());
-		modelAndView.addObject("control", findUserByMobile().getRole().getRole());
-		return modelAndView;
-	}
+    @RequestMapping(value = "/activeCases", method = RequestMethod.GET)
+    public @ResponseBody
+    List<CaseInfo> getActiveCases( HttpSession session) {
+        User user = getUser(session);
+        if (user == null) {
+            return null;
+        }
+        return caseService.getCaseInfoByUserId(user.getUserId());
+    }
 
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	public ModelAndView allTasks() {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("rule", new Task());
-		//POINT=7 http://stackoverflow.com/questions/22364886/neither-bindingresult-nor-plain-target-object-for-bean-available-as-request-attr
-		modelAndView.addObject("tasks", taskService.findAll());
-		modelAndView.addObject("auth", findUserByMobile());
-		modelAndView.addObject("control", findUserByMobile().getRole().getRole());
-		modelAndView.addObject("mode", "MODE_ALL");
-		modelAndView.setViewName("task");
-		return modelAndView;
-	}
-
-	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public ModelAndView updateTask(@RequestParam int id) {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("rule", new Task());
-		modelAndView.addObject("task", taskService.findTask(id));
-		modelAndView.addObject("auth", findUserByMobile());
-		modelAndView.addObject("control",findUserByMobile().getRole().getRole());
-		modelAndView.addObject("mode", "MODE_UPDATE");
-		modelAndView.setViewName("task");
-		return modelAndView;
-	}
-
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView deleteTask(@RequestParam int id) {
-		ModelAndView modelAndView = new ModelAndView("redirect:/admin/tasks/all");
-		modelAndView.addObject("rule", new Task());
-		modelAndView.addObject("auth", findUserByMobile());
-		modelAndView.addObject("control", findUserByMobile().getRole().getRole());
-		taskService.delete(id);
-		return modelAndView;
-	}
-
-	@RequestMapping(value = "/per_inf", method = RequestMethod.GET)
-	public ModelAndView infTask(@RequestParam int id) {
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("rule", new Task());
-		modelAndView.addObject("task", taskService.findTask(id));
-		modelAndView.addObject("usertasks", userTaskService.findByTask(taskService.findTask(id)));
-		modelAndView.addObject("auth", findUserByMobile());
-		modelAndView.addObject("control", findUserByMobile().getRole().getRole());
-		modelAndView.addObject("mode", "MODE_INF");
-		modelAndView.setViewName("task");
-		return modelAndView;
-	}
-
-	private User findUserByMobile(){
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByEmail(auth.getName());
-		return user;
-	}
-*/
+    private User getUser(HttpSession session) {
+        return (User) session.getAttribute("user");
+    }
 }

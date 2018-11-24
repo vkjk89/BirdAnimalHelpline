@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html>
+
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/css/basic-template.css" th:href="@{/css/basic-template.css}">
     <link rel="stylesheet" href="/static/css/receptionist-dashboard.css" th:href="@{/css/receptionist-dashboard.css}">
+    <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+
 </head>
 <body>
 
@@ -16,7 +20,7 @@
         </span>
         <span id="right-side" class="no-select">
             <button id="user-dp-btn" type="button"><img src="/static/img/display-picture11.png" th:src="@{/img/display-picture11.png}" width="" height="" alt="DP"></button>
-            <span id="user-name">#User_Name</span>
+            <span id="user-name" th:text="${user.userName}">#User_Name</span>
             <span id="more-btn">&#x25BC;</span>
         </span>
         <div id="dropdown-menu" class="no-select" style="display: none;">
@@ -40,7 +44,7 @@
         </div>
 <!-------------------------------- RAISE-A-CASE-------------------------------------------->
         <div id="raise-a-case-content">
-            <form action="" id="raise-a-case-form">
+            <form action="" id="raise-a-case-form" >
                 <div id="form-left-side">
                     <div id="header-form-left-side">Animal/Bird Information</div>
                     <hr>
@@ -57,7 +61,7 @@
                         </div>
                         <label for="animal-type">Animal type: </label>
                         <select name="animal-type" id="animal-type" required autocomplete="off" tabindex="1">
-                            <option value="Default">Choose an Animal Type</option>
+                            <option value="Default" th:each="o : ${birdAnimals}" th:text="${o}" th:value="${o}">Choose an Animal Type</option>
                         </select><br>
                         <label for="animal-name">Animal name: </label>
                         <input type="text" name="animal-name" id="animal-name" placeholder="Eg: Rufus" autocomplete="off" tabindex="2"><br>
@@ -82,6 +86,10 @@
                         <input type="number" name="location-pincode" id="location-pincode" required autocomplete="off" tabindex="7">
                     </div>
                 </div>
+                <div>
+                    <span id="error"></span>
+                </div>
+
             </form>
             <div id="cta-btns">
                 <button type="reset" id="reset-raise-case" form="raise-a-case-form" tabindex="9">Clear All</button>
@@ -159,19 +167,19 @@
     <section id="card-right-side">
         <div id="raise-a-case-side-card">
             <div id="rac-body">
-                <img src="/static/img/raise-a-case.png" alt="Raise a Case" class="right-side-card-img" width="" height="">
+                <img th:src="@{/img/raise-a-case.png}" src="/static/img/raise-a-case.png" alt="Raise a Case" class="right-side-card-img" width="" height="">
                 <label for="right-side-card-img">Raise a Case</label>
             </div>
         </div>
         <div id="my-cases-side-card">
             <div id="myc-body">
-                <img src="/static/img/my-cases1.png" alt="Raise a Case" class="right-side-card-img" width="" height="" style="left:-1.5vh;">
+                <img th:src="@{/img/my-cases1.png}" src="/static/img/my-cases1.png" alt="Raise a Case" class="right-side-card-img" width="" height="" style="left:-1.5vh;">
                 <label for="right-side-card-img">My Cases</label>
             </div>
         </div>
         <div id="user-data-change-approvals-side-card">
             <div id="usdca-body">
-                <img src="/static/img/user-data-change-approvals.png" alt="Raise a Case" class="right-side-card-img" width="" height="">
+                <img th:src="@{/img/user-data-change-approvals.png}" src="/static/img/user-data-change-approvals.png" alt="Raise a Case" class="right-side-card-img" width="" height="">
                 <label for="right-side-card-img">Data Change Approvals</label>
             </div>
         </div>
@@ -310,6 +318,74 @@
             document.getElementsByClassName('row')[i].style.display = "";
             }
         }
+
+
+        $(document).ready(function () {
+            $('#myc-body').click(
+                function() {
+                    $.ajax({
+                        type: 'GET', // define the type of HTTP verb we want to use (POST for our form)
+                        url: '/activeCases', // the url where we want to POST
+                        dataType: 'json' // what type of data do we expect back from the server
+                        //encode: true
+                    })
+                        .done(function (data) {
+                            // log data to the console so we can see
+                            console.log(data);
+
+                            $('#case-id').val(data);
+                            setTimeout(function() { $('#case-id').val('');}, 2000);});
+                }
+            );
+            // process the form
+            $('#raise-a-case-form').submit(function (event) {
+
+                // get the form data
+                // there are many ways to get this data using jQuery (you can use the class or id also)
+                var formData = {
+                    'typeAnimal': $('select[name=animal-type]').val(),
+                    'animalName': $('input[name=animal-name]').val(),
+                    'animalCondition': $('input[name=condition]').val(),
+                    'contactName': $('input[name=contact-name]').val(),
+                    'contactNumber': $('input[name=contact-number]').val(),
+                    'location': $('input[name=location]').val(),
+                    'locationPincode': $('input[name=location-pincode]').val()
+                };
+
+                console.info("vimal : "+formData);
+
+                // process the form
+                $.ajax({
+                    type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                    url: '/addNewCase', // the url where we want to POST
+                    data: formData, // our data object
+                    dataType: 'json' // what type of data do we expect back from the server
+                    //encode: true
+                })
+                // using the done promise callback
+                    .done(function (data) {
+                        // log data to the console so we can see
+                        console.log(data);
+                        if(data &&  data == 'error') {
+                            $('#error').text(data);
+                        }
+
+
+                        $('#raise-a-case-form')[0].reset();
+                        $('#case-id').val(data);
+                        setTimeout(function() {
+                            $('#case-id').val('');}, 2000);
+
+
+
+                // here we will handle errors and validation messages
+                    });
+
+                // stop the form from submitting the normal way and refreshing the page
+                event.preventDefault();
+            });
+
+        });
     </script>
 
 </body>

@@ -6,11 +6,11 @@ import org.birdhelpline.app.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -68,9 +68,23 @@ public class UserService {
         if(user == null || user.getLastLoginDate() == null) {
             return true;
         }
-        userDao.insertLastLoginDate(name);
+        userDao.updateLastLoginDate(name);
         return false;
     }
 
+    public void enableUser(String userName) {
+        User user = userDao.getUserByUserName(userName);
+        if(user == null ) {
+            throw new UsernameNotFoundException(userName);
+        }
+        logger.info("Enabling user : "+user);
+        userDao.enableUser(user);
+        userDao.insertUserAuthority(user.getUserId(),user.getRole());
+
+    }
+
+    public List<String> getListBirdAnimals() {
+        return userDao.getListBirdAnimals();
+    }
 
 }

@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,23 +32,17 @@ public class UserController {
 
 	Gson gson = new Gson();
 
-
+    @RequestMapping(path ="/enableUser",method = RequestMethod.POST)
+    public @ResponseBody String enableUser(@RequestParam("userName") String name) {
+        userService.enableUser(name);
+        return "SUCCESS";
+    }
 
 
     @RequestMapping("/getPinCodeLandMark")
     public @ResponseBody List<PinCodeLandmarkInfo>  getPinCodeVsLandMarks(@RequestParam("term") String term) {
         logger.info("vkj term : "+term);
 	    return userService.getPinCodeLandMarks(term);
-//        Map<Long, List<String>> pincodeVsLand = userService.getPinCodeVsLandMarks(
-//        logger.info( gson.toJson(pincodeVsLand));
-//        //return gson.toJson(userService.getPinCodeVsLandMarks());
-//        JsonObject jsonObject = new JsonObject();
-////        for(Map.Entry<Long,List<String>> entry : pincodeVsLand.entrySet()) {
-////            jsonObject.addProperty("pincode",entry.getKey());
-////            jsonObject.add("landmarks",gson.toJsonTree(entry.getValue()));
-////        }
-////        logger.info("vkj : "+jsonObject.toString());
-        //return jsonObject.toString();
     }
 }
 
