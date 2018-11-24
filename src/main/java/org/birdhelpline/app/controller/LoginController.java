@@ -1,6 +1,7 @@
 package org.birdhelpline.app.controller;
 
 import org.birdhelpline.app.model.User;
+import org.birdhelpline.app.model.UserServiceTimeInfo;
 import org.birdhelpline.app.service.CaseService;
 import org.birdhelpline.app.service.UserService;
 import org.slf4j.Logger;
@@ -17,9 +18,10 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Base64;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -161,12 +163,14 @@ public class LoginController {
 
     @RequestMapping(path = "/profileCompletion", method =  { RequestMethod.POST,RequestMethod.GET})
     public ModelAndView processProfileCompletionPage(@RequestParam(name = "page", required = false) final Integer currentPage,
-                              final @ModelAttribute("user") User user, BindingResult result,
-                              final HttpSession session,
-                              SessionStatus status,
-                              @RequestParam(name = "action", required = false) String action) throws IOException {
+                                                     final @ModelAttribute("user") User user, BindingResult result,
+                                                     final HttpSession session,
+                                                     SessionStatus status,
+                                                     @RequestParam(name = "action", required = false) String action,
+                                                     HttpServletRequest request) throws IOException {
         logger.info("vkj inside reg : " + user + " " + currentPage);
         logger.info("vkj action : " + action);
+
         ModelAndView modelAndView = new ModelAndView();
         if (currentPage == null) {
             //modelAndView.setViewName("Vol-dashboard");
@@ -179,7 +183,7 @@ public class LoginController {
             case 2:
                 handleProfileStep2(modelAndView,user, result); break;
             case 3:
-                handleProfileStep3(modelAndView,user, status, action,result); break;
+                handleProfileStep3(modelAndView,user, status, action,result,request); break;
             //TODO create this page
             default:
                 modelAndView.setViewName("Error");
@@ -196,8 +200,35 @@ public class LoginController {
         modelAndView.setViewName("Profile-Completion/step3");
     }
 
-    private void handleProfileStep3(ModelAndView modelAndView, User user, SessionStatus status, String action, BindingResult result) {
-        modelAndView.setViewName("Admin");
+    private void handleProfileStep3(ModelAndView modelAndView, User user, SessionStatus status, String action, BindingResult result, HttpServletRequest request) {
+        logger.info("vkj request 1: "+ request.getParameterMap().keySet());
+        logger.info("vkj request 2: "+ request.getParameterMap().values());
+        for(Map.Entry<String,String[]> entry : request.getParameterMap().entrySet()) {
+            logger.info(entry.getKey()+ " : "+ Arrays.toString(entry.getValue()));
+        }
+        populateUserServiceTimeInfo(user,request);
+        userService.saveUserAddrPinDetails(user);
+        modelAndView.setViewName("redirect:/default");
+    }
+
+    private void populateUserServiceTimeInfo(User user, HttpServletRequest request) {
+        List<UserServiceTimeInfo> list = new ArrayList<>();
+        UserServiceTimeInfo serviceTimeInfo = null;
+        String [] selectedPinCodeIds = request.getParameterMap().get("pincodeId");
+        String [] selectedTimings =request.getParameterMap().get("selectedTiming");
+
+        if(selectedPinCodeIds != null && selectedTimings !=null && selectedPinCodeIds.length == selectedTimings.length) {
+            for(int i = 0; i<selectedPinCodeIds.length;i++) {
+                serviceTimeInfo = new UserServiceTimeInfo();
+                serviceTimeInfo.setPincodeId(Long.parseLong(selectedPinCodeIds[i]));
+                String [] time = selectedTimings[i].split("-");
+                serviceTimeInfo.setFromTime(Integer.parseInt(time[0]));
+                serviceTimeInfo.setToTime(Integer.parseInt(time[1]));
+                list.add(serviceTimeInfo);
+            }
+        }
+        user.setUserServiceTimeInfos(list);
+        logger.info("vkj user service time : "+ list);
     }
 
     @RequestMapping(path = "/forgotPassword", method = {RequestMethod.GET})
@@ -207,7 +238,34 @@ public class LoginController {
         return "forgot-password";
     }
 
- @RequestMapping(value = "/access-denied", method = RequestMethod.GET)
+
+    @RequestMapping(path = "/validateForgotPasswdDetails", method = {RequestMethod.POST})
+    public @ResponseBody  String validateForgotPasswordDetails(@RequestParam("birthdate") String dob,
+                                                @RequestParam("contact-number") String mobile,
+                                                @RequestParam("securityquestion") String securityQ,
+                                                @RequestParam("securityanswer") String securityA,
+                                                               HttpSession session) throws IOException {
+        logger.info(" vkj inside valiate forgot password ");
+        User user = userService.validateForgotPasswdDetails(dob,mobile,securityQ,securityA);
+        logger.info("User is : "+user);
+        session.setAttribute("userId",user.getUserId());
+        //return user != null && user.isEnabled() ? "Valid" : "Invalid";
+        return user != null ? "valid" : "invalid";
+    }
+    @RequestMapping(path = "/forgotPassword", method = {RequestMethod.POST})
+    public @ResponseBody  String forgotPasswordPost(@RequestParam("password") String newPasswd, HttpSession session) throws IOException {
+        logger.info(" vkj inside set new password ");
+        Long userId = (Long) session.getAttribute("userId");
+        if(userId !=null) {
+            userService.setNewPassword(userId,newPasswd);
+            return "success";
+        }
+        else {
+            return "invalid";
+        }
+    }
+
+    @RequestMapping(value = "/access-denied", method = RequestMethod.GET)
     public ModelAndView test() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("403");

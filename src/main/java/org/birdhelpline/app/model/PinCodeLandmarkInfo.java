@@ -1,21 +1,32 @@
 package org.birdhelpline.app.model;
 
 public class PinCodeLandmarkInfo {
+    long pincodeId;
     long pincode;
     String landmark;
 
 
-    public PinCodeLandmarkInfo(long pinCode, String landMark) {
-        this.pincode=pinCode;
-        this.landmark=landMark;
+    public PinCodeLandmarkInfo(long pincodeId, long pincode, String landmark) {
+        this.pincodeId = pincodeId;
+        this.pincode = pincode;
+        this.landmark = landmark;
     }
 
     @Override
     public String toString() {
         return "PinCodeLandmarkInfo{" +
-                "pincode=" + pincode +
+                "pincodeId=" + pincodeId +
+                ", pincode=" + pincode +
                 ", landmark='" + landmark + '\'' +
                 '}';
+    }
+
+    public long getPincodeId() {
+        return pincodeId;
+    }
+
+    public void setPincodeId(long pincodeId) {
+        this.pincodeId = pincodeId;
     }
 
     public long getPincode() {

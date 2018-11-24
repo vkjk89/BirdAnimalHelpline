@@ -59,7 +59,7 @@ input[name = "pincode"] {
     margin-top: 1vw;
 }
 
-input[name = "alternate-number"] {
+input[name = "contact"] {
     box-sizing: border-box;
     display: inline-block;
     width: 48.8vw;

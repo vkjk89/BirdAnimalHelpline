@@ -90,7 +90,7 @@ form {
     box-sizing: border-box;
 }
 
-input[type = "text"], input[name = "securityanswer"], input[name = "email"], input[name = "contact-number-2"], select, input[type = "date"], input[type = "radio"] {
+input[type = "text"], input[name = "securityanswer"], input[name = "email"], input[name = "mobile"], select, input[type = "date"], input[type = "radio"] {
     border: 1px solid #cccccc;
     border-radius: 5px;
     padding: 3vw;
@@ -98,7 +98,7 @@ input[type = "text"], input[name = "securityanswer"], input[name = "email"], inp
     margin-bottom: 2vh;
 }
 
-input[type = "text"]:focus, input[name = "securityanswer"]:focus, input[name = "email"]:focus, input[name = "contact-number-2"]:focus, select:focus, input[type = "date"]:focus {
+input[type = "text"]:focus, input[name = "securityanswer"]:focus, input[name = "email"]:focus, input[name = "mobile"]:focus, select:focus, input[type = "date"]:focus {
     border: 1px solid black;
 }
 
@@ -132,7 +132,7 @@ input[name = "contact-number-1"] {
     width: 15vw;
 }
 
-input[name = "contact-number-2"] {
+input[name = "mobile"] {
     box-sizing: border-box;
     width: 56.5vw;
 }

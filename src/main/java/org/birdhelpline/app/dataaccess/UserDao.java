@@ -23,11 +23,11 @@ import java.util.*;
 @Repository
 public class UserDao {
     Logger logger = LoggerFactory.getLogger(UserDao.class);
-    private static final String USER_QUERY = "select u.user_id as user_id , ui.first_name,ui.last_name,u.email,u.mobile from user u , user_info ui where ";
+    private static final String USER_QUERY = "select * from user u , user_info ui where ";
     private static final RowMapper<User> USER_MAPPER = new UserRowMapper();
     private Map<String, Integer> userRoleVsRoleId = new HashMap<>();
     private Map<Integer, String> securityQIdVSSecurityQ = new LinkedHashMap<>();
-    private Map<Long, List<String>> pinCodeVsLandMarks = new HashMap<>();
+    //private Map<Long, List<String>> pinCodeVsLandMarks = new HashMap<>();
     private List<PinCodeLandmarkInfo> listPincodeLandMarks = new ArrayList<>();
     private List<String> listBirdAnimals = new ArrayList<>();
 
@@ -60,18 +60,19 @@ public class UserDao {
                 (ResultSet resultSet) ->
                 {
                     long pinCode = resultSet.getLong("pincode");
+                    long pinCodeId = resultSet.getLong("pin_land_id");
                     String landMark = resultSet.getString("landmark");
-                    List<String> landMarks = pinCodeVsLandMarks.get(pinCode);
-                    if (landMarks == null) {
-                        landMarks = new ArrayList<>();
-                        pinCodeVsLandMarks.put(pinCode, landMarks);
-                    }
-                    landMarks.add(landMark);
-                    listPincodeLandMarks.add(new PinCodeLandmarkInfo(pinCode, landMark));
+//                    List<String> landMarks = pinCodeVsLandMarks.get(pinCode);
+//                    if (landMarks == null) {
+//                        landMarks = new ArrayList<>();
+//                        pinCodeVsLandMarks.put(pinCode, landMarks);
+//                    }
+//                    landMarks.add(landMark);
+                    listPincodeLandMarks.add(new PinCodeLandmarkInfo(pinCodeId, pinCode, landMark));
                 }
         );
 
-        logger.info("VKJ : " + pinCodeVsLandMarks);
+        logger.info("VKJ : " + listPincodeLandMarks);
 
         jdbcTemplate.query("select security_q_id, security_q_text from security_q order by 1 ",
                 (ResultSet resultSet) ->
@@ -94,19 +95,18 @@ public class UserDao {
         return listBirdAnimals;
     }
 
-
-
-    public Map<Long, List<String>> getPinCodeVsLandMarks() {
-        return pinCodeVsLandMarks;
-    }
-
     public List<PinCodeLandmarkInfo> getPinCodeLandMarks() {
         return listPincodeLandMarks;
     }
 
     @Transactional(readOnly = true)
     public User getUser(long id) {
-        return jdbcTemplate.queryForObject(USER_QUERY + "u.user_id = ui.user_id and u.user_id = ?", USER_MAPPER, id);
+        try {
+            return jdbcTemplate.queryForObject(USER_QUERY + "u.user_id = ui.user_id and u.user_id = ?", USER_MAPPER, id);
+
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
     }
 
     @Transactional(readOnly = true)
@@ -114,6 +114,15 @@ public class UserDao {
         try {
             return jdbcTemplate.queryForObject(USER_QUERY + "u.user_id = ui.user_id and ui.mobile = ?", USER_MAPPER, mobile);
         } catch (EmptyResultDataAccessException notFound) {
+            return null;
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public User getUserWithForgotPasswd(String dob, String mobile, String securityQ, String securityA) {
+        try {
+            return jdbcTemplate.queryForObject(USER_QUERY + " u.user_id = ui.user_id and ui.dob = ? and u.mobile= ? and ui.security_id =? and ui.security_ans = ?", USER_MAPPER, dob, mobile, securityQ, securityA);
+        } catch (EmptyResultDataAccessException ex) {
             return null;
         }
     }
@@ -242,11 +251,30 @@ public class UserDao {
         return securityQIdVSSecurityQ;
     }
 
+    public void saveUserAddrPinDetails(User user) {
+        //TODO
+
+    }
+
+    public void setNewPassword(Long userId, String encode) {
+        this.jdbcTemplate.update(connection -> {
+                    PreparedStatement ps = connection.prepareStatement(
+                            "update user u set u.password =  ? where u.user_id = ?");
+
+                    ps.setString(1, encode);
+                    ps.setLong(2, userId);
+                    return ps;
+                }
+        );
+    }
+
+
     static class UserRowMapper implements RowMapper<User> {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             User user = new User();
             user.setUserId(rs.getLong("user_id"));
             user.setEmail(rs.getString("email"));
+            user.setEnabled(rs.getBoolean("enabled"));
             user.setPassword(rs.getString("password"));
             user.setMobile(rs.getLong("mobile"));
             user.setUserName(rs.getString("user_name"));
