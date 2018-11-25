@@ -7,6 +7,37 @@
           -ms-user-select: none; /* Internet Explorer/Edge */
               user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
+
+figcaption {
+    text-align: center;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+    cursor: pointer;
+}
+ 
+::-webkit-scrollbar-track {/*
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.8);
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
+    border-radius: 10px;
+    background-color: #EAEAEA;
+}
+
+::-webkit-scrollbar-thumb:start {
+    background-color: transparent;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;/*
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,1);
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.5);*/
+    background-color: #CCC;
+}
 /*----------------------------TOP-NAV-------------------------*/
 #top-nav {
     box-sizing: border-box;
@@ -487,12 +518,71 @@ li::before {
 
 /*--------------------USER-DATA-CHANGE-APPROVALS--------------------*/
 #user-data-change-approvals-content {
-    margin-top: 50vh;
+    margin-top: 5vh;
+    margin-right: 5vh;
+    height: 68vh;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
+#dynamic_image_enlarge {
+    display: none;
+    position: absolute;
+    width: 62vw;
+    height: 60vh;
+    background-color: rgba(222, 184, 134, 1);
+    z-index: 101;
+    padding: 2vw 4vw;
+    text-align: center;
+}
 
+#dynamic_image_enlarge img {
+    height: 54vh;
+}
 
+#dynamic_image_enlarge button {
+    background-color: #333;
+    color: white;
+    padding: 1vw 2vw;
+    float: right;
+    letter-spacing: 1px;
+}
 
-        /*#card-right-side * {
+.dynamic_usdca_member {
+    margin-bottom: 2vh;
+    box-shadow: 0px 0px 20px #AAA;
+}
+
+.user-info {
+    padding: 1vw;
+    background-color: #007AEA;
+    color: white;
+}
+
+.usdca-user-name:hover, .usdca-user-name:hover:focus, .usdca-user-role:hover, .usdca-user-role:focus {
+    text-shadow: 0px 0px 20px #fff;
+    cursor: pointer;
+}
+
+.usdca-user-role {
+    float: right;
+}
+
+.wrapper {
+    display: flex;
+}
+
+.old-photo, .new-photo {
+    width: 18vw;
+    cursor: pointer;
+}
+
+.approve, .reject {
+    width: 17vw;
+    padding: 0;
+    cursor: pointer;
+}
+
+        /*#user-data-change-approvals-content * {
             border: 1px solid burlywood;
         }*/

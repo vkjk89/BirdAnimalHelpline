@@ -86,7 +86,7 @@
                         <label for="location">Location: </label>
                         <textarea rows="2" cols="50" name="location" id="location" tabindex="8" maxlength="250"></textarea>
                         <input type="text" name="location-landmark" id="location-landmark" placeholder="Landmark - Eg: Near Regal Cinema" autocomplete="off" tabindex="9">
-                        <input type="number" name="location-pincode" id="location-pincode" placeholder="Pincode - Eg: 400002" required autocomplete="off" tabindex="10">
+                        <input type="number" name="location-pincode" id="location-pincode" placeholder="Pincode - Eg: 400002" required autocomplete="off" tabindex="10" min="400000" max="500000" title="Please enter valid pincode">
                     </div>
                 </div>
                 <div>
@@ -163,7 +163,34 @@
 
 <!-------------------------------- USER-DATA-CHANGE-APPROVALS--------------------------------------->
         <div id="user-data-change-approvals-content">
-            TEST!
+            <div id="dynamic_image_enlarge">
+                <div id="old-photo-enlarge"><img src="/static/img/selected-photo.png" th:src="@{/img/selected-photo.png}"></div>
+                <button id="image_enlarge_back_button" type="button">Back</button>
+            </div>
+            <div class="dynamic_usdca_member"id="member-1">
+                <div class="user-info">
+                    <span class="usdca-user-name">#user_name</span>
+                    <span class="usdca-user-role">#user_role</span>
+                </div>
+                <div class="wrapper">
+                    <div class="old-photo"><figure><img src="/static/img/old-photo.png" th:src="@{/img/old-photo.png}"width="100%" height="auto"><figcaption>Old Photo</figcaption></figure></div>
+                    <div class="new-photo"><figure><img src="/static/img/new-photo.png" th:src="@{/img/new-photo.png}" width="100%" height="auto"><figcaption>New Photo</figcaption></figure></div>
+                    <button type="button" class="approve"><figure><img src="/static/img/approved.png" th:src="@{/img/approved.png}" id="approve-img-1" width="100%" height="auto"><figcaption>Approved</figcaption></figure></button>
+                    <button type="button" class="reject"><figure><img src="/static/img/rejected.png" th:src="@{/img/rejected.png}" id="reject-img-1" width="100%" height="auto"><figcaption>Rejected</figcaption></figure></button>
+                </div>
+            </div>
+            <div class="dynamic_usdca_member"id="member-2">
+                <div class="user-info">
+                    <span class="usdca-user-name">#user_name</span>
+                    <span class="usdca-user-role">#user_role</span>
+                </div>
+                <div class="wrapper">
+                    <div class="old-photo"><figure><img src="/static/img/old-photo.png" th:src="@{/img/old-photo.png}"width="100%" height="auto"><figcaption>Old Photo</figcaption></figure></div>
+                    <div class="new-photo"><figure><img src="/static/img/new-photo.png" th:src="@{/img/new-photo.png}" width="100%" height="auto"><figcaption>New Photo</figcaption></figure></div>
+                    <button type="button" class="approve"><figure><img src="/static/img/approved.png" th:src="@{/img/approved.png}" id="approve-img-2" width="100%" height="auto"><figcaption>Approved</figcaption></figure></button>
+                    <button type="button" class="reject"><figure><img src="/static/img/rejected.png" th:src="@{/img/rejected.png}" id="reject-img-2" width="100%" height="auto"><figcaption>Rejected</figcaption></figure></button>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -354,6 +381,46 @@
                 else alert("Ctrl + Alt + R is shortcut for Resetting all fields of a Case");
             }
         }
+
+//------Approve-Reject-Buttons-Photo-Change---------------------------------------------------------------------------------------------
+        var approve_reject = 1;
+
+        document.getElementsByClassName('approve')[approve_reject - 1].onclick = function(){
+            console.log(approve_reject);
+            console.log(document.getElementById('approve-img-' + approve_reject));
+            document.getElementById( 'approve-img-' + approve_reject).setAttribute("th:src","/img/approved-click.png");
+            document.getElementById( 'approve-img-' + approve_reject).setAttribute("src","/static/img/approved-click.png");
+            $( "#member-" + approve_reject ).fadeOut("slow");
+            approve_reject++;
+            console.log(approve_reject);
+            console.log(temp);
+        }
+        document.getElementsByClassName('reject')[approve_reject - 1].onclick = function(){
+            document.getElementById( 'reject-img-' + approve_reject ).setAttribute("th:src","/img/rejected-click.png");
+            document.getElementById( 'reject-img-' + approve_reject ).setAttribute("src","/static/img/rejected-click.png");
+            $( "#member-" + approve_reject ).fadeOut("slow");
+            approve_reject++;
+        }
+
+//------Enlarge-Old-or-New-Photo-------------------------------------------------------------------------------------------------------
+        //var x = 1;
+        $('.old-photo').children("figure").click(function(){
+            $('#dynamic_image_enlarge').css('display','block');
+            $('.dynamic_usdca_member').children().css('display','none');
+            console.log(event.target);
+            if (event.target == "<img>" || event.target == "<figcaption>"){alert();}
+        });
+
+        $('.new-photo').children("figure").click(function(){
+            $('#dynamic_image_enlarge').css('display','block');
+            $('.dynamic_usdca_member').children().css('display','none');
+            console.log(event.target);
+        });
+
+        $('#image_enlarge_back_button').click(function(){
+            $('#dynamic_image_enlarge').css('display','none');
+            $('.dynamic_usdca_member').children().css('display','');
+        });
 
 //------BACKEND-INTEGRATION-------------------------------------------------------------------------------------------------------------
         $(document).ready(function () {

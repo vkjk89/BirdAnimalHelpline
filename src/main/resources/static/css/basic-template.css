@@ -29,6 +29,7 @@ button, input[type = "submit"]{
   color: black;
   padding: 3vw 5vw;
   background-color: transparent;
+  cursor: pointer;
 }
 
 input[type = "text"], input[type = "number"], input[type = "search"], input[type = "email"], input[type = "password"], input[type = "file"], select, textarea {
