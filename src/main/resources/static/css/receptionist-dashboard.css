@@ -570,15 +570,16 @@ li::before {
 
 .wrapper {
     display: flex;
+    justify-content: space-around;
 }
 
 .old-photo, .new-photo {
-    width: 18vw;
+    width: 12vw;
     cursor: pointer;
 }
 
 .approve, .reject {
-    width: 17vw;
+    width: 12vw;
     padding: 0;
     cursor: pointer;
 }
