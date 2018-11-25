@@ -57,7 +57,30 @@ main {
     margin-right: 8%;
     float: right;
     background-color: rgb(230,230,230);
-}   
+}
+
+#pwa {
+    display: none;
+    position: absolute;
+    top: 40%;
+    left: 30%;
+    background-color: #333;
+    color: white;
+    z-index: 10001;
+    padding: 2vw;
+}
+
+#install {
+    background-color: #007AEA;
+    padding: 1.5vh;
+    float: right;
+}
+
+#not-now {
+    background-color: transparent;
+    padding: 1.5vh;
+    float: right;
+}
 
 @media only screen and (min-width: 1024px){
     .logoImage {

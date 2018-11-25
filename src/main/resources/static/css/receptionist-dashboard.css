@@ -126,6 +126,7 @@ main {
 
 #heading-raise-a-case, #heading-my-cases, #heading-user-data-change-approvals {
     position: relative;
+    display: block;
     box-sizing: border-box;
     padding: 1vw;
     height: 6vh;
@@ -152,7 +153,7 @@ main {
     box-sizing: border-box;
     display: block;
     color: black;
-    margin-left: 1.75vw;
+    margin-left: 3vw;
     margin-top: 3vh;
     margin-bottom: 3vh;
     margin-right: 1.75vw;
@@ -181,7 +182,8 @@ main {
     box-shadow: 00px 00px 30px #999;
 }
 
-#raise-a-case-side-card:hover, #my-cases-side-card:hover, #user-data-change-approvals-side-card:hover {
+#raise-a-case-side-card:hover, #my-cases-side-card:hover, #user-data-change-approvals-side-card:hover, #raise-a-case-side-card:focus, #my-cases-side-card:focus, #user-data-change-approvals-side-card:focus {
+    border: none;
     box-shadow: 00px 00px 40px #888;
     cursor: pointer;
     transform: scale(1.03);
@@ -351,7 +353,7 @@ label {
 
 /*--------------------MY-CASES--------------------*/
 #search-case-input {
-    width: 66.5vw;
+    width: 68.5vw;
     border-radius: 0;
     padding: 1vw;
     background-image: url("/img/search-1.png");
@@ -381,6 +383,7 @@ input[type="search"]:focus::placeholder {
     justify-content: space-around;
     border: none;
     font-weight: 400;
+    width: 68.5vw;
 }
 
 .active-header {
@@ -423,7 +426,7 @@ input[type="search"]:focus::placeholder {
     overflow-x: hidden;
 }
 
-.sr-no-div {width: 8vw;} .case-id-div {width: 15vw;} .case-status-div {width: 15vw;} .date-div {width: 14vw;} .animal-type-div {width: 28vw;} .case-name-div {width: 19vw;}
+.sr-no-div {width: 8vw;} .case-id-div {width: 15vw;} .case-status-div {width: 15vw;} .date-div {width: 13vw;} .animal-type-div {width: 28vw;} .case-name-div {width: 19vw;}
 .sr-no {width: 8vw;} .case-id {width: 15vw;} .case-status {width: 15vw;} .date {width: 13vw;} .animal-type {width: 28vw;} .case-name {width: 19vw;}
 
 li {
@@ -483,7 +486,9 @@ li::before {
 }
 
 /*--------------------USER-DATA-CHANGE-APPROVALS--------------------*/
-
+#user-data-change-approvals-content {
+    margin-top: 5vh;
+}
 
 
 

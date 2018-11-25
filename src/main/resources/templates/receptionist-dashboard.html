@@ -40,7 +40,7 @@
             <span id="myc-heading-animation">My Cases</span>
         </div>
         <div id="heading-user-data-change-approvals">
-            <span id="usdca-heading-animation">User Modification Approvals</span>
+            <span id="usdca-heading-animation">Data Change Approvals</span>
         </div>
 <!-------------------------------- RAISE-A-CASE-------------------------------------------->
         <div id="raise-a-case-content">
@@ -54,9 +54,9 @@
                             <input type="number" id="case-id" name="case-id" disabled placeholder="" required autocomplete="off">
                             <div>
                                 <input type="radio" name="bird-or-animal" id="bird-or-animal1" value="Animal" required tabindex="1">
-                                    <label for="bird-or-animal1" id="bird-option"><img src="/static/img/bird1.png" alt="Bird" width="50vw"></label>
+                                    <label for="bird-or-animal1" id="bird-option"><img src="/static/img/bird1.png" th:src="@{/img/bird1.png}" alt="Bird" width="50vw"></label>
                                 <input type="radio" name="bird-or-animal" id="bird-or-animal2" value="Bird" tabindex="2">
-                                    <label for="bird-or-animal2" id="animal-option"><img src="/static/img/animal.png" width="50vw" alt="Animal"></label>
+                                    <label for="bird-or-animal2" id="animal-option"><img src="/static/img/animal.png" th:src="@{/img/animal.png}" width="50vw" alt="Animal"></label>
                             </div>
                         </div>
                         <label for="animal-type" id="animal-type-js">Animal/Bird type: </label>
@@ -84,7 +84,7 @@
                         </select>
                         <input type="number" name="contact-number" id="contact-number" placeholder="10 digit Mobile No. without prefix" required min="5000000000" max="9999999999" title="Ten digit mobile no. without any code" autocomplete="off" tabindex="7"><br>
                         <label for="location">Location: </label>
-                        <textarea rows="2" cols="50" name="location" id="location" tabindex="8"></textarea>
+                        <textarea rows="2" cols="50" name="location" id="location" tabindex="8" maxlength="250"></textarea>
                         <input type="text" name="location-landmark" id="location-landmark" placeholder="Landmark - Eg: Near Regal Cinema" autocomplete="off" tabindex="9">
                         <input type="number" name="location-pincode" id="location-pincode" placeholder="Pincode - Eg: 400002" required autocomplete="off" tabindex="10">
                     </div>
@@ -111,7 +111,7 @@
             <div id="tab-content">
                 <div id="active-tab-content">
                     <div class="content-table" id="active-content-table">
-                        <div style="display: flex; position: fixed; width: 71.5vw; font-size: 1.2em; background-color: rgb(248,248,248); font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC;">
+                        <div style="display: flex; position: fixed; width: 68.5vw; font-size: 1.2em; background-color: rgb(248,248,248); font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC;">
                             <div class="sr-no-div">Sr. No.</div>
                             <div class="case-id-div">Case ID</div>
                             <div class="case-status-div">Case Status</div>
@@ -119,7 +119,7 @@
                             <div class="animal-type-div">Animal/Bird Type</div>
                             <div class="case-name-div">Animal/Bird Name</div>
                         </div>
-                        <div class="my-cases-result" id="table1">
+                        <div class="my-cases-result" id="table1" style="width: 68.5vw;">
                             <div class ="row row1"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>
                             <div class ="row row1"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>
                             <div class ="row row1"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>
@@ -137,9 +137,9 @@
                             <div class="animal-type-div">Animal/Bird Type</div>
                             <div class="case-name-div">Animal/Bird Name</div>
                         </div>
-                        <div class="my-cases-result" id="table1">
-                            <div class ="row row1"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>
-                            <div class ="row row1"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>
+                        <div class="my-cases-result" id="table2">
+                            <div class ="row"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>
+                            <div class ="row"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>
                         </div>
                     </div>
                 </div>
@@ -153,7 +153,7 @@
                             <div class="animal-type-div">Animal/Bird Type</div>
                             <div class="case-name-div">Animal/Bird Name</div>
                         </div>
-                        <div class="my-cases-result" id="table1">
+                        <div class="my-cases-result" id="table3">
                             <div class ="row row1"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>
                         </div>
                     </div>
@@ -168,19 +168,19 @@
     </main>
 
     <section id="card-right-side">
-        <div id="raise-a-case-side-card">
+        <div id="raise-a-case-side-card" tabindex="">
             <div id="rac-body">
                 <img th:src="@{/img/raise-a-case.png}" src="/static/img/raise-a-case.png" alt="Raise a Case" class="right-side-card-img" width="" height="">
                 <label for="right-side-card-img">Raise a Case</label>
             </div>
         </div>
-        <div id="my-cases-side-card">
+        <div id="my-cases-side-card" tabindex="">
             <div id="myc-body">
                 <img th:src="@{/img/my-cases1.png}" src="/static/img/my-cases1.png" alt="Raise a Case" class="right-side-card-img" width="" height="" style="left:-1.5vh;">
                 <label for="right-side-card-img">My Cases</label>
             </div>
         </div>
-        <div id="user-data-change-approvals-side-card">
+        <div id="user-data-change-approvals-side-card" tabindex="">
             <div id="usdca-body">
                 <img th:src="@{/img/user-data-change-approvals.png}" src="/static/img/user-data-change-approvals.png" alt="Raise a Case" class="right-side-card-img" width="" height="">
                 <label for="right-side-card-img">Data Change Approvals</label>
@@ -339,6 +339,22 @@
             document.getElementById('animal-name').setAttribute("placeholder", "Eg: Rufus (Optional)");
         }
 
+//------Keyboard-Shortcuts---------------------------------------------------------------------------------------------------------------
+        document.onkeyup = function(e) {
+            if (e.ctrlKey && e.altKey && e.which == 83) {
+                if(document.getElementById('heading-raise-a-case').style.display == "" || document.getElementById('heading-raise-a-case').style.display == "block"){
+                    document.getElementById('submit-raise-case').click();
+                }
+                else alert("Ctrl + Alt + S is shortcut for Raising a Case");
+            }
+            if (e.ctrlKey && e.altKey && e.which == 82) {
+                if(document.getElementById('heading-raise-a-case').style.display == "" || document.getElementById('heading-raise-a-case').style.display == "block"){
+                    document.getElementById('reset-raise-case').click();
+                }
+                else alert("Ctrl + Alt + R is shortcut for Resetting all fields of a Case");
+            }
+        }
+
 //------BACKEND-INTEGRATION-------------------------------------------------------------------------------------------------------------
         $(document).ready(function () {
             $('#myc-body').click(
@@ -406,6 +422,17 @@
             });
 
         });
+
+/*-----Duplicate-ID's-----
+        var allElements = document.getElementsByTagName("*"), allIds = {}, dupIDs = [];
+        for (var i = 0, n = allElements.length; i < n; ++i) {
+        var el = allElements[i];
+        if (el.id) {
+            if (allIds[el.id] !== undefined) dupIDs.push(el.id);
+            allIds[el.id] = el.name || el.id;
+            }
+        }
+        if (dupIDs.length) { console.error("Duplicate ID's:", dupIDs);} else { console.log("No Duplicates Detected"); }--------------*/
     </script>
 
 </body>
