@@ -70,8 +70,6 @@ public class LoginController {
     }
 
 
-
-
 //    @Bean
 //    public MultipartResolver multipartResolver() {
 //        return new CommonsMultipartResolver();
@@ -79,15 +77,15 @@ public class LoginController {
 
     @RequestMapping(path = "/registration", method = {RequestMethod.GET, RequestMethod.POST})
     public String processPage(@RequestParam(name = "page", required = false) final Integer currentPage,
-                              @RequestParam(name = "dp-image", required = false) MultipartFile file,
-//                              MultipartFile file,
-                              final @ModelAttribute("user") User user, BindingResult result,
-                              final HttpSession session,
+//                              @RequestParam(name = "dp-image", required = false) MultipartFile file,
+                              @ModelAttribute("user") User user, BindingResult result,
                               SessionStatus status,
                               @RequestParam(name = "action", required = false) String action,
                               Model model) throws IOException {
         logger.info(" vkj inside reg : " + user + " " + currentPage);
         logger.info("vkj action : " + action);
+        model.addAttribute("securityQs", userService.getSecurityQs());
+
         if (currentPage == null) {
             return "RequestRegistration/Step1";
         }
@@ -95,24 +93,22 @@ public class LoginController {
             case 0:
                 return "RequestRegistration/Step1";
             case 1:
-                model.addAttribute("securityQs" , userService.getSecurityQs());
                 return "RequestRegistration/Step2";
             case 2:
                 return handleStep2(user, result);
             case 3:
-                return handleStep3(file, user, status, action,result);
+                return handleStep3(user, status, action, result);
             //TODO create this page
             default:
                 return "error/UndefinedPage";
         }
     }
 
-//    private String handleStep3(@RequestParam(name = "image", required = false) MultipartFile file, @ModelAttribute("user") User user, SessionStatus status, @RequestParam(name = "action", required = false) String action, BindingResult result) throws IOException {
-    private String handleStep3(MultipartFile file,  User user, SessionStatus status, String action, BindingResult result) throws IOException {
-
+    //    private String handleStep3(@RequestParam(name = "image", required = false) MultipartFile file, @ModelAttribute("user") User user, SessionStatus status, @RequestParam(name = "action", required = false) String action, BindingResult result) throws IOException {
+    private String handleStep3(User user, SessionStatus status, String action, BindingResult result) {
         String userName = user.getUserName();
         User fromDb = userService.findUserByUserName(userName);
-        if(fromDb != null) {
+        if (fromDb != null) {
             result.rejectValue("userName", "userName.invalid", "UserName is already taken up");
             return "RequestRegistration/Step3";
         }
@@ -124,10 +120,9 @@ public class LoginController {
         }
 
         long userId = userService.saveUser(user);
-        if(userId == 0) {
+        if (userId == 0) {
             return "Error";
-        }
-        else {
+        } else {
             status.setComplete();
         }
 
@@ -159,17 +154,16 @@ public class LoginController {
 
     @ModelAttribute("user")
     private User getUserObj() {
-            return new User();
+        return new User();
     }
 
-    @RequestMapping(path = "/profileCompletion", method =  { RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(path = "/profileCompletion", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView processProfileCompletionPage(@RequestParam(name = "page", required = false) final Integer currentPage,
                                                      final @ModelAttribute("user") User user, BindingResult result,
-                                                     final HttpSession session,
                                                      SessionStatus status,
                                                      @RequestParam(name = "action", required = false) String action,
                                                      HttpServletRequest request,
-                                                     RedirectAttributes redirectAttrs) throws IOException {
+                                                     RedirectAttributes redirectAttrs)  {
         logger.info("vkj inside profile comple : " + user + " " + currentPage);
         logger.info("vkj action : " + action);
 
@@ -181,11 +175,13 @@ public class LoginController {
         }
         switch (currentPage) {
             case 1:
-                handleProfileStep1(modelAndView,user, result); break;
+                handleProfileStep1(modelAndView, user, result);
+                break;
             case 2:
-                handleProfileStep2(modelAndView,user, result); break;
+                handleProfileStep2(modelAndView, user, result);
+                break;
             case 3:
-                handleProfileStep3(modelAndView,user, status, action,result,request,redirectAttrs);
+                handleProfileStep3(modelAndView, user, status, action, result, request, redirectAttrs);
                 break;
             //TODO create this page
             default:
@@ -205,70 +201,73 @@ public class LoginController {
 
     private void
     handleProfileStep3(ModelAndView modelAndView, User user, SessionStatus status, String action, BindingResult result, HttpServletRequest request, RedirectAttributes redirectAttrs) {
-        logger.info("vkj request 1: "+ request.getParameterMap().keySet());
-        logger.info("vkj request 2: "+ request.getParameterMap().values());
-        for(Map.Entry<String,String[]> entry : request.getParameterMap().entrySet()) {
-            logger.info(entry.getKey()+ " : "+ Arrays.toString(entry.getValue()));
+        logger.info("vkj request 1: " + request.getParameterMap().keySet());
+        logger.info("vkj request 2: " + request.getParameterMap().values());
+        for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
+            logger.info(entry.getKey() + " : " + Arrays.toString(entry.getValue()));
         }
-        populateUserServiceTimeInfo(user,request);
+        populateUserServiceTimeInfo(user, request);
         userService.saveUserAddrPinDetails(user);
-        redirectAttrs.addFlashAttribute("profileCompleted",true);
+        redirectAttrs.addFlashAttribute("profileCompleted", true);
         modelAndView.setViewName("redirect:/default");
     }
 
     private void populateUserServiceTimeInfo(User user, HttpServletRequest request) {
         List<UserServiceTimeInfo> list = new ArrayList<>();
         UserServiceTimeInfo serviceTimeInfo = null;
-        String [] selectedPinCodeIds = request.getParameterMap().get("pincodeId");
-        String [] selectedTimings =request.getParameterMap().get("selectedTiming");
+        String[] selectedPinCodeIds = request.getParameterMap().get("pincodeId");
+        String[] selectedTimings = request.getParameterMap().get("selectedTiming");
 
-        if(selectedPinCodeIds != null && selectedTimings !=null && selectedPinCodeIds.length == selectedTimings.length) {
-            for(int i = 0; i<selectedPinCodeIds.length;i++) {
+        if (selectedPinCodeIds != null && selectedTimings != null && selectedPinCodeIds.length == selectedTimings.length) {
+            for (int i = 0; i < selectedPinCodeIds.length; i++) {
                 serviceTimeInfo = new UserServiceTimeInfo();
                 serviceTimeInfo.setPincodeId(Long.parseLong(selectedPinCodeIds[i]));
-                String [] time = selectedTimings[i].split("-");
+                String[] time = selectedTimings[i].split("-");
                 serviceTimeInfo.setFromTime(Integer.parseInt(time[0]));
                 serviceTimeInfo.setToTime(Integer.parseInt(time[1]));
                 list.add(serviceTimeInfo);
             }
         }
         user.setUserServiceTimeInfos(list);
-        logger.info("vkj user service time : "+ list);
+        logger.info("vkj user service time : " + list);
     }
 
     @RequestMapping(path = "/forgotPassword", method = {RequestMethod.GET})
     public String forgotPassword(Model model) throws IOException {
         logger.info(" vkj inside forgot password ");
-        model.addAttribute("securityQs" , userService.getSecurityQs());
+        model.addAttribute("securityQs", userService.getSecurityQs());
         return "forgot-password";
     }
 
 
     @RequestMapping(path = "/validateForgotPasswdDetails", method = {RequestMethod.POST})
-    public @ResponseBody  String validateForgotPasswordDetails(@RequestParam("birthdate") String dob,
-                                                @RequestParam("contact-number") String mobile,
-                                                @RequestParam("securityquestion") String securityQ,
-                                                @RequestParam("securityanswer") String securityA,
-                                                               HttpSession session) throws IOException {
+    public @ResponseBody
+    String validateForgotPasswordDetails(@RequestParam("birthdate") String dob,
+                                         @RequestParam("contact-number") String mobile,
+                                         @RequestParam("securityquestion") String securityQ,
+                                         @RequestParam("securityanswer") String securityA,
+                                         HttpSession session) throws IOException {
         logger.info(" vkj inside valiate forgot password ");
-        User user = userService.validateForgotPasswdDetails(dob,mobile,securityQ,securityA);
-        logger.info("User is : "+user);
-        if(user != null) {
+        User user = userService.validateForgotPasswdDetails(dob, mobile, securityQ, securityA);
+        logger.info("User is : " + user);
+        if (user != null) {
             session.setAttribute("userId", user.getUserId());
         }
         //return user != null && user.isEnabled() ? "Valid" : "Invalid";
         return user != null ? "valid" : "invalid";
     }
+
     @RequestMapping(path = "/forgotPassword", method = {RequestMethod.POST})
-    public @ResponseBody  String forgotPasswordPost(@RequestParam("password") String newPasswd, HttpSession session) throws IOException {
+    public
+    String forgotPasswordPost(@RequestParam("password") String newPasswd, HttpSession session ,Model model) throws IOException {
         logger.info(" vkj inside set new password ");
         Long userId = (Long) session.getAttribute("userId");
-        if(userId !=null) {
-            userService.setNewPassword(userId,newPasswd);
-            return "success";
-        }
-        else {
-            return "invalid";
+        if (userId != null) {
+            userService.setNewPassword(userId, newPasswd);
+            model.addAttribute("error","Password reset successfully");
+            return "SignIn";
+        } else {
+            return "Error";
         }
     }
 
@@ -281,14 +280,15 @@ public class LoginController {
 
 
     @RequestMapping(path = "/profilePicUpload", method = RequestMethod.POST)
-    public @ResponseBody String profilePicUpload(@RequestParam(name = "dp-image", required = false) MultipartFile file,
-                                   @RequestPart(name = "dp-image" , required = false) MultipartFile file1,
-                              final HttpSession session, final @ModelAttribute("user") User user, BindingResult result
-                              ) throws IOException {
-       logger.info("Received data 1 : "+file);
-       logger.info("Received data  2: "+file1);
+    public @ResponseBody
+    String profilePicUpload(@RequestParam(name = "dp-image", required = false) MultipartFile file,
+                            @RequestPart(name = "dp-image", required = false) MultipartFile file1,
+                            final HttpSession session, final @ModelAttribute("user") User user, BindingResult result
+    ) throws IOException {
+        logger.info("Received data 1 : " + file);
+        logger.info("Received data  2: " + file1);
 
-       user.setImage(file.getBytes());
-       return Base64.getEncoder().encodeToString(file.getBytes());
+        user.setImage(file.getBytes());
+        return Base64.getEncoder().encodeToString(file.getBytes());
     }
 }
