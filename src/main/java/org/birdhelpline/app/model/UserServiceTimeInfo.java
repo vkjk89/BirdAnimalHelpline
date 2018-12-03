@@ -1,25 +1,25 @@
 package org.birdhelpline.app.model;
 
 public class UserServiceTimeInfo {
-    private long userId;
-    private long pincode;
+    private long pincodeId;
     private int fromTime;
     private int toTime;
 
-    public long getUserId() {
-        return userId;
+    @Override
+    public String toString() {
+        return "UserServiceTimeInfo{" +
+                "pincodeId=" + pincodeId +
+                ", fromTime=" + fromTime +
+                ", toTime=" + toTime +
+                '}';
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public long getPincodeId() {
+        return pincodeId;
     }
 
-    public long getPincode() {
-        return pincode;
-    }
-
-    public void setPincode(long pincode) {
-        this.pincode = pincode;
+    public void setPincodeId(long pincodeId) {
+        this.pincodeId = pincodeId;
     }
 
     public int getFromTime() {
@@ -36,15 +36,5 @@ public class UserServiceTimeInfo {
 
     public void setToTime(int toTime) {
         this.toTime = toTime;
-    }
-
-    @Override
-    public String toString() {
-        return "UserServiceTimeInfo{" +
-                "userId=" + userId +
-                ", pincode=" + pincode +
-                ", fromTime=" + fromTime +
-                ", toTime=" + toTime +
-                '}';
     }
 }

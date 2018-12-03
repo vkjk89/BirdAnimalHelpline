@@ -44,9 +44,6 @@ public class UserService {
 
     }
 
-    public Map<Long,List<String>> getPinCodeVsLandMarks(){
-        return userDao.getPinCodeVsLandMarks();
-    }
 
     public List<PinCodeLandmarkInfo> getPinCodeLandMarks(String term){
         List<PinCodeLandmarkInfo> list = userDao.getPinCodeLandMarks();
@@ -87,4 +84,16 @@ public class UserService {
         return userDao.getListBirdAnimals();
     }
 
+    public void saveUserAddrPinDetails(User user) {
+        logger.info(" vkj : "+user);
+        userDao.saveUserAddrPinDetails(user);
+    }
+
+    public User validateForgotPasswdDetails(String dob, String mobile, String securityQ, String securityA) {
+        return userDao.getUserWithForgotPasswd(dob,mobile,securityQ,securityA);
+    }
+
+    public void setNewPassword(Long userId, String newPasswd) {
+        userDao.setNewPassword(userId,bCryptPasswordEncoder.encode(newPasswd));
+    }
 }

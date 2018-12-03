@@ -41,7 +41,27 @@ public class CaseController {
         if (user == null) {
             return null;
         }
-        return caseService.getCaseInfoByUserId(user.getUserId());
+        return caseService.getActiveCaseInfoByUserId(user.getUserId());
+    }
+
+    @RequestMapping(value = "/recentCases", method = RequestMethod.GET)
+    public @ResponseBody
+    List<CaseInfo> getRecentCases( HttpSession session) {
+        User user = getUser(session);
+        if (user == null) {
+            return null;
+        }
+        return caseService.getRecentCaseInfoByUserId(user.getUserId());
+    }
+
+    @RequestMapping(value = "/closedCases", method = RequestMethod.GET)
+    public @ResponseBody
+    List<CaseInfo> getClosedCases( HttpSession session) {
+        User user = getUser(session);
+        if (user == null) {
+            return null;
+        }
+        return caseService.getClosedCaseInfoByUserId(user.getUserId());
     }
 
     private User getUser(HttpSession session) {

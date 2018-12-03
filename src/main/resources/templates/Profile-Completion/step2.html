@@ -24,7 +24,7 @@
                 <input th:field="*{officeAddr.addrLine1}" type = "text" name = "address-line1" placeholder="Address Line 1">
                 <input th:field="*{officeAddr.addrLine2}" type = "text" name = "address-line2" placeholder="Adderss Line 2">
                 <input th:field="*{officeAddr.pincode}" type = "number" name = "pincode" placeholder="Pincode" required min="400000" max="450000">
-                <label for="">Nature of Business</label>
+                <label for="nature-of-business">Nature of Business</label>
                 <input th:field="*{officeAddr.natureBusiness}" type = "text" name = "nature-of-business" placeholder="Eg. - Textiles" required>
                 <button type = "submit" form="home-address-form" id = "next"><img th:src="@{/img/next-button21.png}" src="/static/img/next-button21.png" alt="next" ></button>
                 <input type="hidden" name="page" value="2">

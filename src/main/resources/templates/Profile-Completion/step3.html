@@ -24,7 +24,7 @@
         We need a few more details.
     </p>
     <main>
-        <form th:action="@{/profileCompletion}" action="" name = "pincode" id = "pincode" method="POST">
+        <form th:object="${user}" th:action="@{/profileCompletion}" action="" name = "pincode" id = "pincode" method="POST">
             <div class="ui-widget" id="1pincode">
                 <label for="search-pincode" id = "title">Your preffered pick-up locations:</label>
 
@@ -96,14 +96,14 @@
 
     $(document).ready(function() {
         var container = $(document.createElement('div')).css({
-            padding: '5px', margin: '20px', width: '170px', border: '1px dashed',
-            borderTopColor: '#999', borderBottomColor: '#999',
-            borderLeftColor: '#999', borderRightColor: '#999'
+            //padding: '5px', margin: '20px', width: '170px', border: '1px dashed',
+            //borderTopColor: '#999', borderBottomColor: '#999',
+            //borderLeftColor: '#999', borderRightColor: '#999'
         });
 
-        var a = '<input type = "checkbox" id = "x" name = "Specify Timings:" onclick = "specifytimings(x)">';
-        var b = '<label style = "font-size:0.7em" for = "x"> Specify Timings </label> ';
-        var c = '<select id = "select-timings" form = "pincode"> <option> 00:00-06:00</option><option> 06:00-12:00</option><option> 12:00-18:00</option> </select>'
+        var a = '';
+        var b = '';
+        var c = ''
         $("#search-pincode").autocomplete({
             //appendTo  : "#search-pincode-results",
             minLength: 2,
@@ -116,7 +116,7 @@
                             // following property gets displayed in drop down
                             label: item.landmark+"-"+item.pincode,
                             // following property gets entered in the textbox
-                            value: item.landmark+"-"+item.pincode,
+                            value: item.pincodeId,
                             // following property is added for our own use
                             landmarks: item.landmark,
                             pincode:item.pincode
@@ -134,12 +134,13 @@
                     iCnt = iCnt + 1;
 
                     // ADD TEXTBOX.
-                    $(container).append(a).append(b).append(c);
+                    $(container).append('<span><input type="hidden"  name ="pincodeId" value ="'+ui.item.value+'" style = "font-size:0.7em" for = "pincodeId"> '+ui.item.label+'</span>').
+                                append('<label style = "font-size:0.7em" for = "selectedTiming"> Specify Timings </label> ').
+                                append('<select name = "selectedTiming" id = "select-timings" form = "pincode"> <option>00-06</option><option>06-12</option><option>12-18</option><option>18-23</option></select>');
                     $("#log").after(container);
-                    $( "#log" ).scrollTop( 0 );
+                    //$( "#log" ).scrollTop( 0 );
                     $("#search-pincode").autocomplete("close");
-                    // $( "<span>" ).text( ui.item.label ).appendTo( "#log" );
-                    // $( "#log" ).scrollTop( 0 );
+                    $("#search-pincode").val('');
                     return false;
                 }
             }

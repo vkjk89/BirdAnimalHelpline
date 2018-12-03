@@ -49,6 +49,12 @@ public class CaseDao {
         caseInfo.setDesc(rs.getString("description"));
         caseInfo.setCloseRemark(rs.getString("close_remark"));
         caseInfo.setTypeAnimal(rs.getString("type_animal"));
+        caseInfo.setAnimalName(rs.getString("animal_name"));
+        caseInfo.setAnimalCondition(rs.getString("animal_condition"));
+        caseInfo.setLocation(rs.getString("location"));
+        caseInfo.setLocationPincode(rs.getString("location_pincode"));
+        caseInfo.setContactName(rs.getString("contact_name"));
+        caseInfo.setContactNumber(rs.getString("contact_number"));
         return caseInfo;
     };
     private String insertCaseQ;
@@ -98,7 +104,7 @@ public class CaseDao {
         return list;
     }
 
-    public List<CaseInfo> getCaseInfoByUserId(Long userId) {
+    public List<CaseInfo> getAllCaseInfoByUserId(Long userId ) {
         List<CaseInfo> caseInfos = null;
         try {
             Map<String, Object> params = new HashMap<String, Object>();

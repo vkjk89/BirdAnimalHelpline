@@ -3,6 +3,7 @@ package org.birdhelpline.app.dataaccess;
 import org.apache.commons.io.IOUtils;
 import org.birdhelpline.app.model.PinCodeLandmarkInfo;
 import org.birdhelpline.app.model.User;
+import org.birdhelpline.app.model.UserServiceTimeInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,11 @@ import java.util.*;
 @Repository
 public class UserDao {
     Logger logger = LoggerFactory.getLogger(UserDao.class);
-    private static final String USER_QUERY = "select u.user_id as user_id , ui.first_name,ui.last_name,u.email,u.mobile from user u , user_info ui where ";
+    private static final String USER_QUERY = "select * from user u , user_info ui where ";
     private static final RowMapper<User> USER_MAPPER = new UserRowMapper();
     private Map<String, Integer> userRoleVsRoleId = new HashMap<>();
     private Map<Integer, String> securityQIdVSSecurityQ = new LinkedHashMap<>();
-    private Map<Long, List<String>> pinCodeVsLandMarks = new HashMap<>();
+    //private Map<Long, List<String>> pinCodeVsLandMarks = new HashMap<>();
     private List<PinCodeLandmarkInfo> listPincodeLandMarks = new ArrayList<>();
     private List<String> listBirdAnimals = new ArrayList<>();
 
@@ -60,18 +61,19 @@ public class UserDao {
                 (ResultSet resultSet) ->
                 {
                     long pinCode = resultSet.getLong("pincode");
+                    long pinCodeId = resultSet.getLong("pin_land_id");
                     String landMark = resultSet.getString("landmark");
-                    List<String> landMarks = pinCodeVsLandMarks.get(pinCode);
-                    if (landMarks == null) {
-                        landMarks = new ArrayList<>();
-                        pinCodeVsLandMarks.put(pinCode, landMarks);
-                    }
-                    landMarks.add(landMark);
-                    listPincodeLandMarks.add(new PinCodeLandmarkInfo(pinCode, landMark));
+//                    List<String> landMarks = pinCodeVsLandMarks.get(pinCode);
+//                    if (landMarks == null) {
+//                        landMarks = new ArrayList<>();
+//                        pinCodeVsLandMarks.put(pinCode, landMarks);
+//                    }
+//                    landMarks.add(landMark);
+                    listPincodeLandMarks.add(new PinCodeLandmarkInfo(pinCodeId, pinCode, landMark));
                 }
         );
 
-        logger.info("VKJ : " + pinCodeVsLandMarks);
+        logger.info("VKJ : " + listPincodeLandMarks);
 
         jdbcTemplate.query("select security_q_id, security_q_text from security_q order by 1 ",
                 (ResultSet resultSet) ->
@@ -94,19 +96,18 @@ public class UserDao {
         return listBirdAnimals;
     }
 
-
-
-    public Map<Long, List<String>> getPinCodeVsLandMarks() {
-        return pinCodeVsLandMarks;
-    }
-
     public List<PinCodeLandmarkInfo> getPinCodeLandMarks() {
         return listPincodeLandMarks;
     }
 
     @Transactional(readOnly = true)
     public User getUser(long id) {
-        return jdbcTemplate.queryForObject(USER_QUERY + "u.user_id = ui.user_id and u.user_id = ?", USER_MAPPER, id);
+        try {
+            return jdbcTemplate.queryForObject(USER_QUERY + "u.user_id = ui.user_id and u.user_id = ?", USER_MAPPER, id);
+
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
     }
 
     @Transactional(readOnly = true)
@@ -114,6 +115,15 @@ public class UserDao {
         try {
             return jdbcTemplate.queryForObject(USER_QUERY + "u.user_id = ui.user_id and ui.mobile = ?", USER_MAPPER, mobile);
         } catch (EmptyResultDataAccessException notFound) {
+            return null;
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public User getUserWithForgotPasswd(String dob, String mobile, String securityQ, String securityA) {
+        try {
+            return jdbcTemplate.queryForObject(USER_QUERY + " u.user_id = ui.user_id and ui.dob = ? and u.mobile= ? and ui.security_id =? and ui.security_ans = ?", USER_MAPPER, dob, mobile, securityQ, securityA);
+        } catch (EmptyResultDataAccessException ex) {
             return null;
         }
     }
@@ -242,11 +252,87 @@ public class UserDao {
         return securityQIdVSSecurityQ;
     }
 
+    @Transactional
+    public void saveUserAddrPinDetails(User user) {
+
+        jdbcTemplate.update((Connection con) -> {
+            PreparedStatement ps = con.prepareStatement(
+                    "insert into user_addr_info (user_id,full_name,address_line1,address_line2,pincode,alternate_contact,address_type,nature_business) values (?,?,?,?,?,?,?,?)"
+            );
+
+            ps.setLong(1, user.getUserId());
+            ps.setString(2, user.getHomeAddr().getFullName());
+            ps.setString(3, user.getHomeAddr().getAddrLine1());
+            ps.setString(4, user.getHomeAddr().getAddrLine2());
+            ps.setLong(5, user.getHomeAddr().getPincode());
+            ps.setString(6, user.getHomeAddr().getContactPrefix() + "-" + user.getHomeAddr().getContact());
+            ps.setString(7, "H");
+            ps.setString(8, "");
+            return ps;
+        });
+
+        jdbcTemplate.update((Connection con) -> {
+            PreparedStatement ps = con.prepareStatement(
+                    "insert into user_addr_info (user_id,full_name,address_line1,address_line2,pincode,alternate_contact,address_type,nature_business) values (?,?,?,?,?,?,?,?)"
+            );
+
+            ps.setLong(1, user.getUserId());
+            ps.setString(2, user.getOfficeAddr().getFullName());
+            ps.setString(3, user.getOfficeAddr().getAddrLine1());
+            ps.setString(4, user.getOfficeAddr().getAddrLine2());
+            ps.setLong(5, user.getOfficeAddr().getPincode());
+            ps.setString(6, "");
+           // ps.setString(6, user.getOfficeAddr().getContactPrefix() + "-" + user.getOfficeAddr().getContact());
+            ps.setString(7, "O");
+            ps.setString(8, user.getOfficeAddr().getNatureBusiness());
+            return ps;
+        });
+
+        for (UserServiceTimeInfo serviceTimeInfo : user.getUserServiceTimeInfos()) {
+            jdbcTemplate.update((Connection con) -> {
+                PreparedStatement ps = con.prepareStatement(
+                        "insert into user_service_time_info (user_id,pin_land_id,from_time,to_time) values (?,?,?,?)"
+                );
+                ps.setLong(1, user.getUserId());
+                ps.setLong(2, serviceTimeInfo.getPincodeId());
+                ps.setInt(3, serviceTimeInfo.getFromTime());
+                ps.setInt(4,serviceTimeInfo.getToTime());
+                return ps;
+            });
+        }
+
+
+
+            jdbcTemplate.update((Connection con) -> {
+                PreparedStatement ps = con.prepareStatement(
+                        "update user_info u set u.last_login_date = now() where u.user_id = ?"
+                );
+                ps.setLong(1, user.getUserId());
+                return ps;
+            });
+
+
+    }
+
+    public void setNewPassword(Long userId, String encode) {
+        this.jdbcTemplate.update(connection -> {
+                    PreparedStatement ps = connection.prepareStatement(
+                            "update user u set u.password =  ? where u.user_id = ?");
+
+                    ps.setString(1, encode);
+                    ps.setLong(2, userId);
+                    return ps;
+                }
+        );
+    }
+
+
     static class UserRowMapper implements RowMapper<User> {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             User user = new User();
             user.setUserId(rs.getLong("user_id"));
             user.setEmail(rs.getString("email"));
+            user.setEnabled(rs.getBoolean("enabled"));
             user.setPassword(rs.getString("password"));
             user.setMobile(rs.getLong("mobile"));
             user.setUserName(rs.getString("user_name"));

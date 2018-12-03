@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,50 +28,60 @@ public class DefaultController {
     UserService userService;
 
     @GetMapping(value = "/default")
-    public ModelAndView handleLogin(HttpServletRequest request) {
+    public ModelAndView handleLogin(HttpServletRequest request, Model model) {
         ModelAndView modelAndView = new ModelAndView("Error");
         Principal principal = request.getUserPrincipal();
-        logger.info("Inside handleLogin for user : "+ principal.getName());
+        logger.info("Inside handleLogin for user : " + principal.getName());
+
+        logger.info(" vkj model" + model.asMap());
         User user = userService.findUserByUserName(principal.getName());
-        if(user == null) {
+        if (user == null) {
             //modelAndView.setViewName("Error");
             return modelAndView;
         }
+
         HttpSession session = request.getSession();
-        logger.info("vkj s 1"+session.isNew());
-        logger.info("vkj s 2"+session.getAttribute("user"));
-
         modelAndView.addObject("user", user);
-        session.setAttribute("user",user);
-        logger.info("vkj s 3"+session.getAttribute("user"));
+        session.setAttribute("user", user);
 
-        modelAndView.addObject("birdAnimals" , userService.getListBirdAnimals());
-        logger.info("VKJ user is : "+user);
+        Boolean profileCompleted = (Boolean) model.asMap().get("profileCompleted");
+        if (profileCompleted != null && profileCompleted) {
+            logger.info(" VKJ : from profile compl page so redirecting :" + profileCompleted);
+            getViewBasedOnRole(modelAndView);
+            return modelAndView;
+        }
 
-        if(user.getLastLoginDate() == null) {
+        modelAndView.addObject("birdAnimals", userService.getListBirdAnimals());
+
+        logger.info("VKJ user is : " + user);
+        if (user.getLastLoginDate() == null) {
             logger.info("User login for first time so redirecting to profile completion page");
-            modelAndView.setViewName("receptionist-dashboard");
-            // modelAndView.setViewName("Vol-dashboard");
-            //modelAndView.setViewName("Profile-Completion/step1");
+            //modelAndView.setViewName("receptionist-dashboard");
+            //modelAndView.setViewName("Vol-dashboard");
+            modelAndView.setViewName("Profile-Completion/step1");
 
             return modelAndView;
         }
 
+        getViewBasedOnRole(modelAndView);
+
+        return modelAndView;
+    }
+
+    private void getViewBasedOnRole(ModelAndView modelAndView) {
         Collection<? extends GrantedAuthority> auth = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        for(GrantedAuthority authority : auth) {
-            if(authority.getAuthority().equalsIgnoreCase("ADMIN")){
-                modelAndView.setViewName("Admin");
+        logger.info("vkj auths : "+auth);
+        for (GrantedAuthority authority : auth) {
+            if (authority.getAuthority().equalsIgnoreCase("ADMIN")) {
+                modelAndView.setViewName("admin-dashboard");
                 break;
-            }
-            else if(authority.getAuthority().equalsIgnoreCase("RECEPTIONIST")) {
-                modelAndView.setViewName("Receptionist");
+            } else if (authority.getAuthority().equalsIgnoreCase("RECEPTIONIST")) {
+                modelAndView.setViewName("receptionist-dashboard");
                 break;
-            }
-            else {
+            } else {
                 modelAndView.setViewName("Vol-dashboard");
                 break;
             }
         }
-        return  modelAndView;
     }
 }
