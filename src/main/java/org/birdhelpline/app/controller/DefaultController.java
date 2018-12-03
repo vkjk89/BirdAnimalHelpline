@@ -44,6 +44,7 @@ public class DefaultController {
 
         modelAndView.addObject("birdAnimals" , userService.getListBirdAnimals());
         logger.info("VKJ user is : "+user);
+
         if(user.getLastLoginDate() == null) {
             logger.info("User login for first time so redirecting to profile completion page");
             modelAndView.setViewName("receptionist-dashboard");
