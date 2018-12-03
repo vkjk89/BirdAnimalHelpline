@@ -37,20 +37,18 @@
     <meta name="theme-color" content="#333333">
 </head>
 
-<body>
-    <!--- div class="bg"></div --->
-    
+<body>    
     <main id = "main">
         <div>
             <button class = "info-btn"><a onclick="aboutus();"><img th:src="@{/img/aboutus.png}" src = "/static/img/aboutus.png" style = "width: 100%; height: auto; padding: 0;" alt = "About Us"></a></button>
         </div>
-        <div id = "div1">
+        <div>
             <div>
                 <img th:src="@{/img/Logo1.png}" src="/static/img/Logo1.png" class = "logoImage" alt = "Logo"><br><br>
             </div>
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-dark active" onclick="window.location.assign('/registration');" style="font-size: 1.2em;">
-                        <input type="radio" name="options" id="option1" autocomplete="off" checked>Create an Account
+                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Create an Account
                     </label>
                     <label class="btn btn-dark" onclick="window.location.assign('/signIn');" style="font-size: 1.2em;">
                         <input type="radio" name="options" id="option2" autocomplete="off"> Sign In

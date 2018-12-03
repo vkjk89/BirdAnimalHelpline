@@ -1,5 +1,5 @@
 .logoImage {
-    margin-top: 35vw;
+    margin-top: 5vw;
     max-width: 60vw;
     height: auto;
 }
@@ -11,6 +11,8 @@
 
 main {
     all: unset;
+    width: 100vw;
+    text-align: center;
 }
 
     /*body * {
@@ -29,6 +31,7 @@ main {
     right: 2vw;
     width: 14vw;
 }
+
 #aboutus {
     display: none; 
     width: 100%; 
@@ -39,9 +42,9 @@ main {
     position: absolute; 
     z-index: 1000; 
     padding-bottom: 10%;
-  }
+}
   
-  #aboutus-info{
+#aboutus-info{
     margin-left:8%; 
     margin-top:30%; 
     margin-right: 8%;
@@ -50,7 +53,7 @@ main {
     text-align: start; 
     font-size: 1.2em; 
     padding: 5%; 
-  }
+}
   
 #backbutton {
     margin-top: 10vw;
@@ -105,5 +108,11 @@ main {
     }
     .logoImage {
         margin-top: 25vw;
+    }
+}
+
+@media only screen and (max-width: 768px){
+    .logoImage {
+        margin-top: 35vw;
     }
 }

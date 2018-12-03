@@ -314,18 +314,11 @@
         document.getElementById("more-btn").onclick = function dropdown_menu(){
             dropdown_menu_state = !dropdown_menu_state;
             if(dropdown_menu_state === true){
-                alert("block");
                 document.getElementById("dropdown-menu").style.display = "none";
             } else {
-                alert("none");
                 document.getElementById("dropdown-menu").style.display = "block";
             }
         };
-        setTimeout(function(){ 
-            document.body.onclick = function(){
-                document.getElementById("dropdown-menu").style.display = "none";
-            };
-        }, 200);
 
 //------Search-Focus-&-Clear-Table-on-Search---------------------------------------------------------------------------------------------
         document.getElementById('search-case-input').onfocus = function(){            
@@ -393,7 +386,6 @@
             $( "#member-" + approve_reject ).fadeOut("slow");
             approve_reject++;
             console.log(approve_reject);
-            console.log(temp);
         }
         document.getElementsByClassName('reject')[approve_reject - 1].onclick = function(){
             document.getElementById( 'reject-img-' + approve_reject ).setAttribute("th:src","/img/rejected-click.png");
@@ -407,8 +399,6 @@
         $('.old-photo').children("figure").click(function(){
             $('#dynamic_image_enlarge').css('display','block');
             $('.dynamic_usdca_member').children().css('display','none');
-            console.log(event.target);
-            if (event.target == "<img>" || event.target == "<figcaption>"){alert();}
         });
 
         $('.new-photo').children("figure").click(function(){
