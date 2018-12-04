@@ -155,7 +155,7 @@ main {
     box-shadow: 00px 00px 40px #999;
 }
 
-#heading-raise-a-case, #heading-my-cases, #heading-user-data-change-approvals {
+#heading-raise-a-case, #heading-my-cases, #heading-user-data-change-approvals, #heading-case-details {
     position: relative;
     display: block;
     box-sizing: border-box;
@@ -166,11 +166,11 @@ main {
     width: 75vw;
 }
 
-#heading-my-cases, #heading-user-data-change-approvals {
+#heading-my-cases, #heading-user-data-change-approvals, #heading-case-details {
     display: none;
 }
 
-#heading-raise-a-case span, #heading-my-cases span, #heading-user-data-change-approvals span {
+#heading-raise-a-case span, #heading-my-cases span, #heading-user-data-change-approvals span, #heading-case-details span {
     position: relative;
     box-sizing: border-box;
     color: white;
@@ -179,7 +179,7 @@ main {
     top: -0.75vh;
 }
 
-#raise-a-case-content, #my-cases-content, #user-data-change-approvals-content {
+#raise-a-case-content, #my-cases-content, #user-data-change-approvals-content, #case-details {
     position: relative;
     box-sizing: border-box;
     display: block;
@@ -265,20 +265,27 @@ label:hover {
     border: 1px solid green;
 }*/
 
-form {
+#raise-a-case-content form, #case-details-form {
     display: flex;
 }
 
-#form-left-side {
+#case-details-form {
+    display: none;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 73vh;
+}
+
+#form-left-side, #form-left-side-case-details {
     width: 50%;
     font-size: 1em;
 }
-#form-right-side {
+#form-right-side, #form-right-side-case-details {
     width: 50%;
     font-size: 1em;
 }
 
-#header-form-left-side, #header-form-right-side {
+#header-form-left-side, #header-form-right-side, #header-form-left-side-case-details, #header-form-right-side-case-details {
     font-size: 1.3em;
     font-weight: 500;
     padding-left: 1vw;
@@ -290,11 +297,12 @@ hr {
     width: 90%;
 }
 
-#body-form-left-side, #body-form-right-side {
+#body-form-left-side, #body-form-right-side, #body-form-left-side-case-details, #body-form-right-side-case-details {
     padding-left: 1vw;
 }
 
-input[type="text"], input[type="number"], select, textarea, input[type="file"] {
+#animal-name, #condition, #animal-type, #raise-a-case-content textarea, #case-photos, #contact-name, #nine-one, #contact-number, #location, #location-landmark, #location-pincode,
+#animal-name-case-details, #condition-case-details, #animal-type-case-details, #case-photos-case-details, #contact-name-case-details, #nine-one-case-details, #contact-number-case-details, #location-case-details, #location-landmark-case-details, #location-pincode-case-details {
     margin: 0vh 0vh;
     border-radius: 0px;
     font-size: 0.9em;
@@ -305,49 +313,55 @@ input[type="text"], input[type="number"], select, textarea, input[type="file"] {
     border: 1px solid #CCC;
 }
 
-input[type="text"]:focus::placeholder, input[type="number"]:focus::placeholder, textarea:focus::placeholder, input[type="file"]:focus::placeholder {
+#case-id, #case-id-case-details {
+    width: 5vw;
+    margin: 0vw 1vw 1vh 1vw;
+    height: 1vh;
+    border-radius: 0px;
+    font-size: 0.9em;
+    padding: 0.75vw;
+    padding-left: 0.75vw;
+    margin-bottom: 2vh;
+    border: 1px solid #CCC;
+}
+
+#raise-a-case-content input[type="text"]:focus::placeholder, #raise-a-case-content input[type="number"]:focus::placeholder, #raise-a-case-content textarea:focus::placeholder, #raise-a-case-content input[type="file"]:focus::placeholder, #case-details input[type="text"]:focus::placeholder, #case-details input[type="number"]:focus::placeholder, #case-details textarea:focus::placeholder, #case-details input[type="file"]:focus::placeholder {
     opacity: 0.7;
 }
 
-textarea {
+#raise-a-case-content textarea, #case-details textarea {
     font-size: 1.2em;
     font-weight: 100;
 }
 
-select {
+#animal-type, #animal-type-case-details select {
     width: 78%;
 }
 
-label {
+#raise-a-case-content label, #case-details label {
     display: block;
     margin-bottom: 0.5vw;
 }
 
-#id-and-bird-type {
+#id-and-bird-type, #id-and-bird-type-case-details {
     display: flex;
 }
 
-#id-and-bird-type label {
+#id-and-bird-type label, #id-and-bird-type-case-details label {
     display: inline;
 }
 
-#bird-option img, #animal-option img {
+#bird-option img, #animal-option img, #bird-option-case-details img, #animal-option-case-details img {
     vertical-align: middle;
     padding: 0vw 1vw;
     height: 3.5vw;
 }
 
-#case-id {
-    width: 5vw;
-    margin: 0vw 1vw 1vh 1vw;
-    height: 1vh;
-}
-
-#nine-one {
+#nine-one, #nine-one-case-details {
     width: 5vw;
 }
 
-#contact-number {
+#contact-number, #contact-number-case-details {
     width: 57.3%;
 }
 
@@ -515,6 +529,9 @@ li::before {
         opacity: 1;
     }
 }
+
+/*-----Case-Details-----*/
+
 
 /*--------------------USER-DATA-CHANGE-APPROVALS--------------------*/
 #user-data-change-approvals-content {
