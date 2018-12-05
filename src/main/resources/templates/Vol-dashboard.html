@@ -14,7 +14,7 @@
 
 <!--<body th:object="${user}">-->
     <nav id="top-nav">
-        <span id="profile-options" onclick="openSideNav();">&#9776;</span>
+        <span id="profile-options">&#9776;</span>
         <span id="navbar-username" th:text="${user.userName}">#Username</span>
         <button type="button" id="user-dp">
             <img th:if="${user.image == null}"  th:src="@{/img/display-picture11.png}" src="/static/img/display-picture11.png"  width="" height="" alt="User-Display-Picture">
@@ -27,7 +27,7 @@
             <div id="background-img">
                 <img src="/static/img/side-nav-background-nav.png" th:src="@{/img/side-nav-background-nav.png}" alt="Side-Nav-Background" width="75vw" id="bg-image">
             </div>
-            <span id="close-btn" onclick="closeSideNav();">&times;</span>
+            <span id="close-btn">&times;</span>
             <div id="side-nav-user-dp">
                 <img th:if="${user.image == null}" th:src="@{/img/display-picture1.png}" src="/static/img/display-picture1.png" width="" height="auto" alt="Side-Nav-Display-Picture">
                 <img th:if="${user.image != null}" th:src="${'data:image/png;base64,'+user.getEncodedImage()}" src="/static/img/display-picture1.png" width="" height="auto" alt="Side-Nav-Display-Picture">
@@ -194,22 +194,35 @@
         document.getElementById('cases-accepted').style.color = "burlywood";
     }
 
-    function openSideNav(){
+    document.getElementById('profile-options').onclick = function openSideNav(){
         document.getElementById('side-nav').style.display = "block";
         document.getElementById('side-nav').classList.add('side-nav-anim');
         document.getElementById('top-nav').style.opacity = "0.1";
         document.getElementById('page-heading').style.opacity = "0.1";
         document.getElementById('my-cases').style.opacity = "0.1";
         document.getElementById('accept-case').style.opacity = "0.1";
-    }
+    };
 
-    function closeSideNav(){
+    document.getElementById('close-btn').onclick = function closeSideNav(){
         document.getElementById('side-nav').classList.remove('side-nav-anim');
         document.getElementById('side-nav').style.display = "none";
         document.getElementById('page-heading').style.opacity = "1";
         document.getElementById('top-nav').style.opacity = "1";
         document.getElementById('my-cases').style.opacity = "1";
         document.getElementById('accept-case').style.opacity = "1";
+    };
+    
+    window.onclick = function(e) {
+        if ( !e.target.matches('#close-btn') && !e.target.matches('#profile-options') && !e.target.matches('#bottom-action-bar') ) {
+            if( document.getElementById('side-nav').classList.contains('side-nav-anim') ){
+                document.getElementById('side-nav').classList.remove('side-nav-anim');
+                document.getElementById('side-nav').style.display = "none";
+                document.getElementById('page-heading').style.opacity = "1";
+                document.getElementById('top-nav').style.opacity = "1";
+                document.getElementById('my-cases').style.opacity = "1";
+                document.getElementById('accept-case').style.opacity = "1";
+            }
+        }
     }
 </script>
 </body>
