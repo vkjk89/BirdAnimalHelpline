@@ -49,8 +49,8 @@ a {
     padding: 0;
     float: right;
     border-radius: 50%;
-    background-color: rgb(248,248,248);
-    border: 1px solid rgb(248,248,248);
+    background-color: rgb(248, 248, 248);
+    border: 1px solid rgb(248, 248, 248);
     width: 12vw;
     height: 12vw;
     overflow: hidden;
@@ -85,7 +85,7 @@ a {
         opacity: 0;
         width: 0;
     }
-    100%{
+    100% {
         opacity: 1;
         width: 75vw;
         height: 100vh;
@@ -140,6 +140,7 @@ a {
     float: right;
     font-size: 1.2em;
 }
+
 #top-part {
     border-bottom: 1px solid white;
 }
@@ -194,8 +195,9 @@ h1 {
     margin-left: 2vw;
     font-size: 1.2em;
 }
+
 /*-----------------------SECTION-CASE-ACCEPTANCE--------------------*/
-#my-cases{
+#my-cases {
     padding: 7.5vw;
 }
 
@@ -204,7 +206,7 @@ h1 {
     box-shadow: 10px 10px 20px #BBB;
 }
 
-input[type="search"]{
+input[type="search"] {
     box-sizing: border-box;
     padding: 4vw;
     background-image: url('/img/search-1.png');
@@ -233,7 +235,7 @@ input[type="search"]::placeholder {
 
 #results-tab-div {
     box-sizing: border-box;
-    border: 1px solid black; 
+    border: 1px solid black;
     width: 85vw;
     display: flex;
     justify-content: space-around;
@@ -256,12 +258,12 @@ input[type="search"]::placeholder {
     font-size: 1.2em;
 }
 
-.active-recent{
+.active-recent {
     font-weight: 900;
     font-size: 1.2em;
 }
 
-.active-closed{
+.active-closed {
     font-weight: 900;
     font-size: 1.2em;
 }
@@ -297,6 +299,7 @@ input[type="search"]::placeholder {
         opacity: 1;
     }
 }
+
 /*------------------------------ACCEPT-CASE--------------------------*/
 
 .accept-case {
@@ -307,7 +310,7 @@ input[type="search"]::placeholder {
 
 .accept-case-shadow {
     border-radius: 5px;
-    box-shadow: 10px 10px 20px #BBB; 
+    box-shadow: 10px 10px 20px #BBB;
 }
 
 #heading-accept-case {
@@ -358,7 +361,7 @@ input[type="search"]::placeholder {
     margin-top: 2vh;
 }
 
-#accept, #decline{
+#accept, #decline {
     float: right;
     padding: 3vw;
     border-radius: 5px;
@@ -367,11 +370,11 @@ input[type="search"]::placeholder {
     font-size: 1.1em;
 }
 
-#accept{
+#accept {
     background-color: #28A745;
 }
 
-#decline{
+#decline {
     padding-top: 5vw;
     background-color: transparent;
     margin-right: 1vw;
@@ -419,9 +422,9 @@ input[type="search"]::placeholder {
     padding-right: 2vw;
 }
 
-        /*body * {
-            border: 1px solid burlywood;
-        }*/
+/*body * {
+    border: 1px solid burlywood;
+}*/
 
 @media only screen and (max-width: 360px) {
     body {

@@ -20,9 +20,11 @@ public class CaseInfo {
     private String animalName;
     private String animalCondition;
     private String contactName;
+    private String contactPrefix;
     private String contactNumber;
     private String location;
     private String locationPincode;
+    private String locationLandMark;
 
     private List<CaseTxn> caseTxnList = new ArrayList<>();
 
@@ -196,5 +198,21 @@ public class CaseInfo {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getContactPrefix() {
+        return contactPrefix;
+    }
+
+    public void setContactPrefix(String contactPrefix) {
+        this.contactPrefix = contactPrefix;
+    }
+
+    public String getLocationLandMark() {
+        return locationLandMark;
+    }
+
+    public void setLocationLandMark(String locationLandMark) {
+        this.locationLandMark = locationLandMark;
     }
 }

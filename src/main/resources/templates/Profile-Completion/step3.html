@@ -1,60 +1,63 @@
 <!DOCTYPE html>
-<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Profile Completion</title>
-    <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
-    <link rel="stylesheet" th:href="@{/css/Profile-Completion/step3.css}" href="/static/css/Profile-Completion/step3.css">
-    <link rel="stylesheet" th:href="@{/css/jquery/jquery-ui.theme.min.css}" href="/static/css/jquery/jquery-ui.theme.min.css">
-    <link rel="stylesheet" th:href="@{/css/jquery/jquery-ui.structure.min.css}" href="/static/css/jquery/jquery-ui.structure.min.css">
-    <link rel="stylesheet" th:href="@{/css/jquery/jquery-ui.min.css}" href="/static/css/jquery/jquery-ui.min.css">
+    <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
+    <link href="/static/css/Profile-Completion/step3.css" rel="stylesheet"
+          th:href="@{/css/Profile-Completion/step3.css}">
+    <link href="/static/css/jquery/jquery-ui.theme.min.css" rel="stylesheet"
+          th:href="@{/css/jquery/jquery-ui.theme.min.css}">
+    <link href="/static/css/jquery/jquery-ui.structure.min.css" rel="stylesheet"
+          th:href="@{/css/jquery/jquery-ui.structure.min.css}">
+    <link href="/static/css/jquery/jquery-ui.min.css" rel="stylesheet" th:href="@{/css/jquery/jquery-ui.min.css}">
     <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <!--<script src="/static/js/jquery.iframe-transport.js" th:src="@{/js/jquery.iframe-transport.js}"></script>-->
     <script src="/static/js/jquery.ui.widget.js" th:src="@{/js/jquery.ui.widget.js}"></script>
     <script src="/static/js/jquery-ui.min.js" th:src="@{/js/jquery-ui.min.js}"></script>
 
 
-
 </head>
 <body>
 
-    <p id = "header">
-        We need a few more details.
-    </p>
-    <main>
-        <form th:object="${user}" th:action="@{/profileCompletion}" action="" name = "pincode" id = "pincode" method="POST">
-            <div class="ui-widget" id="1pincode">
-                <label for="search-pincode" id = "title">Your preffered pick-up locations:</label>
+<p id="header">
+    We need a few more details.
+</p>
+<main>
+    <form action="" id="pincode" method="POST" name="pincode" th:action="@{/profileCompletion}" th:object="${user}">
+        <div class="ui-widget" id="1pincode">
+            <label for="search-pincode" id="title">Your preffered pick-up locations:</label>
 
-                <!--<input   type = "search" id = "search-pincode" name = "search-pincode" placeholder="Search Pincode" autocomplete="off"  value="" >-->
-                <input class ="ui-autocomplete-input" type = "search" id = "search-pincode" name = "search-pincode" placeholder="Search Pincode" >
+            <!--<input   type = "search" id = "search-pincode" name = "search-pincode" placeholder="Search Pincode" autocomplete="off"  value="" >-->
+            <input class="ui-autocomplete-input" id="search-pincode" name="search-pincode" placeholder="Search Pincode"
+                   type="search">
 
-                <div class="ui-widget" style="margin-top:2em; font-family:Arial">
-                    Result:
-                    <div id="log" style="height: 200px; width: 300px; overflow: auto;" class="ui-widget-content"></div>
-                </div>
-                <!--<input class ="ui-autocomplete-input ui-corner-all" type = "search" id = "search-pincode" name = "search-pincode" placeholder="Search Pincode" autocomplete="off" onkeyup="search()" value="" >-->
-                    <!--<div id = "search-results-list">-->
-                        <!--<div onclick = "confirmpincode('li-div1')" id="li-div1" class = "pin-div">400004 - C.P. Tank</div>-->
-                        <!--<div onclick = "confirmpincode('li-div2')" id="li-div2" class = "pin-div">400006 - Walkeshwar</div>-->
-                        <!--<div onclick = "confirmpincode('li-div3')" id="li-div3" class = "pin-div">400002 - Fort</div>-->
-                        <!--<div onclick = "confirmpincode('li-div4')" id="li-div4" class = "pin-div">400003 - Cloth Market</div>-->
-                        <!--<div onclick = "confirmpincode('li-div5')" id="li-div5" class = "pin-div">400029 - A I staff colony</div>-->
-                        <!--<div onclick = "confirmpincode('li-div6')" id="li-div6" class = "pin-div">400065 - Aareymilk Colony</div>-->
-                        <!--<div onclick = "confirmpincode('li-div7')" id="li-div7" class = "pin-div">400011 - Agripada</div>-->
-                    <!--</div>-->
-                <!--<div class="selected-pincodes" id="selected-pincodes">-->
-                    <!--<p style = "font-size: 1.1em; border-bottom: 1px solid #CCCCCC; width: 60vw;">Selected Pincodes:</p>-->
-                    <!--<div id = "selected-pin-content"></div>-->
-                <!--</div>-->
-                <button type = "submit" form="pincode" id="next">Submit</button>
+            <div class="ui-widget" style="margin-top:2em; font-family:Arial">
+                Result:
+                <div class="ui-widget-content" id="log" style="height: 200px; width: 300px; overflow: auto;"></div>
             </div>
-            <input type="hidden" name="page" value="3">
-        </form>
-    </main>
-    
+            <!--<input class ="ui-autocomplete-input ui-corner-all" type = "search" id = "search-pincode" name = "search-pincode" placeholder="Search Pincode" autocomplete="off" onkeyup="search()" value="" >-->
+            <!--<div id = "search-results-list">-->
+            <!--<div onclick = "confirmpincode('li-div1')" id="li-div1" class = "pin-div">400004 - C.P. Tank</div>-->
+            <!--<div onclick = "confirmpincode('li-div2')" id="li-div2" class = "pin-div">400006 - Walkeshwar</div>-->
+            <!--<div onclick = "confirmpincode('li-div3')" id="li-div3" class = "pin-div">400002 - Fort</div>-->
+            <!--<div onclick = "confirmpincode('li-div4')" id="li-div4" class = "pin-div">400003 - Cloth Market</div>-->
+            <!--<div onclick = "confirmpincode('li-div5')" id="li-div5" class = "pin-div">400029 - A I staff colony</div>-->
+            <!--<div onclick = "confirmpincode('li-div6')" id="li-div6" class = "pin-div">400065 - Aareymilk Colony</div>-->
+            <!--<div onclick = "confirmpincode('li-div7')" id="li-div7" class = "pin-div">400011 - Agripada</div>-->
+            <!--</div>-->
+            <!--<div class="selected-pincodes" id="selected-pincodes">-->
+            <!--<p style = "font-size: 1.1em; border-bottom: 1px solid #CCCCCC; width: 60vw;">Selected Pincodes:</p>-->
+            <!--<div id = "selected-pin-content"></div>-->
+            <!--</div>-->
+            <button form="pincode" id="next" type="submit">Submit</button>
+        </div>
+        <input name="page" type="hidden" value="3">
+    </form>
+</main>
+
 
 <script>
     // document.getElementById('search-pincode').autofocus;
@@ -67,14 +70,13 @@
         document.getElementById('search-results-list').style.display = "block";
 
         for (i = 0; i < div.length; i++) {
-            if (filter != ""){
-                if (div[i].innerHTML.toUpperCase().indexOf(filter) > -1) { 
+            if (filter != "") {
+                if (div[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
                     div[i].style.display = "";
                 } else {
                     div[i].style.display = "none";
                 }
-            }
-            else document.getElementById('search-results-list').style.display = "none";
+            } else document.getElementById('search-results-list').style.display = "none";
         }
     }
 
@@ -94,32 +96,29 @@
         document.getElementById('select-timings-am-pm').style.display = "inline";
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         var container = $(document.createElement('div')).css({
             //padding: '5px', margin: '20px', width: '170px', border: '1px dashed',
             //borderTopColor: '#999', borderBottomColor: '#999',
             //borderLeftColor: '#999', borderRightColor: '#999'
         });
 
-        var a = '';
-        var b = '';
-        var c = ''
         $("#search-pincode").autocomplete({
             //appendTo  : "#search-pincode-results",
             minLength: 2,
             delay: 500,
             //define callback to format results
             source: function (request, response) {
-                $.getJSON("/getPinCodeLandMark", request, function(result) {
-                    response($.map(result, function(item) {
+                $.getJSON("/getPinCodeLandMark", request, function (result) {
+                    response($.map(result, function (item) {
                         return {
                             // following property gets displayed in drop down
-                            label: item.landmark+"-"+item.pincode,
+                            label: item.landmark + "-" + item.pincode,
                             // following property gets entered in the textbox
                             value: item.pincodeId,
                             // following property is added for our own use
                             landmarks: item.landmark,
-                            pincode:item.pincode
+                            pincode: item.pincode
                         }
 
                     }));
@@ -127,16 +126,14 @@
             },
 
             //define select handler
-            select : function(event, ui) {
+            select: function (event, ui) {
                 var iCnt = 0;
                 console.log(ui.item);
                 if (ui.item) {
                     iCnt = iCnt + 1;
 
                     // ADD TEXTBOX.
-                    $(container).append('<span><input type="hidden"  name ="pincodeId" value ="'+ui.item.value+'" style = "font-size:0.7em" for = "pincodeId"> '+ui.item.label+'</span>').
-                                append('<label style = "font-size:0.7em" for = "selectedTiming"> Specify Timings </label> ').
-                                append('<select name = "selectedTiming" id = "select-timings" form = "pincode"> <option>00-06</option><option>06-12</option><option>12-18</option><option>18-23</option></select>');
+                    $(container).append('<span><input type="hidden"  name ="pincodeId" value ="' + ui.item.value + '" style = "font-size:0.7em" for = "pincodeId"> ' + ui.item.label + '</span>').append('<label style = "font-size:0.7em" for = "selectedTiming"> Specify Timings </label> ').append('<select name = "selectedTiming" id = "select-timings" form = "pincode"> <option>00-06</option><option>06-12</option><option>12-18</option><option>18-23</option></select>');
                     $("#log").after(container);
                     //$( "#log" ).scrollTop( 0 );
                     $("#search-pincode").autocomplete("close");

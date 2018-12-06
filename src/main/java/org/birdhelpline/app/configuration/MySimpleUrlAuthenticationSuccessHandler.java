@@ -16,8 +16,8 @@ import java.io.IOException;
 @Component("myAuthenticationSuccessHandler")
 public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-@Autowired
-private UserService userService;
+    @Autowired
+    private UserService userService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -28,7 +28,7 @@ private UserService userService;
         HttpSession session = request.getSession();
         if (session != null) {
             User user = userService.findUserByUserName(authentication.getName());
-            if(user == null) {
+            if (user == null) {
                 throw new UsernameNotFoundException(authentication.getName());
             }
             session.setAttribute("user", user);

@@ -1,31 +1,32 @@
 <!DOCTYPE html>
-<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Request Registration</title>
-    <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
-    <link rel="stylesheet" th:href="@{/css/RequestRegistration/reg-complete.css}" href="/static/css/RequestRegistration/reg-complete.css">
-    
+    <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
+    <link href="/static/css/RequestRegistration/reg-complete.css" rel="stylesheet"
+          th:href="@{/css/RequestRegistration/reg-complete.css}">
+
 </head>
 <body>
 
-    <!-- div class="bg"></div -->
+<!-- div class="bg"></div -->
 
-    <main> 
-        <div class="thankyou-div" id="thankyou-div">
-            <img th:src="@{/img/form-submitted.png}" src="/static/img/form-submitted.png"><br><br><br>
-            Thank you.<br>
-            Your form has been submitted.
-        </div>
+<main>
+    <div class="thankyou-div" id="thankyou-div">
+        <img src="/static/img/form-submitted.png" th:src="@{/img/form-submitted.png}"><br><br><br>
+        Thank you.<br>
+        Your form has been submitted.
+    </div>
 
-        <div id="footer-btns" class="footer-btns">
-            <input type = "submit" name = "Done" value = "Done" onclick="window.location.assign('/');" id = "next">
-        </div>
-    
-    </main>
+    <div class="footer-btns" id="footer-btns">
+        <input id="next" name="Done" onclick="window.location.assign('/');" type="submit" value="Done">
+    </div>
 
-   
+</main>
+
+
 </body>
 </html>

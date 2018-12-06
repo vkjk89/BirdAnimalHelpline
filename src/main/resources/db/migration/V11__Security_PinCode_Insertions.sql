@@ -1,2 +1,0 @@
-﻿insert into pincode_landmark(pincode, landmark)  values (400004,"KHETWADI"),(400004,"CP TANK");
-insert into security_q(security_q_id, security_q_text) values (1,"What is your favourite Sport?"),(2,"Which floor do you live on?"),(3,"What is your Place of Birth?");

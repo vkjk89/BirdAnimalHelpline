@@ -2,35 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Contact Us</title>
-    <link rel="stylesheet" href="/static/css/basic-template.css" th:href="@{/css/basic-template.css}">
-    <link rel="stylesheet" href="/static/css/contact-us.css" th:href="@{/css/contact-us.css}">
-    
+    <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
+    <link href="/static/css/contact-us.css" rel="stylesheet" th:href="@{/css/contact-us.css}">
+
 </head>
 <body>
 
-    <!-- div class="bg"></div -->
-    
-    <main>
-        <div id = "wrapper-big">
-            <div class="header" id="header">
-                <h2>BIRD HELPLINE MUMBAI</h2><br>
-                <p style = "font-size: 0.8em;">We help animals and birds in distress</p>
-            </div>
-            <div class="content" id="content">
-                <div class = "banner">
-                WE HELP BIRDS & ANIMALS IN DISTRESS<br> <b>CALL US ON : 8655370005 / 06</b>
-                </div>
+<!-- div class="bg"></div -->
 
-            <div id = "inner-content">
+<main>
+    <div id="wrapper-big">
+        <div class="header" id="header">
+            <h2>BIRD HELPLINE MUMBAI</h2><br>
+            <p style="font-size: 0.8em;">We help animals and birds in distress</p>
+        </div>
+        <div class="content" id="content">
+            <div class="banner">
+                WE HELP BIRDS & ANIMALS IN DISTRESS<br> <b>CALL US ON : 8655370005 / 06</b>
+            </div>
+
+            <div id="inner-content">
                 <h4 style="font-size: 1.3em;">Bird Helpline Mumbai</h4>
                 Cell: 8655370005 / 06 <br>
                 Email: birdhelpline@gmail.com <br>
                 FB: www.facebook.com/birdhelpline <br><br>
 
-                <h4 style = "margin-bottom: 1vw;">For donation call 8655370006 or donate at:</h4> <br>
+                <h4 style="margin-bottom: 1vw;">For donation call 8655370006 or donate at:</h4> <br>
                 Axis bank <br>
                 Shree Navkar Jain Trust <br>
                 A/c no. 915010030815492 <br>
@@ -42,42 +42,46 @@
             </div>
 
             ------------------------OR------------------------ <br>
-            <div id = "cta-btns">
-                <button id = "btn-leaveareply" style = "font-size: 1.5em" onclick="leaveareply()">Leave a Reply</button><br>
-                <button id = "home-btn"><a href = "Index.html"><img src = "/static/img/home-1.png" th:src="@{/img/home-1.png}"></a></button>
-                </div>               
-            </div> 
+            <div id="cta-btns">
+                <button id="btn-leaveareply" onclick="leaveareply()" style="font-size: 1.5em">Leave a Reply</button>
+                <br>
+                <button id="home-btn"><a href="Index.html"><img src="/static/img/home-1.png"
+                                                                th:src="@{/img/home-1.png}"></a></button>
+            </div>
         </div>
+    </div>
 
-        <div id = "wrapper-big2" style = "text-align: start; display: none; padding: 3vw;">
-            <h2>Leave a Reply</h2>
+    <div id="wrapper-big2" style="text-align: start; display: none; padding: 3vw;">
+        <h2>Leave a Reply</h2>
 
-            <p>Your email address will not be published. Required fields are marked <span style = "color: red;">*</span></p>
-            <form>
-                <div>Name <span style = "color: red;">*</span></div>
-                <input type = "text" autofocus required autocomplete="off"><br><br>     
+        <p>Your email address will not be published. Required fields are marked <span style="color: red;">*</span></p>
+        <form>
+            <div>Name <span style="color: red;">*</span></div>
+            <input autocomplete="off" autofocus required type="text"><br><br>
 
-                <div>Email <span style = "color: red;">*</span></div>
-                <input type = "text" required><br><br>
+            <div>Email <span style="color: red;">*</span></div>
+            <input required type="text"><br><br>
 
-                <div>Comment</div><br><br>
-                <textarea rows = "3" required></textarea>
+            <div>Comment</div>
+            <br><br>
+            <textarea required rows="3"></textarea>
 
-                <div id = "cta-btns2">
-                    <input type = "submit" id = "post" value="Submit" name = "Submit">
-                    <button id = "home-btn"><a href = "Index.html"><img src = "/static/img/home-1.png" th:src="@{/img/home-1.png}"></a></button>
-                </div>
-            </form>
-        </div>
-        
-    </main>
+            <div id="cta-btns2">
+                <input id="post" name="Submit" type="submit" value="Submit">
+                <button id="home-btn"><a href="Index.html"><img src="/static/img/home-1.png"
+                                                                th:src="@{/img/home-1.png}"></a></button>
+            </div>
+        </form>
+    </div>
 
-    <script>
-        function leaveareply(){
-            document.getElementById('wrapper-big').style.display = "none";
-            document.getElementById('wrapper-big2').style.display = "block";
-        }
-    </script>
- 
+</main>
+
+<script>
+    function leaveareply() {
+        document.getElementById('wrapper-big').style.display = "none";
+        document.getElementById('wrapper-big2').style.display = "block";
+    }
+</script>
+
 </body>
 </html>

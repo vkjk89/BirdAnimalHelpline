@@ -10,9 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,11 +30,9 @@ public class DefaultController {
         ModelAndView modelAndView = new ModelAndView("Error");
         Principal principal = request.getUserPrincipal();
         logger.info("Inside handleLogin for user : " + principal.getName());
-
         logger.info(" vkj model" + model.asMap());
         User user = userService.findUserByUserName(principal.getName());
         if (user == null) {
-            //modelAndView.setViewName("Error");
             return modelAndView;
         }
 
@@ -70,7 +66,7 @@ public class DefaultController {
 
     private void getViewBasedOnRole(ModelAndView modelAndView) {
         Collection<? extends GrantedAuthority> auth = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        logger.info("vkj auths : "+auth);
+        logger.info("vkj auths : " + auth);
         for (GrantedAuthority authority : auth) {
             if (authority.getAuthority().equalsIgnoreCase("ADMIN")) {
                 modelAndView.setViewName("admin-dashboard");

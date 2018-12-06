@@ -1,84 +1,97 @@
 <!DOCTYPE html>
 
-<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Request Registration</title>
-    <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
-    <link rel="stylesheet" th:href="@{/css/RequestRegistration/Step2.css}" href="/static/css/RequestRegistration/Step2.css">
-    
+    <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
+    <link href="/static/css/RequestRegistration/Step2.css" rel="stylesheet"
+          th:href="@{/css/RequestRegistration/Step2.css}">
+
 </head>
-<body>    
-    <div class = "heading">
-        Join Us
+<body>
+<div class="heading">
+    Join Us
+</div>
+<div class="progress-bar" id="progress-bar">
+    <div class="progress-bar-status" id="progress-bar-1">1</div>
+    <div class="progress-bar-status" id="progress-bar-2"></div>
+    <div class="progress-bar-status" id="progress-bar-3">2</div>
+    <div class="progress-bar-status" id="progress-bar-4"></div>
+    <div id="progress-bar-5">3</div>
+</div>
+<form action="#" class="first-form" id="first-form" method="post" name="step2" th:action="@{/registration}"
+      th:object="${user}">
+    <main>
+        <div class="step2" id="step2" name="step2">
+            <ul th:if="${#fields.hasErrors('*')}">
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+            </ul>
+            <input autocomplete="off" autofocus id="fname" name="first-name" pattern="[A-Za-z]{0,}" placeholder="First Name"
+                   required th:field="*{firstName}" title="Your First Name" type="text">
+            <input autocomplete="off" name="last-name" pattern="[A-Za-z]{0,}" placeholder="Last Name" required
+                   th:field="*{lastName}" title="Your Last Name" type="text"><br>
+
+            <div class="birth-date-div" id="birth-date-div">
+                <label id="DOB" name="birthdate">Date of Birth: </label>
+                <input autocomplete="off" id="birthdate" max="2010-12-31" min="1930-01-01" name="birthdate" required
+                       th:field="*{dob}" type="date">
+            </div>
+
+            <input disabled name="contact-number-1" style="color:black;" type="text" value="+91"> -
+            <input max="9999999999" min="5000000000" name="mobile" placeholder="Mobile Number" required
+                   th:field="*{mobile}" title="Ten digit mobile no. without any code" type="number"><br>
+
+            <!--<input  th:if="${user.mobile !=0 }" th:field="*{mobile}" type = "number" placeholder="Mobile Number" name = "mobile" required min="5000000000" max="9999999999" title="Ten digit mobile no. without any code"><br>-->
+
+            <label name="gender">Gender: </label>
+            <input id="gender-1" name="gender" th:field="*{gender}" type="radio" value="M">
+            <label for="gender-1"> Male</label>
+            <input id="gender-2" name="gender" th:field="*{gender}" type="radio" value="F">
+            <label for="gender-2"> Female</label>
+            <input id="gender-3" name="gender" th:field="*{gender}" type="radio" value="O">
+            <label for="gender-3"> Others</label><br>
+
+            <input autocomplete="off" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{3,}$" placeholder="E-mail Address"
+                   required th:field="*{email}" title="Please enter valid email addresss"
+                   type="email">
+
+            <p id="security-question">Security Question</p>
+            <p id="security-para">We will be using this question in case you forget your password, so choose wisely.</p>
+            <select id="securityquestion" name="securityquestion" required th:field="*{securityQId}">
+                <!--<option value="1">1. What is your favourite Sport?</option>-->
+                <option th:each="o : ${securityQs}" th:text="${o.getValue()}" th:value="${o.getKey()}" value="1">1. What
+                    is your favourite Sport?
+                </option>
+                <!--<option value="2">2. Which floor do you live on?</option>-->
+                <!--<option value="3">3. What is your Place of Birth?</option>-->
+            </select>
+            <input name="security-answer" placeholder="Your response" required th:field="*{securityQAns}" type="text">
+            <input name="page" type="hidden" value="2">
+        </div>
+
+    </main>
+
+    <div class="bottom-nav-bar" id="bottom-nav-bar">
+        <a href="Step1.html" th:href="@{/registration}"><img id="previous"
+                                                             src="/static/img/previous-button-1.png"
+                                                             th:src="@{/img/previous-button-1.png}"></button>
+            <button type="submit"><img id="next" src="/static/img/next-button11.png" th:src="@{/img/next-button11.png}">
+        </a>
     </div>
-    <div id="progress-bar" class="progress-bar">
-            <div id = "progress-bar-1" class="progress-bar-status">1</div>
-            <div id = "progress-bar-2" class="progress-bar-status"></div>
-            <div id = "progress-bar-3" class="progress-bar-status">2</div>
-            <div id = "progress-bar-4" class="progress-bar-status"></div>
-            <div id = "progress-bar-5">3</div>        
-        </div>
-    <form id = "first-form" class = "first-form"  name = "step2" method="post" action="#" th:action="@{/registration}" th:object="${user}" >
-        <main>
-            <div id="step2" class = "step2" name = "step2">
-                <ul th:if="${#fields.hasErrors('*')}" >
-                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
-                </ul>
-                <input th:field="*{firstName}" type = "text" placeholder="First Name" name = "first-name" autofocus required autocomplete="off" pattern="[A-Za-z]{0,}" title="Your First Name" id="fname">
-                <input th:field="*{lastName}" type = "text" placeholder="Last Name" name = "last-name" required autocomplete="off" pattern="[A-Za-z]{0,}" title="Your Last Name"><br>
+</form>
 
-                <div class="birth-date-div" id="birth-date-div">
-                <label name = "birthdate" id = "DOB">Date of Birth: </label>
-                <input th:field="*{dob}" type="date" name="birthdate" id = "birthdate" min="1930-01-01" max="2010-12-31" required autocomplete="off">
-                </div>
-                
-                <input type = "text" value="+91" name = "contact-number-1" disabled style="color:black;"> -
-                    <input  th:field="*{mobile}"  type = "number" placeholder="Mobile Number" name = "mobile" required min="5000000000" max="9999999999" title="Ten digit mobile no. without any code"><br>
+<script>
+    var d = new Date();
+    var maxyear = d.getFullYear() - 10;
+    document.getElementById('birthdate').setAttribute('max', maxyear + '-12-31');
 
-                <!--<input  th:if="${user.mobile !=0 }" th:field="*{mobile}" type = "number" placeholder="Mobile Number" name = "mobile" required min="5000000000" max="9999999999" title="Ten digit mobile no. without any code"><br>-->
-
-                <label name = "gender">Gender: </label>
-                <input th:field="*{gender}" type = "radio" id = "gender-1" name="gender" value="M">
-                    <label for="gender-1"> Male</label>
-                <input th:field="*{gender}" type = "radio" id = "gender-2" name="gender" value="F">
-                    <label for="gender-2"> Female</label>
-                <input th:field="*{gender}" type = "radio" id = "gender-3" name="gender" value="O">
-                <label for="gender-3"> Others</label><br>
-
-                <input th:field="*{email}" type = "email" name = "email" placeholder="E-mail Address" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{3,}$" title="Please enter valid email addresss" required autocomplete="off" >
-
-                <p id="security-question">Security Question</p>
-                <p id="security-para">We will be using this question in case you forget your password, so choose wisely.</p>
-                <select  th:field="*{securityQId}" name = "securityquestion" id = "securityquestion" required>
-                        <!--<option value="1">1. What is your favourite Sport?</option>-->
-                        <option th:each ="o : ${securityQs}" th:text="${o.getValue()}" th:value="${o.getKey()}" value="1">1. What is your favourite Sport?</option>
-                        <!--<option value="2">2. Which floor do you live on?</option>-->
-                        <!--<option value="3">3. What is your Place of Birth?</option>-->
-                </select>
-                <input th:field="*{securityQAns}" type = "text" placeholder="Your response" name = "security-answer" required>
-                <input type="hidden" name="page" value="2">
-            </div> 
-
-        </main>
-
-        <div id="bottom-nav-bar" class="bottom-nav-bar">
-            <a th:href="@{/registration}" href="Step1.html"><img src="/static/img/previous-button-1.png" th:src="@{/img/previous-button-1.png}" id="previous"></button>
-            <button  type="submit"><img src="/static/img/next-button11.png" th:src="@{/img/next-button11.png}" id="next"></a>
-        </div>
-    </form>
-
-    <script>
-        var d = new Date();
-        var maxyear = d.getFullYear() - 10;
-        document.getElementById('birthdate').setAttribute('max', maxyear + '-12-31' );
-
-        var minyear = d.getFullYear() - 100;
-        document.getElementById('birthdate').setAttribute('min', minyear + '-01-01' );
-    </script>
+    var minyear = d.getFullYear() - 100;
+    document.getElementById('birthdate').setAttribute('min', minyear + '-01-01');
+</script>
 
 </body>
 </html>

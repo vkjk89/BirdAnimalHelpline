@@ -1,7 +1,7 @@
 #header {
     box-sizing: border-box;
     width: 100vw;
-    margin: 0;   
+    margin: 0;
     padding: 3vh;
     color: white;
     background-color: #374047;
@@ -16,14 +16,14 @@ main {
     animation: pincode-start 1s forwards 0s ease-in-out;
 }
 
-    body * {
-        border: 1px solid salmon;
-    }
+body * {
+    border: 1px solid salmon;
+}
 
 input[type = "search"] {
     background-size: 5vw 5vw;
     background-image: url(/img/search-1.png);
-    background-position: 3vw 4vw; 
+    background-position: 3vw 4vw;
     background-repeat: no-repeat;
     border: 1px solid #cccccc;
     border-radius: 5px;
@@ -88,27 +88,28 @@ input[type = "search"]:focus {
 }
 
 #select-timings, #select-timings-am-pm {
-    display: none; 
-    background:transparent; 
-    border-radius:50px; 
-    margin-left:2vw;
+    display: none;
+    background: transparent;
+    border-radius: 50px;
+    margin-left: 2vw;
 }
 
-@keyframes pincode-start{
-    0%{
+@keyframes pincode-start {
+    0% {
         transform: scale(0) translateX(500vw);
-        }
-    100%{
+    }
+    100% {
         transform: scale(1) translateX(0);
-        }
+    }
 }
 
 /*---------------------------------------------------------------------------------------------------------------------*/
 
-@media only screen and (min-width: 520px){
+@media only screen and (min-width: 520px) {
     body {
         font-size: 1.5em;
     }
+
     input, select {
         font-size: 1.2em;
     }

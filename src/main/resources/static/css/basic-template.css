@@ -1,64 +1,64 @@
 body {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0 auto;
-  background-color: rgb(248,248,248);
-  color: #374047;
-  font-family: 'Open Sans', sans-serif;
-  height: 100%;
-  width: 100%;
-  text-decoration: none;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0 auto;
+    background-color: rgb(248, 248, 248);
+    color: #374047;
+    font-family: 'Open Sans', sans-serif;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
 }
 
 a, a:visited, a:link, a:active {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 main {
-  box-sizing: border-box;
-  padding-top: 0;
-  z-index: 2;
-  color: black;
-  text-align: center;
-  margin-right: 5vw;
+    box-sizing: border-box;
+    padding-top: 0;
+    z-index: 2;
+    color: black;
+    text-align: center;
+    margin-right: 5vw;
 }
 
-button, input[type = "submit"]{
-  border: none;
-  outline: none;
-  color: black;
-  padding: 3vw 5vw;
-  background-color: transparent;
-  cursor: pointer;
+button, input[type = "submit"] {
+    border: none;
+    outline: none;
+    color: black;
+    padding: 3vw 5vw;
+    background-color: transparent;
+    cursor: pointer;
 }
 
 input[type = "text"], input[type = "number"], input[type = "search"], input[type = "email"], input[type = "password"], input[type = "file"], select, textarea {
-  outline: none;
-  border: 1px solid #cccccc;
-  background-color: transparent;
+    outline: none;
+    border: 1px solid #cccccc;
+    background-color: transparent;
 }
 
 input[type = "text"]:focus, input[type = "number"]:focus, input[type = "search"]:focus, input[type = "email"]:focus, input[type = "password"]:focus, input[type = "file"]:focus, select:focus, textarea:focus {
-  border: 1px solid black;
+    border: 1px solid black;
 }
 
 input[type="radio"] {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 textarea {
-  font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 ul li {
-  list-style-type: none;
+    list-style-type: none;
 }
 
 .no-select, .no-select *, img, input, label, button {
-  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }

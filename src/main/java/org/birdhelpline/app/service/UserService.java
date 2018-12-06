@@ -32,22 +32,22 @@ public class UserService {
         try {
             return userDao.createUser(user);
         } catch (SQLException e) {
-            logger.error(e.getMessage(),e);
+            logger.error(e.getMessage(), e);
             return 0;
         }
 
 
     }
 
-    public Map<Integer,String> getSecurityQs() {
+    public Map<Integer, String> getSecurityQs() {
         return userDao.getSecurityQs();
 
     }
 
 
-    public List<PinCodeLandmarkInfo> getPinCodeLandMarks(String term){
+    public List<PinCodeLandmarkInfo> getPinCodeLandMarks(String term) {
         List<PinCodeLandmarkInfo> list = userDao.getPinCodeLandMarks();
-        return list.stream().filter(p ->  p.getLandmark().indexOf(term) >=0 ).collect(Collectors.toList());
+        return list.stream().filter(p -> p.getLandmark().indexOf(term) >= 0).collect(Collectors.toList());
 
     }
 
@@ -60,9 +60,8 @@ public class UserService {
     }
 
     public boolean isFirstTimeLogin(String name) {
-        //Timestamp lastLoginDate = userDao.getLastLoginByUserName(name);
         User user = findUserByUserName(name);
-        if(user == null || user.getLastLoginDate() == null) {
+        if (user == null || user.getLastLoginDate() == null) {
             return true;
         }
         userDao.updateLastLoginDate(name);
@@ -71,12 +70,12 @@ public class UserService {
 
     public void enableUser(String userName) {
         User user = userDao.getUserByUserName(userName);
-        if(user == null ) {
+        if (user == null) {
             throw new UsernameNotFoundException(userName);
         }
-        logger.info("Enabling user : "+user);
+        logger.info("Enabling user : " + user);
         userDao.enableUser(user);
-        userDao.insertUserAuthority(user.getUserId(),user.getRole());
+        userDao.insertUserAuthority(user.getUserId(), user.getRole());
 
     }
 
@@ -85,15 +84,19 @@ public class UserService {
     }
 
     public void saveUserAddrPinDetails(User user) {
-        logger.info(" vkj : "+user);
+        logger.info(" vkj : " + user);
         userDao.saveUserAddrPinDetails(user);
     }
 
     public User validateForgotPasswdDetails(String dob, String mobile, String securityQ, String securityA) {
-        return userDao.getUserWithForgotPasswd(dob,mobile,securityQ,securityA);
+        return userDao.getUserWithForgotPasswd(dob, mobile, securityQ, securityA);
     }
 
     public void setNewPassword(Long userId, String newPasswd) {
-        userDao.setNewPassword(userId,bCryptPasswordEncoder.encode(newPasswd));
+        userDao.setNewPassword(userId, bCryptPasswordEncoder.encode(newPasswd));
+    }
+
+    public List<User> getUserList(String term) {
+        return userDao.getUserByTerm(term);
     }
 }

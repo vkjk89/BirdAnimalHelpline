@@ -18,25 +18,24 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public class DataSourceConfig {
 
+    private final static Logger logger = LoggerFactory.getLogger(DataSourceConfig.class);
     @Value("${database.jdbc.url}")
     private String jdbcURL;
     @Value("${database.jdbc.user}")
     private String userName;
     @Value("${database.jdbc.password}")
     private String password;
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private HikariConfig config = new HikariConfig();
+    private HikariConfig config;
     private HikariDataSource dataSource;
 
     @Bean(name = "dataSource")
     public DataSource dataSource() {
-        logger.info("VKJ DB : "+jdbcURL+"\t"+userName+"\t"+password);
+        logger.info("VKJ DB : " + jdbcURL + "\t" + userName + "\t" + password);
         config = new HikariConfig();
         config.setJdbcUrl(jdbcURL);
         config.setUsername(userName);
         config.setPassword(password);
-        config.setMaximumPoolSize(5);
+        config.setMaximumPoolSize(10);
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");

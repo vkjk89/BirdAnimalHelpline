@@ -1,244 +1,259 @@
 .heading {
-  box-sizing: border-box;
-  padding: 5vw;
-  text-align: start;
-  background-color: #374047;
-  color: white;
-  font-size: 1.5em;
-  z-index: 2;
+    box-sizing: border-box;
+    padding: 5vw;
+    text-align: start;
+    background-color: #374047;
+    color: white;
+    font-size: 1.5em;
+    z-index: 2;
 }
 
 .progress-bar {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 0;
-  margin-top: 2vh;
-  background-color: transparent;
-  width: 50vw;
-  height: 10vw;
-  z-index: 2;
-  text-align: center;
-  font-size: 1.2em;
-  margin-left: 27vw;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 0;
+    margin-top: 2vh;
+    background-color: transparent;
+    width: 50vw;
+    height: 10vw;
+    z-index: 2;
+    text-align: center;
+    font-size: 1.2em;
+    margin-left: 27vw;
 }
 
 .progress-bar div {
-  border: 1px solid #374047;
+    border: 1px solid #374047;
 }
 
 #progress-bar-1, #progress-bar-3, #progress-bar-5 {
-  border-radius: 100%;
-  color: white;
-  line-height: 10vw;
+    border-radius: 100%;
+    color: white;
+    line-height: 10vw;
 }
 
 #progress-bar-3, #progress-bar-5 {
-  color: #374047;
-  animation: Progressbar1 0.5s forwards 0s ease-in-out;
+    color: #374047;
+    animation: Progressbar1 0.5s forwards 0s ease-in-out;
 }
 
 #progress-bar-2, #progress-bar-4 {
-  margin-top: 49%;
-  height: 2px;
-  border-left: none;
-  border-right: none;
+    margin-top: 49%;
+    height: 2px;
+    border-left: none;
+    border-right: none;
 }
 
 #progress-bar-4 {
-  animation: Progressbar1 0.5s forwards 0s ease-in-out;
+    animation: Progressbar1 0.5s forwards 0s ease-in-out;
 }
 
 .progress-bar-status {
-  background-color: #374047;
-  animation: Progressbar 0.5s forwards 0s ease-in-out;
+    background-color: #374047;
+    animation: Progressbar 0.5s forwards 0s ease-in-out;
 }
 
-@keyframes Progressbar{
-  0%{
-      transform: translateX(-70px); opacity: 0.1;
-      }
-  100%{
-      transform: translateX(0); opacity: 1;
-      }
+@keyframes Progressbar {
+    0% {
+        transform: translateX(-70px);
+        opacity: 0.1;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
-@keyframes Progressbar1{
-  0%{
-      transform: translateX(-50px); opacity: 0.2;
-      }
-  100%{
-      transform: translateX(0); opacity: 1;
-      }
+@keyframes Progressbar1 {
+    0% {
+        transform: translateX(-50px);
+        opacity: 0.2;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
+
 /* ------------------------------------------------------------------------------------------------------------------*/
 
 #step1 {
-  display: block;
+    display: block;
 }
-    /*body * {
-      border: 1px solid burlywood;
-    }*/
+
+/*body * {
+  border: 1px solid burlywood;
+}*/
 
 .volrole {
-  margin-top: 3.8vh;
-  font-size: 2em;
+    margin-top: 3.8vh;
+    font-size: 2em;
 }
 
 #role-row-1, #role-row-2 {
-  display: flex;
-  justify-content: space-evenly; 
+    display: flex;
+    justify-content: space-evenly;
 }
 
 #role-row-1 {
-  margin-top: -2.5vh;
+    margin-top: -2.5vh;
 }
 
-input [name = "role"]{
-  display: none;
+input [name = "role"] {
+    display: none;
 }
 
 span {
-  list-style: none;
-  margin-top: 5vh;
-  box-shadow: 10px 10px 10px 2px #CCC;
-  border-radius: 15px;
-  width: 38vw;
-  margin-bottom: -2vh;
+    list-style: none;
+    margin-top: 5vh;
+    box-shadow: 10px 10px 10px 2px #CCC;
+    border-radius: 15px;
+    width: 38vw;
+    margin-bottom: -2vh;
 }
 
 #volrole-selector img {
-  height: 8vh;
-  width: auto;
+    height: 8vh;
+    width: auto;
 }
 
 label {
-  display: block;
-  margin-top: 1vh;
-  margin-bottom: -2vh;
-  width: 38vw;
-  margin-left: -5vw;
-  height: 4vh;
-  padding: 2vw 0vw 0vw 0vw;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
-  background-color: #374047;
-  color: white;
-  box-shadow: 10px 10px 10px 1px #CCC;
+    display: block;
+    margin-top: 1vh;
+    margin-bottom: -2vh;
+    width: 38vw;
+    margin-left: -5vw;
+    height: 4vh;
+    padding: 2vw 0vw 0vw 0vw;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: #374047;
+    color: white;
+    box-shadow: 10px 10px 10px 1px #CCC;
 }
 
 button {
-  color: #374047;
-  width: 100%;
+    color: #374047;
+    width: 100%;
 }
 
 #Fosterer, #Receptionist {
-  display: none;
+    display: none;
 }
 
 .footer button {
-  border: none;
-  outline: none;
-  margin-top: 5vh;
-  padding-left: 80vw;
+    border: none;
+    outline: none;
+    margin-top: 5vh;
+    padding-left: 80vw;
 }
 
 .footer img {
-  width: 10vw;
+    width: 10vw;
 }
 
-@media only screen and (max-width: 360px){
-  .heading {
-    padding: 3vw;
-  }
-  .progress-bar {
-    font-size: 1em;
-  }
-  main div:nth-child(2) img{
-    width: auto;
-    height: 5vh;
-    padding: 0;
-  }
-  .volrole {
-    margin-top: 1vh;
-    font-size: 1.5em;
-    text-align: center;
-    margin-bottom: 0;
-  }
-  .volrole-selector {
-    margin-top: 0;
-  }
-  .volrole-selector div {
-    font-size: 1.1em;
-  }
-  .volrole-selector ul {
-    margin-top: 0;
-    margin-bottom: 0em;
-  }
-  main div:nth-child(2) li {
-    height: 18vh;
-    width: 35vw;
-    padding: 0vw 2vw;
-    padding-bottom: 2vw;
-    max-height: 100px;
-  }
-  .footer button img {
-    max-width: 35px;
-  }
+@media only screen and (max-width: 360px) {
+    .heading {
+        padding: 3vw;
+    }
+
+    .progress-bar {
+        font-size: 1em;
+    }
+
+    main div:nth-child(2) img {
+        width: auto;
+        height: 5vh;
+        padding: 0;
+    }
+
+    .volrole {
+        margin-top: 1vh;
+        font-size: 1.5em;
+        text-align: center;
+        margin-bottom: 0;
+    }
+
+    .volrole-selector {
+        margin-top: 0;
+    }
+
+    .volrole-selector div {
+        font-size: 1.1em;
+    }
+
+    .volrole-selector ul {
+        margin-top: 0;
+        margin-bottom: 0em;
+    }
+
+    main div:nth-child(2) li {
+        height: 18vh;
+        width: 35vw;
+        padding: 0vw 2vw;
+        padding-bottom: 2vw;
+        max-height: 100px;
+    }
+
+    .footer button img {
+        max-width: 35px;
+    }
 }
 
 /*-----------------------------------------------------------------------------------------------------------*/
 
-@keyframes Fosterer{
-  0%{
-      transform: scale(0) translateX(2000px);
-      }
-  100%{
-      transform: scale(1) translateX(0vw);
-      }
+@keyframes Fosterer {
+    0% {
+        transform: scale(0) translateX(2000px);
+    }
+    100% {
+        transform: scale(1) translateX(0vw);
+    }
 }
 
 .fosterer {
-  animation: Fosterer 0.8s forwards 0s ease-in-out;
+    animation: Fosterer 0.8s forwards 0s ease-in-out;
 }
 
-@keyframes Fosterer-end{
-  0%{
-      transform: rotate(0) scale(1);
-      }
-  100%{
-      transform: rotate(720deg) scale(0);
-      }
+@keyframes Fosterer-end {
+    0% {
+        transform: rotate(0) scale(1);
+    }
+    100% {
+        transform: rotate(720deg) scale(0);
+    }
 }
 
 .fosterer-end {
-  animation: Fosterer-end 0.7s forwards 0s ease-in-out;
+    animation: Fosterer-end 0.7s forwards 0s ease-in-out;
 }
 
-@keyframes Receptionist{
-  0%{
-      transform: scale(0) translateX(-2000px);
-      }
-  100%{
-      transform: scale(1) translateX(0vw);
-      }
+@keyframes Receptionist {
+    0% {
+        transform: scale(0) translateX(-2000px);
+    }
+    100% {
+        transform: scale(1) translateX(0vw);
+    }
 }
 
 .receptionist {
-  animation: Receptionist 0.8s forwards 0s ease-in-out;
+    animation: Receptionist 0.8s forwards 0s ease-in-out;
 }
 
-@keyframes Receptionist-end{
-  0%{
-      transform: rotate(0) scale(1);
-      }
-  100%{
-      transform: rotate(720deg) scale(0);
-      }
+@keyframes Receptionist-end {
+    0% {
+        transform: rotate(0) scale(1);
+    }
+    100% {
+        transform: rotate(720deg) scale(0);
+    }
 }
 
 .receptionist-end {
-  animation: Receptionist-end 0.7s forwards 0s ease-in-out;
+    animation: Receptionist-end 0.7s forwards 0s ease-in-out;
 }
+
 /*-----------------------------------------------------------------------------------------------------------*/
 
 

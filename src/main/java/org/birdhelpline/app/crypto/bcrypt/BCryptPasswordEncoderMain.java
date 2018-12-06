@@ -25,14 +25,13 @@ public class BCryptPasswordEncoderMain {
      * @param args single password to encode
      */
     public static void main(String[] args) {
-        String[] passwords = {"qqq", "admin1", "user2"};
+        String[] passwords = {"test"};
 
         if (args.length == 1) {
             logger.info(encode(args[0]));
-        }
-        else {
+        } else {
             logger.info("Encoding passwords: {}", Arrays.toString(passwords));
-            for(String psswd: passwords){
+            for (String psswd : passwords) {
                 logger.info("[{}]", encode(psswd));
             }
         }

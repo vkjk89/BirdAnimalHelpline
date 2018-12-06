@@ -32,8 +32,8 @@
         jsonParse = 'parseJSON';
 
     if ('JSON' in window && 'parse' in JSON) {
-      jsonAPI = JSON;
-      jsonParse = 'parse';
+        jsonAPI = JSON;
+        jsonParse = 'parse';
     }
 
     // The iframe transport accepts four additional options:
@@ -52,7 +52,7 @@
             // prevents warning popups on HTTPS in IE6:
             /*jshint scripturl: true */
             var initialIframeSrc = options.initialIframeSrc || 'javascript:false;',
-            /*jshint scripturl: false */
+                /*jshint scripturl: false */
                 form,
                 iframe,
                 addParamChar;
@@ -78,11 +78,11 @@
                     counter += 1;
                     iframe = $(
                         '<iframe src="' + initialIframeSrc +
-                            '" name="iframe-transport-' + counter + '"></iframe>'
+                        '" name="iframe-transport-' + counter + '"></iframe>'
                     ).bind('load', function () {
                         var fileInputClones,
                             paramNames = $.isArray(options.paramName) ?
-                                    options.paramName : [options.paramName];
+                                options.paramName : [options.paramName];
                         iframe
                             .unbind('load')
                             .bind('load', function () {
@@ -131,7 +131,7 @@
                             });
                         }
                         if (options.fileInput && options.fileInput.length &&
-                                options.type === 'POST') {
+                            options.type === 'POST') {
                             fileInputClones = options.fileInput.clone();
                             // Insert a clone for each file input field:
                             options.fileInput.after(function (index) {
@@ -212,8 +212,8 @@
             'iframe xml': function (iframe) {
                 var xmlDoc = iframe && iframe[0];
                 return xmlDoc && $.isXMLDoc(xmlDoc) ? xmlDoc :
-                        $.parseXML((xmlDoc.XMLDocument && xmlDoc.XMLDocument.xml) ||
-                            $(xmlDoc.body).html());
+                    $.parseXML((xmlDoc.XMLDocument && xmlDoc.XMLDocument.xml) ||
+                        $(xmlDoc.body).html());
             },
             'iframe script': function (iframe) {
                 return iframe && $.globalEval($(iframe[0].body).text());

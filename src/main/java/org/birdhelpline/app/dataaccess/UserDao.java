@@ -7,8 +7,10 @@ import org.birdhelpline.app.model.UserServiceTimeInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.*;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -23,12 +25,10 @@ import java.util.*;
 
 @Repository
 public class UserDao {
-    Logger logger = LoggerFactory.getLogger(UserDao.class);
-    private static final String USER_QUERY = "select * from user u , user_info ui where ";
-    private static final RowMapper<User> USER_MAPPER = new UserRowMapper();
+    private static final Logger logger = LoggerFactory.getLogger(UserDao.class);
+
     private Map<String, Integer> userRoleVsRoleId = new HashMap<>();
     private Map<Integer, String> securityQIdVSSecurityQ = new LinkedHashMap<>();
-    //private Map<Long, List<String>> pinCodeVsLandMarks = new HashMap<>();
     private List<PinCodeLandmarkInfo> listPincodeLandMarks = new ArrayList<>();
     private List<String> listBirdAnimals = new ArrayList<>();
 
@@ -38,12 +38,14 @@ public class UserDao {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    private String insertUserInfoQ;
-    private String insertUserQ;
-    private String getUsersByMobileQ;
-    private String getUserByUserNameQ;
-    private String updateLastLoginQ;
-    private String enableUserQ;
+    @Value("${user.all.query}")
+    private String userAllQ;
+
+    @Value("${user.basic.query}")
+    private String userBasicQ;
+
+    @Value("${user.nearest.pincode.query}")
+    private String nearestUserQ;
 
     @PostConstruct
     private void init() {
@@ -63,12 +65,6 @@ public class UserDao {
                     long pinCode = resultSet.getLong("pincode");
                     long pinCodeId = resultSet.getLong("pin_land_id");
                     String landMark = resultSet.getString("landmark");
-//                    List<String> landMarks = pinCodeVsLandMarks.get(pinCode);
-//                    if (landMarks == null) {
-//                        landMarks = new ArrayList<>();
-//                        pinCodeVsLandMarks.put(pinCode, landMarks);
-//                    }
-//                    landMarks.add(landMark);
                     listPincodeLandMarks.add(new PinCodeLandmarkInfo(pinCodeId, pinCode, landMark));
                 }
         );
@@ -92,19 +88,10 @@ public class UserDao {
 
     }
 
-    public List<String> getListBirdAnimals() {
-        return listBirdAnimals;
-    }
-
-    public List<PinCodeLandmarkInfo> getPinCodeLandMarks() {
-        return listPincodeLandMarks;
-    }
-
     @Transactional(readOnly = true)
     public User getUser(long id) {
         try {
-            return jdbcTemplate.queryForObject(USER_QUERY + "u.user_id = ui.user_id and u.user_id = ?", USER_MAPPER, id);
-
+            return jdbcTemplate.queryForObject(userAllQ + " and u.user_id = ?", new UserRowMapper("BIAS"), id);
         } catch (EmptyResultDataAccessException ex) {
             return null;
         }
@@ -113,7 +100,7 @@ public class UserDao {
     @Transactional(readOnly = true)
     public User findUserByMobile(int mobile) {
         try {
-            return jdbcTemplate.queryForObject(USER_QUERY + "u.user_id = ui.user_id and ui.mobile = ?", USER_MAPPER, mobile);
+            return jdbcTemplate.queryForObject(userAllQ + " and ui.mobile = ?", new UserRowMapper("BIAS"), mobile);
         } catch (EmptyResultDataAccessException notFound) {
             return null;
         }
@@ -122,7 +109,7 @@ public class UserDao {
     @Transactional(readOnly = true)
     public User getUserWithForgotPasswd(String dob, String mobile, String securityQ, String securityA) {
         try {
-            return jdbcTemplate.queryForObject(USER_QUERY + " u.user_id = ui.user_id and ui.dob = ? and u.mobile= ? and ui.security_id =? and ui.security_ans = ?", USER_MAPPER, dob, mobile, securityQ, securityA);
+            return jdbcTemplate.queryForObject(userBasicQ + " and ui.dob = ? and u.mobile= ? and ui.security_id =? and ui.security_ans = ?", new UserRowMapper("B"), dob, mobile, securityQ, securityA);
         } catch (EmptyResultDataAccessException ex) {
             return null;
         }
@@ -140,10 +127,23 @@ public class UserDao {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         long userId = insertUser(userToAdd, keyHolder);
         insertUserInfo(userId, userToAdd);
+        insertUserImage(userId, userToAdd);
         //insertUserAuthority(userId, userToAdd.getRole());
         return userId;
     }
 
+    private void insertUserImage(long userId, User userToAdd) {
+        this.jdbcTemplate.update((Connection connection) -> {
+            PreparedStatement ps = connection.prepareStatement(
+                    "insert into user_image (user_id,image) values (?,?)"
+            );
+            ps.setLong(1, userId);
+            ps.setBlob(2, new ByteArrayInputStream(userToAdd.getUserImage().getImage()));
+            return ps;
+        });
+
+
+    }
 
     public void insertUserAuthority(long userId, String role) {
         this.jdbcTemplate.update((Connection connection) -> {
@@ -163,9 +163,8 @@ public class UserDao {
     private void insertUserInfo(long userId, User userToAdd) throws SQLException {
 
         this.jdbcTemplate.update((Connection con) -> {
-            insertUserInfoQ = "insert into user_info (user_id,first_name,last_name,address,gender,dob,role,image,security_id,security_ans) values (?,?, ?,?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(
-                    insertUserInfoQ
+                    "insert into user_info (user_id,first_name,last_name,address,gender,dob,role,security_id,security_ans) values (?,?,?,?,?,?,?,?,?)"
             );
 
             ps.setLong(1, userId);
@@ -175,9 +174,8 @@ public class UserDao {
             ps.setString(5, userToAdd.getGender());
             ps.setString(6, userToAdd.getDob());
             ps.setString(7, userToAdd.getRole());
-            ps.setBlob(8, new ByteArrayInputStream(userToAdd.getImage()));
-            ps.setInt(9, userToAdd.getSecurityQId());
-            ps.setString(10, userToAdd.getSecurityQAns());
+            ps.setInt(8, userToAdd.getSecurityQId());
+            ps.setString(9, userToAdd.getSecurityQAns());
             return ps;
         });
 
@@ -185,9 +183,8 @@ public class UserDao {
 
     private long insertUser(User userToAdd, KeyHolder keyHolder) throws SQLException {
         this.jdbcTemplate.update((connection -> {
-            insertUserQ = "insert into user (user_name,password,email,mobile) values (?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(
-                    insertUserQ,
+                    "insert into user (user_name,password,email,mobile) values (?,?,?,?)",
                     new String[]{"user_id"});
 
             ps.setString(1, userToAdd.getUserName());
@@ -200,9 +197,8 @@ public class UserDao {
     }
 
     public boolean getUserByMobile(long mobile) {
-        getUsersByMobileQ = "select count(1) from user where mobile = ?";
-        int count = jdbcTemplate.queryForObject(getUsersByMobileQ, Integer.class, mobile);
-        return count > 0 ? true : false;
+        int count = jdbcTemplate.queryForObject("select count(1) from user where mobile = ?", Integer.class, mobile);
+        return count > 0;
     }
 
     public User getUserByUserName(String userName) {
@@ -210,26 +206,22 @@ public class UserDao {
         try {
             Map<String, Object> params = new HashMap<String, Object>();
             params.put("userName", userName);
-            getUserByUserNameQ = "select * from user u , user_info ui where u.user_name = :userName and u.user_id = ui.user_id";
             user = namedParameterJdbcTemplate.queryForObject(
-                    getUserByUserNameQ,
-                    params, new UserRowMapper()
+                    userAllQ + " and u.user_name = :userName ",
+                    params, new UserRowMapper("BIAS")
             );
         } catch (EmptyResultDataAccessException ex) {
             //throw new ObjectRetrievalFailureException(User.class, userName);
             return null;
         }
         return user;
-        //return jdbcOperations.queryForObject("select * from user where user_name = ?",User.class, userName,new UserRowMapper());
     }
 
 
     public void updateLastLoginDate(String name) {
         this.jdbcTemplate.update(connection -> {
-                    updateLastLoginQ = "update user_info ui, user u set ui.last_login_date =  now() where u.user_id = ui.user_id and u.user_name=?";
                     PreparedStatement ps = connection.prepareStatement(
-                            updateLastLoginQ);
-
+                            "update user_info ui, user u set ui.last_login_date =  now() where u.user_id = ui.user_id and u.user_name=?");
                     ps.setString(1, name);
                     return ps;
                 }
@@ -238,18 +230,13 @@ public class UserDao {
 
     public void enableUser(User user) {
         this.jdbcTemplate.update(connection -> {
-                    enableUserQ = "update user u set enabled =  1 where u.user_name=?";
                     PreparedStatement ps = connection.prepareStatement(
-                            enableUserQ);
+                            "update user u set enabled =  1 where u.user_name=?");
 
                     ps.setString(1, user.getUserName());
                     return ps;
                 }
         );
-    }
-
-    public Map<Integer, String> getSecurityQs() {
-        return securityQIdVSSecurityQ;
     }
 
     @Transactional
@@ -282,7 +269,7 @@ public class UserDao {
             ps.setString(4, user.getOfficeAddr().getAddrLine2());
             ps.setLong(5, user.getOfficeAddr().getPincode());
             ps.setString(6, "");
-           // ps.setString(6, user.getOfficeAddr().getContactPrefix() + "-" + user.getOfficeAddr().getContact());
+            // ps.setString(6, user.getOfficeAddr().getContactPrefix() + "-" + user.getOfficeAddr().getContact());
             ps.setString(7, "O");
             ps.setString(8, user.getOfficeAddr().getNatureBusiness());
             return ps;
@@ -296,20 +283,19 @@ public class UserDao {
                 ps.setLong(1, user.getUserId());
                 ps.setLong(2, serviceTimeInfo.getPincodeId());
                 ps.setInt(3, serviceTimeInfo.getFromTime());
-                ps.setInt(4,serviceTimeInfo.getToTime());
+                ps.setInt(4, serviceTimeInfo.getToTime());
                 return ps;
             });
         }
 
 
-
-            jdbcTemplate.update((Connection con) -> {
-                PreparedStatement ps = con.prepareStatement(
-                        "update user_info u set u.last_login_date = now() where u.user_id = ?"
-                );
-                ps.setLong(1, user.getUserId());
-                return ps;
-            });
+        jdbcTemplate.update((Connection con) -> {
+            PreparedStatement ps = con.prepareStatement(
+                    "update user_info u set u.last_login_date = now() where u.user_id = ?"
+            );
+            ps.setLong(1, user.getUserId());
+            return ps;
+        });
 
 
     }
@@ -326,8 +312,56 @@ public class UserDao {
         );
     }
 
+    public List<User> getUserByTerm(String term) {
+        List<User> users = null;
+        try {
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("userName", "%" + term + "%");
+            users = namedParameterJdbcTemplate.query(
+                    userAllQ+" and u.user_name like :userName ",
+                    params, new UserRowMapper("BIAS")
+            );
+        } catch (EmptyResultDataAccessException ex) {
+            //throw new ObjectRetrievalFailureException(User.class, userName);
+            return null;
+        }
+        return users;
+    }
+
+    public List<User> getTop5Vol() {
+        List<User> users = null;
+        try {
+            users = namedParameterJdbcTemplate.query(
+                    userAllQ + "  order by ui.case_accepted_count desc limit 5", new UserRowMapper("BIAS")
+            );
+        } catch (EmptyResultDataAccessException ex) {
+            //throw new ObjectRetrievalFailureException(User.class, userName);
+            return null;
+        }
+        return users;
+    }
+
+    public List<User> getNearestVol(String locationPincode) {
+        List<User> users = null;
+        try {
+            users = namedParameterJdbcTemplate.query(
+                    nearestUserQ + locationPincode, new UserRowMapper("BIAS")
+            );
+        } catch (EmptyResultDataAccessException ex) {
+            //throw new ObjectRetrievalFailureException(User.class, userName);
+            return null;
+        }
+        return users;
+    }
 
     static class UserRowMapper implements RowMapper<User> {
+        private final String type;
+
+        //B->Basic, I->Image, A->Addr, S->ServiceTime
+        public UserRowMapper(String type) {
+            this.type = type;
+        }
+
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             User user = new User();
             user.setUserId(rs.getLong("user_id"));
@@ -344,20 +378,38 @@ public class UserDao {
             user.setCreationDate(rs.getTimestamp("create_date"));
             user.setLastLoginDate(rs.getTimestamp("last_login_date"));
             user.setRole(rs.getString("role"));
-            try {
-                Blob image = rs.getBlob("image");
-                if (image != null) {
-                    user.setImage(IOUtils.toByteArray(image.getBinaryStream()));
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             user.setSecurityQId(rs.getInt("security_id"));
             user.setSecurityQAns(rs.getString("security_ans"));
-
+            if (type.contains("I")) {
+                try {
+                    Blob image = rs.getBlob("image");
+                    if (image != null) {
+                        user.getUserImage().setImage(IOUtils.toByteArray(image.getBinaryStream()));
+                    }
+                    image = rs.getBlob("old_image");
+                    if (image != null) {
+                        user.getUserImage().setOldImage(IOUtils.toByteArray(image.getBinaryStream()));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             return user;
         }
     }
 
-    ;
+
+    public List<String> getListBirdAnimals() {
+        return listBirdAnimals;
+    }
+
+    public List<PinCodeLandmarkInfo> getPinCodeLandMarks() {
+        return listPincodeLandMarks;
+    }
+
+    public Map<Integer, String> getSecurityQs() {
+        return securityQIdVSSecurityQ;
+    }
+
+
 }

@@ -16,7 +16,7 @@ public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
     public void onLogoutSuccess(HttpServletRequest request,
                                 HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
-        System.out.println("vkj insde logout");
+        System.out.println("vkj inside logout");
         HttpSession session = request.getSession();
         if (session != null) {
             session.removeAttribute("user");

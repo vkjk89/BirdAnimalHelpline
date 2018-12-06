@@ -7,7 +7,7 @@
     font-size: 1.5em;
     z-index: 2;
 }
-  
+
 .progress-bar {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -22,17 +22,17 @@
     font-size: 1.2em;
     margin-left: 25vw;
 }
-  
+
 .progress-bar div {
     border: 1px solid #374047;
 }
-  
+
 #progress-bar-1, #progress-bar-3, #progress-bar-5 {
     border-radius: 100%;
     color: white;
     line-height: 10vw;
 }
-  
+
 #progress-bar-5 {
     color: #374047;
 }
@@ -40,40 +40,45 @@
 #progress-bar-3 {
     animation: Progressbar1 0.5s forwards 0s ease-in-out;
 }
-  
+
 #progress-bar-2, #progress-bar-4 {
     margin-top: 49%;
     height: 2px;
     border-left: none;
     border-right: none;
 }
-  
+
 #progress-bar-4 {
     animation: Progressbar1 0.5s forwards 0s ease-in-out;
 }
-  
+
 .progress-bar-status {
     background-color: #374047;
     animation: Progressbar 0.5s forwards 0s ease-in-out;
 }
-  
-@keyframes Progressbar{
-    0%{
-        transform: translateX(-70px); opacity: 0.1;
-        }
-    100%{
-        transform: translateX(0); opacity: 1;
-        }
+
+@keyframes Progressbar {
+    0% {
+        transform: translateX(-70px);
+        opacity: 0.1;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
-  
-@keyframes Progressbar1{
-    0%{
-        transform: translateX(-50px); opacity: 0.1;
-        }
-    100%{
-        transform: translateX(0); opacity: 1;
-        }
+
+@keyframes Progressbar1 {
+    0% {
+        transform: translateX(-50px);
+        opacity: 0.1;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
+
 /* ------------------------------------------------------------------------------------------------------------------*/
 
 #step2 {
@@ -154,7 +159,7 @@ p[id = "security-question"] {
 
 p[id = "security-para"] {
     box-sizing: border-box;
-    margin-top: 0; 
+    margin-top: 0;
     width: 74.5vw;
 }
 
@@ -185,25 +190,29 @@ input[name = "security-answer"] {
     margin-left: 50vw;
 }
 
-    /*body * {
-        border: 1px solid burlywood;
-    }*/
+/*body * {
+    border: 1px solid burlywood;
+}*/
 
 @media only screen and (max-width: 340px) {
     .heading {
         padding: 3vw;
         font-size: 1.2em;
     }
+
     input[type = "date"] {
         font-size: 0.9em;
     }
+
     body {
         overflow-x: hidden;
         font-size: 0.8em;
     }
+
     #previous {
         padding-top: 0vh;
-    }    
+    }
+
     #next {
         padding-top: 0vh;
     }

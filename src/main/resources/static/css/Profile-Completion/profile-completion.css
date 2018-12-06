@@ -1,4 +1,4 @@
-#home-address{
+#home-address {
     box-sizing: border-box;
     text-align: start;
     padding: 10vw;
@@ -6,7 +6,7 @@
     animation: home-work-address 1s forwards 0s ease-in-out;
 }
 
-#work-address{
+#work-address {
     box-sizing: border-box;
     text-align: start;
     padding: 10vw;
@@ -15,14 +15,14 @@
 }
 
 #header {
-    margin: 0;   
+    margin: 0;
     padding: 3vh;
     color: white;
     background-color: #374047;
     font-size: 1.2em;
 }
 
-#home-address p:first-child, #work-address p:first-child{
+#home-address p:first-child, #work-address p:first-child {
     width: calc(70vw + 3vh);
     border-bottom: 1px solid #374047;
     font-size: 1.2em;
@@ -80,9 +80,9 @@ select * {
     background-color: transparent;
 }
 
-    /*body * {
-      border: 1px solid burlywood;
-    }*/
+/*body * {
+  border: 1px solid burlywood;
+}*/
 
 #next img {
     width: 10vw;
@@ -97,12 +97,13 @@ select * {
 
 /*------------------------------------------------------------------------------------------------*/
 
-@keyframes home-work-address{
-    0%{
+@keyframes home-work-address {
+    0% {
         transform: scale(0) translateX(500vw);
-        }
-    100%{
+    }
+    100% {
         transform: scale(1) translateX(0);
-        }
+    }
 }
+
 /*------------------------------------------------------------------------------------------------*/

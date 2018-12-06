@@ -1,7 +1,11 @@
 package org.birdhelpline.app.service;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.birdhelpline.app.dataaccess.CaseDao;
+import org.birdhelpline.app.dataaccess.UserDao;
 import org.birdhelpline.app.model.CaseInfo;
+import org.birdhelpline.app.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,33 +20,41 @@ import java.util.stream.Collectors;
 
 public class CaseService {
 
+    Gson gson = new Gson();
     @Autowired
     private CaseDao caseDao;
+    @Autowired
+    private UserDao userDao;
 
     public CaseInfo getCaseInfoByCaseId(Long caseId) {
         return caseDao.getCaseInfoByCaseId(caseId);
     }
 
+
+    @Transactional
+    public Long save(CaseInfo caseInfo) {
+        Long caseId = caseDao.save(caseInfo);
+        caseInfo.setCaseId(caseId);
+        caseDao.saveCaseTxn(caseInfo);
+        return caseId;
+    }
+
+
     public List<CaseInfo> getActiveCaseInfoByUserId(Long userId) {
         List<CaseInfo> list = caseDao.getAllCaseInfoByUserId(userId);
         if (list != null && !list.isEmpty()) {
-            Collections.sort(list.stream().filter(c -> c.isActive()).collect(Collectors.toList()),
-                    ((c1, c2) -> c1.getLastModificationDate().compareTo(c2.getLastModificationDate())));
+            list = list.stream().filter(c -> c.isActive()).collect(Collectors.toList());
+            Collections.sort(list,
+                    ((c1, c2) -> c2.getLastModificationDate().compareTo(c1.getLastModificationDate())));
             return list;
         }
         return Collections.EMPTY_LIST;
     }
 
-    @Transactional
-    public Long save(CaseInfo caseInfo) {
-        Long caseId = caseDao.save(caseInfo);
-        return caseId;
-    }
-
     public List<CaseInfo> getRecentCaseInfoByUserId(Long userId) {
         List<CaseInfo> list = caseDao.getAllCaseInfoByUserId(userId);
         if (list != null && !list.isEmpty()) {
-            Collections.sort(list, (c1, c2) -> c1.getLastModificationDate().compareTo(c2.getLastModificationDate()));
+            Collections.sort(list, (c1, c2) -> c2.getLastModificationDate().compareTo(c1.getLastModificationDate()));
             return list;
         }
         return Collections.EMPTY_LIST;
@@ -56,6 +68,43 @@ public class CaseService {
             Collections.sort(list,
                     Comparator.comparing(caseInfo -> caseInfo.getLastModificationDate())
             );
+            return list;
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+    public String getVolInfoForCase(Long caseId) {
+        CaseInfo caseInfo = caseDao.getCaseInfoByCaseId(caseId);
+        if (caseInfo != null) {
+            List<User> top5Vol = userDao.getTop5Vol();
+            List<User> nearestVol = userDao.getNearestVol(caseInfo.getLocationPincode());
+            JsonObject jsonObject = new JsonObject();
+            String top5VolStr = gson.toJson(top5Vol);
+            String nearestVolStr = gson.toJson(nearestVol);
+            JsonObject obj = new JsonObject();
+            obj.addProperty("top5", top5VolStr);
+            obj.addProperty("nearest", nearestVolStr);
+            return gson.toJson(obj);
+
+        }
+        return "";
+    }
+
+    public String assignCase(Long userId, Long toUserId, Long caseId) {
+        caseDao.assignCase(userId, toUserId, caseId);
+        return "success";
+    }
+
+    public String closeCase(Long userId, Long caseId, String closeRemark) {
+        caseDao.closeCase(userId, caseId, closeRemark);
+        return "success";
+    }
+
+    public List<CaseInfo> getCaseInfo(Long userId, String searchTerm) {
+        List<CaseInfo> list = caseDao.getAllCaseInfoByUserId(userId);
+        if (list != null && !list.isEmpty()) {
+            list = list.stream().filter(c -> String.valueOf(c.getCaseId()).contains(searchTerm)).collect(Collectors.toList());
+            Collections.sort(list, (c1, c2) -> c2.getLastModificationDate().compareTo(c1.getLastModificationDate()));
             return list;
         }
         return Collections.EMPTY_LIST;

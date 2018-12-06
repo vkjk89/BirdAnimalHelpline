@@ -2,7 +2,6 @@ package org.birdhelpline.app.controller;
 
 import org.birdhelpline.app.model.User;
 import org.birdhelpline.app.model.UserServiceTimeInfo;
-import org.birdhelpline.app.service.CaseService;
 import org.birdhelpline.app.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,21 +31,15 @@ public class LoginController {
 
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-    Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private CaseService caseService;
 
     @RequestMapping(value = {"/", "/error"}, method = RequestMethod.GET)
     public ModelAndView welcome(HttpSession session) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (!(auth instanceof AnonymousAuthenticationToken)) {
-            /* The user is logged in :) */
-            return new ModelAndView("forward:/default");
-        }
+        if (checkIfUserLoggedIn()) return new ModelAndView("forward:/default");
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
         session.setAttribute("user", user);
@@ -56,11 +49,7 @@ public class LoginController {
 
     @RequestMapping(value = {"/signIn"}, method = RequestMethod.GET)
     public ModelAndView signIn(@RequestParam(name = "error", required = false) Boolean error) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (!(auth instanceof AnonymousAuthenticationToken)) {
-            /* The user is logged in :) */
-            return new ModelAndView("forward:/default");
-        }
+        if (checkIfUserLoggedIn()) return new ModelAndView("forward:/default");
         ModelAndView modelAndView = new ModelAndView();
         if (error != null && error) {
             modelAndView.addObject("error", "Invalid credentials");
@@ -69,19 +58,18 @@ public class LoginController {
         return modelAndView;
     }
 
+    private boolean checkIfUserLoggedIn() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return !(auth instanceof AnonymousAuthenticationToken);
+    }
 
-//    @Bean
-//    public MultipartResolver multipartResolver() {
-//        return new CommonsMultipartResolver();
-//    }
 
     @RequestMapping(path = "/registration", method = {RequestMethod.GET, RequestMethod.POST})
     public String processPage(@RequestParam(name = "page", required = false) final Integer currentPage,
-//                              @RequestParam(name = "dp-image", required = false) MultipartFile file,
                               @ModelAttribute("user") User user, BindingResult result,
                               SessionStatus status,
                               @RequestParam(name = "action", required = false) String action,
-                              Model model) throws IOException {
+                              Model model) {
         logger.info(" vkj inside reg : " + user + " " + currentPage);
         logger.info("vkj action : " + action);
         model.addAttribute("securityQs", userService.getSecurityQs());
@@ -104,7 +92,6 @@ public class LoginController {
         }
     }
 
-    //    private String handleStep3(@RequestParam(name = "image", required = false) MultipartFile file, @ModelAttribute("user") User user, SessionStatus status, @RequestParam(name = "action", required = false) String action, BindingResult result) throws IOException {
     private String handleStep3(User user, SessionStatus status, String action, BindingResult result) {
         String userName = user.getUserName();
         User fromDb = userService.findUserByUserName(userName);
@@ -113,7 +100,6 @@ public class LoginController {
             return "RequestRegistration/Step3";
         }
         if (action != null) {
-            //user.setImage(file.getBytes());
             if (action.equalsIgnoreCase("preview")) {
                 return "RequestRegistration/Preview";
             }
@@ -163,7 +149,7 @@ public class LoginController {
                                                      SessionStatus status,
                                                      @RequestParam(name = "action", required = false) String action,
                                                      HttpServletRequest request,
-                                                     RedirectAttributes redirectAttrs)  {
+                                                     RedirectAttributes redirectAttrs) {
         logger.info("vkj inside profile comple : " + user + " " + currentPage);
         logger.info("vkj action : " + action);
 
@@ -181,7 +167,7 @@ public class LoginController {
                 handleProfileStep2(modelAndView, user, result);
                 break;
             case 3:
-                handleProfileStep3(modelAndView, user, status, action, result, request, redirectAttrs);
+                handleProfileStep3(modelAndView, user, request, redirectAttrs);
                 break;
             //TODO create this page
             default:
@@ -200,7 +186,7 @@ public class LoginController {
     }
 
     private void
-    handleProfileStep3(ModelAndView modelAndView, User user, SessionStatus status, String action, BindingResult result, HttpServletRequest request, RedirectAttributes redirectAttrs) {
+    handleProfileStep3(ModelAndView modelAndView, User user, HttpServletRequest request, RedirectAttributes redirectAttrs) {
         logger.info("vkj request 1: " + request.getParameterMap().keySet());
         logger.info("vkj request 2: " + request.getParameterMap().values());
         for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
@@ -246,25 +232,23 @@ public class LoginController {
                                          @RequestParam("contact-number") String mobile,
                                          @RequestParam("securityquestion") String securityQ,
                                          @RequestParam("securityanswer") String securityA,
-                                         HttpSession session) throws IOException {
+                                         HttpSession session) {
         logger.info(" vkj inside valiate forgot password ");
         User user = userService.validateForgotPasswdDetails(dob, mobile, securityQ, securityA);
         logger.info("User is : " + user);
         if (user != null) {
             session.setAttribute("userId", user.getUserId());
         }
-        //return user != null && user.isEnabled() ? "Valid" : "Invalid";
         return user != null ? "valid" : "invalid";
     }
 
     @RequestMapping(path = "/forgotPassword", method = {RequestMethod.POST})
-    public
-    String forgotPasswordPost(@RequestParam("password") String newPasswd, HttpSession session ,Model model) throws IOException {
+    public String forgotPasswordPost(@RequestParam("password") String newPasswd, HttpSession session, Model model) throws IOException {
         logger.info(" vkj inside set new password ");
         Long userId = (Long) session.getAttribute("userId");
         if (userId != null) {
             userService.setNewPassword(userId, newPasswd);
-            model.addAttribute("error","Password reset successfully");
+            model.addAttribute("error", "Password reset successfully");
             return "SignIn";
         } else {
             return "Error";
@@ -282,13 +266,12 @@ public class LoginController {
     @RequestMapping(path = "/profilePicUpload", method = RequestMethod.POST)
     public @ResponseBody
     String profilePicUpload(@RequestParam(name = "dp-image", required = false) MultipartFile file,
-                            @RequestPart(name = "dp-image", required = false) MultipartFile file1,
-                            final HttpSession session, final @ModelAttribute("user") User user, BindingResult result
+                            //@RequestPart(name = "dp-image", required = false) MultipartFile file1,
+                            final HttpSession session, final @ModelAttribute("user") User user
     ) throws IOException {
         logger.info("Received data 1 : " + file);
-        logger.info("Received data  2: " + file1);
-
-        user.setImage(file.getBytes());
-        return Base64.getEncoder().encodeToString(file.getBytes());
+        //logger.info("Received data  2: " + file1);
+        user.getUserImage().setImage(file.getBytes());
+        return Base64.getEncoder().encodeToString(user.getUserImage().getImage());
     }
 }

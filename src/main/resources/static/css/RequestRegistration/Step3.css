@@ -5,8 +5,8 @@
     color: white;
     font-size: 1.5em;
     z-index: 2;
-  }
-  
+}
+
 .progress-bar {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -21,12 +21,12 @@
     font-size: 1.2em;
     margin-left: 25vw;
 }
-  
+
 .progress-bar div {
     border: 1px solid #374047;
     box-shadow: 3px 3px 3px #CCC;
 }
-  
+
 #progress-bar-1, #progress-bar-3, #progress-bar-5 {
     border-radius: 100%;
     color: white;
@@ -40,7 +40,7 @@
 #progress-bar-5 {
     animation: Progressbar2 0.5s forwards 0s ease-in-out;
 }
-  
+
 #progress-bar-2, #progress-bar-4 {
     margin-top: 49%;
     height: 2px;
@@ -48,41 +48,47 @@
     border-right: none;
     box-shadow: 3px 3px 3px #CCC;
 }
-  
+
 #progress-bar-4 {
     animation: Progressbar1 0.5s forwards 0s ease-in-out;
 }
-  
+
 .progress-bar-status {
     background-color: #374047;
     animation: Progressbar 0.5s forwards 0s ease-in-out;
 }
-  
-@keyframes Progressbar{
-    0%{
-        transform: translateX(-70px); opacity: 0.1;
-        }
-    100%{
-        transform: translateX(0); opacity: 1;
-        }
-}
-  
-@keyframes Progressbar1{
-    0%{
-        transform: translateX(-60px); opacity: 0.1;
-        }
-    100%{
-        transform: translateX(0); opacity: 1;
-        }
+
+@keyframes Progressbar {
+    0% {
+        transform: translateX(-70px);
+        opacity: 0.1;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
-@keyframes Progressbar2{
-    0%{
-        transform: translateX(-50px); opacity: 0.1;
-        }
-    100%{
-        transform: translateX(0); opacity: 1;
-        }
+@keyframes Progressbar1 {
+    0% {
+        transform: translateX(-60px);
+        opacity: 0.1;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes Progressbar2 {
+    0% {
+        transform: translateX(-50px);
+        opacity: 0.1;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 /* ------------------------------------------------------------------------------------------------------------------*/
@@ -111,14 +117,14 @@ ul li {
     box-sizing: border-box;
     position: relative;
     width: 70vw;
-    color: rgb(255,0,0,0.8);
+    color: rgb(255, 0, 0, 0.8);
     padding: 2vw;
     font-size: 0.73em;
 }
 
 main div img {
     margin-top: 1.5vh;
-    width : 15vh;
+    width: 15vh;
 }
 
 #dp-label-2 {
@@ -138,7 +144,7 @@ main div {
     text-align: center;
 }
 
-input[type = "text"], input[type = "password"]{
+input[type = "text"], input[type = "password"] {
     box-sizing: border-box;
     width: 60vw;
     margin-top: 3vh;
@@ -151,7 +157,7 @@ input[type = "text"], input[type = "password"]{
     font-size: 0.9em;
 }
 
-input[type = "password"]{
+input[type = "password"] {
     margin-top: 1vh;
 }
 
@@ -211,53 +217,62 @@ button {
     margin-left: -35vw;
 }
 
-        /*body * {
-            border: 1px solid green;
-        }*/
+/*body * {
+    border: 1px solid green;
+}*/
 
-@media only screen and (max-width: 320px){
+@media only screen and (max-width: 320px) {
     main div img {
         padding-top: 1vh;
-        width : 10vh;
+        width: 10vh;
     }
+
     #dp-label-2 {
         font-size: 0.7em;
     }
-    input[type = "submit"]{
+
+    input[type = "submit"] {
         font-size: 0.7em;
     }
-    input[type = "text"]{
+
+    input[type = "text"] {
         font-size: 0.8em;
     }
-    input[type = "password"]{
+
+    input[type = "password"] {
         font-size: 0.7em;
     }
+
     #warning {
         font-size: 0.65em;
     }
+
     .btn-group {
         font-size: 0.8em;
     }
+
     #previous {
         margin-top: 0vh;
     }
+
     .footer-btns {
         margin-top: 2vh;
     }
 }
 
-@media only screen and (min-width: 520px){
+@media only screen and (min-width: 520px) {
     main {
         font-size: 1.5em;
-    }  
+    }
+
     .footer-btns .btn-group label {
         font-size: 1.7em;
     }
 }
 
-@media only screen and (min-height: 520px){
-    main div img{
+@media only screen and (min-height: 520px) {
+    main div img {
         margin-top: 4vh;
-        width : 12vh;      
+        width: 12vh;
     }
 }

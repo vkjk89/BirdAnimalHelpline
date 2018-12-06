@@ -18,77 +18,77 @@ import javax.sql.DataSource;
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	@Autowired
-	private DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
 
-	@Autowired
+    @Autowired
     private MySimpleUrlAuthenticationSuccessHandler successHandler;
 
-	@Autowired
+    @Autowired
     private MyLogoutSuccessHandler logoutSuccessHandler;
 
-	@Value("${queries.users-query}")
-	private String usersQuery;
-	
-	@Value("${queries.roles-query}")
-	private String rolesQuery;
+    @Value("${queries.users-query}")
+    private String usersQuery;
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth)
-			throws Exception {
-		auth.
-			jdbcAuthentication()
-				.usersByUsernameQuery(usersQuery)
-				.authoritiesByUsernameQuery(rolesQuery)
-				.dataSource(dataSource)
-				.passwordEncoder(bCryptPasswordEncoder);
+    @Value("${queries.roles-query}")
+    private String rolesQuery;
 
-	}
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth)
+            throws Exception {
+        auth.
+                jdbcAuthentication()
+                .usersByUsernameQuery(usersQuery)
+                .authoritiesByUsernameQuery(rolesQuery)
+                .dataSource(dataSource)
+                .passwordEncoder(bCryptPasswordEncoder);
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		
-		http.
-			authorizeRequests()
-				.antMatchers("/").permitAll()
-				.antMatchers("/signIn").permitAll()
-				.antMatchers("/login").permitAll()
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+
+        http.
+                authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("/signIn").permitAll()
+                .antMatchers("/login").permitAll()
                 .antMatchers("/registration**").permitAll()
-				.antMatchers("/forgotPassword").permitAll()
-				.antMatchers("/validateForgotPasswdDetails").permitAll()
-				.antMatchers("/profilePicUpload").permitAll()
-				.antMatchers("/enableUser").permitAll()
-				//.antMatchers("/css/**").permitAll()
-				//.antMatchers("/img/**").permitAll()
-				//.antMatchers("/js/**").permitAll()
-				.antMatchers("/favicon.ico").permitAll()
-				.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
-				.authenticated().and().csrf().disable().formLogin()
+                .antMatchers("/forgotPassword").permitAll()
+                .antMatchers("/validateForgotPasswdDetails").permitAll()
+                .antMatchers("/profilePicUpload").permitAll()
+                .antMatchers("/enableUser").permitAll()
+                //.antMatchers("/css/**").permitAll()
+                //.antMatchers("/img/**").permitAll()
+                //.antMatchers("/js/**").permitAll()
+                .antMatchers("/favicon.ico").permitAll()
+                .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
+                .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/signIn")
                 .loginProcessingUrl("/login")
-				.failureUrl("/signIn?error=true")
-                .defaultSuccessUrl("/default",true)
-				.usernameParameter("username")
-				.passwordParameter("password")
+                .failureUrl("/signIn?error=true")
+                .defaultSuccessUrl("/default", true)
+                .usernameParameter("username")
+                .passwordParameter("password")
                 //.successHandler(successHandler)
 
-				.and().logout()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/")
+                .and().logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
                 //.logoutSuccessHandler(logoutSuccessHandler)
                 .and().exceptionHandling()
-				.accessDeniedPage("/access-denied");
-			
-	}
-	
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-	    web
-	       .ignoring()
-	       .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**","/icons/**");
-	}
+                .accessDeniedPage("/access-denied");
+
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web
+                .ignoring()
+                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**", "/icons/**");
+    }
 
 }

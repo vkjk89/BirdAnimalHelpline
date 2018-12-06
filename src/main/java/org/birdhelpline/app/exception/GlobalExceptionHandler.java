@@ -10,7 +10,8 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(FileUploadBase.FileSizeLimitExceededException.class)
-    public @ResponseBody String handleMaxUploadException(MaxUploadSizeExceededException e){
+    public @ResponseBody
+    String handleMaxUploadException(MaxUploadSizeExceededException e) {
         return "Image size too big, should be less then < 10MB";
     }
 }
