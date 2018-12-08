@@ -7,13 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Bird Helpline</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/static/css/basic-template.css" th:href="@{/css/basic-template.css}">
-    <link rel="stylesheet" href="/static/css/receptionist-dashboard.css" th:href="@{/css/receptionist-dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
+    <link rel="stylesheet" th:href="@{/css/receptionist-dashboard.css}" href="/static/css/receptionist-dashboard.css">
     <link rel="stylesheet" th:href="@{/css/jquery/jquery-ui.theme.min.css}" href="/static/css/jquery/jquery-ui.theme.min.css">
     <link rel="stylesheet" th:href="@{/css/jquery/jquery-ui.structure.min.css}" href="/static/css/jquery/jquery-ui.structure.min.css">
     <link rel="stylesheet" th:href="@{/css/jquery/jquery-ui.min.css}" href="/static/css/jquery/jquery-ui.min.css">
 
-    <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <script src="/static/js/jquery.ui.widget.js" th:src="@{/js/jquery.ui.widget.js}"></script>
     <script src="/static/js/jquery-ui.min.js" th:src="@{/js/jquery-ui.min.js}"></script>
 
@@ -102,6 +102,7 @@
             </form>
             <div id="cta-btns">
                 <div id="raise-a-case-success"><span id="raise-a-case-checkmark"> &check;</span> Success! Case raised successfully</div>
+                <div id="raise-a-case-error"><span id="raise-a-case-cross"> &times;</span> Error!</div>
                 <button type="submit" id="submit-raise-case" form="raise-a-case-form" tabindex="11">Raise Case</button>
                 <button type="reset" id="reset-raise-case" form="raise-a-case-form" tabindex="12">Clear All</button>
             </div>
@@ -128,7 +129,7 @@
                         </div>
                         <div class="my-cases-result" id="table1" style="width: 68.5vw;">
                             <div class ="row row1" onclick="case_details()"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>
-                            <!--<div class ="row row1"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>-->
+                            <div class ="row row1" onclick="case_details()"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>
                             <!--<div class ="row row1"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>-->
                             <!--<div class ="row row1"> <div class="sr-no"><li></li></div> <div class="case-id">#Case_ID</div> <div class="case-status">#Case_Status</div> <div class="date">#Date</div> <div class="animal-type">#Animal/Bird_Type</div> <div class="case-name">#Animal/Bird_Name</div> </div>-->
                         </div>
@@ -215,13 +216,56 @@
                         Action Center
                     </div>
                     <div id="action-center-body">
-                        <a class="action-center-links">Assign a Case</a>
-                        <a class="action-center-links">Assign</a>
-                        <a class="action-center-links">Assi</a>
-                        <a class="action-center-links">As</a>
+                        <a class="action-center-links" id="action-center-assign-case">Assign Case</a>
+                        <a class="action-center-links" id="action-center-close-case">Close Case</a>
                     </div>
                 </div>
             </form>
+            <div id="action-center-content">
+                <div id="content-assign-case">
+                    <div id="assign-case-search">
+                        <input type="search" name="assign-case-search-input" id="assign-case-search-input" placeholder="Search...">
+                        <div id="assign-case-search-body">
+                            <div id="top-five">
+                                <h2>Top Five Volunteers: </h2>
+                                <ul class="top-five-and-nearest-and-search-results-ul">
+                                    <li>#Vol_Name1 <button type="button" class="assign-case-assign-btn">Assign</button> </li>
+                                    <li>#Vol_Name2 <button type="button" class="assign-case-assign-btn">Assign</button> </li>
+                                    <li>#Vol_Name3 <button type="button" class="assign-case-assign-btn">Assign</button> </li>
+                                    <li>#Vol_Name4 <button type="button" class="assign-case-assign-btn">Assign</button> </li>
+                                    <li>#Vol_Name5 <button type="button" class="assign-case-assign-btn">Assign</button> </li>
+                                </ul>
+                            </div>
+                            <div id="nearest-assigned-volunteers">
+                                <h2>Nearest: </h2>
+                                <ul class="top-five-and-nearest-and-search-results-ul">
+                                    <li>#Vol_Name1 <button type="button" class="assign-case-assign-btn">Assign</button> </li>
+                                    <li>#Vol_Name2 <button type="button" class="assign-case-assign-btn">Assign</button> </li>
+                                    <li>#Vol_Name3 <button type="button" class="assign-case-assign-btn">Assign</button> </li>
+                                    <li>#Vol_Name4 <button type="button" class="assign-case-assign-btn">Assign</button> </li>
+                                    <li>#Vol_Name5 <button type="button" class="assign-case-assign-btn">Assign</button> </li>
+                                    <li>#Vol_Name6 <button type="button" class="assign-case-assign-btn">Assign</button> </li>
+                                    <li>#Vol_Name7 <button type="button" class="assign-case-assign-btn">Assign</button> </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="assign-case-search-results">
+                            <ul class="top-five-and-nearest-and-search-results-ul">
+                                <li>#Vol_Name1 <button type="button" class="assign-case-assign-btn">Assign</button> </li>
+                                <li>#Vol_Name2 <button type="button" class="assign-case-assign-btn">Assign</button> </li>
+                                <li>#Vol_Name3 <button type="button" class="assign-case-assign-btn">Assign</button> </li>
+                            </ul>                            
+                        </div>
+                        <div id="assign-case-status-bar">
+                            <div id="assign-case-success"><span id="assign-case-success-checkmark"> &check;</span> Success! Case assigned successfully</div>
+                            <div id="assign-case-error"><span id="assign-case-error-cross"> &times;</span> Error!</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-close-case">
+                    ME2!
+                </div>
+            </div>
         </div>
 
 <!-------------------------------- USER-DATA-CHANGE-APPROVALS--------------------------------------->
@@ -279,10 +323,6 @@
                 <label for="right-side-card-img">Data Change Approvals</label>
             </div>
         </div>
-    </section>
-
-    <section>
-
     </section>
 
     <script>
@@ -419,37 +459,97 @@
 
 //------Search-Focus-&-Clear-Table-on-Search---------------------------------------------------------------------------------------------
         document.getElementById('search-case-input').onfocus = function(){
-                document.getElementById('tab-header').style.display = "none";
-                hideresults();
+            $('#tab-header').fadeOut(300);
+            hideresults();
         };
         document.getElementById('search-case-input').addEventListener("focusout", function(){
-            document.getElementById('tab-header').style.display = "";
-            showresults();
+            if(document.getElementById('search-case-input').value == ""){
+                $('#tab-header').fadeIn(300);
+                showresults();
+            }
         });
 
         function hideresults(){
-            for (var i = 0; i < document.getElementsByClassName('row').length; i++){
-            document.getElementsByClassName('row')[i].style.display = "none";
-            }
+            $('.row').fadeOut(300);
         }
 
         function showresults(){
-            for (var i = 0; i < document.getElementsByClassName('row').length; i++){
-            document.getElementsByClassName('row')[i].style.display = "";
-            }
+            $('.row').fadeIn(300);
         }
 
 //------Case-Details---------------------------------------------------------------------------------------------------------------------
         function case_details(){
-            document.getElementById('raise-a-case-content').style.display = "none";
             document.getElementById('my-cases-content').style.display = "none";
             document.getElementById('case-details').style.display = "block";
-            document.getElementById('user-data-change-approvals-content').style.display = "none";
-            document.getElementById('heading-raise-a-case').style.display = "none";
             document.getElementById('heading-my-cases').style.display = "none";
             document.getElementById('heading-case-details').style.display = "block";
-            document.getElementById('heading-user-data-change-approvals').style.display = "none";
             document.getElementById('case-details-form').style.display = "block";
+        }
+        //--Action-Centre--------------------------------------------------------------------------------
+        document.getElementById('action-center-assign-case').onclick = function(){
+            document.getElementById('case-details-form').style.display = "none";
+            document.getElementById('content-assign-case').style.display = "block";
+            document.getElementById('myc-case-details-heading-animation').innerHTML = "#CaseID - Assign Case";
+            navigate_back_state = "Action_Centre";
+        };
+
+        document.getElementById('action-center-close-case').onclick = function(){
+            document.getElementById('case-details-form').style.display = "none";
+            document.getElementById('content-close-case').style.display = "block";
+            document.getElementById('myc-case-details-heading-animation').innerHTML = "#CaseID - Close Case";
+            navigate_back_state = "Action_Centre";
+        };
+
+            //Assign-Case------------------------------------------------------------------------------------
+            document.getElementById('assign-case-search-input').onfocus = function(){
+                $('#top-five').fadeOut(200);
+                $('#nearest-assigned-volunteers').fadeOut(200);
+                setTimeout(function(){ 
+                    $('#assign-case-search-results').css('display', 'block');
+                    $('#assign-case-search-results').fadeIn(200);
+                }, 200);
+            };
+
+            document.getElementById('assign-case-search-input').addEventListener("focusout", function(){
+                if(document.getElementById('assign-case-search-input').value == ""){
+                    $('#top-five').fadeIn(200);
+                    $('#nearest-assigned-volunteers').fadeIn(200);
+                    $('#assign-case-search-results').css('display', 'none');
+                    $('#assign-case-search-results').fadeOut(200);
+                }
+            });
+
+            $('.assign-case-assign-btn').click(function(){
+                $('#assign-case-success').fadeIn(200); alert('Success div will show o server response');
+                setTimeout(function(){
+                    navigate_back();
+                }, 350);
+            });
+
+
+//------Navigation-Back-Button----------------------------------------------------------------------------------------------------------
+        var navigate_back_state = "Case_Details";
+        document.getElementById('myc-case-details-heading-back-button').onclick = function(){
+            navigate_back();
+        };
+
+        function navigate_back(){
+            if (navigate_back_state == "Case_Details"){
+                document.getElementById('my-cases-content').style.display = "block";
+                document.getElementById('case-details').style.display = "none";
+                document.getElementById('heading-my-cases').style.display = "block";
+                document.getElementById('heading-case-details').style.display = "none";
+                document.getElementById('case-details-form').style.display = "none";
+                navigate_back_state = "Case_Details";
+            }
+            else if (navigate_back_state == "Action_Centre"){
+                document.getElementById('case-details-form').style.display = "block";
+                document.getElementById('content-assign-case').style.display = "none";
+                document.getElementById('content-close-case').style.display = "none";
+                document.getElementById('myc-case-details-heading-animation').innerHTML = "Case Details";
+                document.getElementById('assign-case-success').style.display = "none";
+                navigate_back_state = "Case_Details";
+            }            
         }
 
 //------Keyboard-Shortcuts---------------------------------------------------------------------------------------------------------------
@@ -466,7 +566,7 @@
                 }
                 else alert("Ctrl + Alt + R is shortcut for Resetting all fields of a Case");
             }
-        }
+        };
 
 //------Approve-Reject-Buttons-Effect--------------------------------------------------------------------------------------------------
         function approve_profile_pic(){

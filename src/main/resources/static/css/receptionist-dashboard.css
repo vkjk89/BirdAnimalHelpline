@@ -123,6 +123,7 @@
 #dropdown-menu button a {
     display: block;
     color: white;
+    letter-spacing: 1px;
 }
 
 #home-btn, #home-btn-txt, #user-dp-btn, #user-name, #more-btn {
@@ -334,6 +335,11 @@ hr {
 
 #raise-a-case-content input[type="text"]:focus::placeholder, #raise-a-case-content input[type="number"]:focus::placeholder, #raise-a-case-content textarea:focus::placeholder, #raise-a-case-content input[type="file"]:focus::placeholder, #case-details input[type="text"]:focus::placeholder, #case-details input[type="number"]:focus::placeholder, #case-details textarea:focus::placeholder, #case-details input[type="file"]:focus::placeholder {
     opacity: 0.5;
+    transition: all 0.5s ease-in-out;
+}
+
+#raise-a-case-content input[type="text"]:focus, #raise-a-case-content input[type="number"]:focus, #raise-a-case-content textarea:focus, #raise-a-case-content input[type="file"]:focus{
+    border: 1px solid black;
 }
 
 #raise-a-case-content textarea, #case-details textarea {
@@ -400,13 +406,27 @@ hr {
 }
 
 #raise-a-case-success {
+    display: none;
+    position: absolute;
     background: rgba(0, 160, 0, 0.4);
     color: green;
     letter-spacing: 0.5px;
     font-size: 1.2em;
     float: left;
-    padding: 0.7vw 3vh;
-    box-shadow: 0px 0px 15px #00a00066;
+    padding: 0.5vw 3vh;
+    border: 3px solid rgb(0, 160, 0);
+}
+
+#raise-a-case-error {
+    display: none;
+    position: absolute;
+    background: rgba(158, 0, 0, 0.4);
+    color: rgb(160, 0, 0);
+    letter-spacing: 0.5px;
+    font-size: 1.2em;
+    float: left;
+    padding: 0.5vw 3vh;
+    border: 3px solid rgb(160, 0, 0);
 }
 
 #raise-a-case-checkmark {
@@ -414,6 +434,15 @@ hr {
     font-weight: 900;
     border-radius: 50%;
     border: 2px solid rgb(0, 160, 0);
+    text-align: center;
+    padding: 0vw 6px;
+}
+
+#raise-a-case-cross {
+    font-size: 1.2em;
+    font-weight: 900;
+    border-radius: 50%;
+    border: 2px solid rgb(160, 0, 0);
     text-align: center;
     padding: 0vw 6px;
 }
@@ -481,6 +510,116 @@ hr {
     display: block;
     padding: 1vw;
 }
+/*-------------------Assign-Case-------------------*/
+
+#content-assign-case {
+    display: none;
+    position: absolute;
+    top: 0;
+}
+
+#assign-case-search {
+    height: 65vh;
+}
+
+#assign-case-search-input {
+    background-image: url('/static/img/search-1.png');
+    background-size: 3vw;
+    background-repeat: no-repeat;
+    background-position: 15px 15px;
+    border-radius: 0;
+    padding: 2vw 3vw;
+    padding-left: 5vw;
+    font-size: 1.2em;
+    padding-bottom: 1.5vw;
+    width: 65.5vw;
+}
+#assign-case-search-input:focus {
+    border: 1px solid black;
+    transition: all 0.3s ease-in-out;
+}
+
+#assign-case-search-body {
+    display: flex;
+}
+
+.top-five-and-nearest-and-search-results-ul li {
+    margin: 1vw 0vw;
+}
+
+.top-five-and-nearest-and-search-results-ul span {
+    display: inline;
+}
+
+.top-five-and-nearest-and-search-results-ul li:hover {
+    color: #007AEA;
+}
+
+.assign-case-assign-btn {
+    all: unset;
+    margin: 0vw 8vw;
+    padding: 1vw 2vw;
+    background-color: rgb(0, 160, 0);
+    color: white;
+    cursor: pointer;
+    font-size: 0.8em;
+    letter-spacing: 1px;
+}
+
+.assign-case-assign-btn:hover {
+    box-shadow: 0px 0px 20px #BBB;
+}
+
+
+#top-five, #nearest-assigned-volunteers {
+    margin-top: 5vh;
+    height: 48vh;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+#top-five h2, #nearest-assigned-volunteers h2 {
+    margin-top: 0;
+}
+
+#assign-case-search-results {
+    display: none;
+    position: absolute;
+    top: 7vw;
+}
+
+#assign-case-status-bar {
+    position: absolute;
+    bottom: 0;
+}
+
+#assign-case-success, #assign-case-error {
+    display: none;
+    position: absolute;
+    background: rgba(0, 160, 0, 0.4);
+    color: green;
+    letter-spacing: 0.5px;
+    font-size: 1.2em;
+    float: left;
+    padding: 0.5vw 3vh;
+    border: 3px solid rgb(0, 160, 0);
+    width: 25vw;
+}
+
+#assign-case-error {
+    display: none;
+    background: rgba(1600, 0, 0, 0.4);
+    color: rgb(160, 0, 0);
+    border: 3px solid rgb(160, 0, 0);
+    width: 5vw;
+}
+
+/**-----------------Close-Case---------------------*/
+#content-close-case {
+    display: none;
+    position: absolute;
+    top: 0;
+}
 
 /*--------------------MY-CASES--------------------*/
 #search-case-input {
@@ -504,6 +643,7 @@ input[type="search"]:focus {
 
 input[type="search"]:focus::placeholder {
     color: #CCC;
+    transition: all 0.5s ease-in-out;
 }
 
 #tab-header {
@@ -560,11 +700,11 @@ input[type="search"]:focus::placeholder {
 .sr-no-div {width: 8vw;} .case-id-div {width: 15vw;} .case-status-div {width: 15vw;} .date-div {width: 13vw;} .animal-type-div {width: 28vw;} .case-name-div {width: 19vw;}
 .sr-no {width: 8vw;} .case-id {width: 15vw;} .case-status {width: 15vw;} .date {width: 13vw;} .animal-type {width: 28vw;} .case-name {width: 19vw;}
 
-li {
+.sr-no li {
     list-style-type: none;
 }
 
-li::before {
+.sr-no li::before {
     counter-increment: section;
     content: counters(section,".") ". ";
 }
@@ -692,6 +832,10 @@ figure img {
 .old-photo, .new-photo {
     width: 12vw;
     cursor: pointer;
+}
+
+.old-photo img, .new-photo img {
+    cursor: crosshair;
 }
 
 .approve, .reject {
