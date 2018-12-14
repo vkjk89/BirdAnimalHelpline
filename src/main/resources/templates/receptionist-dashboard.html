@@ -180,7 +180,7 @@
             <span id="myc-case-details-heading-back-button">&#10140;</span>
         </div>
         <div id="case-details">
-            <form action="" id="case-details-form">
+            <div id="case-details-form">
                 <div id="form-left-side-case-details">
                     <div id="header-form-left-side-case-details">#Animal/Bird Information</div>
                     <hr>
@@ -203,6 +203,12 @@
                     <div id="header-form-right-side-case-details">Contact Information</div>
                     <hr>
                     <div id="body-form-right-side-case-details">
+                        <div>#Name</div>
+                        <div>#Adrress Line1</div>
+                        <div>#Landmark</div>
+                        <div>#Pincode</div>
+                        <div>#Contact Number</div>
+                        <!--
                         <label for="contact-name-case-details">Name: </label>
                         <input type="text" id="contact-name-case-details" autocomplete="off" disabled><br>
                         <label for="contact-name-case-details">Contact Number: </label>
@@ -213,7 +219,7 @@
                         <label for="location-landmark-case-details">Landmark </label>
                         <input type="text" id="location-landmark-case-details" autocomplete="off" disabled>
                         <label for="location-pincode-case-details">Pincode </label>
-                        <input type="number" id="location-pincode-case-details" disabled>
+                        <input type="number" id="location-pincode-case-details" disabled>    -->
                     </div>
                 </div>
                 <div id="action-center">
@@ -225,7 +231,7 @@
                         <a class="action-center-links" id="action-center-close-case">Close Case</a>
                     </div>
                 </div>
-            </form>
+            </div>
             <div id="action-center-content">
                 <div id="content-assign-case">
                     <div id="assign-case-search">
@@ -268,8 +274,22 @@
                     </div>
                 </div>
                 <div id="content-close-case">
-                    ME2!
-                </div>
+                    <div style="margin-top: 10vh;">
+                        <div>
+                            <span id="close-case-reason-span">Select reason:</span>
+                            <select name="close-case-reason" id="close-case-reason">
+                                <option value="Dead">Dead</option>
+                                <option value="Healthy">Healthy</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <textarea name="close-case-other-reason" id="close-case-other-reason" cols="25" rows="4" placeholder="Specify Reason"></textarea>
+                        </div>
+                        <div>
+                            <button id="close-case-cancel-btn" onclick="navigate_back()">Cancel</button>
+                            <button id="close-case-submit-btn">Close Case</button>
+                        </div>
+                    </div>
+                </div>           
             </div>
         </div>
 
@@ -333,7 +353,10 @@
     <script>
 
 //------Right-Side-Cards-Toggle-Display--------------------------------------------------------------------------------------
-        document.getElementById('rac-body').onclick = function(){ 
+        document.getElementById('rac-body').style.borderBottom = "3px solid #007AEA";   //Raise a Case is the Default Screen
+        document.getElementById('rac-body').classList.add('right-side-card-rotate');    //Raise a Case is the Default Screen
+        
+        document.getElementById('rac-body').onclick = function(){
             this.classList.add('right-side-card-rotate');
             this.style.borderBottom = "3px solid #007AEA";
             document.getElementById('myc-body').classList.remove('right-side-card-rotate');
@@ -441,14 +464,20 @@
             dropdown_menu_state = !dropdown_menu_state;
             if(dropdown_menu_state === true){
                 document.getElementById("dropdown-menu").style.display = "none";
+                $("main").css("opacity", "1");
+                $("#card-right-side").css("opacity", "1");
             } else {
                 document.getElementById("dropdown-menu").style.display = "block";
+                $("main").css("opacity", "0.3");
+                $("#card-right-side").css("opacity", "0.3");
             }
         };
         window.onclick = function(e){
-            if (!e.target.matches('#more-btn')) {
+            if ( !e.target.matches('#more-btn') ) {
                 if(dropdown_menu_state === false){
                     document.getElementById("dropdown-menu").style.display = "none";
+                    $("main").css("opacity", "1");
+                    $("#card-right-side").css("opacity", "1");
                     dropdown_menu_state = !dropdown_menu_state;
                 }
             }
@@ -504,21 +533,21 @@
             document.getElementById('case-details-form').style.display = "none";
             document.getElementById('content-assign-case').style.display = "block";
             document.getElementById('myc-case-details-heading-animation').innerHTML = "#CaseID - Assign Case";
-            navigate_back_state = "Action_Centre";
+            navigate_back_state = "Action_Centre_Assign_Case";
         };
 
         document.getElementById('action-center-close-case').onclick = function(){
-            document.getElementById('case-details-form').style.display = "none";
+            document.getElementById('case-details-form').style.opacity = "0.2";
             document.getElementById('content-close-case').style.display = "block";
             document.getElementById('myc-case-details-heading-animation').innerHTML = "#CaseID - Close Case";
-            navigate_back_state = "Action_Centre";
+            navigate_back_state = "Action_Centre_Close_Case";
         };
 
             //Assign-Case------------------------------------------------------------------------------------
             document.getElementById('assign-case-search-input').onfocus = function(){
                 $('#top-five').fadeOut(200);
                 $('#nearest-assigned-volunteers').fadeOut(200);
-                setTimeout(function(){ 
+                setTimeout(function(){
                     $('#assign-case-search-results').css('display', 'block');
                     $('#assign-case-search-results').fadeIn(200);
                 }, 200);
@@ -540,6 +569,19 @@
                 }, 350);
             });
 
+//------Close-Case---------------------------------------------------------------------------------------------------------------------
+        //------Select-Other-Reason----------------------------------------------------------------------------------------------------
+        document.getElementById('close-case-reason').onchange = function(){
+            if (document.getElementById('close-case-reason').value == "Other") {
+                document.getElementById('close-case-other-reason').style.display = "block";
+            }
+        };
+        //------Close-Case-Button------------------------------------------------------------------------------------------------------
+        document.getElementById('close-case-submit-btn').onclick = function(){
+            navigate_back();
+            navigate_back();
+        }
+
 
 //------Navigation-Back-Button----------------------------------------------------------------------------------------------------------
         var navigate_back_state = "Case_Details";
@@ -556,12 +598,13 @@
                 document.getElementById('case-details-form').style.display = "none";
                 navigate_back_state = "Case_Details";
             }
-            else if (navigate_back_state == "Action_Centre"){
+            else if (navigate_back_state == "Action_Centre_Assign_Case" || navigate_back_state == "Action_Centre_Close_Case"){
                 document.getElementById('case-details-form').style.display = "block";
                 document.getElementById('content-assign-case').style.display = "none";
                 document.getElementById('content-close-case').style.display = "none";
                 document.getElementById('myc-case-details-heading-animation').innerHTML = "Case Details";
                 document.getElementById('assign-case-success').style.display = "none";
+            document.getElementById('case-details-form').style.opacity = "1";
                 navigate_back_state = "Case_Details";
             }            
         }

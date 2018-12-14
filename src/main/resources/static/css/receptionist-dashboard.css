@@ -1,13 +1,4 @@
 /*-----------------------------GLOBAL-------------------------*/
-.no-select, .no-select *, img, input, label, button {
-    -webkit-touch-callout: none; /* iOS Safari */
-      -webkit-user-select: none; /* Safari */
-       -khtml-user-select: none; /* Konqueror HTML */
-         -moz-user-select: none; /* Firefox */
-          -ms-user-select: none; /* Internet Explorer/Edge */
-              user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
-}
-
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -110,17 +101,18 @@
 }
 
 #dropdown-menu button {
-    width: 12vw;
+    width: 13vw;
     padding: 2vh;
     display: block;
     border-bottom: 1px solid #CCCCCC44;
     cursor: pointer;
+    font-size: 0.9em;
 }
 
 #dropdown-menu button a {
     display: block;
     color: white;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 }
 
 #dropdown-menu button a:hover {
@@ -128,11 +120,11 @@
     font-weight: 500;
 }
 
-#home-btn, #user-dp-btn, #user-name, #more-btn {
-    opacity: 0.8;
+#home-btn, #user-dp-btn, #more-btn {
+    opacity: 0.7;
 }
 
-#home-btn:hover, #user-dp-btn:hover, #user-name:hover, #more-btn:hover {
+#home-btn:hover, #user-dp-btn:hover, #more-btn:hover {
     opacity: 1;
     cursor: pointer;
 }
@@ -545,6 +537,16 @@ hr {
 
 #assign-case-search-body {
     display: flex;
+    justify-content: space-around;
+}
+
+#top-five {
+    border-right: 2px solid #333;
+    width: 30vw;
+}
+
+#nearest-assigned-volunteers {
+    width: 30vw;
 }
 
 .top-five-and-nearest-and-search-results-ul li {
@@ -568,6 +570,7 @@ hr {
     cursor: pointer;
     font-size: 0.8em;
     letter-spacing: 1px;
+    margin-right: 0;
 }
 
 .assign-case-assign-btn:hover {
@@ -623,6 +626,61 @@ hr {
     display: none;
     position: absolute;
     top: 0;
+    width: 70vw;
+    height: 75vh;
+    text-align: center;
+}
+
+#close-case-reason-span {
+    position: relative;
+    vertical-align: middle;
+    top: 0.5vh;
+    font-size: 1em;
+}
+
+#close-case-reason {
+    padding: 0.5vw 1vw;
+    border-radius: 0;
+    letter-spacing: 1px;
+    vertical-align: top;
+    letter-spacing: 1px;
+    font-size: 1em;
+    margin-left: 0.5vw;
+    margin-bottom: 1.5vh;
+}
+
+#close-case-other-reason {
+    box-sizing: border-box;
+    display: none;
+    margin-left: 36%;
+    border-radius: 0;
+    letter-spacing: 1px;
+    padding: 1vw;
+    font-size: 1em;
+    margin-bottom: 1vh;
+}
+
+#close-case-cancel-btn, #close-case-submit-btn {
+    box-sizing: border-box;
+    padding: 1vw 2vw;
+    color: white;
+    letter-spacing: 2px;
+    margin: 0.5vw;
+    font-size: 1em;
+}
+
+#close-case-cancel-btn {
+    background-color: #333;
+    transition: background 0.5s ease-in-out;
+}
+
+#close-case-submit-btn {
+    background-color: rgb(0, 160, 0);
+    transition: background 0.5s ease-in-out;
+}
+
+#close-case-cancel-btn:hover, #close-case-submit-btn:hover {
+    box-shadow: 0px 0px 20px #BBB;
 }
 
 /*--------------------MY-CASES--------------------*/
