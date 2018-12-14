@@ -12,6 +12,7 @@
     <link rel="stylesheet" th:href="@{/css/jquery/jquery-ui.theme.min.css}" href="/static/css/jquery/jquery-ui.theme.min.css">
     <link rel="stylesheet" th:href="@{/css/jquery/jquery-ui.structure.min.css}" href="/static/css/jquery/jquery-ui.structure.min.css">
     <link rel="stylesheet" th:href="@{/css/jquery/jquery-ui.min.css}" href="/static/css/jquery/jquery-ui.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <script src="/static/js/jquery.ui.widget.js" th:src="@{/js/jquery.ui.widget.js}"></script>
@@ -22,11 +23,15 @@
 
     <nav id="top-nav" class="no-select">
         <span id="left-side" class="no-select">
-            <button id="home-btn" type="button" class="no-select"><img src="/static/img/home-white.png" th:src="@{/img/home-white.png}" width="" height="" alt="Home"></button><span id="home-btn-txt" class="no-select"> Home</span>
+            <button id="home-btn" type="button" class="no-select">
+                <span class = "fa fa-home fa-lg fa-2x"></span>
+                <span id="home-btn-txt">Home</span>
+            </button>
         </span>
         <span id="right-side" class="no-select">
-            <button id="user-dp-btn" type="button"><img src="/static/img/display-picture11.png" th:src="@{/img/display-picture11.png}" width="" height="" alt="DP"></button>
-            <span id="user-name" th:text="${user.userName}">#User_Name</span>
+            <button id="user-dp-btn" type="button">
+                <span class = "fa fa-user-circle fa-lg fa-2x" style="filter: invert(100%)"></span>
+                <span id="user-name" th:text="${user.userName}">#User_Name</span></button>
             <span id="more-btn">&#x25BC;</span>
         </span>
         <div id="dropdown-menu" class="no-select" style="display: none;">
@@ -136,8 +141,8 @@
                     </div>
                 </div>
                 <div id="recent-tab-content">
-                    <div class="content-table" id="recent-content-table">
-                        <div style="display: flex; position: fixed; width: 71.5vw; font-size: 1.2em; background-color: rgb(248,248,248); font-weight: 500; padding-bottom: 0.5vh;border-bottom: 1px solid #CCC;">
+                    <div class="content-table" id="active-content-table">
+                        <div style="display: flex; position: fixed; width: 68.5vw; font-size: 1.2em; background-color: rgb(248,248,248); font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC;">
                             <div class="sr-no-div">Sr. No.</div>
                             <div class="case-id-div">Case ID</div>
                             <div class="case-status-div">Case Status</div>
@@ -152,8 +157,8 @@
                     </div>
                 </div>
                 <div id="closed-tab-content">
-                    <div class="content-table" id="closed-content-table">
-                        <div style="display: flex; position: fixed; width: 71.5vw; font-size: 1.2em; background-color: rgb(248,248,248); font-weight: 500; padding-bottom: 0.5vh;border-bottom: 1px solid #CCC;">
+                    <div class="content-table" id="active-content-table">
+                        <div style="display: flex; position: fixed; width: 68.5vw; font-size: 1.2em; background-color: rgb(248,248,248); font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC;">
                             <div class="sr-no-div">Sr. No.</div>
                             <div class="case-id-div">Case ID</div>
                             <div class="case-status-div">Case Status</div>
@@ -282,8 +287,8 @@
                 <div class="wrapper">
                     <div class="old-photo"><figure><img src="/static/img/old-photo.png" th:src="@{/img/old-photo.png}"width="100%" height="auto"><figcaption>Old Photo</figcaption></figure></div>
                     <div class="new-photo"><figure><img src="/static/img/new-photo.png" th:src="@{/img/new-photo.png}" width="100%" height="auto"><figcaption>New Photo</figcaption></figure></div>
-                    <button type="button" class="approve"><figure><img src="/static/img/approved.png" th:src="@{/img/approved.png}" id="approve-img-1" width="100%" height="auto" onclick="approve_profile_pic()"><figcaption>Approved</figcaption></figure></button>
-                    <button type="button" class="reject"><figure><img src="/static/img/rejected.png" th:src="@{/img/rejected.png}" id="reject-img-1" width="100%" height="auto" onclick="reject_profile_pic()"><figcaption>Rejected</figcaption></figure></button>
+                    <button type="button" class="approve"><figure><img src="/static/img/approved.png" th:src="@{/img/approved.png}" id="approve-img-1" width="100%" height="auto" onclick="approve_profile_pic()"><figcaption>Approve</figcaption></figure></button>
+                    <button type="button" class="reject"><figure><img src="/static/img/rejected.png" th:src="@{/img/rejected.png}" id="reject-img-1" width="100%" height="auto" onclick="reject_profile_pic()"><figcaption>Reject</figcaption></figure></button>
                 </div>
             </div>
             <div class="dynamic_usdca_member"id="member-2">
@@ -330,8 +335,11 @@
 //------Right-Side-Cards-Toggle-Display--------------------------------------------------------------------------------------
         document.getElementById('rac-body').onclick = function(){ 
             this.classList.add('right-side-card-rotate');
+            this.style.borderBottom = "3px solid #007AEA";
             document.getElementById('myc-body').classList.remove('right-side-card-rotate');
+            document.getElementById('myc-body').style.borderBottom = "none";
             document.getElementById('usdca-body').classList.remove('right-side-card-rotate');
+            document.getElementById('usdca-body').style.borderBottom = "none";
             setTimeout(function(){ document.getElementById('rac-body').classList.remove('right-side-card-rotate'); }, 600);
             
             document.getElementById('raise-a-case-content').style.display = "block";
@@ -345,8 +353,11 @@
         }
         document.getElementById('myc-body').onclick = function(){ 
             this.classList.add('right-side-card-rotate');
+            this.style.borderBottom = "3px solid #007AEA";
             document.getElementById('rac-body').classList.remove('right-side-card-rotate');
+            document.getElementById('rac-body').style.borderBottom = "none";
             document.getElementById('usdca-body').classList.remove('right-side-card-rotate');
+            document.getElementById('usdca-body').style.borderBottom = "none";
             setTimeout(function(){ document.getElementById('myc-body').classList.remove('right-side-card-rotate'); }, 600);
 
             document.getElementById('active-tab-header').classList.add('active-header');
@@ -361,8 +372,11 @@
         }
         document.getElementById('usdca-body').onclick = function(){
             this.classList.add('right-side-card-rotate');
+            this.style.borderBottom = "3px solid #007AEA";
             document.getElementById('rac-body').classList.remove('right-side-card-rotate');
-            document.getElementById('myc-body').classList.remove('right-side-card-rotate'); 
+            document.getElementById('rac-body').style.borderBottom = "none";
+            document.getElementById('myc-body').classList.remove('right-side-card-rotate');
+            document.getElementById('myc-body').style.borderBottom = "none";
             setTimeout(function(){ document.getElementById('usdca-body').classList.remove('right-side-card-rotate'); }, 600);
 
             document.getElementById('raise-a-case-content').style.display = "none";
@@ -602,6 +616,10 @@
             $('.dynamic_usdca_member').children().css('display','');
         });
 
+//-----Disable-Right-Click-Menu-On-Image
+        $("body").on("contextmenu", "img", function(e) {
+        return false;
+        });
 
 //------BACKEND-INTEGRATION-------------------------------------------------------------------------------------------------------------
         $(document).ready(function () {

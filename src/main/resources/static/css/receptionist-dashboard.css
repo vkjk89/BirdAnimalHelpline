@@ -1,5 +1,5 @@
 /*-----------------------------GLOBAL-------------------------*/
-.no-select, .no-select * {
+.no-select, .no-select *, img, input, label, button {
     -webkit-touch-callout: none; /* iOS Safari */
       -webkit-user-select: none; /* Safari */
        -khtml-user-select: none; /* Konqueror HTML */
@@ -39,6 +39,10 @@
     color: white;
 }
 
+#top-nav * {
+    vertical-align: middle;
+}
+
 #left-side {
     float: left;
     margin-left: 1vw;
@@ -53,16 +57,16 @@
 
 #home-btn img {
     box-sizing: border-box;
-    width: 4vh;
+    height: 3vh;
+    vertical-align: middle;
 }
 
 #home-btn-txt {
     position: relative;
     box-sizing: border-box;
-    font-size: 1em;
-    height: 3vh;
-    top: -1vh;
     margin-left: 0.2vw;
+    font-size: 1.2em;
+    letter-spacing: 1px;
 }
 
 #right-side {
@@ -73,18 +77,11 @@
 }
 
 #user-dp-btn {
+    position: relative;
     box-sizing: border-box;
     padding: 0;
-    background-color: white;
-    border: 2px solid white;
     border-radius: 5px;
-    margin-top: 1vh;
-    height: 4vh;
-}
-
-#user-dp-btn img {
-    width: 3vh;
-    border-radius: 5px;
+    height: 6vh;
 }
 
 #user-name {
@@ -93,14 +90,14 @@
     padding: 0;
     color: white;
     padding: 1vh;
-    top: -0.5vh;
-    margin: 0vw 0.25vw;
+    font-size: 1.2em;
+    letter-spacing: 1px;
 }
 
 #more-btn {
     position: relative;
     box-sizing: border-box;
-    top: -0.5vh;
+    top: -0.25vh;
 }
 
 #dropdown-menu {
@@ -126,11 +123,16 @@
     letter-spacing: 1px;
 }
 
-#home-btn, #home-btn-txt, #user-dp-btn, #user-name, #more-btn {
+#dropdown-menu button a:hover {
+    color: #007AEA;
+    font-weight: 500;
+}
+
+#home-btn, #user-dp-btn, #user-name, #more-btn {
     opacity: 0.8;
 }
 
-#home-btn:hover, #home-btn-txt:hover, #user-dp-btn:hover, #user-name:hover, #more-btn:hover {
+#home-btn:hover, #user-dp-btn:hover, #user-name:hover, #more-btn:hover {
     opacity: 1;
     cursor: pointer;
 }
@@ -343,8 +345,10 @@ hr {
 }
 
 #raise-a-case-content textarea, #case-details textarea {
-    font-size: 1.2em;
-    font-weight: 100;
+    font-size: 1.1em;
+    resize: none;
+    letter-spacing: 1px;
+    line-height: 1.2em;
 }
 
 #animal-type {
