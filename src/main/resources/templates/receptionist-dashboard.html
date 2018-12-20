@@ -725,6 +725,7 @@
                 document.getElementById("top-nav-search-user-profile-back-button").style.display = "block";
                 document.getElementById("user-profile-cases-content").style.display = "none";
                 $("#user-profile-about-content").fadeIn();
+                user_profile_basic_details();
             };
         }
 
@@ -806,16 +807,21 @@
             document.getElementById('user-profile-recent-tab-content').style.display = "none";
         }
         //------Basic-Details-and-User-Cases------------------------------------------------------------
-        document.getElementById("user-profile-basic-details-btn").onclick = function user_profile_basic_details(){
-            this.style.border = "2px solid #007AEA";
+        document.getElementById("user-profile-basic-details-btn").onclick = function(){
+            user_profile_basic_details();
+        }
+
+        function user_profile_basic_details(){
+            document.getElementById("user-profile-basic-details-btn").style.border = "2px solid #007AEA";
             document.getElementById("user-profile-user-cases-btn").style.border = "2px solid transparent";
             $("#user-profile-cases-content").fadeOut(200);
             var user_profile_about_conent = setTimeout(function(){
                 $("#user-profile-about-content").fadeIn();
             },210);
         }
+
         document.getElementById("user-profile-user-cases-btn").onclick = function user_profile_user_cases(){
-            this.style.border = "2px solid #007AEA";
+            document.getElementById("user-profile-user-cases-btn").style.border = "2px solid #007AEA";
             document.getElementById("user-profile-basic-details-btn").style.border = "2px solid transparent";
             $("#user-profile-about-content").fadeOut(200);
             var user_profile_user_cases = setTimeout(function(){

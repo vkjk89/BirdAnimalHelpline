@@ -476,11 +476,12 @@ label:hover {
 .right-side-card-img {
     box-sizing: border-box;
     position: relative;
-    height: 13vh;
+    height: 11vh;
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 3vh;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
 }
 
 #rac-body label, #myc-body label {
@@ -498,6 +499,10 @@ label:hover {
     padding: 1.5vw 0vw;
     margin-left: 4vw;
     width: 65vw;
+}
+
+#top-nav-search-results li:first-child {
+    margin-top: 3vh;
 }
 
 #top-nav-search-results li:hover {
