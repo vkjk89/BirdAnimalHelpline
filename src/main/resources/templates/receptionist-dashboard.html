@@ -186,7 +186,7 @@
         <div id="raise-a-case-content">
             <form action="" id="raise-a-case-form">
                 <div id="form-left-side">
-                    <div id="header-form-left-side">Animal/Bird Information</div>
+                    <div id="header-form-left-side">Bird/Animal Information</div>
                     <hr>
                     <div id="body-form-left-side">
                         <div id="id-and-bird-type">
@@ -199,12 +199,12 @@
                                     <label for="bird-or-animal2" id="animal-option"><img src="/static/img/animal.png" th:src="@{/img/animal.png}" width="50vw" height="auto" alt="Animal"></label>
                             </div>
                         </div>
-                        <label for="animal-type" id="animal-type-js">Animal/Bird type: </label>
+                        <label for="animal-type" id="animal-type-js">Bird/Animal type: </label>
                         <select name="animal-type" id="animal-type" required autocomplete="off" tabindex="3">
                             <option value="" th:each="o : ${birdAnimals}" th:text="${o}" th:value="${o}" id="select-default">Choose Bird/Animal Type</option>
                         </select><br>
-                        <label for="animal-name" id="animal-name-js">Animal/Bird name: </label>
-                        <input type="text" name="animal-name" id="animal-name" placeholder="Eg: Rufus (Optional)" autocomplete="off" tabindex="4"><br>
+                        <label for="animal-name" id="animal-name-js">Bird/Animal name: </label>
+                        <input type="text" name="animal-name" id="animal-name" placeholder="" autocomplete="off" tabindex="4"><br>
                         <label for="condition">Condition: </label>
                         <input type="text" name="condition" id="condition" placeholder="Eg: Broken Leg (Recommended)" autocomplete="off" tabindex="5">
                         <label for="case-photos">Upload Photos</label>
@@ -492,13 +492,13 @@
         var previous_page = "raise_a_case";
         var current_page = "raise_a_case";
 //------Right-Side-Cards-Toggle-Display--------------------------------------------------------------------------------------
-        document.getElementById('rac-body').style.borderBottom = "3px solid #007AEA";   //Raise a Case is the Default Screen
+        document.getElementById('rac-body').style.borderBottom = "5px solid #007AEA";   //Raise a Case is the Default Screen
         document.getElementById('rac-body').classList.add('right-side-card-rotate');    //Raise a Case is the Default Screen
         
         document.getElementById('rac-body').onclick = function(){raise_a_case();}
         function raise_a_case(){
             document.getElementById('rac-body').classList.add('right-side-card-rotate');
-            document.getElementById('rac-body').style.borderBottom = "3px solid #007AEA";
+            document.getElementById('rac-body').style.borderBottom = "5px solid #007AEA";
             document.getElementById('myc-body').classList.remove('right-side-card-rotate');
             document.getElementById('myc-body').style.borderBottom = "none";
             document.getElementById('usdca-body').classList.remove('right-side-card-rotate');
@@ -525,12 +525,17 @@
             document.getElementById('heading-my-cases').style.opacity = 1;
             document.getElementById('heading-case-details').style.opacity = 1;
             document.getElementById('heading-user-data-change-approvals').style.opacity = 1;
+            document.getElementById("top-nav-search").value = "";
+            document.getElementById('top-nav-search-heading').style.display = "none";
+            document.getElementById('top-nav-search-results').style.display = "none";
+            document.getElementById("user-profile").style.display = "none";
+            document.getElementById("top-nav-search-heading-content").innerHTML = "";
         }
 
         document.getElementById('myc-body').onclick = function(){my_cases();}
         function my_cases(){
             document.getElementById('myc-body').classList.add('right-side-card-rotate');
-            document.getElementById('myc-body').style.borderBottom = "3px solid #007AEA";
+            document.getElementById('myc-body').style.borderBottom = "5px solid #007AEA";
             document.getElementById('rac-body').classList.remove('right-side-card-rotate');
             document.getElementById('rac-body').style.borderBottom = "none";
             document.getElementById('usdca-body').classList.remove('right-side-card-rotate');
@@ -561,12 +566,17 @@
             document.getElementById('heading-my-cases').style.opacity = 1;
             document.getElementById('heading-case-details').style.opacity = 1;
             document.getElementById('heading-user-data-change-approvals').style.opacity = 1;
+            document.getElementById("top-nav-search").value = "";
+            document.getElementById('top-nav-search-heading').style.display = "none";
+            document.getElementById('top-nav-search-results').style.display = "none";
+            document.getElementById("user-profile").style.display = "none";
+            document.getElementById("top-nav-search-heading-content").innerHTML = "";
         }
 
         document.getElementById('usdca-body').onclick = function(){user_data_change_approvals();}
         function user_data_change_approvals(){
             document.getElementById('usdca-body').classList.add('right-side-card-rotate');
-            document.getElementById('usdca-body').style.borderBottom = "3px solid #007AEA";
+            document.getElementById('usdca-body').style.borderBottom = "5px solid #007AEA";
             document.getElementById('rac-body').classList.remove('right-side-card-rotate');
             document.getElementById('rac-body').style.borderBottom = "none";
             document.getElementById('myc-body').classList.remove('right-side-card-rotate');
@@ -593,6 +603,11 @@
             document.getElementById('heading-my-cases').style.opacity = 1;
             document.getElementById('heading-case-details').style.opacity = 1;
             document.getElementById('heading-user-data-change-approvals').style.opacity = 1;
+            document.getElementById("top-nav-search").value = "";
+            document.getElementById('top-nav-search-heading').style.display = "none";
+            document.getElementById('top-nav-search-results').style.display = "none";
+            document.getElementById("user-profile").style.display = "none";
+            document.getElementById("top-nav-search-heading-content").innerHTML = "";
         }
 
 //------Active-Recent-Closed-Tabs-JS--------------------------------------------------------------------------------
@@ -688,7 +703,7 @@
             document.getElementById('top-nav-search-results').style.display = "none";
             document.getElementById("user-profile").style.display = "none";
             document.getElementById("top-nav-search-heading-content").innerHTML = "Searching Results for - #Search_Input";
-            if( document.getElementById('raise-a-case-content').style.display == "none"){
+            if( document.getElementById('raise-a-case-content').style.display == "none" && previous_page == "raise_a_case"){
                 document.getElementById('heading-raise-a-case').style.display = "block";
                 document.getElementById('raise-a-case-content').style.display = "block";
             }
@@ -850,6 +865,14 @@
             document.getElementById('animal-name').setAttribute("placeholder", "Eg: Rufus (Optional)");
         }
 
+        document.getElementById('reset-raise-case').onclick = function(){
+            document.getElementById('header-form-left-side').innerHTML = "Bird/Animal Information";
+            document.getElementById('animal-type-js').innerHTML = "Bird/Animal type: ";
+            document.getElementById('animal-name-js').innerHTML = "Bird/Animal name: ";
+            document.getElementById('select-default').innerHTML = "Choose Bird/Animal Type";
+            document.getElementById('animal-name').setAttribute("placeholder", "");
+        }
+
 //------Search-Focus-&-Clear-Table-on-Search---------------------------------------------------------------------------------------------
         document.getElementById('search-case-input').onfocus = function(){
             $('#tab-header').fadeOut(300);
@@ -969,11 +992,11 @@
             else if (current_page == "action_centre_assign_case" && previous_page == "case_details" || current_page == "action_centre_close_case" && previous_page == "case_details"){
                 case_details_and_action_center();
             }
-            else if(current_page == "case_details" && previous_page == "top_nav_search"){
+            else if(identifier == "myc-case-details-heading-back-button1"){
                 document.getElementById('case-details').style.display = "none";
                 document.getElementById('heading-case-details').style.display = "none";
                 document.getElementById("user-profile").style.display = "block";
-            document.getElementById('top-nav-search-heading').style.display = "block";
+                document.getElementById('top-nav-search-heading').style.display = "block";
             }
 
             function my_cases_and_case_details(){
@@ -1084,12 +1107,9 @@
             var y = event.clientY;
             var x = event.clientX;
             var tooltip_height = 0.39 * document.documentElement.clientHeight;
-            //console.log(tooltip_height);
             document.getElementById("vol-description-tooltip").style.top = "calc(" + y + "px" + " - " + tooltip_height + "px" + ")";
-            //console.log(document.getElementById("vol-description-tooltip").style.top);
-            document.getElementById("vol-description-tooltip").style.left = x + 20 + "px";
+            document.getElementById("vol-description-tooltip").style.left = x - 40 + "px";
             $("#vol-description-tooltip").fadeIn();
-            //console.log("x = " + x + "  " + "y = " + y);
         }
 
         for(let i=0; i < document.getElementsByClassName("vol_tooltip").length; i++){
