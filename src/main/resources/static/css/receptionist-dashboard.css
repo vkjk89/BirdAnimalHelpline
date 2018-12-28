@@ -16,7 +16,7 @@
 ::-webkit-scrollbar-thumb:start {
     background-color: transparent;
 }
-
+ 
 ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: #CCC;
@@ -34,8 +34,8 @@ button {
     top: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgb(248, 248, 248);
-    background-image: url(/img/loading.gif);
+    background-color: rgb(248,248,248);
+    background-image: url(/static/img/loading.gif);
     background-repeat: no-repeat;
     background-size: 120%;
     background-position: -15vw -15vh;
@@ -61,7 +61,7 @@ button {
 }
 
 #alert-box-content {
-    background-color: rgb(248, 248, 248);
+    background-color: rgb(248,248,248);
     color: #333;
     width: 20vw;
     margin: 0vw 0vw 0vw 40vw;
@@ -113,7 +113,7 @@ button {
 
 #top-nav-search {
     box-sizing: border-box;
-    background-image: url("/img/search-1.png");
+    background-image: url("/static/img/search-1.png");
     background-position: 0.5vw 0.35vw;
     background-size: 1.5vw;
     background-repeat: no-repeat;
@@ -218,7 +218,7 @@ main {
     width: 75vw;
     margin: 5vh;
     text-align: left;
-    background-color: rgb(248, 248, 248);
+    background-color: rgb(248,248,248);
     box-shadow: 00px 00px 40px #999;
 }
 
@@ -251,15 +251,12 @@ main {
     letter-spacing: 0.75px;
     top: -0.75vh;
 }
-
 #top-nav-search-heading span:first-child {
     font-size: 1.1em;
     font-weight: 400;
-    padding: 0;
-    top: -0.65vh;
 }
 
-#heading-case-details span:nth-child(2), #heading-case-details span:nth-child(3), #top-nav-search-close-button, #top-nav-search-user-profile-back-button {
+#heading-case-details span:nth-child(2), #heading-case-details span:nth-child(3), #top-nav-search-close-button, #top-nav-search-user-profile-back-button{
     position: relative;
     box-sizing: border-box;
     font-weight: 900;
@@ -269,14 +266,18 @@ main {
     top: -0.75vh;
     cursor: pointer;
 }
-
+#heading-case-details span:nth-child(2) {
+    font-size: 2em;
+    font-weight: 700;
+    top: -1.5vh;
+    margin-left: 0.5vw;
+}
 #top-nav-search-close-button {
     height: 6vh;
 }
-
-#top-nav-search-user-profile-back-button {
+#top-nav-search-user-profile-back-button{
     margin: 0vw 0.75vw;
-    top: -0.8vh;
+    top: -0.75vh;
 }
 
 #raise-a-case-content, #my-cases-content, #user-data-change-approvals-content, #case-details, #top-nav-search-results, #user-profile {
@@ -288,6 +289,19 @@ main {
     margin-top: 3vh;
     margin-bottom: 3vh;
     margin-right: 1.75vw;
+}
+
+#heading-case-details {
+    position: absolute;
+    top: 0vh;
+    z-index: 2;
+}
+
+#case-details {
+    position: absolute;
+    top: 6vh;
+    z-index: 2;
+    width: 68.5vw;
 }
 
 #top-nav-search-results, #user-profile {
@@ -316,7 +330,7 @@ main {
     box-sizing: border-box;
     border-radius: 50%;
     border: 2px solid #333;
-    background-color: rgb(248, 248, 248);
+    background-color: rgb(248,248,248);
     padding: 1vw;
     height: 20vh;
 }
@@ -398,7 +412,7 @@ main {
     display: flex;
     padding: 2vw;
     padding-top: 1vw;
-    font-size: 1.3em;
+    font-size: 1.15em;
     width: 40vw;
     justify-content: space-between;
 }
@@ -500,7 +514,7 @@ label:hover {
     border-bottom: 1px solid #CCC;
     padding: 1.5vw 0vw;
     margin-left: 4vw;
-    width: 65vw;
+    width: 67vw;
 }
 
 #top-nav-search-results li:first-child {
@@ -518,8 +532,28 @@ label:hover {
     margin-right: 2vw;
 }
 
+.search-li-cases-header, .search-li-cases {
+    display: flex;
+    margin-left: 5vw;
+    width: 65vw;
+    font-weight: 500;
+    font-size: 1.2em;
+    justify-content: space-between;
+}
+
+.search-li-cases {
+    margin-top: 2vh;
+    font-weight: 400;
+    font-size: 1.2em;
+}
+
+.search-li-cases:hover {
+    color: #007AEA;
+    cursor: pointer;
+}
+
 /*--------------------RAISE-A-CASE--------------------*/
-#raise-a-case-content form, #case-details-form {
+#raise-a-case-form, #case-details-form {
     display: flex;
 }
 
@@ -530,9 +564,13 @@ label:hover {
     height: 71vh;
 }
 
-#form-left-side, #form-right-side {
+#form-left-side, #form-right-side{
     width: 50%;
     font-size: 1em;
+}
+
+#form-left-side label, #form-right-side label{
+    width: 65%;
 }
 
 #form-left-side-case-details, #form-right-side-case-details {
@@ -732,7 +770,7 @@ hr {
     position: absolute;
     display: block;
     top: 0;
-    right: 2vw;
+    right: -1.75vw;
     width: 12vw;
     letter-spacing: 1px;
     background-color: #333;
@@ -765,7 +803,6 @@ hr {
     display: block;
     padding: 1vw;
 }
-
 /*-------------------Assign-Case-------------------*/
 
 #content-assign-case {
@@ -779,7 +816,7 @@ hr {
 }
 
 #assign-case-search-input {
-    background-image: url('/img/search-1.png');
+    background-image: url('/static/img/search-1.png');
     background-size: 3vw;
     background-repeat: no-repeat;
     background-position: 15px 15px;
@@ -790,7 +827,6 @@ hr {
     padding-bottom: 1.5vw;
     width: 65.5vw;
 }
-
 #assign-case-search-input:focus {
     border: 1px solid black;
     transition: all 0.3s ease-in-out;
@@ -798,20 +834,23 @@ hr {
 
 #assign-case-search-body {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 #top-five {
-    border-right: 2px solid #333;
-    width: 30vw;
+    border: 1px solid #CCC;
+    width: 30.25vw;
 }
 
 #nearest-assigned-volunteers {
-    width: 30vw;
+    border: 1px solid #CCC;
+    border-left: none;
+    width: 31vw;
 }
 
 .top-five-and-nearest-and-search-results-ul li {
-    margin: 1vw 0vw;
+    margin: 0vw 0vw;
+    margin-left: -2vw;
 }
 
 .top-five-and-nearest-and-search-results-ul span {
@@ -840,7 +879,9 @@ hr {
 
 
 #top-five, #nearest-assigned-volunteers {
-    margin-top: 5vh;
+    margin-top: 3vh;
+    padding-top: 2vh;
+    padding-left: 2vw;
     height: 48vh;
     overflow: auto;
     overflow-x: hidden;
@@ -854,6 +895,9 @@ hr {
     display: none;
     position: absolute;
     top: 7vw;
+    padding-right: 2vw;
+    padding-left: 1vw;
+    border: 1px solid #CCC;
 }
 
 #assign-case-status-bar {
@@ -924,7 +968,7 @@ hr {
     cursor: text;
 }
 
-#tooltip-info-name, #tooltip-info-role, #tooltip-info-address, #tooltip-info-tel-number {
+#tooltip-info-name, #tooltip-info-role, #tooltip-info-address, #tooltip-info-tel-number  {
     padding-bottom: 1vh;
 }
 
@@ -938,8 +982,8 @@ hr {
     display: none;
     position: absolute;
     top: 0;
-    width: 70vw;
-    height: 75vh;
+    width: 72vw;
+    height: 65vh;
     text-align: center;
     padding-top: 10vh;
 }
@@ -973,6 +1017,7 @@ hr {
     font-size: 1em;
     margin-bottom: 1vh;
     border: 1px solid #666;
+    background-color: rgb(248,248,248);
 }
 
 #close-case-other-reason::placeholder {
@@ -1082,53 +1127,8 @@ input[type="search"]:focus::placeholder {
     overflow-x: hidden;
 }
 
-.sr-no-div {
-    width: 8vw;
-}
-
-.case-id-div {
-    width: 15vw;
-}
-
-.case-status-div {
-    width: 15vw;
-}
-
-.date-div {
-    width: 13vw;
-}
-
-.animal-type-div {
-    width: 28vw;
-}
-
-.case-name-div {
-    width: 19vw;
-}
-
-.sr-no {
-    width: 8vw;
-}
-
-.case-id {
-    width: 15vw;
-}
-
-.case-status {
-    width: 15vw;
-}
-
-.date {
-    width: 13vw;
-}
-
-.animal-type {
-    width: 28vw;
-}
-
-.case-name {
-    width: 19vw;
-}
+.sr-no-div {width: 8vw;} .case-id-div {width: 15vw;} .case-status-div {width: 15vw;} .date-div {width: 13vw;} .animal-type-div {width: 28vw;} .case-name-div {width: 19vw;}
+.sr-no {width: 8vw;} .case-id {width: 15vw;} .case-status {width: 15vw;} .date {width: 13vw;} .animal-type {width: 28vw;} .case-name {width: 19vw;}
 
 .sr-no li {
     list-style-type: none;
@@ -1136,7 +1136,7 @@ input[type="search"]:focus::placeholder {
 
 .sr-no li::before {
     counter-increment: section;
-    content: counters(section, ".") ". ";
+    content: counters(section,".") ". ";
 }
 
 .row {
@@ -1158,6 +1158,11 @@ input[type="search"]:focus::placeholder {
     border-top: none;
 }
 
+.search-li-case-details-onclick div {
+    display: inline-block;
+    padding: 0vw 6vw 0vw 0vw;
+}
+
 
 .tab-header-animation {
     animation: tab-header 0.5s forwards 0s cubic-bezier(0.175, 0.885, 0.32, 1.20);
@@ -1165,7 +1170,7 @@ input[type="search"]:focus::placeholder {
 
 @keyframes tab-header {
     0% {
-        transform: scale(0) translateX(50px);
+        transform: scale(0) translateX(50px); 
     }
     100% {
         transform: scale(1) translateX(0);
@@ -1268,8 +1273,12 @@ figure img {
 
 .approve, .reject {
     width: 12vw;
-    padding: 0;
-    cursor: pointer;
+    padding: 0;    
     letter-spacing: 1px;
     font-size: 1.07em;
+    cursor: default;
+}
+
+.approve figure img, .reject figure img {
+    cursor: pointer;
 }

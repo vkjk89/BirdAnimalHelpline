@@ -5,19 +5,17 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
-    <title>Bird Helpline</title>
     <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Bird Helpline</title>
+
     <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
     <link href="/static/css/receptionist-dashboard.css" rel="stylesheet" th:href="@{/css/receptionist-dashboard.css}">
-    <link href="/static/css/jquery/jquery-ui.theme.min.css" rel="stylesheet"
-          th:href="@{/css/jquery/jquery-ui.theme.min.css}">
-    <link href="/static/css/jquery/jquery-ui.structure.min.css" rel="stylesheet"
-          th:href="@{/css/jquery/jquery-ui.structure.min.css}">
+    <link href="/static/css/jquery/jquery-ui.theme.min.css" rel="stylesheet" th:href="@{/css/jquery/jquery-ui.theme.min.css}">
+    <link href="/static/css/jquery/jquery-ui.structure.min.css" rel="stylesheet" th:href="@{/css/jquery/jquery-ui.structure.min.css}">
     <link href="/static/css/jquery/jquery-ui.min.css" rel="stylesheet" th:href="@{/css/jquery/jquery-ui.min.css}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"
-            th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <script src="/static/js/jquery.ui.widget.js" th:src="@{/js/jquery.ui.widget.js}"></script>
     <script src="/static/js/jquery-ui.min.js" th:src="@{/js/jquery-ui.min.js}"></script>
 
@@ -66,50 +64,51 @@
 </nav>
 
 <main>
-    <div id="heading-raise-a-case">
+    <div id="heading-raise-a-case" class="no-select">
         <span id="rac-heading-animation">Raise a Case</span>
     </div>
-    <div id="heading-my-cases">
+    <div id="heading-my-cases" class="no-select">
         <span id="myc-heading-animation">My Cases</span>
     </div>
-    <div id="heading-user-data-change-approvals">
+    <div id="heading-user-data-change-approvals" class="no-select">
         <span id="usdca-heading-animation">Data Change Approvals</span>
     </div>
     <!---------------------------------Top-Nav-Search-Results---------------------------------->
     <div id="top-nav-search-content">
         <div id="top-nav-search-heading">
-            <span id="top-nav-search-heading-content">Searching Results for - #Search_Input</span>
-            <span id="top-nav-search-close-button"
-                  style="position: relative; font-size: 2em; top:-1.8vh;">&times;</span>
-            <span id="top-nav-search-user-profile-back-button">&#10140;</span>
+            <span id="top-nav-search-heading-content">Searching results for - #Search_Input</span>
+            <span id="top-nav-search-close-button" class="no-select" style="position: relative; font-size: 2em; top:-1.8vh;">&times;</span>
+            <span id="top-nav-search-user-profile-back-button" class="no-select">&#10140;</span>
         </div>
         <div id="top-nav-search-results">
-            <li class="search-li-user-profile-onclick"><span class="top-nav-search-vol-name">#Vol_Name1</span> <span
-                    class="top-nav-search-vol-role">#Vol_Role</span></li>
-            <li class="search-li-user-profile-onclick"><span class="top-nav-search-vol-name">#Vol_Name2</span> <span
-                    class="top-nav-search-vol-role">#Vol_Role</span></li>
+            <div>
+                <li class="search-li-user-profile-onclick"><span class="top-nav-search-vol-name">#Vol_Name1</span> <span class="top-nav-search-vol-role">#Vol_Role</span></li>
+                <li class="search-li-user-profile-onclick"><span class="top-nav-search-vol-name">#Vol_Name2</span> <span class="top-nav-search-vol-role">#Vol_Role</span></li>
+            </div>
+            <div>
+                <div class="search-li-cases-header"><span class="">#Sr._No.</span><span class="">#Case_ID</span><span class="">#Case_Status</span><span class="">#Date</span><span class="">#Animal/Bird_Type</span><span class="">#Animal/Bird_Name</span></div>
+                <div class="search-li-cases search-li-cases-onclick"><span>#Sr._No.</span><span>#Case_ID</span><span>#Case_Status</span><span>#Date</span><span>#Animal/Bird_Type</span><span>#Animal/Bird_Name</span></div>
+            </div>
         </div>
         <div id="user-profile">
             <div id="user-profile-top-side">
-                <span id="user-profile-left-side"><img alt="DP"
-                                                       height="" src="/static/img/display-picture11.png" th:src="@{/img/display-picture11.png}"
-                                                       width=""></span>
+                <span id="user-profile-left-side"><img alt="DP" height="" src="/static/img/display-picture11.png" th:src="@{/img/display-picture11.png}" width=""></span>
                 <span id="user-profile-middle-side">
-                        <div>#User_Name</div>
-                        <div>#User_Role</div>
-                    </span>
+                    <div>#User_Name</div>
+                    <div>#User_Role</div>
+                </span>
                 <span id="user-profile-right-side">
-                        <table id="user-profile-right-side-table">
-                            <tr>
-                                <td>Cases Accepted &nbsp;</td>
-                                <td>Cases Rejected</td>
-                            </tr>
-                            <tr>
-                                <td>#304</td>
-                                <td>#15</td>
-                            </tr>
-                        </table>
-                    </span>
+                    <table id="user-profile-right-side-table">
+                        <tr>
+                            <td>Cases Accepted &nbsp;</td>
+                            <td>Cases Rejected</td>
+                        </tr>
+                        <tr>
+                            <td>#304</td>
+                            <td>#15</td>
+                        </tr>
+                    </table>
+                </span>
             </div>
             <div id="user-profile-main">
                 <div id="user-profile-nav-links">
@@ -125,8 +124,17 @@
                     </div>
                     <div id="user-profile-about-right-side">
                         <div class="user-profile-about-right-side-member">
-                            <div class="home-work-address"><h5 style="margin:0;">#Home/Work-Address(If-present)</h5>
+                            <div class="home-work-address"><h3 style="margin:0; font-size: 1em;">#Home/Work-Address(If-present)</h3></div>
+                            <div class="user-profile-address-line1">#Address-Line1</div>
+                            <div class="user-profile-address-line2">#Address-Line2</div>
+                            <div class="user-profile-address-pincode">#Pincode</div>
+                            <div class="user-profile-contact-number">
+                                <span class="user-profile-nine-one-zero-two-two">#+91/022</span>
+                                <span class="user-profile-contact-number">#Contact_Number</span>
                             </div>
+                        </div>
+                        <div class="user-profile-about-right-side-member">
+                            <div class="home-work-address"><h3 style="margin:0; font-size: 1em;">#Home/Work-Address(If-present)</h3></div>
                             <div class="user-profile-address-line1">#Address-Line1</div>
                             <div class="user-profile-address-line2">#Address-Line2</div>
                             <div class="user-profile-address-pincode">#Pincode</div>
@@ -139,12 +147,9 @@
                 </div>
                 <div id="user-profile-cases-content">
                     <div id="user-profile-tab-header">
-                        <span id="user-profile-active-tab-header"
-                              style="border-right: 1px solid #CCCCCC72;border-left: 1px solid #007AEA;">Active</span>
-                        <span id="user-profile-recent-tab-header"
-                              style="border-right: 1px solid #CCCCCC72;border-left: 1px solid #CCCCCC72;">Recent</span>
-                        <span id="user-profile-closed-tab-header"
-                              style="border-right: 1px solid #007AEA;border-left: 1px solid #CCCCCC72;">Closed</span>
+                        <span id="user-profile-active-tab-header" style="border-right: 1px solid #CCCCCC72;border-left: 1px solid #007AEA;">Active</span>
+                        <span id="user-profile-recent-tab-header" style="border-right: 1px solid #CCCCCC72;border-left: 1px solid #CCCCCC72;">Recent</span>
+                        <span id="user-profile-closed-tab-header" style="border-right: 1px solid #007AEA;border-left: 1px solid #CCCCCC72;">Closed</span>
                     </div>
                     <div id="user-profile-active-tab-content">
                         <div class="content-table" id="user-profile-active-content-table">
@@ -157,7 +162,7 @@
                                 <div class="case-name-div">Animal/Bird Name</div>
                             </div>
                             <div class="my-cases-result" style="width: 68.5vw;">
-                                <div class="row row1" onclick="top_nav_search_case_details()">
+                                <div class="row row11">
                                     <div class="sr-no">
                                         <li></li>
                                     </div>
@@ -181,7 +186,7 @@
                                 <div class="case-name-div">Animal/Bird Name</div>
                             </div>
                             <div class="my-cases-result" style="width: 68.5vw;">
-                                <div class="row row1" onclick="top_nav_search_case_details()">
+                                <div class="row row11">
                                     <div class="sr-no">
                                         <li></li>
                                     </div>
@@ -205,7 +210,7 @@
                                 <div class="case-name-div">Animal/Bird Name</div>
                             </div>
                             <div class="my-cases-result" style="width: 68.5vw;">
-                                <div class="row row1" onclick="">
+                                <div class="row row11">
                                     <div class="sr-no">
                                         <li></li>
                                     </div>
@@ -225,43 +230,31 @@
 
     <!-------------------------------- RAISE-A-CASE-------------------------------------------->
     <div id="raise-a-case-content">
-        <form action="" id="raise-a-case-form">
+        <form action="" id="raise-a-case-form" autocomplete="off">
             <div id="form-left-side">
                 <div id="header-form-left-side">Bird/Animal Information</div>
                 <hr>
                 <div id="body-form-left-side">
                     <div id="id-and-bird-type">
-                        <label for="case-id">Case ID </label>
-                        <input autocomplete="off" disabled id="case-id" name="case-id" placeholder="" required
-                               type="number">
-                        <div>
-                            <input id="bird-or-animal1" name="bird-or-animal" required tabindex="1" type="radio"
-                                   value="Animal">
-                            <label for="bird-or-animal1" id="bird-option"><img alt="Bird"
-                                                                               height="auto" src="/static/img/bird1.png"
-                                                                               th:src="@{/img/bird1.png}" width="50vw"></label>
+                        <label for="case-id" style="width: auto;">Case ID </label>
+                        <input autocomplete="off" disabled id="case-id" name="case-id" placeholder="" required type="number">
+                        <div class="no-select">
+                            <input id="bird-or-animal1" name="bird-or-animal" required tabindex="1" type="radio" value="Animal">
+                            <label for="bird-or-animal1" id="bird-option"><img alt="Bird" height="auto" src="/static/img/bird1.png" th:src="@{/img/bird1.png}" width="50vw"></label>
                             <input id="bird-or-animal2" name="bird-or-animal" tabindex="2" type="radio" value="Bird">
-                            <label for="bird-or-animal2" id="animal-option"><img alt="Animal"
-                                                                                 height="auto"
-                                                                                 src="/static/img/animal.png" th:src="@{/img/animal.png}"
-                                                                                 width="50vw"></label>
+                            <label for="bird-or-animal2" id="animal-option"><img alt="Animal" height="auto" src="/static/img/animal.png" th:src="@{/img/animal.png}" width="50vw"></label>
                         </div>
                     </div>
                     <label for="animal-type" id="animal-type-js">Bird/Animal type: </label>
                     <select autocomplete="off" id="animal-type" name="animal-type" required tabindex="3">
-                        <option id="select-default" th:each="o : ${birdAnimals}" th:text="${o}" th:value="${o}"
-                                value="">Choose Bird/Animal Type
-                        </option>
+                        <option id="select-default" th:each="o : ${birdAnimals}" th:text="${o}" th:value="${o}" value="">Choose Bird/Animal Type</option>
                     </select><br>
                     <label for="animal-name" id="animal-name-js">Bird/Animal name: </label>
-                    <input autocomplete="off" id="animal-name" name="animal-name" placeholder="" tabindex="4"
-                           type="text"><br>
+                    <input autocomplete="off" id="animal-name" name="animal-name" placeholder="" tabindex="4" type="text"><br>
                     <label for="condition">Condition: </label>
-                    <input autocomplete="off" id="condition" name="condition" placeholder="Eg: Broken Leg (Recommended)"
-                           tabindex="5" type="text">
+                    <input autocomplete="off" id="condition" name="condition" placeholder="Eg: Broken Leg (Recommended)" tabindex="5" type="text">
                     <label for="case-photos">Upload Photos</label>
-                    <input accept="image/*" id="case-photos" multiple name="case-photos" onchange="if (this.files.length > 5  ){alert('You can select maximum of 5 photos');this.value = ''} "
-                           type="file">
+                    <input accept="image/*" id="case-photos" multiple name="case-photos" onchange="if (this.files.length > 3){alert('You can select maximum of 5 photos');this.value = ''} " type="file">
                 </div>
             </div>
             <div id="form-right-side">
@@ -275,27 +268,20 @@
                         <option value="+91">+91</option>
                         <option value="022">022</option>
                     </select>
-                    <input autocomplete="off" id="contact-number" max="9999999999" min="5000000000" name="contact-number"
-                           placeholder="" required tabindex="7"
-                           title="Ten digit mobile no. without any code" type="number"><br>
+                    <input autocomplete="off" id="contact-number" max="9999999999" min="5000000000" name="contact-number" placeholder="" required tabindex="7" title="Ten digit mobile no. without any code" type="number"><br>
                     <label for="location">Location: </label>
                     <textarea cols="50" id="location" maxlength="250" name="location" rows="2" tabindex="8"></textarea>
-                    <input autocomplete="off" id="location-landmark" name="location-landmark"
-                           placeholder="Landmark - Eg: Near Regal Cinema" tabindex="9" type="text">
-                    <input autocomplete="off" id="location-pincode" max="500000"
-                           min="400000" name="location-pincode" placeholder="Pincode - Eg: 400002" required tabindex="10"
-                           title="Please enter valid pincode" type="number">
+                    <input autocomplete="off" id="location-landmark" name="location-landmark" placeholder="Landmark - Eg: Near Regal Cinema" tabindex="9" type="text">
+                    <input autocomplete="off" id="location-pincode" max="500000" min="400000" name="location-pincode" placeholder="Pincode - Eg: 400002" required tabindex="10" title="Please enter valid pincode" type="number">
                 </div>
             </div>
-            <div>
+            <div style = "background: forestgreen">
                 <span id="error"></span>
             </div>
 
         </form>
         <div id="cta-btns">
-            <div id="raise-a-case-success"><span id="raise-a-case-checkmark"> &check;</span> Success! Case raised
-                successfully
-            </div>
+            <div id="raise-a-case-success"><span id="raise-a-case-checkmark"> &check;</span> Success! Case raised</div>
             <div id="raise-a-case-error"><span id="raise-a-case-cross"> &times;</span> Error!</div>
             <button form="raise-a-case-form" id="submit-raise-case" tabindex="11" type="submit">Raise Case</button>
             <button form="raise-a-case-form" id="reset-raise-case" tabindex="12" type="reset">Clear All</button>
@@ -311,10 +297,8 @@
             <span id="closed-tab-header" style="border-right: 1px solid #007AEA;border-left: 1px solid #CCCCCC72;">Closed</span>
         </div>
         <div class="my-cases-result1" id="table4" style="width: 68.5vw;">
-            <div class="row row1" onclick="case_details()">
-                <div class="sr-no">
-                    <li></li>
-                </div>
+            <div class="row row1">
+                <div class="sr-no"><li></li></div>
                 <div class="case-id">#Case_ID</div>
                 <div class="case-status">#Case_Status</div>
                 <div class="date">#Date</div>
@@ -325,7 +309,7 @@
         <div id="tab-content">
             <div id="active-tab-content">
                 <div class="content-table" id="active-content-table">
-                    <div style="display: flex; position: fixed; width: 68.5vw; font-size: 1.2em; background-color: rgb(248,248,248); font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC;">
+                    <div style="display: flex; position: fixed; width: 68.5vw; font-size: 1.2em; font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC;">
                         <div class="sr-no-div">Sr. No.</div>
                         <div class="case-id-div">Case ID</div>
                         <div class="case-status-div">Case Status</div>
@@ -334,10 +318,8 @@
                         <div class="case-name-div">Animal/Bird Name</div>
                     </div>
                     <div class="my-cases-result" id="table1" style="width: 68.5vw;">
-                        <div class="row row1" onclick="case_details()">
-                            <div class="sr-no">
-                                <li></li>
-                            </div>
+                        <div class="row row1">
+                            <div class="sr-no"><li></li></div>
                             <div class="case-id">#Case_ID</div>
                             <div class="case-status">#Case_Status</div>
                             <div class="date">#Date</div>
@@ -349,7 +331,7 @@
             </div>
             <div id="recent-tab-content">
                 <div class="content-table" id="recent-content-table">
-                    <div style="display: flex; position: fixed; width: 68.5vw; font-size: 1.2em; background-color: rgb(248,248,248); font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC;">
+                    <div style="display: flex; position: fixed; width: 68.5vw; font-size: 1.2em; font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC;">
                         <div class="sr-no-div">Sr. No.</div>
                         <div class="case-id-div">Case ID</div>
                         <div class="case-status-div">Case Status</div>
@@ -358,10 +340,8 @@
                         <div class="case-name-div">Animal/Bird Name</div>
                     </div>
                     <div class="my-cases-result" id="table2" style="width: 68.5vw;">
-                        <div class="row row1" onclick="case_details()">
-                            <div class="sr-no">
-                                <li></li>
-                            </div>
+                        <div class="row row1">
+                            <div class="sr-no"><li></li></div>
                             <div class="case-id">#Case_ID</div>
                             <div class="case-status">#Case_Status</div>
                             <div class="date">#Date</div>
@@ -373,7 +353,7 @@
             </div>
             <div id="closed-tab-content">
                 <div class="content-table" id="closed-content-table">
-                    <div style="display: flex; position: fixed; width: 68.5vw; font-size: 1.2em; background-color: rgb(248,248,248); font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC;">
+                    <div style="display: flex; position: fixed; width: 68.5vw; font-size: 1.2em; font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC;">
                         <div class="sr-no-div">Sr. No.</div>
                         <div class="case-id-div">Case ID</div>
                         <div class="case-status-div">Case Status</div>
@@ -382,10 +362,8 @@
                         <div class="case-name-div">Animal/Bird Name</div>
                     </div>
                     <div class="my-cases-result" id="table3" style="width: 68.5vw;">
-                        <div class="row row1" onclick="case_details()">
-                            <div class="sr-no">
-                                <li></li>
-                            </div>
+                        <div class="row row1">
+                            <div class="sr-no"><li></li></div>
                             <div class="case-id">#Case_ID</div>
                             <div class="case-status">#Case_Status</div>
                             <div class="date">#Date</div>
@@ -400,9 +378,9 @@
 
 
     <div id="heading-case-details">
-        <span id="myc-case-details-heading-animation">Case Details</span>
-        <span id="myc-case-details-heading-back-button">&#10140;</span>
-        <span id="myc-case-details-heading-back-button1" style="display: none;">&#10140;</span>
+        <span id="myc-case-details-heading-animation" class="no-select">Case Details</span>
+        <span id="myc-case-details-heading-close-button" class="no-select">&times;</span>
+        <span id="myc-case-details-heading-back-button" class="no-select">&#10140;</span>
     </div>
     <div id="case-details">
         <div id="case-details-form">
@@ -412,8 +390,7 @@
                 <div id="body-form-left-side-case-details">
                     <div id="id-and-bird-type-case-details">
                         <label for="case-id-case-details">Case ID </label>
-                        <input autocomplete="off" disabled id="case-id-case-details" name="case-id-case-details" required
-                               type="number">
+                        <input autocomplete="off" disabled id="case-id-case-details" name="case-id-case-details" required type="number">
                     </div>
                     <label for="animal-type">#Animal/Bird type: </label>
                     <input disabled id="animal-type-case-details" type="text"><br>
@@ -432,7 +409,7 @@
                     <label>Name: </label>
                     <input autocomplete="off" disabled id="contact-name-case-details" type="text"><br>
                     <label>Contact Number: </label>
-                    <input disabled id="nine-one-case-details" placeholder="022" type="text">
+                    <input disabled id="nine-one-case-details" placeholder="" type="text">
                     <input autocomplete="off" disabled id="contact-number-case-details" type="number"><br>
                     <label>Location: </label>
                     <textarea cols="50" disabled id="location-case-details" rows="3"></textarea>
@@ -443,20 +420,19 @@
                 </div>
             </div>
             <div id="action-center">
-                <div id="action-center-heading">
+                <div id="action-center-heading" class="no-select">
                     Action Center
                 </div>
                 <div id="action-center-body">
-                    <a class="action-center-links" id="action-center-assign-case">Assign Case</a>
-                    <a class="action-center-links" id="action-center-close-case">Close Case</a>
+                    <a class="action-center-links" id="action-center-assign-case" class="no-select">Assign Case</a>
+                    <a class="action-center-links" id="action-center-close-case" class="no-select">Close Case</a>
                 </div>
             </div>
         </div>
         <div id="action-center-content">
             <div id="content-assign-case">
                 <div id="assign-case-search">
-                    <input class="ui-autocomplete-input" id="assign-case-search-input" name="assign-case-search-input"
-                           placeholder="Search..." type="search">
+                    <input class="ui-autocomplete-input" id="assign-case-search-input" name="assign-case-search-input" placeholder="Search..." type="search">
                     <div id="assign-case-search-body">
                         <div id="top-five">
                             <h2>Top Five Volunteers: </h2>
@@ -483,8 +459,7 @@
                         </ul>
                     </div>
                     <div id="assign-case-status-bar">
-                        <div id="assign-case-success"><span id="assign-case-success-checkmark"> &check;</span> Success!
-                            Case assigned successfully
+                        <div id="assign-case-success"><span id="assign-case-success-checkmark"> &check;</span> Success! Case assigned successfully
                         </div>
                         <div id="assign-case-error"><span id="assign-case-error-cross"> &times;</span> Error!</div>
                     </div>
@@ -515,8 +490,7 @@
                             <option value="Healthy">Healthy</option>
                             <option value="Other">Other</option>
                         </select>
-                        <textarea cols="25" id="close-case-other-reason" name="close-case-other-reason" placeholder="Specify Reason"
-                                  rows="4"></textarea>
+                        <textarea cols="25" id="close-case-other-reason" name="close-case-other-reason" placeholder="Specify Reason" rows="4"></textarea>
                     </div>
                     <div>
                         <button id="close-case-cancel-btn" onclick="navigate_back()">Cancel</button>
@@ -526,7 +500,6 @@
             </div>
         </div>
     </div>
-    <!--</div>-->
 
     <!-------------------------------- USER-DATA-CHANGE-APPROVALS--------------------------------------->
 
@@ -542,26 +515,22 @@
             </div>
             <div class="wrapper">
                 <div class="old-photo">
-                    <figure><img height="auto" src="/static/img/old-photo.png" th:src="@{/img/old-photo.png}"
-                                 width="100%">
+                    <figure><img height="auto" src="/static/img/old-photo.png" th:src="@{/img/old-photo.png}" width="100%">
                         <figcaption>Old Photo</figcaption>
                     </figure>
                 </div>
                 <div class="new-photo">
-                    <figure><img height="auto" src="/static/img/new-photo.png" th:src="@{/img/new-photo.png}"
-                                 width="100%">
+                    <figure><img height="auto" src="/static/img/new-photo.png" th:src="@{/img/new-photo.png}" width="100%">
                         <figcaption>New Photo</figcaption>
                     </figure>
                 </div>
                 <button class="approve" type="button">
-                    <figure><img height="auto" id="approve-img-1" onclick="approve_profile_pic()"
-                                 src="/static/img/approved.png" th:src="@{/img/approved.png}" width="100%">
+                    <figure><img height="auto" id="approve-img-1" src="/static/img/approved.png" th:src="@{/img/approved.png}" width="100%">
                         <figcaption>Approve</figcaption>
                     </figure>
                 </button>
                 <button class="reject" type="button">
-                    <figure><img height="auto" id="reject-img-1" onclick="reject_profile_pic()"
-                                 src="/static/img/rejected.png" th:src="@{/img/rejected.png}" width="100%">
+                    <figure><img height="auto" id="reject-img-1" src="/static/img/rejected.png" th:src="@{/img/rejected.png}" width="100%">
                         <figcaption>Reject</figcaption>
                     </figure>
                 </button>
@@ -574,26 +543,22 @@
             </div>
             <div class="wrapper">
                 <div class="old-photo">
-                    <figure><img height="auto" src="/static/img/old-photo.png" th:src="@{/img/old-photo.png}"
-                                 width="100%">
+                    <figure><img height="auto" src="/static/img/old-photo.png" th:src="@{/img/old-photo.png}" width="100%">
                         <figcaption>Old Photo</figcaption>
                     </figure>
                 </div>
                 <div class="new-photo">
-                    <figure><img height="auto" src="/static/img/new-photo.png" th:src="@{/img/new-photo.png}"
-                                 width="100%">
+                    <figure><img height="auto" src="/static/img/new-photo.png" th:src="@{/img/new-photo.png}" width="100%">
                         <figcaption>New Photo</figcaption>
                     </figure>
                 </div>
                 <button class="approve" type="button">
-                    <figure><img height="auto" id="approve-img-2" onclick="approve_profile_pic()"
-                                 src="/static/img/approved.png" th:src="@{/img/approved.png}" width="100%">
+                    <figure><img height="auto" id="approve-img-2" src="/static/img/approved.png" th:src="@{/img/approved.png}" width="100%">
                         <figcaption>Approved</figcaption>
                     </figure>
                 </button>
                 <button class="reject" type="button">
-                    <figure><img height="auto" id="reject-img-2" onclick="reject_profile_pic()"
-                                 src="/static/img/rejected.png" th:src="@{/img/rejected.png}" width="100%">
+                    <figure><img height="auto" id="reject-img-2" src="/static/img/rejected.png" th:src="@{/img/rejected.png}" width="100%">
                         <figcaption>Rejected</figcaption>
                     </figure>
                 </button>
@@ -601,38 +566,33 @@
         </div>
     </div>
     <div hidden id="dialog" title="Basic dialog">
-        <p>This is the default dialog which is useful for displaying information. The dialog window can be moved,
-            resized and closed with the 'x' icon.</p>
+        <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
     </div>
 </main>
 
 <section id="card-right-side">
     <div id="raise-a-case-side-card" tabindex="">
         <div id="rac-body">
-            <img alt="Raise a Case" class="right-side-card-img" height=""
-                 src="/static/img/raise-a-case.png" th:src="@{/img/raise-a-case.png}" width="">
+            <img alt="Raise a Case" class="right-side-card-img" height="" src="/static/img/raise-a-case.png" th:src="@{/img/raise-a-case.png}" width="">
             <label for="right-side-card-img">Raise a Case</label>
         </div>
     </div>
     <div id="my-cases-side-card" tabindex="">
         <div id="myc-body">
-            <img alt="Raise a Case" class="right-side-card-img" height=""
-                 src="/static/img/my-cases1.png" style="left:-1.5vh;" th:src="@{/img/my-cases1.png}" width="">
+            <img alt="Raise a Case" class="right-side-card-img" height="" src="/static/img/my-cases1.png" style="left:-1.5vh;" th:src="@{/img/my-cases1.png}" width="">
             <label for="right-side-card-img">My Cases</label>
         </div>
     </div>
     <div id="user-data-change-approvals-side-card" tabindex="">
         <div id="usdca-body">
-            <img alt="Raise a Case" class="right-side-card-img"
-                 height="" src="/static/img/user-data-change-approvals.png" th:src="@{/img/user-data-change-approvals.png}" width="">
+            <img alt="Raise a Case" class="right-side-card-img" height="" src="/static/img/user-data-change-approvals.png" th:src="@{/img/user-data-change-approvals.png}" width="">
             <label for="right-side-card-img">Data Change Approvals</label>
         </div>
     </div>
 </section>
 
 <script>
-    var previous_page = "raise_a_case";
-    var current_page = "raise_a_case";
+    var page_history = ["raise_a_case"];
     //------Right-Side-Cards-Toggle-Display--------------------------------------------------------------------------------------
     document.getElementById('rac-body').style.borderBottom = "5px solid #007AEA";   //Raise a Case is the Default Screen
     document.getElementById('rac-body').classList.add('right-side-card-rotate');    //Raise a Case is the Default Screen
@@ -653,8 +613,7 @@
         }, 600);
 
         document.getElementById('raise-a-case-content').style.display = "block";
-        previous_page = current_page;
-        current_page = "raise_a_case";
+        page_history.unshift("raise_a_case");
         document.getElementById('my-cases-content').style.display = "none";
         document.getElementById('case-details').style.display = "none";
         document.getElementById('user-data-change-approvals-content').style.display = "none";
@@ -698,8 +657,7 @@
         document.getElementById('raise-a-case-content').style.display = "none";
         document.getElementById('my-cases-content').style.display = "block";
         document.getElementById('search-case-input').value = "";
-        previous_page = current_page;
-        current_page = "my_cases";
+        page_history.unshift("my_cases");
         document.getElementById('case-details').style.display = "none";
         document.getElementById('user-data-change-approvals-content').style.display = "none";
         document.getElementById('heading-raise-a-case').style.display = "none";
@@ -744,8 +702,7 @@
         document.getElementById('my-cases-content').style.display = "none";
         document.getElementById('case-details').style.display = "none";
         document.getElementById('user-data-change-approvals-content').style.display = "block";
-        previous_page = current_page;
-        current_page = "user_data_change_approvals";
+        page_history.unshift("user_data_change_approvals");
         document.getElementById('heading-raise-a-case').style.display = "none";
         document.getElementById('heading-my-cases').style.display = "none";
         document.getElementById('heading-case-details').style.display = "none";
@@ -815,7 +772,7 @@
 
     //-----Top-Nav-Search-----------------------------------------------------------------------------------
     document.getElementById("top-nav-search").onkeyup = function () {
-        if (this.value != "") {
+        if (this.value !== "") {
             document.getElementById('raise-a-case-content').style.opacity = 0;
             document.getElementById('my-cases-content').style.opacity = 0;
             document.getElementById('case-details').style.opacity = 0;
@@ -826,9 +783,10 @@
             document.getElementById('heading-user-data-change-approvals').style.opacity = 0;
             document.getElementById('top-nav-search-heading').style.display = "block";
             document.getElementById('top-nav-search-results').style.display = "block";
-            document.getElementById("top-nav-search-user-profile-back-button").style.display = "none";
             document.getElementById("user-profile").style.display = "none";
-            document.getElementById("top-nav-search-heading-content").innerHTML = "Searching Results for - #Search_Input";
+            document.getElementById("top-nav-search-heading-content").innerHTML = "Searching results for - #Search_Input";
+            document.getElementById("top-nav-search-user-profile-back-button").style.display = "none";
+            page_history.unshift("top_nav_search_results");
         } else {
             document.getElementById('raise-a-case-content').style.opacity = 1;
             document.getElementById('my-cases-content').style.opacity = 1;
@@ -842,9 +800,13 @@
             document.getElementById('top-nav-search-heading').style.display = "none";
             document.getElementById('top-nav-search-results').style.display = "none";
             document.getElementById("user-profile").style.display = "none";
-            document.getElementById("top-nav-search-heading-content").innerHTML = "Searching Results for - #Search_Input";
+            document.getElementById("top-nav-search-heading-content").innerHTML = "";
+            if(document.getElementById('raise-a-case-content').style.display === "block"){page_history.unshift("raise_a_case")}
+            else if(document.getElementById('my-cases-content').style.display === "block"){page_history.unshift("my_cases")}
+            else if(document.getElementById('user-data-change-approvals-content').style.display === "block"){page_history.unshift("user_data_change_approvals")}
         }
     };
+    //---------Close-Button-------------------------------------------------------
     document.getElementById("top-nav-search-close-button").onclick = function () {
         document.getElementById('raise-a-case-content').style.opacity = 1;
         document.getElementById('my-cases-content').style.opacity = 1;
@@ -858,67 +820,69 @@
         document.getElementById('top-nav-search-heading').style.display = "none";
         document.getElementById('top-nav-search-results').style.display = "none";
         document.getElementById("user-profile").style.display = "none";
-        document.getElementById("top-nav-search-heading-content").innerHTML = "Searching Results for - #Search_Input";
-        if (document.getElementById('raise-a-case-content').style.display == "none" && previous_page == "raise_a_case") {
-            document.getElementById('heading-raise-a-case').style.display = "block";
-            document.getElementById('raise-a-case-content').style.display = "block";
-        }
+        document.getElementById("top-nav-search-heading-content").innerHTML = "";
+        document.getElementById('case-details').style.display = "none";
+        document.getElementById('heading-case-details').style.display = "none";
+        document.getElementById('case-details-form').style.display = "none";
+        if(document.getElementById('raise-a-case-content').style.display === "block"){page_history.unshift("raise_a_case")}
+        else if(document.getElementById('my-cases-content').style.display === "block"){page_history.unshift("my_cases")}
+        else if(document.getElementById('user-data-change-approvals-content').style.display === "block"){page_history.unshift("user_data_change_approvals")}
     };
 
     document.getElementById("top-nav-search-user-profile-back-button").onclick = function () {
-        document.getElementById("top-nav-search-heading-content").innerHTML = "#Search_Input - #User_Name";
-        document.getElementById("user-profile").style.display = "none";
-        document.getElementById('top-nav-search-results').style.display = "block";
+        navigate_back();
         document.getElementById("top-nav-search-user-profile-back-button").style.display = "none";
     };
 
     for (let i = 0; i < document.getElementsByClassName("search-li-user-profile-onclick").length; i++) {
         document.getElementsByClassName("search-li-user-profile-onclick")[i].onclick = function () {
             document.getElementById("top-nav-search").value = "";
-            document.getElementById("top-nav-search-heading-content").innerHTML = "Searching Results for - #Search_Input";
+            document.getElementById("top-nav-search-heading-content").innerHTML = "#Search_Input - #User_Name";
             document.getElementById("top-nav-search-results").style.display = "none";
             document.getElementById("user-profile").style.display = "block";
             document.getElementById("top-nav-search-user-profile-back-button").style.display = "block";
             document.getElementById("user-profile-cases-content").style.display = "none";
+            page_history.unshift("top_nav_search_user_profile");
             $("#user-profile-about-content").fadeIn();
             user_profile_basic_details();
         };
     }
 
+    for (let i = 0; i < document.getElementsByClassName("search-li-cases-onclick").length; i++) {
+        document.getElementsByClassName("search-li-cases-onclick")[i].onclick = function () {
+            document.getElementById("top-nav-search").value = "";
+            document.getElementById("top-nav-search-heading-content").innerHTML = "#Search_Input - #Case_ID";
+            document.getElementById("top-nav-search-results").style.display = "none";
+            document.getElementById("user-profile").style.display = "none";
+            document.getElementById("top-nav-search-user-profile-back-button").style.display = "none";
+            page_history.unshift("top_nav_search_cases_details");
+            top_nav_search_case_details();
+        };
+    }
+    
+    for(let i=0; i <document.getElementsByClassName("row11").length; i++){
+        document.getElementsByClassName("row11")[i].onclick = function(){
+            top_nav_search_case_details();
+            page_history.unshift("user_cases_case_details");
+        }
+    }
+
     function top_nav_search_case_details() {
-        document.getElementById('raise-a-case-content').style.display = "none";
-        document.getElementById('heading-raise-a-case').style.display = "none";
-        document.getElementById('my-cases-content').style.display = "none";
-        document.getElementById('heading-my-cases').style.display = "none";
-        document.getElementById('user-data-change-approvals-content').style.display = "none";
-        document.getElementById('heading-user-data-change-approvals').style.display = "none";
         document.getElementById('case-details').style.display = "block";
         document.getElementById('heading-case-details').style.display = "block";
         document.getElementById('case-details-form').style.display = "flex";
         document.getElementById('action-center').style.display = "none";
-        document.getElementById('raise-a-case-content').style.opacity = 1;
-        document.getElementById('my-cases-content').style.opacity = 1;
-        document.getElementById('case-details').style.opacity = 1;
-        document.getElementById('user-data-change-approvals-content').style.opacity = 1;
-        document.getElementById('heading-raise-a-case').style.opacity = 1;
-        document.getElementById('heading-my-cases').style.opacity = 1;
         document.getElementById('heading-case-details').style.opacity = 1;
-        document.getElementById('heading-user-data-change-approvals').style.opacity = 1;
+        document.getElementById('case-details').style.opacity = 1;
         document.getElementById("top-nav-search").value = "";
         document.getElementById('top-nav-search-heading').style.display = "none";
         document.getElementById('top-nav-search-results').style.display = "none";
         document.getElementById("user-profile").style.display = "none";
-        document.getElementById('myc-case-details-heading-back-button').style.display = "none";
-        document.getElementById('myc-case-details-heading-back-button1').style.display = "block";
+        document.getElementById("form-left-side-case-details").style.width = "50%";
+        document.getElementById("form-right-side-case-details").style.width = "50%";
     }
 
-    document.getElementById('myc-case-details-heading-back-button1').onclick = function () {
-        previous_page = "top_nav_search";
-        current_page = "case_details";
-        navigate_back();
-    };
-
-    //------Active-Recent-Closed-Tabs-JS--------------------------------------------------------------------------------
+    //------Search-Active-Recent-Closed-Tabs-JS--------------------------------------
     document.getElementById('user-profile-active-tab-header').onclick = function user_profile_search_results_active() {
         this.classList.add('active-header');
         document.getElementById('user-profile-recent-tab-header').classList.remove('active-header');
@@ -978,6 +942,7 @@
     }
 
     document.getElementById("user-profile-user-cases-btn").onclick = function user_profile_user_cases() {
+        document.getElementById('user-profile-active-tab-header').classList.add('active-header');
         document.getElementById("user-profile-user-cases-btn").style.border = "2px solid #007AEA";
         document.getElementById("user-profile-basic-details-btn").style.border = "2px solid transparent";
         $("#user-profile-about-content").fadeOut(200);
@@ -996,8 +961,9 @@
             $("#card-right-side").css("opacity", "1");
         } else {
             document.getElementById("dropdown-menu").style.display = "block";
-            $("main").css("opacity", "0.3");
-            $("#card-right-side").css("opacity", "0.3");
+            $("main").css("opacity", "0.1");
+            $("#card-right-side").css("opacity", "0.1");
+            document.getElementsByTagName("body")[0].style.pointerEvents = "none";
         }
     };
     window.onclick = function (e) {
@@ -1006,6 +972,7 @@
                 document.getElementById("dropdown-menu").style.display = "none";
                 $("main").css("opacity", "1");
                 $("#card-right-side").css("opacity", "1");
+                document.getElementsByTagName("body")[0].style.pointerEvents = "";
                 dropdown_menu_state = !dropdown_menu_state;
             }
         }
@@ -1037,16 +1004,16 @@
     };
 
     //------Search-Focus-&-Clear-Table-on-Search---------------------------------------------------------------------------------------------
-    document.getElementById('search-case-input').onfocus = function () {
-        $('#tab-header').fadeOut(300);
-        hideresults();
-    };
-    document.getElementById('search-case-input').addEventListener("focusout", function () {
-        if (document.getElementById('search-case-input').value == "") {
+    document.getElementById('search-case-input').onkeyup = function () {
+        if (document.getElementById('search-case-input').value !== ""){
+            $('#tab-header').fadeOut(300);
+            hideresults();
+        }
+        else {
             $('#tab-header').fadeIn(300);
             showresults();
         }
-    });
+    };
 
     function hideresults() {
         $('.row').fadeOut(300);
@@ -1057,15 +1024,18 @@
     }
 
     //------Case-Details---------------------------------------------------------------------------------------------------------------------
-    function case_details(data) {
-
+    for(let i=0; i<document.getElementsByClassName("row1").length; i++){
+        document.getElementsByClassName("row1")[i].onclick = function case_details(data) {
         document.getElementById('my-cases-content').style.display = "none";
         document.getElementById('case-details').style.display = "block";
         document.getElementById('heading-my-cases').style.display = "none";
         document.getElementById('heading-case-details').style.display = "block";
         document.getElementById('case-details-form').style.display = "flex";
-        previous_page = current_page;
-        current_page = "case_details";
+        document.getElementById("form-left-side-case-details").style.width = "40%";
+        document.getElementById("form-right-side-case-details").style.width = "40%";
+        document.getElementById('action-center').style.display = "block";
+        document.getElementById('case-details-form').style.opacity = "";
+        page_history.unshift("case_details");
         //console.info(data);
         console.info(" vkj map : " + caseIdVsInfoMap);
         //console.info(" vkj data : "+data.getElementsByClassName("case-id"));
@@ -1084,9 +1054,48 @@
         $('#location-case-details').val(caseInfo.location);
         $('#location-landmark-case-details').val(caseInfo.locationLandMark);
         $('#location-pincode-case-details').val(caseInfo.locationPincode);
-
-
+        }
     }
+    
+
+    document.getElementById("myc-case-details-heading-close-button").onclick = function(){
+        document.getElementById('case-details').style.display = "none";
+        document.getElementById('heading-case-details').style.display = "none";
+        document.getElementById('case-details-form').style.display = "none";
+        document.getElementById('top-nav-search-heading').style.display = "none";
+        document.getElementById('top-nav-search-results').style.display = "none";
+        document.getElementById('content-assign-case').style.display = "none";
+        document.getElementById('content-close-case').style.display = "none";
+        document.getElementById('case-details-form').style.pointerEvents = "";
+        for(let i=0; i<page_history.length; i++){
+            if(page_history[0 + i] === "my_cases"){
+               my_cases();
+               break;
+            }
+            else if (page_history[0 + i] === "user_cases_case_details" || page_history[0 + i] === "top_nav_search_cases_details"){
+                document.getElementById('raise-a-case-content').style.opacity = 1;
+                document.getElementById('my-cases-content').style.opacity = 1;
+                document.getElementById('case-details').style.opacity = 1;
+                document.getElementById('user-data-change-approvals-content').style.opacity = 1;
+                document.getElementById('heading-raise-a-case').style.opacity = 1;
+                document.getElementById('heading-my-cases').style.opacity = 1;
+                document.getElementById('heading-case-details').style.opacity = 1;
+                document.getElementById('heading-user-data-change-approvals').style.opacity = 1;
+                document.getElementById("top-nav-search").value = "";
+                document.getElementById('top-nav-search-heading').style.display = "none";
+                document.getElementById('top-nav-search-results').style.display = "none";
+                document.getElementById("user-profile").style.display = "none";
+                document.getElementById("top-nav-search-heading-content").innerHTML = "";
+                document.getElementById('case-details').style.display = "none";
+                document.getElementById('heading-case-details').style.display = "none";
+                document.getElementById('case-details-form').style.display = "none";
+                if(document.getElementById('raise-a-case-content').style.display === "block"){page_history.unshift("raise_a_case")}
+                else if(document.getElementById('my-cases-content').style.display === "block"){page_history.unshift("my_cases")}
+                else if(document.getElementById('user-data-change-approvals-content').style.display === "block"){page_history.unshift("user_data_change_approvals")}
+                break;
+            }
+        }
+    };
 
     document.getElementById('myc-case-details-heading-back-button').onclick = function () {
         navigate_back();
@@ -1096,38 +1105,38 @@
         document.getElementById('case-details-form').style.display = "none";
         document.getElementById('content-assign-case').style.display = "block";
         document.getElementById('myc-case-details-heading-animation').innerHTML = "#CaseID - Assign Case";
-        previous_page = current_page;
-        current_page = "action_centre_assign_case";
+        document.getElementById("myc-case-details-heading-close-button").style.display = "block";
+        page_history.unshift("action_centre_assign_case");
         getVolInfo();
     };
 
     document.getElementById('action-center-close-case').onclick = function () {
         document.getElementById('case-details-form').style.opacity = "0.2";
+        document.getElementById('case-details-form').style.pointerEvents = "none";
         document.getElementById('content-close-case').style.display = "block";
         document.getElementById('myc-case-details-heading-animation').innerHTML = "#CaseID - Close Case";
+        document.getElementById("myc-case-details-heading-close-button").style.display = "block";
         other_reason_close_case();
-        previous_page = current_page;
-        current_page = "action_centre_close_case";
+        page_history.unshift("action_centre_close_case");
     };
 
     //Assign-Case------------------------------------------------------------------------------------
-    document.getElementById('assign-case-search-input').onfocus = function () {
-        $('#top-five').fadeOut(200);
-        $('#nearest-assigned-volunteers').fadeOut(200);
-        setTimeout(function () {
-            $('#assign-case-search-results').css('display', 'block');
-            $('#assign-case-search-results').fadeIn(200);
-        }, 200);
-    };
-
-    document.getElementById('assign-case-search-input').addEventListener("focusout", function () {
-        if (document.getElementById('assign-case-search-input').value == "") {
+    document.getElementById('assign-case-search-input').onkeyup = function () {
+        if(this.value !== ""){
+            $('#top-five').fadeOut(200);
+            $('#nearest-assigned-volunteers').fadeOut(200);
+            setTimeout(function () {
+                $('#assign-case-search-results').css('display', 'block');
+                $('#assign-case-search-results').fadeIn(200);
+            }, 200);
+        }
+        else {
             $('#top-five').fadeIn(200);
             $('#nearest-assigned-volunteers').fadeIn(200);
             $('#assign-case-search-results').css('display', 'none');
             $('#assign-case-search-results').fadeOut(200);
         }
-    });
+    };
 
     //$('.assign-case-assign-btn').click(function(){
     function assignCase(data) {
@@ -1138,22 +1147,22 @@
     }
 
     //------Close-Case---------------------------------------------------------------------------------------------------------
-    //------Select-Other-Reason--------------------------------------------------------------------------------------------
-    document.getElementById('close-case-reason').onclick = function () {
-        other_reason_close_case();
-    };
+        //------Select-Other-Reason------
+        document.getElementById('close-case-reason').onclick = function () {
+            other_reason_close_case();
+        };
 
-    function other_reason_close_case() {
-        if (document.getElementById('close-case-reason').value == "Other") {
-            document.getElementById('close-case-other-reason').style.display = "block";
-            document.getElementById('close-case-other-reason').value = "";
-            document.getElementById('close-case-other-reason').innerHTML = "";
-            document.getElementById('close-case-other-reason').style.border = "1px solid #666";
-            document.getElementById('close-case-other-reason').placeholder = "Specify Reason";
-        } else {
-            document.getElementById('close-case-other-reason').style.display = "none";
+        function other_reason_close_case() {
+            if (document.getElementById('close-case-reason').value == "Other") {
+                document.getElementById('close-case-other-reason').style.display = "block";
+                document.getElementById('close-case-other-reason').value = "";
+                document.getElementById('close-case-other-reason').innerHTML = "";
+                document.getElementById('close-case-other-reason').style.border = "1px solid #666";
+                document.getElementById('close-case-other-reason').placeholder = "Specify Reason";
+            } else {
+                document.getElementById('close-case-other-reason').style.display = "none";
+            }
         }
-    }
 
     //------Close-Case-Button--aka--Submit-Close-Case----------------------------------------------------------------------
     document.getElementById('close-case-submit-btn').onclick = function () {
@@ -1171,19 +1180,8 @@
 
 
     //------Navigation-Back-Button----------------------------------------------------------------------------------------------------------
-    function navigate_back(identifier) {
-        if (current_page == "case_details" && previous_page == "my_cases") {
-            my_cases_and_case_details();
-        } else if (current_page == "action_centre_assign_case" && previous_page == "case_details" || current_page == "action_centre_close_case" && previous_page == "case_details") {
-            case_details_and_action_center();
-        } else if (identifier == "myc-case-details-heading-back-button1") {
-            document.getElementById('case-details').style.display = "none";
-            document.getElementById('heading-case-details').style.display = "none";
-            document.getElementById("user-profile").style.display = "block";
-            document.getElementById('top-nav-search-heading').style.display = "block";
-        }
-
-        function my_cases_and_case_details() {
+    function navigate_back() {
+        if (page_history[0] === "case_details") {
             document.getElementById('my-cases-content').style.display = "block";
             document.getElementById('case-details').style.display = "none";
             document.getElementById('heading-my-cases').style.display = "block";
@@ -1191,11 +1189,9 @@
             document.getElementById('case-details-form').style.display = "none";
             document.getElementById('top-nav-search-heading').style.display = "none";
             document.getElementById('top-nav-search-results').style.display = "none";
-            previous_page = current_page;
-            current_page = "my_cases";
-        }
-
-        function case_details_and_action_center() {
+            page_history.unshift("my_cases");
+        } 
+        else if (page_history[0] === "action_centre_assign_case" || page_history[0] === "action_centre_close_case") {
             document.getElementById('case-details-form').style.display = "flex";
             document.getElementById('content-assign-case').style.display = "none";
             document.getElementById('content-close-case').style.display = "none";
@@ -1204,11 +1200,38 @@
             document.getElementById('case-details-form').style.opacity = "1";
             document.getElementById('top-nav-search-heading').style.display = "none";
             document.getElementById('top-nav-search-results').style.display = "none";
-            previous_page = "my_cases";
-            current_page = "case_details";
+            document.getElementById('case-details-form').style.pointerEvents = "";
+            page_history.unshift("case_details");
+        } 
+        else if (page_history[0] === "user_cases_case_details"){
+            document.getElementById('case-details').style.display = "none";
+            document.getElementById('heading-case-details').style.display = "none";
+            document.getElementById('case-details-form').style.display = "none";
+            document.getElementById('heading-case-details').style.opacity = 1;
+            document.getElementById('case-details').style.opacity = 1;
+            document.getElementById('top-nav-search-heading').style.display = "block";
+            document.getElementById("top-nav-search-heading-content").innerHTML = "#Search_Input - #User_Name";
+            document.getElementById("top-nav-search-user-profile-back-button").style.display = "block";
+            document.getElementById('top-nav-search-results').style.display = "none";
+            document.getElementById("user-profile").style.display = "block";
+        } 
+        else if (page_history[0] === "top_nav_search_user_profile"){
+            document.getElementById("top-nav-search-heading-content").innerHTML = "Searching results for - #Search_Input";
+            document.getElementById("top-nav-search-user-profile-back-button").style.display = "block";
+            document.getElementById("user-profile").style.display = "none";
+            document.getElementById('top-nav-search-results').style.display = "block";
+        }
+        else if (page_history[0] === "top_nav_search_cases_details"){
+            document.getElementById('top-nav-search-heading').style.display = "block";
+            document.getElementById("top-nav-search-heading-content").innerHTML = "Searching results for - #Search_Input";
+            document.getElementById('top-nav-search-results').style.display = "block";
+            document.getElementById('case-details').style.display = "none";
+            document.getElementById('heading-case-details').style.display = "none";
+            document.getElementById('case-details-form').style.display = "none";
+            document.getElementById('heading-case-details').style.opacity = 1;
+            document.getElementById('case-details').style.opacity = 1;
         }
     }
-
     //------Keyboard-Shortcuts---------------------------------------------------------------------------------------------------------------
     document.onkeyup = function (e) {
         if (e.ctrlKey && e.altKey && e.which == 83) {
@@ -1231,18 +1254,22 @@
     };
 
     //------Approve-Reject-Buttons-Effect--------------------------------------------------------------------------------------------------
-    function approve_profile_pic() {
-        if (event.target.tagName == "IMG" && event.target.parentElement.parentElement.classList.contains('approve')) {
+    for(let i=0; i<document.getElementsByClassName("approve").length; i++){
+        document.getElementsByClassName("approve")[i].onclick = function(){
+            if (event.target.tagName == "IMG" && event.target.parentElement.parentElement.classList.contains('approve')) {
             event.target.setAttribute('src', '/static/img/approved-click.png');
             $(event.target.parentElement.parentElement.parentElement.parentElement).fadeOut();
-        } else alert("Error");
+            } else return false;
+        }
     }
 
-    function reject_profile_pic() {
-        if (event.target.tagName == "IMG" && event.target.parentElement.parentElement.classList.contains('reject')) {
-            event.target.setAttribute('src', '/static/img/rejected-click.png');
-            $(event.target.parentElement.parentElement.parentElement.parentElement).fadeOut();
-        } else alert("Error");
+    for(let i=0; i<document.getElementsByClassName("reject").length; i++){
+        document.getElementsByClassName("reject")[i].onclick = function() {
+            if (event.target.tagName == "IMG" && event.target.parentElement.parentElement.classList.contains('reject')) {
+                event.target.setAttribute('src', '/static/img/rejected-click.png');
+                $(event.target.parentElement.parentElement.parentElement.parentElement).fadeOut();
+            } else alert("Error");
+        }
     }
 
     //------Enlarge-Old-or-New-Photo-------------------------------------------------------------------------------------------------------
@@ -1294,12 +1321,10 @@
         if (userInfo.image) {
             $('#tooltip-dp').html('<img src="data:image/png;base64,"' + userInfo.image + '>');
         }
-        var y = event.clientY;
-        var x = event.clientX;
-        var tooltip_height = 0.39 * document.documentElement.clientHeight;
-        document.getElementById("vol-description-tooltip").style.top = "calc(" + y + "px" + " - " + tooltip_height + "px" + ")";
-        document.getElementById("vol-description-tooltip").style.left = x - 40 + "px";
         $("#vol-description-tooltip").fadeIn();
+        var tooltipHeight = document.getElementById("vol-description-tooltip").getBoundingClientRect().height;
+        document.getElementById("vol-description-tooltip").style.top = event.target.getBoundingClientRect().top - tooltipHeight/2 + "px";
+        document.getElementById("vol-description-tooltip").style.left = event.target.getBoundingClientRect().left + event.target.getBoundingClientRect().width + "px";
     }
 
     //------Tooltip-Vol-Assign-Case--------------------------------------------------------------------------------------------------------

@@ -69,7 +69,8 @@ public class DefaultController {
         logger.info("vkj auths : " + auth);
         for (GrantedAuthority authority : auth) {
             if (authority.getAuthority().equalsIgnoreCase("ADMIN")) {
-                modelAndView.setViewName("admin-dashboard");
+                //You can change page name here
+                modelAndView.setViewName("receptionist-dashboard");
                 break;
             } else if (authority.getAuthority().equalsIgnoreCase("RECEPTIONIST")) {
                 modelAndView.setViewName("receptionist-dashboard");
