@@ -218,15 +218,15 @@ public class UserDao {
     }
 
 
-    public void updateLastLoginDate(String name) {
-        this.jdbcTemplate.update(connection -> {
-                    PreparedStatement ps = connection.prepareStatement(
-                            "update user_info ui, user u set ui.last_login_date =  now() where u.user_id = ui.user_id and u.user_name=?");
-                    ps.setString(1, name);
-                    return ps;
-                }
-        );
-    }
+//    public void updateLastLoginDate(String name) {
+//        this.jdbcTemplate.update(connection -> {
+//                    PreparedStatement ps = connection.prepareStatement(
+//                            "update user_info ui, user u set ui.last_login_date =  now() , login_count = login_count+1 where u.user_id = ui.user_id and u.user_name=?");
+//                    ps.setString(1, name);
+//                    return ps;
+//                }
+//        );
+//    }
 
     public void enableUser(User user) {
         this.jdbcTemplate.update(connection -> {
@@ -291,7 +291,7 @@ public class UserDao {
 
         jdbcTemplate.update((Connection con) -> {
             PreparedStatement ps = con.prepareStatement(
-                    "update user_info u set u.last_login_date = now() where u.user_id = ?"
+                    "update user_info u set u.last_login_date = now() , u.login_count = u.login_count+1 where u.user_id = ?"
             );
             ps.setLong(1, user.getUserId());
             return ps;
@@ -380,6 +380,7 @@ public class UserDao {
             user.setRole(rs.getString("role"));
             user.setSecurityQId(rs.getInt("security_id"));
             user.setSecurityQAns(rs.getString("security_ans"));
+            user.setLoginCount(rs.getInt("login_count"));
             if (type.contains("I")) {
                 try {
                     Blob image = rs.getBlob("image");

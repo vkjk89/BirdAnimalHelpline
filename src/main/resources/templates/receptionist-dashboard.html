@@ -424,8 +424,8 @@
                     Action Center
                 </div>
                 <div id="action-center-body">
-                    <a class="action-center-links" id="action-center-assign-case" class="no-select">Assign Case</a>
-                    <a class="action-center-links" id="action-center-close-case" class="no-select">Close Case</a>
+                    <a class="action-center-links no-select" id="action-center-assign-case" >Assign Case</a>
+                    <a class="action-center-links no-select" id="action-center-close-case" >Close Case</a>
                 </div>
             </div>
         </div>
@@ -1024,8 +1024,7 @@
     }
 
     //------Case-Details---------------------------------------------------------------------------------------------------------------------
-    for(let i=0; i<document.getElementsByClassName("row1").length; i++){
-        document.getElementsByClassName("row1")[i].onclick = function case_details(data) {
+    function case_details(data) {
         document.getElementById('my-cases-content').style.display = "none";
         document.getElementById('case-details').style.display = "block";
         document.getElementById('heading-my-cases').style.display = "none";
@@ -1054,7 +1053,9 @@
         $('#location-case-details').val(caseInfo.location);
         $('#location-landmark-case-details').val(caseInfo.locationLandMark);
         $('#location-pincode-case-details').val(caseInfo.locationPincode);
-        }
+    }
+    for(let i=0; i<document.getElementsByClassName("row1").length; i++){
+        //document.getElementsByClassName("row1")[i].onclick = case_details();
     }
     
 

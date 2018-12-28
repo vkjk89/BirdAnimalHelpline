@@ -50,7 +50,7 @@ public class DefaultController {
         modelAndView.addObject("birdAnimals", userService.getListBirdAnimals());
 
         logger.info("VKJ user is : " + user);
-        if (user.getLastLoginDate() == null) {
+        if (user.getLastLoginDate() == null || user.getLoginCount() == 0) {
             logger.info("User login for first time so redirecting to profile completion page");
             //modelAndView.setViewName("receptionist-dashboard");
             //modelAndView.setViewName("Vol-dashboard");
@@ -69,8 +69,7 @@ public class DefaultController {
         logger.info("vkj auths : " + auth);
         for (GrantedAuthority authority : auth) {
             if (authority.getAuthority().equalsIgnoreCase("ADMIN")) {
-                //You can change page name here
-                modelAndView.setViewName("receptionist-dashboard");
+                modelAndView.setViewName("admin-dashboard");
                 break;
             } else if (authority.getAuthority().equalsIgnoreCase("RECEPTIONIST")) {
                 modelAndView.setViewName("receptionist-dashboard");

@@ -1,0 +1,1 @@
+﻿alter TABLE user_info add COLUMN login_count int(11) DEFAULT 0;

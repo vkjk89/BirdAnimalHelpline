@@ -28,6 +28,7 @@ public class User implements Principal, Serializable {
     private String securityQAns;
     private Long caseAcceptedCount;
     private Long caseRejectedCount;
+    private Integer loginCount;
     private UserAddressInfo homeAddr;
     private UserAddressInfo officeAddr;
     private List<UserServiceTimeInfo> userServiceTimeInfos;
@@ -209,6 +210,14 @@ public class User implements Principal, Serializable {
         this.caseRejectedCount = caseRejectedCount;
     }
 
+    public Integer getLoginCount() {
+        return loginCount;
+    }
+
+    public void setLoginCount(Integer loginCount) {
+        this.loginCount = loginCount;
+    }
+
     public UserAddressInfo getHomeAddr() {
         return homeAddr;
     }
@@ -263,6 +272,7 @@ public class User implements Principal, Serializable {
                 ", securityQAns='" + securityQAns + '\'' +
                 ", caseAcceptedCount=" + caseAcceptedCount +
                 ", caseRejectedCount=" + caseRejectedCount +
+                ", loginCount=" + loginCount +
                 ", homeAddr=" + homeAddr +
                 ", officeAddr=" + officeAddr +
                 ", userServiceTimeInfos=" + userServiceTimeInfos +

@@ -59,14 +59,14 @@ public class UserService {
         return userDao.getUserByUserName(userName);
     }
 
-    public boolean isFirstTimeLogin(String name) {
-        User user = findUserByUserName(name);
-        if (user == null || user.getLastLoginDate() == null) {
-            return true;
-        }
-        userDao.updateLastLoginDate(name);
-        return false;
-    }
+//    public boolean isFirstTimeLogin(String name) {
+//        User user = findUserByUserName(name);
+//        if (user == null || user.getLastLoginDate() == null || user.getLoginCount() == 0) {
+//            return true;
+//        }
+//        userDao.updateLastLoginDate(name);
+//        return false;
+//    }
 
     public void enableUser(String userName) {
         User user = userDao.getUserByUserName(userName);
