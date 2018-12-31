@@ -36,14 +36,14 @@ public class UserController {
     public @ResponseBody
     List<PinCodeLandmarkInfo> getPinCodeVsLandMarks(@RequestParam("term") String term) {
         logger.info("vkj term : " + term);
-        return userService.getPinCodeLandMarks(term);
+        return userService.getPinCodeLandMarks(term.toLowerCase());
     }
 
     @RequestMapping("/getVolListForSearch")
     public @ResponseBody
     List<User> getUserList(@RequestParam("term") String term) {
         logger.info("vkj term : " + term);
-        return userService.getUserList(term);
+        return userService.getUserList(term.toLowerCase());
     }
 
 }

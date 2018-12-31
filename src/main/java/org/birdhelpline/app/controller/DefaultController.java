@@ -15,13 +15,15 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 
 @Controller
 public class DefaultController {
     Logger logger = LoggerFactory.getLogger(DefaultController.class);
-
+    private static final List<String> ROLE_NOT_REQ_PROFILE_COMP = Arrays.asList("ADMIN","Receptionist");
     @Autowired
     UserService userService;
 
@@ -42,15 +44,17 @@ public class DefaultController {
 
         Boolean profileCompleted = (Boolean) model.asMap().get("profileCompleted");
         if (profileCompleted != null && profileCompleted) {
-            logger.info(" VKJ : from profile compl page so redirecting :" + profileCompleted);
+            logger.info(" VKJ : from profile completion page so redirecting :" + profileCompleted);
             getViewBasedOnRole(modelAndView);
             return modelAndView;
         }
 
-        modelAndView.addObject("birdAnimals", userService.getListBirdAnimals());
+        modelAndView.addObject("birds", userService.getListBirds());
+        modelAndView.addObject("animals", userService.getListAnimals());
 
         logger.info("VKJ user is : " + user);
-        if (user.getLastLoginDate() == null || user.getLoginCount() == 0) {
+
+        if (!ROLE_NOT_REQ_PROFILE_COMP.contains(user.getRole()) && (user.getLastLoginDate() == null || user.getLoginCount() == 0)) {
             logger.info("User login for first time so redirecting to profile completion page");
             //modelAndView.setViewName("receptionist-dashboard");
             //modelAndView.setViewName("Vol-dashboard");

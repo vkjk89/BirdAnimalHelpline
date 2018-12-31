@@ -252,11 +252,15 @@
                     </div>
                     <label for="animal-type" id="animal-type-js">Bird/Animal type: </label>
                     <select autocomplete="off" id="animal-type" name="animal-type" required tabindex="3">
-                        <option id="select-default" th:each="o : ${birdAnimals}" th:text="${o}" th:value="${o}" value="">Choose Bird/Animal Type</option>
+                        <option id="select-default" th:each="o : ${birds}" th:text="${o}" th:value="${o}" value="">Choose Bird/Animal Type</option>
                     </select><br>
+                    <!--<select autocomplete="off" id="animal-type" name="animal-type" required tabindex="3">-->
+                        <!--<option id="select-default" th:each="o : ${animals}" th:text="${o}" th:value="${o}" value="">Choose Bird/Animal Type</option>-->
+                    <!--</select><br>-->
                     <label for="animal-name" id="animal-name-js">Bird/Animal name: </label>
                     <input autocomplete="off" id="animal-name" name="animal-name" placeholder="" tabindex="4" type="text"><br>
                     <label for="condition">Condition: </label>
+
                     <input autocomplete="off" id="condition" name="condition" placeholder="Eg: Broken Leg (Recommended)" tabindex="5" type="text">
                     <label for="case-photos">Upload Photos</label>
                     <input accept="image/*" id="case-photos" multiple name="case-photos" onchange="if (this.files.length > 3){alert('You can select maximum of 5 photos');this.value = ''} " type="file">
@@ -1033,7 +1037,7 @@
         $('#condition-case-details').val(caseInfo.animalCondition);
         //$('#case-photos-case-details').val(caseInfo.caseId);
         $('#contact-name-case-details').val(caseInfo.contactName);
-        //$('#nine-one-case-details').val(caseInfo.contactNumber);
+        $('#nine-one-case-details').val(caseInfo.contactPrefix);
         $('#contact-number-case-details').val(caseInfo.contactNumber);
         $('#location-case-details').val(caseInfo.location);
         $('#location-landmark-case-details').val(caseInfo.locationLandMark);
@@ -1469,7 +1473,7 @@
                         var cc = [];
                         $.each(data, function (i, item) {
                             caseIdVsInfoMap[item.caseId] = item;
-                            var htm = aCase + item.caseId + bCase + (item.active ? "Active" : "Closed") + cCase + item.creationDate + dCase + item.typeAnimal + eCase + item.animalName + fCase;
+                            var htm = aCase + item.caseId + bCase + (item.active ? "Active" : "Closed") + cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + item.animalName + fCase;
                             cc.push(htm);
                         });
 
@@ -1560,11 +1564,12 @@
                     caseDetails = ui.item.caseDetails;
                     caseIdVsInfoMap[caseDetails.caseId] = caseDetails;
                     iCnt = iCnt + 1;
-                    var htm = aCase + caseDetails.caseId + bCase + (caseDetails.active ? "Active" : "Closed") + cCase + caseDetails.creationDate + dCase + caseDetails.typeAnimal + eCase + caseDetails.animalName + fCase;
+                    var htm = aCase + caseDetails.caseId + bCase + (caseDetails.active ? "Active" : "Closed") + cCase + caseDetails.creationDateStr + dCase + caseDetails.typeAnimal + eCase + caseDetails.animalName + fCase;
                     $(container).append(htm);
-                    $('#table4').html(container);
+                    $('#table1').html(container);
                     $("#search-case-input").autocomplete("close");
-                    //$("#search-case-input").val('');
+                    $("#search-case-input").val('');
+                    console.info(container);
                     return false;
                 }
             }

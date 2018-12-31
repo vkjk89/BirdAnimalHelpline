@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,6 +36,7 @@
             </div>
         </div>
         <button form="pincode" id="next" type="submit">Submit</button>
+        <input name="page" type="hidden" value="3">
     </form>
 </main>
 
@@ -70,7 +71,7 @@
                 document.getElementById("selected-pincodes").style.display = "block";
                 if (ui.item) {
                     //---------------function timings_create(){
-                        document.getElementById("selected-pincode-ul").innerHTML += "<li><div><div>" + ui.item.landmarks + " - " + ui.item.pincode + "</div><div><input type=\"checkbox\" name=\"pincode-timing-check\" id=\"pincode-timing-check" + counter + "\" class=\"pincode-timing-check member" + counter + "\" onclick=\"select_timings_dropown(this)\"><label for=\"pincode-timing-check" + counter + "\">Specify Timings</label><select name = \"selectedTiming\" id=\"select-timings\" class=\"select-timings member" + counter + "\"><option>00-06</option><option>06-12</option><option>12-18</option><option>18-00</option></select></div></div></li>";
+                        document.getElementById("selected-pincode-ul").innerHTML += "<li><div><input type=\"hidden\"  name =\"pincodeId\" value =\"" + ui.item.value + "\"><div>" + ui.item.landmarks + " - " + ui.item.pincode + "</div><div><input type=\"checkbox\" name=\"pincode-timing-check\" id=\"pincode-timing-check" + counter + "\" class=\"pincode-timing-check member" + counter + "\" onclick=\"select_timings_dropown(this)\"><label for=\"pincode-timing-check" + counter + "\">Specify Timings</label><select name = \"selectedTiming\" id=\"select-timings\" class=\"select-timings member" + counter + "\"><option>00-06</option><option>06-12</option><option>12-18</option><option>18-00</option></select></div></div></li>";
                         counter++;
                     //----------------------------------------}
                     $("#search-pincode").autocomplete("close");

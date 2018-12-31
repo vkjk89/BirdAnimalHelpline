@@ -9,6 +9,7 @@ public class CaseInfo {
     private Long caseId;
     private Long userIdOpened;
     private Timestamp creationDate;
+    private String creationDateStr;
     private Timestamp lastModificationDate;
     private Timestamp closeDate;
     private String desc;
@@ -214,5 +215,13 @@ public class CaseInfo {
 
     public void setLocationLandMark(String locationLandMark) {
         this.locationLandMark = locationLandMark;
+    }
+
+    public String getCreationDateStr() {
+        return creationDateStr;
+    }
+
+    public void setCreationDateStr(String creationDateStr) {
+        this.creationDateStr = creationDateStr;
     }
 }

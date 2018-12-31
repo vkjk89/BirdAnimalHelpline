@@ -25,6 +25,7 @@ public class User implements Principal, Serializable {
     private Timestamp lastLoginDate;
     private String role;
     private Integer securityQId;
+    private String securityQIdStr;
     private String securityQAns;
     private Long caseAcceptedCount;
     private Long caseRejectedCount;
@@ -250,6 +251,14 @@ public class User implements Principal, Serializable {
         this.userImage = userImage;
     }
 
+    public String getSecurityQIdStr() {
+        return securityQIdStr;
+    }
+
+    public void setSecurityQIdStr(String securityQIdStr) {
+        this.securityQIdStr = securityQIdStr;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -269,6 +278,7 @@ public class User implements Principal, Serializable {
                 ", lastLoginDate=" + lastLoginDate +
                 ", role='" + role + '\'' +
                 ", securityQId=" + securityQId +
+                ", securityQIdStr='" + securityQIdStr + '\'' +
                 ", securityQAns='" + securityQAns + '\'' +
                 ", caseAcceptedCount=" + caseAcceptedCount +
                 ", caseRejectedCount=" + caseRejectedCount +

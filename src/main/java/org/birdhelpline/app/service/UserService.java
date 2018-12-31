@@ -47,7 +47,7 @@ public class UserService {
 
     public List<PinCodeLandmarkInfo> getPinCodeLandMarks(String term) {
         List<PinCodeLandmarkInfo> list = userDao.getPinCodeLandMarks();
-        return list.stream().filter(p -> p.getLandmark().indexOf(term) >= 0).collect(Collectors.toList());
+        return list.stream().filter(p -> p.getLandmark().toLowerCase().indexOf(term) >= 0).collect(Collectors.toList());
 
     }
 
@@ -79,8 +79,12 @@ public class UserService {
 
     }
 
-    public List<String> getListBirdAnimals() {
-        return userDao.getListBirdAnimals();
+    public List<String> getListBirds() {
+        return userDao.getListBirds();
+    }
+
+    public List<String> getListAnimals() {
+        return userDao.getListAnimals();
     }
 
     public void saveUserAddrPinDetails(User user) {

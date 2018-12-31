@@ -16,6 +16,9 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +26,8 @@ import java.util.function.Supplier;
 
 @Repository
 public class CaseDao {
+    private static final SimpleDateFormat FORMATTED_DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+
     final Supplier<RowMapper<CaseInfo>> caseInfoRowMapper = () -> (ResultSet rs, int i) -> {
         CaseInfo caseInfo = new CaseInfo();
         caseInfo.setActive(rs.getBoolean("is_active"));
@@ -30,7 +35,9 @@ public class CaseDao {
         caseInfo.setUserIdClosed(rs.getLong("user_id_closed"));
         caseInfo.setUserIdOpened(rs.getLong("user_id_opened"));
         caseInfo.setCurrentUserId(rs.getLong("current_user_id"));
-        caseInfo.setCreationDate(rs.getTimestamp("creation_date"));
+        Timestamp creationDate = rs.getTimestamp("creation_date");
+        caseInfo.setCreationDate(creationDate);
+        caseInfo.setCreationDateStr(FORMATTED_DATE_FORMAT.format(new Date(creationDate.getTime())));
         caseInfo.setLastModificationDate(rs.getTimestamp("last_modification_date"));
         caseInfo.setCloseDate(rs.getTimestamp("close_date"));
         caseInfo.setDesc(rs.getString("description"));
@@ -46,6 +53,7 @@ public class CaseDao {
         caseInfo.setLocationLandMark(rs.getString("location_landmark"));
         return caseInfo;
     };
+
     Logger logger = LoggerFactory.getLogger(CaseDao.class);
     @Autowired
     private JdbcTemplate jdbcTemplate;

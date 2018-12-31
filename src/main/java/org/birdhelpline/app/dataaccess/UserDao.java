@@ -30,7 +30,8 @@ public class UserDao {
     private Map<String, Integer> userRoleVsRoleId = new HashMap<>();
     private Map<Integer, String> securityQIdVSSecurityQ = new LinkedHashMap<>();
     private List<PinCodeLandmarkInfo> listPincodeLandMarks = new ArrayList<>();
-    private List<String> listBirdAnimals = new ArrayList<>();
+    private List<String> listBirds = new ArrayList<>();
+    private List<String> listAnimals = new ArrayList<>();
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -82,9 +83,11 @@ public class UserDao {
 
         logger.info("VKJ : " + securityQIdVSSecurityQ);
 
-        listBirdAnimals = jdbcTemplate.queryForList("select bird_animal_name from bird_animal", String.class);
+        listBirds = jdbcTemplate.queryForList("select bird_animal_name from bird_animal where type ='B'", String.class);
+        listAnimals = jdbcTemplate.queryForList("select bird_animal_name from bird_animal where type ='A'", String.class);
 
-        logger.info("VKJ : " + listBirdAnimals);
+        logger.info("VKJ : " + listBirds);
+        logger.info("VKJ : " + listAnimals);
 
     }
 
@@ -399,11 +402,6 @@ public class UserDao {
         }
     }
 
-
-    public List<String> getListBirdAnimals() {
-        return listBirdAnimals;
-    }
-
     public List<PinCodeLandmarkInfo> getPinCodeLandMarks() {
         return listPincodeLandMarks;
     }
@@ -412,5 +410,11 @@ public class UserDao {
         return securityQIdVSSecurityQ;
     }
 
+    public List<String> getListBirds() {
+        return listBirds;
+    }
 
+    public List<String> getListAnimals() {
+        return listAnimals;
+    }
 }

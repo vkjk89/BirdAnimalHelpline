@@ -135,6 +135,7 @@ public class LoginController {
             return "RequestRegistration/Step2";
         }
 
+        user.setSecurityQIdStr(userService.getSecurityQs().get(user.getSecurityQId()));
         return "RequestRegistration/Step3";
     }
 

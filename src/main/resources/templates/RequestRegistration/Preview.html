@@ -44,8 +44,10 @@
             <span>Email ID: </span>
             <span id="emailID" th:field="*{email}" th:text="*{email}">#email</span>
             <br>
+
             <span style="text-decoration:underline;">Security Question:</span><br>
-            <span id="secquestion" th:field="*{securityQId}" th:text="*{securityQId}">#secQuestion</span>
+            <span id="secquestion" th:field="*{securityQIdStr}" th:text="*{securityQIdStr}">#secQuestion</span>
+
             <br>
             <span id="secresponse" th:field="*{securityQAns}" th:text="*{securityQAns}">#secAnswer</span>
             <br>
@@ -55,7 +57,7 @@
             <div class="step-header" style="margin-bottom:1vh">Login Credentials</div>
             <div id="usernasme" th:field="*{userName}" th:text="*{userName}">#userName</div>
             <div>
-                <input type="password" value="#password" id="password" th:field="*{password}" disabled>
+                <input type="password" value="#password" id="password" name="password" th:value="*{password}" disabled>
                 <button type="button" id="show_pass">Show Password</button></div>
             <br>
         </div>
