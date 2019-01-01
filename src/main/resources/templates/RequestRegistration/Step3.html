@@ -7,12 +7,8 @@
     <title>Request Registration</title>
     <link href="/static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
-    <link href="/static/css/RequestRegistration/Step3.css" rel="stylesheet"
-          th:href="@{/css/RequestRegistration/Step3.css}">
+    <link href="/static/css/RequestRegistration/Step3.css" rel="stylesheet" th:href="@{/css/RequestRegistration/Step3.css}">
     <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
-    <!--<script src="/static/js/jquery.iframe-transport.js" th:src="@{/js/jquery.iframe-transport.js}"></script>-->
-    <!--<script src="/static/js/jquery.ui.widget.js" th:src="@{/js/jquery.ui.widget.js}"></script>-->
-    <!--<script src="/static/js/jquery-ui.min.js" th:src="@{/js/jquery-ui.min.js}"></script>-->
     <script>
 
     </script>
@@ -29,56 +25,44 @@
     <div class="progress-bar-status" id="progress-bar-4"></div>
     <div class="progress-bar-status" id="progress-bar-5">3</div>
 </div>
-<!--<form id = "first-form" class = "first-form"  name = "step2"  >-->
+
 <form action="#" enctype="multipart/form-data" id="step3Form" method="post" name="step3" th:action="@{/registration}"
       th:object="${user}">
 
     <main>
         <div class="step3" id="step3">
-            <label for="dp-img" id="dp-label"><img id="dp-img1"
-                                                   src="/static/img/display-picture11.png" th:src="@{/img/display-picture11.png}"></label>
+            <label for="dp-img" id="dp-label">
+                <img src="/img/loading-simple.gif" id="dp_loading" alt="Loading" style="position:absolute; display:none">
+                <img id="dp-img1" src="/static/img/display-picture11.png" th:src="@{/img/display-picture11.png}">
+            </label>
             <label for="dp-img" id="dp-error">Select valid Profile picture.</label>
             <label for="dp-img" id="dp-label-2">Upload your profile picture</label>
             <div id="warning">
-                <b>Please make sure that the picture you choose to upload doesn't contain any quotes or any picture
-                    other than yourself, as this picture will be used for further identifiction and verification.</b>
+                <b>Please make sure that the picture you choose to upload doesn't contain any quotes or any picture other than yourself, as this picture will be used for further identifiction and verification.</b>
             </div>
-            <input accept="image/*" id="dp-img" name="dp-image" required
-                   style="display:none; top: 0; right: 0; position: absolute;" type="file">
-            <input autocomplete="off" name="username-selection" pattern="[A-Za-z0-9+@+_+-]{4,}" placeholder="Username"
-                   required th:field="*{userName}" title="4 characters minimum" type="text">
+            <input accept="image/*" id="dp-img" name="dp-image" required style="display:none; top: 0; right: 0; position: absolute;" type="file">
+            <input autocomplete="off" name="username-selection" pattern="[A-Za-z0-9+@+_+-]{4,}" placeholder="Username" required th:field="*{userName}" title="4 characters minimum" type="text">
             <ul th:if="${#fields.hasErrors('userName')}">
-                <li th:each="err : ${#fields.errors('userName')}" th:text="${err}">That username is taken. Try
-                    another.
+                <li th:each="err : ${#fields.errors('userName')}" th:text="${err}">That username is taken. Try another.
                 </li>
             </ul>
-            <input autocomplete="off" id="password" name="password-selection" pattern="[0-9]{4}"
-                   placeholder="4 digit password" required th:field="*{password}" title="4 digit password" type="password">
+            <input autocomplete="off" id="password" name="password-selection" pattern="[0-9]{4}" placeholder="4 digit password" required th:field="*{password}" title="4 digit password" type="password">
             <ul th:if="${#fields.hasErrors('password')}">
                 <li th:each="err : ${#fields.errors('password')}" th:text="${err}">Password is invalid</li>
             </ul>
         </div>
 
         <div class="footer-btns" id="footer-btns">
-            <a href="/registration?page=1"><img id="previous"
-                                                src="/static/img/previous-button-1.png" th:src="@{/img/previous-button-1.png}"></a>
-
-            <!--<div class="btn-group btn-group-toggle" data-toggle="buttons">-->
-            <!--<button type = "submit" name="preview" id="preview" value="Preview">Preview</button>-->
-            <!--<button type="submit" name="submit" id="submit">Submit</button>-->
-            <!--</div>-->
-
+            <a href="/registration?page=1"><img id="previous" src="/static/img/previous-button-1.png" th:src="@{/img/previous-button-1.png}"></a>    
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <button id="preview" name="action" type="submit" value="preview">Preview</button>
                 <button id="submit" name="action" type="submit" value="submit">Submit</button>
             </div>
-
         </div>
         <input name="page" type="hidden" value="3">
     </main>
 </form>
 
-<!--<script src="/static/js/jquery-3.3.1.slim.min.js" th:src="@{/js/jquery-3.3.1.slim.min.js}"></script>-->
 <script>
     $(document).ready(function () {
         $('#preview, #submit').click(dp_error);
@@ -87,21 +71,22 @@
         function dp_error() {
             if (document.getElementById("dp-img").files.length == 0) {
                 document.getElementById('dp-error').style.display = "block";
-                document.getElementById('dp-img').style.border = "3px dashed red";
+                document.getElementById('dp-img1').style.border = "3px dashed red";
                 document.getElementById('dp-label-2').style.display = "none";
             } else if (document.getElementById("dp-img").files.length == 1) {
                 document.getElementById('dp-error').style.display = "none";
-                document.getElementById('dp-img').style.border = "none";
+                document.getElementById('dp-img1').style.border = "none";
                 document.getElementById('dp-label-2').style.display = "block";
             } else {
                 document.getElementById('dp-error').style.display = "block";
-                document.getElementById('dp-img').style.border = "3px dashed red";
+                document.getElementById('dp-img1').style.border = "3px dashed red";
                 document.getElementById('dp-label-2').style.display = "none";
             }
         }
 
 
         $('#dp-img').change(function () {
+            document.getElementById("dp_loading").style.display = "block";
             var formData = new FormData();
             formData.append('dp-image', this.files[0]);
             $.ajax({
@@ -114,6 +99,7 @@
                 success: function (data) {
                     console.log(data);
                     $('#dp-img1').attr('src', "data:image/png;base64," + data);//data:image/png;base64,${data}');
+                    document.getElementById("dp_loading").style.display = "none";
                     $('#dp-error').text("")//data:image/png;base64,${data}');
                     //alert(data);
                 },
@@ -122,9 +108,9 @@
                     $('#dp-error').text(e.responseJSON.message);
                     $('#dp-error').show();
                 }
-
             });
         });
+
     });
 </script>
 </body>

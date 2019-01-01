@@ -6,13 +6,11 @@
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Request Registration</title>
     <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
-    <link href="/static/css/RequestRegistration/preview.css" rel="stylesheet"
-          th:href="@{/css/RequestRegistration/preview.css}">
+    <link href="/static/css/RequestRegistration/preview.css" rel="stylesheet" th:href="@{/css/RequestRegistration/preview.css}">
 
 </head>
 <body>
 
-<!-- div class="bg"></div -->
 <form action="/registration" enctype="multipart/form-data" method="post" th:object="${user}">
     <div class="heading">
         Join Us
@@ -20,40 +18,45 @@
 
     <main>
         <div id="step1">
-            <img onclick="window.location = '/registration' " src="/static/img/edit.png" th:src="@{/img/edit.png}">
-            <label>I am a: </label>
-            <div id="volrole-selected" style="display: inline-block" th:field="*{role}" th:text="*{role}">#volrole</div>
+            <div class="step-header">
+                <img onclick="window.location = '/registration' " src="/static/img/edit.png" th:src="@{/img/edit.png}">
+                <span>I am a: </span>
+                <span id="volrole-selected" th:field="*{role}" th:text="*{role}">#volrole</span>
+            </div>
         </div>
         <div id="step2">
-            <img onclick="window.location = '/registration?page=1' " src="/static/img/edit.png"
-                 th:src="@{/img/edit.png}">
-            <div id="first-name" th:field="*{firstName}" th:text="*{firstName}">#firstname</div>
-            <div id="last-name" th:field="*{lastName}" th:text="*{lastName}">#lastname</div>
+            <img onclick="window.location = '/registration?page=1' " src="/static/img/edit.png" th:src="@{/img/edit.png}">
+            <div class="step-header">Basic Details</div>
+            <span>Name: </span>
+            <span id="first-name" th:field="*{firstName}" th:text="*{firstName}">#firstName</span>
+            <span id="last-name" th:field="*{lastName}" th:text="*{lastName}">#lastName</span>
             <br>
-            <Label>Date of Birth: </Label>
-            <div id="DOB" th:field="*{dob}" th:text="*{dob}">#DOB</div>
+            <span>Date of Birth: </span>
+            <span id="DOB" th:field="*{dob}" th:text="*{dob}">#DOB</span>
             <br>
-            <div id="+91">+91</div>
-            -
-            <div id="mobileno" th:field="*{mobile}" th:text="*{mobile}">#mobileno</div>
+            <span>Mobile No.: </span>
+            <span id="+91">+91 - </span>
+            <span id="mobileno" th:field="*{mobile}" th:text="*{mobile}">#mobileNo</span>
             <br>
-            <label>Gender: </label>
-            <div id="gender" th:field="*{gender}" th:text="*{gender}">#gender</div>
+            <span>Gender: </span>
+            <span id="gender" th:field="*{gender}" th:text="*{gender}">#gender</span>
             <br>
-            <label>Email ID: </label>
-            <div id="emailID" th:field="*{email}" th:text="*{email}">#email</div>
+            <span>Email ID: </span>
+            <span id="emailID" th:field="*{email}" th:text="*{email}">#email</span>
             <br>
-            <label style="font-size: 1.1em; font-weight: 700;">Security Question:</label><br>
-            <div id="secquestion" th:field="*{securityQId}" th:text="*{securityQId}">#secquestion</div>
+            <span style="text-decoration:underline;">Security Question:</span><br>
+            <span id="secquestion" th:field="*{securityQId}" th:text="*{securityQId}">#secQuestion</span>
             <br>
-            <div id="secresponse" th:field="*{securityQAns}" th:text="*{securityQAns}">#secanswer</div>
+            <span id="secresponse" th:field="*{securityQAns}" th:text="*{securityQAns}">#secAnswer</span>
             <br>
         </div>
         <div id="step3">
-            <!-- <img th:src="@{/img/edit.png}" src = "/static/img/edit.png" onclick="window.location = '/registration?page=2' "> -->
-            <div id="profilepic"><img src="" th:src="*{'data:image/png;base64,'+getEncodedImage()}"></div>
-            <div id="usernasme" th:field="*{userName}" th:text="*{userName}">#username</div>
-            <div id="password">#passsword</div>
+            <img th:src="@{/img/edit.png}" src = "/static/img/edit.png" onclick="window.location = '/registration?page=2' ">
+            <div class="step-header" style="margin-bottom:1vh">Login Credentials</div>
+            <div id="usernasme" th:field="*{userName}" th:text="*{userName}">#userName</div>
+            <div>
+                <input type="password" value="#password" id="password" th:field="*{password}" disabled>
+                <button type="button" id="show_pass">Show Password</button></div>
             <br>
         </div>
 
@@ -62,11 +65,24 @@
     <div class="footer-btns" id="footer-btns">
         <div style="display:inline-block;">
             <input id="next" name="SubmitApplication" type="submit" value="Submit">
-            <!--<input type = "submit" name = "SubmitApplication" id = "next" value = "Submit" onclick="window.location.assign('/templates/RequestRegistration/reg-complete.html');">-->
         </div>
     </div>
 
     <input name="page" type="hidden" value="3">
+
+    <script>
+        var pass_state = true;
+        document.getElementById("show_pass").onclick = function(){
+            if(pass_state === true){
+                document.getElementById('password').setAttribute('type','text');
+                pass_state = !pass_state;
+            }
+            else {
+                document.getElementById('password').setAttribute('type','password');
+                pass_state = !pass_state;
+            }
+        };
+    </script>
 </form>
 </body>
 </html>

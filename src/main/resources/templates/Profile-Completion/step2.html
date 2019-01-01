@@ -16,23 +16,17 @@
 </p>
 <main>
     <div id="work-address">
-        <form action="" id="home-address-form" method="POST" name="home-address-form" th:action="@{/profileCompletion}"
-              th:object="${user}">
+        <form action="" id="home-address-form" method="POST" name="home-address-form" th:action="@{/profileCompletion}" th:object="${user}">
             <p class="title">Work Address:</p>
-
             <label for="address-line1">Full Name</label>
-            <input autofocus name="full-name" placeholder="Full Name" th:field="*{officeAddr.fullName}" type="text">
+            <input id="full-name" autofocus name="full-name" placeholder="Full Name" th:field="*{officeAddr.fullName}" type="text">
             <label for="address-line2">Street Address</label>
-            <input name="address-line1" placeholder="Address Line 1" th:field="*{officeAddr.addrLine1}" type="text">
-            <input name="address-line2" placeholder="Adderss Line 2" th:field="*{officeAddr.addrLine2}" type="text">
-            <input max="450000" min="400000" name="pincode" placeholder="Pincode" required
-                   th:field="*{officeAddr.pincode}" type="number">
+            <input id="address-line1" name="address-line1" placeholder="Address Line 1" th:field="*{officeAddr.addrLine1}" type="text">
+            <input id="address-line2" name="address-line2" placeholder="Adderss Line 2" th:field="*{officeAddr.addrLine2}" type="text">
+            <input id="pincode" max="450000" min="400000" name="pincode" placeholder="Pincode" required th:field="*{officeAddr.pincode}" type="number">
             <label for="nature-of-business">Nature of Business</label>
-            <input name="nature-of-business" placeholder="Eg. - Textiles" required
-                   th:field="*{officeAddr.natureBusiness}" type="text">
-            <button form="home-address-form" id="next" type="submit"><img alt="next"
-                                                                          src="/static/img/next-button21.png"
-                                                                          th:src="@{/img/next-button21.png}"></button>
+            <input id="nature-of-business" name="nature-of-business" placeholder="Eg. - Textiles" required th:field="*{officeAddr.natureBusiness}" type="text">
+            <button form="home-address-form" id="next" type="submit"><img alt="next" src="/static/img/next-button21.png" th:src="@{/img/next-button21.png}"></button>
             <input name="page" type="hidden" value="2">
         </form>
     </div>

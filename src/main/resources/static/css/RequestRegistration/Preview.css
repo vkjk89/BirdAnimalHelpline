@@ -9,16 +9,41 @@
 
 main {
     box-sizing: border-box;
+    margin-top: 4vh;
     padding-left: 5vw;
     text-align: start;
 }
 
-#step1, #step2, #step3 {
-    margin-right: 5vw;
+.step-header {
+    font-weight: bold;
+    display: block;
 }
 
-#step1 div {
-    font-size: 1.3em;
+#step1, #step2, #step3 {
+    border: 1px solid #374047;
+    margin-bottom: 2vh;
+    min-height: 30px;
+    padding: 3vw;
+}
+
+#step1 span {
+    font-size: 1.2em;
+}
+
+#password {
+    border: none;
+    width:auto;
+    font-size: 1em;
+    letter-spacing: 1px;
+    color: black;
+    margin: 0;
+    margin-top: 1vh;
+    max-width: 50vw;
+}
+#show_pass {padding: 0;margin-top: 1vh;float: right;}
+
+#step1 span, #step2 span, #step3 span {
+    line-height: 5vh;
 }
 
 #step1 img, #step2 img, #step3 img {
@@ -27,29 +52,23 @@ main {
     float: right;
 }
 
-#step1 div, #step1 label, #step2 div, #step2 label {
-    display: inline-block;
-}
-
-#step1 *, #step2 *, #step3 * {
-    margin-top: 2.8vh;
-}
-
 #next {
+    position: relative;
     box-sizing: border-box;
-    bottom: 7vw;
     width: 25vw;
-    float: right;
     margin-left: 70vw;
-}
-
-input[type = "submit"] {
+    padding-left: 4vw;
     background-color: #374047;
     color: white;
     border-radius: 5px;
-    padding: 3vw;
     letter-spacing: 2px;
     font-size: 1em;
+}
+
+@media only screen and (max-width: 360px) {
+    body {
+        font-size: 0.9em;
+    }
 }
 
 /*body * {

@@ -29,7 +29,7 @@
     margin-top: 0;
 }
 
-input[type = "text"], input[type = "number"], input[name = "contact-number-91"] {
+#full-name, #address-line1, #address-line2, #tooltip-pincode, #contact-number, #nine-one, #nature-of-business {
     box-sizing: border-box;
     display: block;
     margin-top: 2vh;
@@ -45,27 +45,27 @@ input[type = "text"]:focus, input[type = "number"]:focus {
 }
 
 
-input[name = "address-line1"], input[name = "address-line2"] {
+#address-line1, #address-line2 {
     margin-bottom: 0vw;
     margin-top: 1vw;
 }
 
-input[name = "address-line1"] {
+#address-line1 {
     margin-top: 2vh;
 }
 
-input[name = "pincode"] {
+#tooltip-pincode {
     width: 35vw;
     margin-top: 1vw;
 }
 
-input[name = "contact"] {
+#contact-number {
     box-sizing: border-box;
     display: inline-block;
     width: 48.8vw;
 }
 
-select[name = "number-prefix"] {
+#nine-one {
     box-sizing: border-box;
     display: inline-block;
     width: 20vw;
@@ -100,6 +100,9 @@ select * {
 @keyframes home-work-address {
     0% {
         transform: scale(0) translateX(500vw);
+    }
+    50% {
+        transform: scale(0) translateX(100vw);
     }
     100% {
         transform: scale(1) translateX(0);

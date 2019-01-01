@@ -17,29 +17,21 @@
 </p>
 <main>
     <div id="home-address">
-        <form action="" id="home-address-form" method="POST" name="home-address-form" th:action="@{/profileCompletion}"
-              th:object="${user}">
+        <form action="" id="home-address-form" method="POST" name="home-address-form" th:action="@{/profileCompletion}" th:object="${user}">
             <p class="title">Home Address:</p>
-
             <label for="address-line1">Full Name</label>
-            <input autofocus id="address-line1" name="full-name" placeholder="Full Name"
-                   th:field="*{homeAddr.fullName}" type="text">
+            <input autofocus id="full-name" name="full-name" placeholder="Full Name" th:field="*{homeAddr.fullName}" type="text">
             <label for="address-line2">Street Address</label>
-            <input id="address-line1" name="address-line1" placeholder="Address Line 1" th:field="*{homeAddr.addrLine1}"
-                   type="text">
-            <input id="address-line1" name="address-line2" placeholder="Adderss Line 2" th:field="*{homeAddr.addrLine2}"
-                   type="text">
-            <input max="450000" min="400000" name="pincode" placeholder="Pincode" required
-                   th:field="*{homeAddr.pincode}" type="number">
+            <input id="address-line1" name="address-line1" placeholder="Address Line 1" th:field="*{homeAddr.addrLine1}" type="text">
+            <input id="address-line2" name="address-line2" placeholder="Adderss Line 2" th:field="*{homeAddr.addrLine2}" type="text">
+            <input id="pincode" max="450000" min="400000" name="pincode" placeholder="Pincode" required th:field="*{homeAddr.pincode}" type="number">
             <label for="contact-number">Alternate Number</label><br>
-            <select class="number-prefix" name="number-prefix" th:field="*{homeAddr.contactPrefix}">
+            <select class="number-prefix" name="number-prefix" th:field="*{homeAddr.contactPrefix}" id="nine-one">
                 <option value="+91">+91</option>
                 <option value="022">022</option>
             </select>
-            <input name="contact" placeholder="" th:field="*{homeAddr.contact}" type="number"><br>
-            <button form="home-address-form" id="next" type="submit"><img alt="next"
-                                                                          src="/static/img/next-button21.png"
-                                                                          th:src="@{/img/next-button21.png}"></button>
+            <input id="contact-number" name="contact" placeholder="" th:field="*{homeAddr.contact}" type="number"><br>
+            <button form="home-address-form" id="next" type="submit"><img alt="next" src="/static/img/next-button21.png" th:src="@{/img/next-button21.png}"></button>
             <input name="page" type="hidden" value="1">
         </form>
     </div>

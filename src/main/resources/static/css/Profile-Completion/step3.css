@@ -1,6 +1,5 @@
-#header {
+#heading {
     box-sizing: border-box;
-    width: 100vw;
     margin: 0;
     padding: 3vh;
     color: white;
@@ -10,107 +9,82 @@
 
 main {
     box-sizing: border-box;
-    text-align: start;
     padding: 10vw;
-    padding-top: 5vw;
-    animation: pincode-start 1s forwards 0s ease-in-out;
+    text-align: start;
 }
 
-body * {
-    border: 1px solid salmon;
-}
-
-input[type = "search"] {
-    background-size: 5vw 5vw;
-    background-image: url(/img/search-1.png);
-    background-position: 3vw 4vw;
-    background-repeat: no-repeat;
-    border: 1px solid #cccccc;
-    border-radius: 5px;
-    padding: 4vw;
-    padding-left: 11vw;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
-    width: 48vw;
-}
-
-input[type = "search"]:focus {
-    width: 65vw;
-    border: 1px solid black;
-}
-
-#search-results-list {
-    overflow-y: scroll;
-    overflow-x: hidden;
-    display: none;
-    list-style: none;
+#search-pincode {
+    box-sizing: border-box;
     margin-top: 2vh;
-    padding: 3vw;
-    border: 1px solid #CCC;
+    padding: 5vw;
     border-radius: 5px;
-    max-height: 100px;
-    width: 70vw;
-}
-
-#search-results-list div {
-    margin-top: 5px;
+    padding-left: 13vw;
+    background-image: url("/img/search-1.png");
+    background-repeat: no-repeat;
+    background-size: 8vw;
+    background-position: 3vw 1.5vh;
+    font-size: 1em;
+    width: 75vw;
+    transition: width 0.4s ease-in-out;
 }
 
 #selected-pincodes {
+    display: none;
+    box-sizing: border-box;
     margin-top: 2vh;
-    padding-left: 3vw;
-    padding-bottom: 2vh;
-    padding-right: 2vw;
+    border: 1px solid #CCC;
+    width: 75vw;
     border-radius: 5px;
+    padding: 3vw;
 }
 
-.selected-pincodes-list-div {
-    font-size: 0.9em;
+#selected-pincodes p {
+    all: unset;
+    font-size: 1.1em; 
+    border-bottom: 1px solid #CCCCCC;
+}
+
+#selected-pin-content {
+    margin-top: 2vh;
+}
+
+#selected-pin-content ul li {
+    margin-left: -2vw;
+    line-height: 3.5vh;
+}
+
+#selected-pincode-ul {
+    list-style-type: decimal;
+    max-width: 50vw;
+}
+
+#selected-pincode-ul li div div:nth-child(2) {
+    font-size: 0.95em;
+}
+
+.select-timings {
+    box-sizing: border-box;
+    background-color: transparent;
+    border-radius: 5px;
+    padding: 0.5vw 1vw;
+    margin-left: 1vw;
+    display:none;
 }
 
 #next {
-    all: unset;
-    margin-top: 5vh;
+    box-sizing: border-box;
+    position: relative;
     float: right;
-    color: white;
+    bottom: 0;
+    margin-top:2vh; 
     background-color: #374047;
-    padding: 3vw;
+    color: white;
     border-radius: 5px;
     letter-spacing: 2px;
-    font-size: 0.9em;
+    font-size: 1em;
+    padding: 3vw 5vw;
 }
-
-#search-pincode-result {
-    z-index: 10000001;
-    display: block;
-    margin-top: 100vh;
-    color: black;
-}
-
-#select-timings, #select-timings-am-pm {
-    display: none;
-    background: transparent;
-    border-radius: 50px;
-    margin-left: 2vw;
-}
-
-@keyframes pincode-start {
-    0% {
-        transform: scale(0) translateX(500vw);
-    }
-    100% {
-        transform: scale(1) translateX(0);
-    }
-}
-
-/*---------------------------------------------------------------------------------------------------------------------*/
-
-@media only screen and (min-width: 520px) {
-    body {
-        font-size: 1.5em;
-    }
-
-    input, select {
-        font-size: 1.2em;
-    }
-}
+/*
+body * {
+    border: 1px solid burlywood;
+}*/

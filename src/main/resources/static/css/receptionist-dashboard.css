@@ -849,28 +849,25 @@ hr {
 }
 
 .top-five-and-nearest-and-search-results-ul li {
-    margin: 0vw 0vw;
+    margin: 0vh 0vw;
+    padding-bottom: 5vh;
     margin-left: -2vw;
+    max-width: 25vw;
 }
 
-.top-five-and-nearest-and-search-results-ul span {
-    display: inline;
-}
-
-.top-five-and-nearest-and-search-results-ul li:hover {
+.top-five-and-nearest-and-search-results-ul li span:hover {
     color: #007AEA;
 }
 
 .assign-case-assign-btn {
     all: unset;
-    margin: 0vw 8vw;
+    float: right;
     padding: 1vw 2vw;
     background-color: rgb(0, 160, 0);
     color: white;
     cursor: pointer;
     font-size: 0.8em;
     letter-spacing: 1px;
-    margin-right: 0;
 }
 
 .assign-case-assign-btn:hover {
@@ -929,13 +926,13 @@ hr {
 /*-----------------Tooltip-Vol-Assign-------------*/
 #vol-description-tooltip {
     box-sizing: border-box;
-    position: absolute;
+    position: fixed;
     display: none;
     background-color: #CCC;
     color: black;
     font-size: 1.1em;
     letter-spacing: 1px;
-    padding-right: 3vw;
+    padding-right: 2vw;
     -webkit-clip-path: polygon(10% 30%, 10% 0, 100% 0, 100% 100%, 10% 100%, 10% 70%, 0 50%);
     clip-path: polygon(10% 40%, 10% 0, 100% 0, 100% 100%, 10% 100%, 10% 60%, 0 50%);
 }
@@ -954,6 +951,7 @@ hr {
     position: relative;
     height: 9vh;
     background-color: #333;
+    color: #333;
     width: 200%;
 }
 
@@ -972,7 +970,7 @@ hr {
     padding-bottom: 1vh;
 }
 
-#tooltip-info-name:hover, #tooltip-info-role:hover, #address-line1:hover, #address-line2:hover, #pincode:hover, #tooltip-info-tel-number:hover {
+#tooltip-info-name:hover, #tooltip-info-role:hover, #address-line1:hover, #address-line2:hover, #tooltip-pincode:hover, #tooltip-info-tel-number:hover {
     color: #007AEA;
     cursor: default;
 }

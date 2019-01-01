@@ -8,8 +8,7 @@
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Request Registration</title>
     <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
-    <link href="/static/css/RequestRegistration/Step2.css" rel="stylesheet"
-          th:href="@{/css/RequestRegistration/Step2.css}">
+    <link href="/static/css/RequestRegistration/Step2.css" rel="stylesheet" th:href="@{/css/RequestRegistration/Step2.css}">
 
 </head>
 <body>
@@ -30,22 +29,16 @@
             <ul th:if="${#fields.hasErrors('*')}">
                 <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
             </ul>
-            <input autocomplete="off" autofocus id="fname" name="first-name" pattern="[A-Za-z]{0,}" placeholder="First Name"
-                   required th:field="*{firstName}" title="Your First Name" type="text">
-            <input autocomplete="off" name="last-name" pattern="[A-Za-z]{0,}" placeholder="Last Name" required
-                   th:field="*{lastName}" title="Your Last Name" type="text"><br>
+            <input autocomplete="off" autofocus id="fname" name="first-name" pattern="[A-Za-z]{0,}" placeholder="First Name" required th:field="*{firstName}" title="Your First Name" type="text">
+            <input autocomplete="off" id="lname" name="last-name" pattern="[A-Za-z]{0,}" placeholder="Last Name" required th:field="*{lastName}" title="Your Last Name" type="text"><br>
 
             <div class="birth-date-div" id="birth-date-div">
                 <label id="DOB" name="birthdate">Date of Birth: </label>
-                <input autocomplete="off" id="birthdate" max="2010-12-31" min="1930-01-01" name="birthdate" required
-                       th:field="*{dob}" type="date">
+                <input autocomplete="off" id="birthdate" max="2010-12-31" min="1930-01-01" name="birthdate" required th:field="*{dob}" type="date">
             </div>
 
-            <input disabled name="contact-number-1" style="color:black;" type="text" value="+91"> -
-            <input max="9999999999" min="5000000000" name="mobile" placeholder="Mobile Number" required
-                   th:field="*{mobile}" title="Ten digit mobile no. without any code" type="number"><br>
-
-            <!--<input  th:if="${user.mobile !=0 }" th:field="*{mobile}" type = "number" placeholder="Mobile Number" name = "mobile" required min="5000000000" max="9999999999" title="Ten digit mobile no. without any code"><br>-->
+            <input disabled name="contact-number-1" style="color:black;" type="text" value="+91" id="nine-one"> -
+            <input type="number" id="contact_number" max="9999999999" min="5000000000" name="mobile" placeholder="Mobile Number" required th:field="*{mobile}" title="Ten digit mobile no. without any code"><br>
 
             <label name="gender">Gender: </label>
             <input id="gender-1" name="gender" th:field="*{gender}" type="radio" value="M">
@@ -55,31 +48,24 @@
             <input id="gender-3" name="gender" th:field="*{gender}" type="radio" value="O">
             <label for="gender-3"> Others</label><br>
 
-            <input autocomplete="off" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{3,}$" placeholder="E-mail Address"
-                   required th:field="*{email}" title="Please enter valid email addresss"
-                   type="email">
+            <input autocomplete="off" id="email-id" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{3,}$" placeholder="E-mail Address" required th:field="*{email}" title="Please enter valid email addresss" type="email">
 
             <p id="security-question">Security Question</p>
             <p id="security-para">We will be using this question in case you forget your password, so choose wisely.</p>
             <select id="securityquestion" name="securityquestion" required th:field="*{securityQId}">
-                <!--<option value="1">1. What is your favourite Sport?</option>-->
-                <option th:each="o : ${securityQs}" th:text="${o.getValue()}" th:value="${o.getKey()}" value="1">1. What
-                    is your favourite Sport?
+                <option th:each="o : ${securityQs}" th:text="${o.getValue()}" th:value="${o.getKey()}" value="1">
+                    1. What is your favourite Sport?
                 </option>
-                <!--<option value="2">2. Which floor do you live on?</option>-->
-                <!--<option value="3">3. What is your Place of Birth?</option>-->
             </select>
-            <input name="security-answer" placeholder="Your response" required th:field="*{securityQAns}" type="text">
+            <input name="security-answer" id="sec_answer" placeholder="Your response" required th:field="*{securityQAns}" type="text">
             <input name="page" type="hidden" value="2">
         </div>
 
     </main>
 
     <div class="bottom-nav-bar" id="bottom-nav-bar">
-        <a href="Step1.html" th:href="@{/registration}"><img id="previous"
-                                                             src="/static/img/previous-button-1.png"
-                                                             th:src="@{/img/previous-button-1.png}"></button>
-            <button type="submit"><img id="next" src="/static/img/next-button11.png" th:src="@{/img/next-button11.png}">
+        <a href="Step1.html" th:href="@{/registration}"><img id="previous" th:src="@{/img/previous-button-1.png}" src="/static/img/previous-button-1.png"></button>
+            <button type="submit"><img id="next" th:src="@{/img/next-button11.png}" src="/static/img/next-button11.png"></button>
         </a>
     </div>
 </form>
@@ -91,6 +77,18 @@
 
     var minyear = d.getFullYear() - 100;
     document.getElementById('birthdate').setAttribute('min', minyear + '-01-01');
+
+
+        /*-----Duplicate-ID's-----*/
+            var allElements = document.getElementsByTagName("*"), allIds = {}, dupIDs = [];
+            for (var i = 0, n = allElements.length; i < n; ++i) {
+            var el = allElements[i];
+            if (el.id) {
+                if (allIds[el.id] !== undefined) dupIDs.push(el.id);
+                allIds[el.id] = el.name || el.id;
+                }
+            }
+            if (dupIDs.length) { console.error("Duplicate ID's:", dupIDs);} else { console.log("No Duplicates Detected"); } /* --------------*/
 </script>
 
 </body>

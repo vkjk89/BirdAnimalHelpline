@@ -80,77 +80,72 @@
 }
 
 /* ------------------------------------------------------------------------------------------------------------------*/
-
+main {
+    margin-right: 0;
+}
 #step2 {
     box-sizing: border-box;
     text-align: start;
-    padding: 2vw;
-    padding-top: 0;
-    padding-left: 10vw;
+    padding: 0 0 0 10vw;
     z-index: 2;
-    font-size: 0.9em;
 }
 
 form {
     box-sizing: border-box;
 }
 
-input[type = "text"], input[name = "securityanswer"], input[name = "email"], input[name = "mobile"], select, input[type = "date"], input[type = "radio"] {
+#fname, #lname, #email-id, #nine-one, #contact_number, #sec_answer, #securityquestion, #birthdate, input[type = "radio"] {
     border: 1px solid #cccccc;
     border-radius: 5px;
     padding: 3vw;
     background: transparent;
     margin-bottom: 2vh;
 }
+#sec_answer {margin-bottom: 0;}
 
 input[type = "text"]:focus, input[name = "securityanswer"]:focus, input[name = "email"]:focus, input[name = "mobile"]:focus, select:focus, input[type = "date"]:focus {
     border: 1px solid black;
 }
 
-input[name = "first-name"], input[name = "last-name"] {
+#fname, #lname {
     display: inline-block;
     margin-top: 3vh;
-    width: 36.75vw;
+    width: 40.5vw;
     box-sizing: border-box;
 }
 
 #birth-date-div {
     box-sizing: border-box;
-    width: 74.5vw;
+    width: 82.5vw;
     display: inline-block;
 }
 
-label[name = "birthdate"] label {
-    box-sizing: border-box;
-    font-size: 4vw;
-}
-
-input[type = "date"] {
+#birthdate {
     box-sizing: border-box;
     float: right;
-    width: 37vw;
+    width: 41vw;
     padding: 3vw;
 }
 
-input[name = "contact-number-1"] {
+#nine-one {
     box-sizing: border-box;
     width: 15vw;
 }
 
-input[name = "mobile"] {
+#contact_number {
     box-sizing: border-box;
-    width: 56.5vw;
+    width: 64.25vw;
 }
 
-input[type = "email"] {
+#email-id {
     box-sizing: border-box;
-    width: 74.5vw;
+    width: 82.25vw;
     margin-bottom: 0;
 }
 
 p[id = "security-question"] {
     box-sizing: border-box;
-    width: 74.5vw;
+    width: 82.25vw;
     font-size: 1.3em;
     border-bottom: 1px solid #374047;
     margin-top: 2vh;
@@ -160,18 +155,19 @@ p[id = "security-question"] {
 p[id = "security-para"] {
     box-sizing: border-box;
     margin-top: 0;
-    width: 74.5vw;
+    font-size: 1em;
+    width: 82.25vw;
 }
 
 select {
     padding: 2vw;
-    width: 74.5vw;
+    width: 82.25vw;
 }
 
-input[name = "security-answer"] {
+#sec_answer {
     box-sizing: border-box;
     padding-left: 3vw;
-    width: 74.5vw;
+    width: 82.25vw;
     margin-bottom: -1vh;
 }
 
@@ -187,33 +183,39 @@ input[name = "security-answer"] {
 #next {
     width: 10vw;
     margin-top: 2vh;
-    margin-left: 50vw;
+    margin-left: 58vw;
 }
 
 /*body * {
     border: 1px solid burlywood;
 }*/
 
-@media only screen and (max-width: 340px) {
+@media only screen and (max-width: 360px) {
     .heading {
         padding: 3vw;
         font-size: 1.2em;
     }
 
-    input[type = "date"] {
+    #birthdate {
         font-size: 0.9em;
     }
 
     body {
         overflow-x: hidden;
-        font-size: 0.8em;
+        font-size: 1em;
     }
 
     #previous {
-        padding-top: 0vh;
+        padding-top: 0;
     }
 
     #next {
-        padding-top: 0vh;
+        padding-top: 0;
+    }
+    p[id = "security-para"] {
+        font-size: 1.1em;
+    }
+    p[id = "security-question"] {
+        font-size: 1.2em;
     }
 }

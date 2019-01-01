@@ -48,8 +48,7 @@
         </span>
     <span class="no-select" id="right-side">
             <button id="user-dp-btn" type="button">
-                <img alt="DP" height="20vw" src="/static/img/display-picture11.png"
-                     th:src="@{/img/display-picture11.png}" width="">
+                <img alt="DP" height="20vw" src="/static/img/display-picture11.png" th:src="@{/img/display-picture11.png}" width="">
                 <span id="user-name" th:text="${user.userName}">#User_Name</span>
             </button>
             <span id="more-btn">&#x25BC;</span>
@@ -87,7 +86,13 @@
             </div>
             <div>
                 <div class="search-li-cases-header"><span class="">#Sr._No.</span><span class="">#Case_ID</span><span class="">#Case_Status</span><span class="">#Date</span><span class="">#Animal/Bird_Type</span><span class="">#Animal/Bird_Name</span></div>
-                <div class="search-li-cases search-li-cases-onclick"><span>#Sr._No.</span><span>#Case_ID</span><span>#Case_Status</span><span>#Date</span><span>#Animal/Bird_Type</span><span>#Animal/Bird_Name</span></div>
+                <div class="search-li-cases search-li-cases-onclick"  onclick="top_nav_search_case_details();
+                document.getElementById('top-nav-search').value = '';
+                document.getElementById('top-nav-search-heading-content').innerHTML = '#Search_Input - #Case_ID';
+                document.getElementById('top-nav-search-results').style.display = 'none';
+                document.getElementById('user-profile').style.display = 'none';
+                document.getElementById('top-nav-search-user-profile-back-button').style.display = 'none';
+                page_history.unshift('top_nav_search_cases_details');"><span>#Sr._No.</span><span>#Case_ID</span><span>#Case_Status</span><span>#Date</span><span>#Animal/Bird_Type</span><span>#Animal/Bird_Name</span></div>
             </div>
         </div>
         <div id="user-profile">
@@ -162,7 +167,7 @@
                                 <div class="case-name-div">Animal/Bird Name</div>
                             </div>
                             <div class="my-cases-result" style="width: 68.5vw;">
-                                <div class="row row11">
+                                <div class="row row11" onclick="top_nav_search_case_details();">
                                     <div class="sr-no">
                                         <li></li>
                                     </div>
@@ -186,7 +191,7 @@
                                 <div class="case-name-div">Animal/Bird Name</div>
                             </div>
                             <div class="my-cases-result" style="width: 68.5vw;">
-                                <div class="row row11">
+                                <div class="row row11" onclick="top_nav_search_case_details();">
                                     <div class="sr-no">
                                         <li></li>
                                     </div>
@@ -210,7 +215,7 @@
                                 <div class="case-name-div">Animal/Bird Name</div>
                             </div>
                             <div class="my-cases-result" style="width: 68.5vw;">
-                                <div class="row row11">
+                                <div class="row row11" onclick="top_nav_search_case_details();">
                                     <div class="sr-no">
                                         <li></li>
                                     </div>
@@ -296,16 +301,6 @@
             <span id="recent-tab-header" style="border-right: 1px solid #CCCCCC72;border-left: 1px solid #CCCCCC72;">Recent</span>
             <span id="closed-tab-header" style="border-right: 1px solid #007AEA;border-left: 1px solid #CCCCCC72;">Closed</span>
         </div>
-        <div class="my-cases-result1" id="table4" style="width: 68.5vw;">
-            <div class="row row1">
-                <div class="sr-no"><li></li></div>
-                <div class="case-id">#Case_ID</div>
-                <div class="case-status">#Case_Status</div>
-                <div class="date">#Date</div>
-                <div class="animal-type">#Animal/Bird_Type</div>
-                <div class="case-name">#Animal/Bird_Name</div>
-            </div>
-        </div>
         <div id="tab-content">
             <div id="active-tab-content">
                 <div class="content-table" id="active-content-table">
@@ -318,7 +313,7 @@
                         <div class="case-name-div">Animal/Bird Name</div>
                     </div>
                     <div class="my-cases-result" id="table1" style="width: 68.5vw;">
-                        <div class="row row1">
+                        <div class="row row1" onclick="case_details();">
                             <div class="sr-no"><li></li></div>
                             <div class="case-id">#Case_ID</div>
                             <div class="case-status">#Case_Status</div>
@@ -340,7 +335,7 @@
                         <div class="case-name-div">Animal/Bird Name</div>
                     </div>
                     <div class="my-cases-result" id="table2" style="width: 68.5vw;">
-                        <div class="row row1">
+                        <div class="row row1" onclick="case_details();">
                             <div class="sr-no"><li></li></div>
                             <div class="case-id">#Case_ID</div>
                             <div class="case-status">#Case_Status</div>
@@ -362,7 +357,7 @@
                         <div class="case-name-div">Animal/Bird Name</div>
                     </div>
                     <div class="my-cases-result" id="table3" style="width: 68.5vw;">
-                        <div class="row row1">
+                        <div class="row row1" onclick="case_details();">
                             <div class="sr-no"><li></li></div>
                             <div class="case-id">#Case_ID</div>
                             <div class="case-status">#Case_Status</div>
@@ -438,7 +433,7 @@
                             <h2>Top Five Volunteers: </h2>
                             <ul class="top-five-and-nearest-and-search-results-ul" id="top_five_vol">
                                 <li><span class="vol_tooltip">#Vol_Name5</span>
-                                    <button class="assign-case-assign-btn" type="button">Assign</button>
+                                    <button class="assign-case-assign-btn" onclick="assignCase(this)" type="button">Assign</button>
                                 </li>
                             </ul>
                         </div>
@@ -446,7 +441,7 @@
                             <h2>Nearest: </h2>
                             <ul class="top-five-and-nearest-and-search-results-ul" id="nearest_5_vol">
                                 <li><span class="vol_tooltip">#Vol_Name7</span>
-                                    <button class="assign-case-assign-btn" type="button">Assign</button>
+                                    <button class="assign-case-assign-btn" onclick="assignCase(this)" type="button">Assign</button>
                                 </li>
                             </ul>
                         </div>
@@ -454,7 +449,7 @@
                     <div id="assign-case-search-results">
                         <ul class="top-five-and-nearest-and-search-results-ul" id="search_vol">
                             <li><span class="vol_tooltip">#Vol_Name3</span>
-                                <button class="assign-case-assign-btn" type="button">Assign</button>
+                                <button class="assign-case-assign-btn" onclick="assignCase(this)" type="button">Assign</button>
                             </li>
                         </ul>
                     </div>
@@ -467,8 +462,8 @@
             </div>
             <div id="vol-description-tooltip">
                 <div id="tooltip-dp">
-                    <!--<img id="dp_image" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/User_font_awesome.svg" width="auto" height="70vh">-->
-                    <!--<div id="decoy-for-img"></div>-->
+                    <img id="dp_image" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/User_font_awesome.svg" width="auto" height="70vh">
+                    <div id="decoy-for-img">1</div>
                 </div>
                 <div id="tooltip-info">
                     <div id="tooltip-info-name">#Vol_Name</div>
@@ -476,7 +471,7 @@
                     <div id="tooltip-info-address">
                         <div id="address-line1">#Address-Line1</div>
                         <div id="address-line2">#Address-Line2</div>
-                        <div id="pincode">#Pincode</div>
+                        <div id="tooltip-pincode">#Pincode</div>
                     </div>
                     <div id="tooltip-info-tel-number">#Tel_Number</div>
                 </div>
@@ -636,6 +631,9 @@
         document.getElementById('top-nav-search-results').style.display = "none";
         document.getElementById("user-profile").style.display = "none";
         document.getElementById("top-nav-search-heading-content").innerHTML = "";
+        document.getElementById('content-assign-case').style.display = "none";
+        document.getElementById('content-close-case').style.display = "none";
+        document.getElementById('case-details-form').style.pointerEvents = "";
     }
 
     document.getElementById('myc-body').onclick = function () {
@@ -681,6 +679,9 @@
         document.getElementById('top-nav-search-results').style.display = "none";
         document.getElementById("user-profile").style.display = "none";
         document.getElementById("top-nav-search-heading-content").innerHTML = "";
+        document.getElementById('content-assign-case').style.display = "none";
+        document.getElementById('content-close-case').style.display = "none";
+        document.getElementById('case-details-form').style.pointerEvents = "";
     }
 
     document.getElementById('usdca-body').onclick = function () {
@@ -722,6 +723,9 @@
         document.getElementById('top-nav-search-results').style.display = "none";
         document.getElementById("user-profile").style.display = "none";
         document.getElementById("top-nav-search-heading-content").innerHTML = "";
+        document.getElementById('content-assign-case').style.display = "none";
+        document.getElementById('content-close-case').style.display = "none";
+        document.getElementById('case-details-form').style.pointerEvents = "";
     }
 
     //------Active-Recent-Closed-Tabs-JS--------------------------------------------------------------------------------
@@ -846,25 +850,6 @@
             $("#user-profile-about-content").fadeIn();
             user_profile_basic_details();
         };
-    }
-
-    for (let i = 0; i < document.getElementsByClassName("search-li-cases-onclick").length; i++) {
-        document.getElementsByClassName("search-li-cases-onclick")[i].onclick = function () {
-            document.getElementById("top-nav-search").value = "";
-            document.getElementById("top-nav-search-heading-content").innerHTML = "#Search_Input - #Case_ID";
-            document.getElementById("top-nav-search-results").style.display = "none";
-            document.getElementById("user-profile").style.display = "none";
-            document.getElementById("top-nav-search-user-profile-back-button").style.display = "none";
-            page_history.unshift("top_nav_search_cases_details");
-            top_nav_search_case_details();
-        };
-    }
-    
-    for(let i=0; i <document.getElementsByClassName("row11").length; i++){
-        document.getElementsByClassName("row11")[i].onclick = function(){
-            top_nav_search_case_details();
-            page_history.unshift("user_cases_case_details");
-        }
     }
 
     function top_nav_search_case_details() {
@@ -1053,9 +1038,6 @@
         $('#location-case-details').val(caseInfo.location);
         $('#location-landmark-case-details').val(caseInfo.locationLandMark);
         $('#location-pincode-case-details').val(caseInfo.locationPincode);
-    }
-    for(let i=0; i<document.getElementsByClassName("row1").length; i++){
-        //document.getElementsByClassName("row1")[i].onclick = case_details();
     }
     
 
@@ -1308,6 +1290,8 @@
         window.location.reload();
     };
 
+    //------Tooltip-Vol-Assign-Case--------------------------------------------------------------------------------------------------------
+
     function show_vol_tooltip() {
         console.info("vimal   1");
         console.info(event.srcElement);
@@ -1320,22 +1304,22 @@
         $('#address-line2').text(userInfo.email);
         $('#tooltip-info-tel-number').text(userInfo.mobile);
         if (userInfo.image) {
-            $('#tooltip-dp').html('<img src="data:image/png;base64,"' + userInfo.image + '>');
+            $('#tooltip-dp').html('<img src="data:image/png;base64,"' + userInfo.image + '><div id="decoy-for-img">.</div>');
+        } else {
+            $('#tooltip-dp').html('<img id="dp_image" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/User_font_awesome.svg" width="auto" height="70vh"><div id="decoy-for-img">.</div>');
         }
         $("#vol-description-tooltip").fadeIn();
         var tooltipHeight = document.getElementById("vol-description-tooltip").getBoundingClientRect().height;
-        document.getElementById("vol-description-tooltip").style.top = event.target.getBoundingClientRect().top - tooltipHeight/2 + "px";
-        document.getElementById("vol-description-tooltip").style.left = event.target.getBoundingClientRect().left + event.target.getBoundingClientRect().width + "px";
+        document.getElementById("vol-description-tooltip").style.top = event.target.getBoundingClientRect().top - tooltipHeight/2.2 + "px";
+        document.getElementById("vol-description-tooltip").style.left = event.target.getBoundingClientRect().left + 10 + event.target.getBoundingClientRect().width + "px";
     }
-
-    //------Tooltip-Vol-Assign-Case--------------------------------------------------------------------------------------------------------
-
 
     var hide_tooltip_timeOut;
 
     function hide_vol_tooltip() {
         hide_tooltip_timeOut = setTimeout(function () {
             $("#vol-description-tooltip").fadeOut();
+            $("#vol-description-tooltip").css("display", "none");
             $('#tooltip-info-name').text("");
             $('#tooltip-info-role').text("");
             $('#address-line1').text("");
@@ -1431,11 +1415,12 @@
             .done(function (data) {
                 console.info("vkj");
                 console.info(data);
-                $('#assign-case-success').fadeIn(1000);
+                $('#assign-case-success').fadeIn(500);
                 //alert('Success div will show on server response');
                 setTimeout(function () {
                     navigate_back();
-                }, 1000);
+                    navigate_back();
+                }, 1200);
             });
         //event.preventDefault();
     }

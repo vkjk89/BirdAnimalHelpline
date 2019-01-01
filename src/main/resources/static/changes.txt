@@ -1,0 +1,54 @@
+!important      All margins - top and bottom should be on the basis of heights       !important
+
+Progress Bar
+change ALL file names to lower_case
+letter-spacing in px
+
+28/10/2018 - Sunday before Exam - Changes:
+    forgot password - ajax usage
+
+Call - 13/11/2018
+    Step3 - alignment issues : Issues with the name
+
+!important   Create Bootstrap like 2 buttons side by side   !important
+
+Some Error page - Access Denied and Internal Server Error
+
+Tab change when search
+Reload button
+Accept - mapping
+logout confirmation
+req reg - home btn
+case status
+
+!important Redesign SignIn and RequestRegistration Pages !important
+
+13/12/2018 - Update2
+Approval History
+
+30/12/2018
+//Reg-Step2 - Input Formatting
+//Step3 - Loading Bar - ProfilePic
+//Preview Page Formatting
+//Preview - remove ProfilePic
+//Preview - Hide/Show Pass
+//Preview - 3rd Edit Button Missing
+//Preview - Seq Question ID (Vimal)
+//Profile Completion Page - Admin, Recpt Cancel (Vimal)
+//ProfileCompletion - Input Formatting
+//Recpt. dashboard  - bird Type - Dropdown - Filter List (V)
+//My Cases - DateFOrmat(V)
+//Raise a case - Bird/Animal Type - Seperation (V)
+//My Cases - Search Case (V)
+//Case Details - +91 Missing (V)
+//Top Nav - DP - Img not Icon
+//Success - Assign Case Timing Increase
+//ProfileCompletion - Pincode Page Formatting
+//Top 5 and nearest - Styling
+//Success - Assign Case Navigation to Search Case
+//Assign and Close Case dont go on clicking my cases
+Case Flow History
+//Vol - Tooltip Fix
+
+Preview Page Password (V)
+Pincode Page Backend (V)

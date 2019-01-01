@@ -179,7 +179,7 @@ input[type = "password"] {
 .btn-group {
     float: right;
     top: 1vh;
-    right: 3vw;
+    right: 0;
 }
 
 button {
@@ -188,9 +188,9 @@ button {
 }
 
 .btn-group button {
-    width: 20vw;
+    width: 18vw;
     padding: 2vw;
-    padding-right: 18.5vw;
+    padding-right: 17.5vw;
     margin: 0;
     letter-spacing: 1px;
     font-weight: 300;
@@ -214,7 +214,7 @@ button {
     box-sizing: border-box;
     width: 10vw;
     margin-top: 1vh;
-    margin-left: -35vw;
+    margin-left: -36vw;
 }
 
 /*body * {
