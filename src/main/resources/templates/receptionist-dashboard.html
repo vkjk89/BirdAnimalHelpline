@@ -42,7 +42,8 @@
                 <span class="fa fa-refresh fa-lg" style="filter: invert(100%)"></span>
             </button>
             <span id="top-nav-search-wrapper">
-                <input autocomplete="off" id="top-nav-search" name="top-nav-search" placeholder="Search Members..." type="search">
+                <input class="ui-autocomplete-input"  id="top-nav-search" name="top-nav-search" placeholder="Search Members..."
+                       type="search">
             </span>
         </span>
     <span class="no-select" id="right-side">
@@ -83,22 +84,37 @@
                 <li class="search-li-user-profile-onclick" onclick="top_nav_search_user_profile();"><span class="top-nav-search-vol-name">#Vol_Name1</span> <span class="top-nav-search-vol-role">#Vol_Role</span></li>
                 <li class="search-li-user-profile-onclick" onclick="top_nav_search_user_profile();"><span class="top-nav-search-vol-name">#Vol_Name2</span> <span class="top-nav-search-vol-role">#Vol_Role</span></li>
             </div>
-            <div class="no-select">
-                <div class="search-li-cases-header"><span class="">#Sr._No.</span><span class="">#Case_ID</span><span class="">#Case_Status</span><span class="">#Date</span><span class="">#Animal/Bird_Type</span><span class="">#Animal/Bird_Name</span></div>
-                <div class="search-li-cases search-li-cases-onclick"  onclick="top_nav_search_case_details('search_cases_details');
+        </div>
+        <div class="no-select" id="case_profile" style="display: none">
+            <div class="search-li-cases-header">
+                <span class="">#Sr._No.</span>
+                <span class="">#Case_ID</span>
+                <span class="">#Case_Status</span>
+                <span class="">#Date</span>
+                <span class="">#Animal/Bird_Type</span>
+                <span class="">#Animal/Bird_Name</span>
+            </div>
+            <div class="search-li-cases search-li-cases-onclick" onclick="case_details(this)/*top_nav_search_case_details();
                 document.getElementById('top-nav-search').value = '';
                 document.getElementById('top-nav-search-heading-content').innerHTML = '#Search_Input - #Case_ID';
                 document.getElementById('top-nav-search-results').style.display = 'none';
                 document.getElementById('user-profile').style.display = 'none';
-                document.getElementById('top-nav-search-user-profile-back-button').style.display = 'none';"><span>#Sr._No.</span><span>#Case_ID</span><span>#Case_Status</span><span>#Date</span><span>#Animal/Bird_Type</span><span>#Animal/Bird_Name</span></div>
+                document.getElementById('top-nav-search-user-profile-back-button').style.display = 'none';
+                page_history.unshift('top_nav_search_cases_details');*/">
+                <span>#Sr._No.</span>
+                <span class="case-id" id="case_profile_id">#Case_ID</span>
+                <span id="case_profile_status">#Case_Status</span>
+                <span id="case_profile_date">#Date</span>
+                <span id="case_profile_type">#Animal/Bird_Type</span>
+                <span id="case_profile_name" >#Animal/Bird_Name</span>
             </div>
         </div>
         <div id="user-profile">
             <div id="user-profile-top-side">
                 <span id="user-profile-left-side"><img alt="DP" height="" src="/static/img/display-picture11.png" th:src="@{/img/display-picture11.png}" width=""></span>
                 <span id="user-profile-middle-side">
-                    <div>#User_Name</div>
-                    <div>#User_Role</div>
+                    <div id="user-profile-middle-side_user_name">#User_Name</div>
+                    <div id="user-profile-middle-side_user_role">#User_Role</div>
                 </span>
                 <span id="user-profile-right-side">
                     <table id="user-profile-right-side-table">
@@ -107,8 +123,8 @@
                             <td>Cases Rejected</td>
                         </tr>
                         <tr>
-                            <td>#304</td>
-                            <td>#15</td>
+                            <td id="user-profile-right-side-table_ac" >#304</td>
+                            <td id="user-profile-right-side-table_rc">#15</td>
                         </tr>
                     </table>
                 </span>
@@ -127,23 +143,27 @@
                     </div>
                     <div id="user-profile-about-right-side">
                         <div class="user-profile-about-right-side-member">
-                            <div class="home-work-address"><h3 style="margin:0; font-size: 1em;">#Home/Work-Address(If-present)</h3></div>
-                            <div class="user-profile-address-line1">#Address-Line1</div>
-                            <div class="user-profile-address-line2">#Address-Line2</div>
-                            <div class="user-profile-address-pincode">#Pincode</div>
-                            <div class="user-profile-contact-number">
-                                <span class="user-profile-nine-one-zero-two-two">#+91/022</span>
-                                <span class="user-profile-contact-number">#Contact_Number</span>
+                            <div class="home-work-address">
+                                <h3 style="margin:0; font-size: 1em;">#Home/Work-Address(If-present)</h3>
+                            </div>
+                            <div id="huser-profile-address-line1" class="user-profile-address-line1">#Address-Line1</div>
+                            <div id="huser-profile-address-line2" class="user-profile-address-line2">#Address-Line2</div>
+                            <div id="huser-profile-address-pincode" class="user-profile-address-pincode">#Pincode</div>
+                            <div  class="user-profile-contact-number">
+                                <span id="huser-profile-contact-number_prefix" class="user-profile-nine-one-zero-two-two">#+91/022</span>
+                                <span id="huser-profile-contact-number" class="user-profile-contact-number">#Contact_Number</span>
                             </div>
                         </div>
                         <div class="user-profile-about-right-side-member">
-                            <div class="home-work-address"><h3 style="margin:0; font-size: 1em;">#Home/Work-Address(If-present)</h3></div>
-                            <div class="user-profile-address-line1">#Address-Line1</div>
-                            <div class="user-profile-address-line2">#Address-Line2</div>
-                            <div class="user-profile-address-pincode">#Pincode</div>
+                            <div class="home-work-address">
+                                <h3 style="margin:0; font-size: 1em;">#Home/Work-Address(If-present)</h3>
+                            </div>
+                            <div id="ouser-profile-address-line1" class="user-profile-address-line1">#Address-Line1</div>
+                            <div id="ouser-profile-address-line2" class="user-profile-address-line2">#Address-Line2</div>
+                            <div id="ouser-profile-address-pincode" class="user-profile-address-pincode">#Pincode</div>
                             <div class="user-profile-contact-number">
-                                <span class="user-profile-nine-one-zero-two-two">#+91/022</span>
-                                <span class="user-profile-contact-number">#Contact_Number</span>
+                                <span id="ouser-profile-contact-number_prefix" class="user-profile-nine-one-zero-two-two">#+91/022</span>
+                                <span id="ouser-profile-contact-number" class="user-profile-contact-number">#Contact_Number</span>
                             </div>
                         </div>
                     </div>
@@ -761,7 +781,7 @@
         document.getElementById('user-data-change-approvals-content').style.display = "block";
         document.getElementById('heading-raise-a-case').style.display = "none";
         document.getElementById('heading-my-cases').style.display = "none";
-        document.getElementById('heading-user-data-change-approvals').style.display = "block";     
+        document.getElementById('heading-user-data-change-approvals').style.display = "block";
         document.getElementById('top-nav-search-heading').style.display = "none";
         document.getElementById('top-nav-search-results').style.display = "none";
         document.getElementById('raise-a-case-content').style.opacity = 1;
@@ -829,8 +849,8 @@
     };
 
     //-----Top-Nav-Search-----------------------------------------------------------------------------------
-    document.getElementById("top-nav-search").onkeyup = function () {
-        if (this.value !== "") {
+    /*document.getElementById("top-nav-search").onkeyup = function () {
+          if (this.value !== "") {
             document.getElementById('raise-a-case-content').style.opacity = 0;
             document.getElementById('my-cases-content').style.opacity = 0;
             document.getElementById('case-details').style.opacity = 0;
@@ -866,7 +886,7 @@
             else if(document.getElementById('my-cases-content').style.display === "block"){page_history.unshift("my_cases")}
             else if(document.getElementById('user-data-change-approvals-content').style.display === "block"){page_history.unshift("user_data_change_approvals")}
         }
-    };
+    };*/
     //---------Close-Button-------------------------------------------------------
     document.getElementById("top-nav-search-close-button").onclick = function () {search_close_button();};
 
@@ -1118,7 +1138,7 @@
         $('#location-landmark-case-details').val(caseInfo.locationLandMark);
         $('#location-pincode-case-details').val(caseInfo.locationPincode);
     }
-    
+
 
     document.getElementById("myc-case-details-heading-close-button").onclick = function(){
         document.getElementById('case-details').style.display = "none";
@@ -1651,9 +1671,8 @@
                             // following property gets displayed in drop down
                             label: item.userName,
                             // following property gets entered in the textbox
-                            value: item.userId,
+                            value: item.userName,
                             // following property is added for our own use
-
                             userDetails: item
                         }
 
@@ -1664,35 +1683,132 @@
 
             //define select handler
             select: function (event, ui) {
-                var iCnt = 0;
                 console.info(event);
                 console.log(ui.item);
                 if (ui.item) {
-                    iCnt = iCnt + 1;
-
-                    // ADD TEXTBOX.
-                    $(container).append('<span><input type="hidden"  name ="pincodeId" value ="' + ui.item.value + '" style = "font-size:0.7em" for = "pincodeId"> ' + ui.item.label + '</span>').append('<label style = "font-size:0.7em" for = "selectedTiming"> Specify Timings </label> ').append('<select name = "selectedTiming" id = "select-timings" form = "pincode"> <option>00-06</option><option>06-12</option><option>12-18</option><option>18-23</option></select>');
-                    $("#log").after(container);
-                    //$( "#log" ).scrollTop( 0 );
-                    $("#search-pincode").autocomplete("close");
-                    $("#search-pincode").val('');
+                    //var cc = [];
+                    var html = aVol + ui.item.userDetails.userName + bVol + cVol + ui.item.userDetails.userId + dVol;
+                    userIdVsInfoMap[ui.item.userDetails.userId] = ui.item.userDetails;
+                    //cc.push(html);
+                    $('#search_vol').html(html);
+                    //console.info(cc);
+                    $("#assign-case-search-input").autocomplete("close");
+                    $("#assign-case-search-input").val('');
                     return false;
                 }
             }
 
         });
-    });
 
-    /*-----Duplicate-ID's-----
-            var allElements = document.getElementsByTagName("*"), allIds = {}, dupIDs = [];
-            for (var i = 0, n = allElements.length; i < n; ++i) {
-            var el = allElements[i];
-            if (el.id) {
-                if (allIds[el.id] !== undefined) dupIDs.push(el.id);
-                allIds[el.id] = el.name || el.id;
+        $("#top-nav-search").autocomplete({
+            minLength: 1,
+            delay: 500,
+            source:
+                function (request, response) {
+                    $.getJSON("/getCaseVolListForSearch", request, function (result) {
+                        response($.map(result, function (item) {
+                                if(item.caseId) {
+                                return {
+                                    // following property gets displayed in drop down
+                                    label: "Case : "+item.caseId,
+                                    // following property gets entered in the textbox
+                                    value: item.caseId,
+                                    // following property is added for our own use
+
+                                    caseDetails: item
+                                }
+                            }
+                            else {
+                                return {
+                                    // following property gets displayed in drop down
+                                    label: "User : "+item.userName,
+                                    // following property gets entered in the textbox
+                                    value: item.userName,
+                                    // following property is added for our own use
+                                    userDetails: item
+                                }
+                            }
+
+                        }));
+                    });
+                    // console.info("vkjk " + request + " " + response);
+                },
+            //define select handler
+            select: function (event, ui) {
+                console.log("VKJ : "+JSON.stringify(ui.item));
+                if (ui.item) {
+                    if(ui.item.userDetails) {
+                        var ud = ui.item.userDetails;
+                        var html = aVol + ud.userName + bVol + cVol + ud.userId + dVol;
+                        userIdVsInfoMap[ud.userId] = ud;
+                        $('#raise-a-case-content').hide();
+                        $('#user-profile-left-side').find('img').attr('src',"data:image/png;base64," + ud.userImage.image);
+                        $('#user-profile-middle-side_user_name').text(ud.userName);
+                        $('#user-profile-middle-side_user_role').text(ud.role);
+                        $('#user-profile-right-side-table_ac').text(ud.caseAcceptedCount);
+                        $('#user-profile-right-side-table_rc').text(ud.caseRejectedCount);
+
+                        $('#user-profile-name').text(ud.firstName+" "+ud.lastName);
+                        $('#user-profile-dob').text(ud.dob);
+                        $('#user-profile-gender').text(ud.gender);
+                        $('#user-profile-email').text(ud.email);
+
+                        $('#huser-profile-address-line1').text(ud.homeAddr.addrLine1);
+                        $('#huser-profile-address-line2').text(ud.homeAddr.addrLine2);
+                        $('#huser-profile-address-pincode').text(ud.homeAddr.pincode);
+                        $('#huser-profile-contact-number_prefix').text(ud.homeAddr.contactPrefix);
+                        $('#huser-profile-contact-number').text(ud.homeAddr.contact);
+
+                        $('#ouser-profile-address-line1').text(ud.officeAddr.addrLine1);
+                        $('#ouser-profile-address-line2').text(ud.officeAddr.addrLine2);
+                        $('#ouser-profile-address-pincode').text(ud.officeAddr.pincode);
+                        $('#ouser-profile-contact-number_prefix').text(ud.officeAddr.contactPrefix);
+                        $('#ouser-profile-contact-number').text(ud.officeAddr.contact);
+
+                        $('#user-profile').show();
+                        //$('#search_vol').html(html);
+                    }
+                    else if(ui.item.caseDetails) {
+                        cd = ui.item.caseDetails;
+                        caseIdVsInfoMap[cd.caseId] = cd;
+                        $('#raise-a-case-content').hide();
+
+                        $('#case_profile_id').text(cd.caseId);
+                        $('#case_profile_status').text(cd.active);
+                        $('#case_profile_date').text(cd.creationDateStr);
+                        $('#case_profile_type').text(cd.typeAnimal);
+                        $('#case_profile_name').text(cd.animalName);
+
+                        $('#case_profile').show();
+
+                    }
+
+                    //console.info(cc);
+
+                    /*document.getElementById('raise-a-case-content').style.opacity = 0;
+                    document.getElementById('my-cases-content').style.opacity = 0;
+                    document.getElementById('case-details').style.opacity = 0;
+                    document.getElementById('user-data-change-approvals-content').style.opacity = 0;
+                    document.getElementById('heading-raise-a-case').style.opacity = 0;
+                    document.getElementById('heading-my-cases').style.opacity = 0;
+                    document.getElementById('heading-case-details').style.opacity = 0;
+                    document.getElementById('heading-user-data-change-approvals').style.opacity = 0;
+                    document.getElementById('top-nav-search-heading').style.display = "block";
+                    document.getElementById('top-nav-search-results').style.display = "block";
+                    document.getElementById("user-profile").style.display = "none";
+                    document.getElementById("top-nav-search-heading-content").innerHTML = "Searching results for - #Search_Input";
+                    document.getElementById("top-nav-search-user-profile-back-button").style.display = "none";
+                    page_history.unshift("top_nav_search_results");*/
+
+                    $("#top-nav-search").autocomplete("close");
+                    $("#top-nav-search").val('');
+                    return false;
                 }
             }
-            if (dupIDs.length) { console.error("Duplicate ID's:", dupIDs);} else { console.log("No Duplicates Detected"); }  --------------*/
+
+        });
+
+    });
 </script>
 
 </body>

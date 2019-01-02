@@ -1,6 +1,7 @@
 package org.birdhelpline.app.dataaccess;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.birdhelpline.app.model.PinCodeLandmarkInfo;
 import org.birdhelpline.app.model.User;
 import org.birdhelpline.app.model.UserServiceTimeInfo;
@@ -41,6 +42,9 @@ public class UserDao {
 
     @Value("${user.all.query}")
     private String userAllQ;
+
+    @Value("${user.all.with.address.query}")
+    private String userAllWithAddressQ;
 
     @Value("${user.basic.query}")
     private String userBasicQ;
@@ -94,7 +98,7 @@ public class UserDao {
     @Transactional(readOnly = true)
     public User getUser(long id) {
         try {
-            return jdbcTemplate.queryForObject(userAllQ + " and u.user_id = ?", new UserRowMapper("BIAS"), id);
+            return jdbcTemplate.queryForObject(userAllQ + " and u.user_id = ?", new UserRowMapper("BI"), id);
         } catch (EmptyResultDataAccessException ex) {
             return null;
         }
@@ -103,7 +107,7 @@ public class UserDao {
     @Transactional(readOnly = true)
     public User findUserByMobile(int mobile) {
         try {
-            return jdbcTemplate.queryForObject(userAllQ + " and ui.mobile = ?", new UserRowMapper("BIAS"), mobile);
+            return jdbcTemplate.queryForObject(userAllQ + " and ui.mobile = ?", new UserRowMapper("BI"), mobile);
         } catch (EmptyResultDataAccessException notFound) {
             return null;
         }
@@ -211,7 +215,7 @@ public class UserDao {
             params.put("userName", userName);
             user = namedParameterJdbcTemplate.queryForObject(
                     userAllQ + " and u.user_name = :userName ",
-                    params, new UserRowMapper("BIAS")
+                    params, new UserRowMapper("BI")
             );
         } catch (EmptyResultDataAccessException ex) {
             //throw new ObjectRetrievalFailureException(User.class, userName);
@@ -220,16 +224,6 @@ public class UserDao {
         return user;
     }
 
-
-//    public void updateLastLoginDate(String name) {
-//        this.jdbcTemplate.update(connection -> {
-//                    PreparedStatement ps = connection.prepareStatement(
-//                            "update user_info ui, user u set ui.last_login_date =  now() , login_count = login_count+1 where u.user_id = ui.user_id and u.user_name=?");
-//                    ps.setString(1, name);
-//                    return ps;
-//                }
-//        );
-//    }
 
     public void enableUser(User user) {
         this.jdbcTemplate.update(connection -> {
@@ -318,56 +312,67 @@ public class UserDao {
     public List<User> getUserByTerm(String term) {
         List<User> users = null;
         try {
+            UserRowMapper rowMapper = new UserRowMapper("BIA");
             Map<String, Object> params = new HashMap<String, Object>();
             params.put("userName", "%" + term + "%");
-            users = namedParameterJdbcTemplate.query(
-                    userAllQ+" and u.user_name like :userName ",
-                    params, new UserRowMapper("BIAS")
+            namedParameterJdbcTemplate.query(
+                    userAllWithAddressQ + " where u.user_name like :userName ",
+                    params, rowMapper
             );
+            return new ArrayList<>(rowMapper.map.values());
         } catch (EmptyResultDataAccessException ex) {
             //throw new ObjectRetrievalFailureException(User.class, userName);
             return null;
         }
-        return users;
     }
 
     public List<User> getTop5Vol() {
         List<User> users = null;
         try {
-            users = namedParameterJdbcTemplate.query(
-                    userAllQ + "  order by ui.case_accepted_count desc limit 5", new UserRowMapper("BIAS")
+            UserRowMapper rowMapper = new UserRowMapper("BI");
+            namedParameterJdbcTemplate.query(
+                    userAllQ + "  order by ui.case_accepted_count desc limit 5", rowMapper
             );
+            return new ArrayList<>(rowMapper.map.values());
         } catch (EmptyResultDataAccessException ex) {
             //throw new ObjectRetrievalFailureException(User.class, userName);
             return null;
         }
-        return users;
     }
 
     public List<User> getNearestVol(String locationPincode) {
         List<User> users = null;
         try {
-            users = namedParameterJdbcTemplate.query(
-                    nearestUserQ + locationPincode, new UserRowMapper("BIAS")
+            UserRowMapper rowMapper = new UserRowMapper("BI");
+            namedParameterJdbcTemplate.query(
+                    nearestUserQ + locationPincode, rowMapper
             );
+            return new ArrayList<>(rowMapper.map.values());
         } catch (EmptyResultDataAccessException ex) {
             //throw new ObjectRetrievalFailureException(User.class, userName);
             return null;
         }
-        return users;
     }
 
     static class UserRowMapper implements RowMapper<User> {
         private final String type;
+        private Map<Long, User> map = new HashMap<>();
 
         //B->Basic, I->Image, A->Addr, S->ServiceTime
         public UserRowMapper(String type) {
             this.type = type;
         }
 
+
+        @Override
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-            User user = new User();
-            user.setUserId(rs.getLong("user_id"));
+            Long userId = rs.getLong("user_id");
+            User user = map.get(userId);
+            if (user == null) {
+                user = new User();
+                map.put(userId, user);
+            }
+            user.setUserId(userId);
             user.setEmail(rs.getString("email"));
             user.setEnabled(rs.getBoolean("enabled"));
             user.setPassword(rs.getString("password"));
@@ -384,6 +389,8 @@ public class UserDao {
             user.setSecurityQId(rs.getInt("security_id"));
             user.setSecurityQAns(rs.getString("security_ans"));
             user.setLoginCount(rs.getInt("login_count"));
+            user.setCaseAcceptedCount(rs.getLong("case_accepted_count"));
+            user.setCaseRejectedCount(rs.getLong("case_rejected_count"));
             if (type.contains("I")) {
                 try {
                     Blob image = rs.getBlob("image");
@@ -396,6 +403,34 @@ public class UserDao {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                }
+            }
+            if (type.contains("A")) {
+                String typeAddr = rs.getString("address_type");
+                if (StringUtils.isNotBlank(typeAddr)) {
+                    switch (typeAddr) {
+                        case "H":
+                            user.getHomeAddr().setAddressType(typeAddr);
+                            user.getHomeAddr().setAddrLine1(rs.getString("address_line1"));
+                            user.getHomeAddr().setAddrLine2(rs.getString("address_line2"));
+                            user.getHomeAddr().setFullName(rs.getString("full_name"));
+                            user.getHomeAddr().setPincode(rs.getLong("pincode"));
+                            user.getHomeAddr().setContactPrefix(rs.getString("alternate_contact_prefix"));
+                            user.getHomeAddr().setContact(rs.getString("alternate_contact"));
+                            break;
+                        case "O":
+                            user.getOfficeAddr().setAddressType(typeAddr);
+                            user.getOfficeAddr().setAddrLine1(rs.getString("address_line1"));
+                            user.getOfficeAddr().setAddrLine2(rs.getString("address_line2"));
+                            user.getOfficeAddr().setFullName(rs.getString("full_name"));
+                            user.getOfficeAddr().setPincode(rs.getLong("pincode"));
+                            user.getOfficeAddr().setContactPrefix(rs.getString("alternate_contact_prefix"));
+                            user.getOfficeAddr().setContact(rs.getString("alternate_contact"));
+                            user.getOfficeAddr().setNatureBusiness(rs.getString("nature_business"));
+                            break;
+                        default:
+                            logger.warn("Unknown type Addr : " + typeAddr);
+                    }
                 }
             }
             return user;

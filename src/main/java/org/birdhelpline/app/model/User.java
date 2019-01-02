@@ -30,11 +30,10 @@ public class User implements Principal, Serializable {
     private Long caseAcceptedCount;
     private Long caseRejectedCount;
     private Integer loginCount;
-    private UserAddressInfo homeAddr;
-    private UserAddressInfo officeAddr;
+    private UserAddressInfo homeAddr = new UserAddressInfo();
+    private UserAddressInfo officeAddr = new UserAddressInfo();
     private List<UserServiceTimeInfo> userServiceTimeInfos;
     private UserImage userImage = new UserImage();
-
 
     public String getEncodedImage() {
         if (userImage != null && userImage.getImage() != null)

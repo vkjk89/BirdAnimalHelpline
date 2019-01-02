@@ -61,6 +61,7 @@ public class CaseDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private String caseInfoByCaseIdQWithoutTxn = "select * from case_info where case_id = ?";
     private String caseInfoByUserIdQWithoutTxn = "select * from case_info where user_id_opened = :userId OR user_id_closed = :userId OR current_user_id = :userId";
+    private String caseInfoBySearchTermQWithoutTxn = "select * from case_info where case_id like :searchTerm";
     private String caseTxnsQ = "select * from case_txn where case_id = ?";
     private String insertCaseQ;
 
@@ -209,5 +210,21 @@ public class CaseDao {
             ps.setLong(2, userId);
             return ps;
         }));
+    }
+
+    public List<CaseInfo> getAllCaseInfoBySearchTerm(String searchTerm) {
+        List<CaseInfo> caseInfos = null;
+        try {
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("searchTerm", "%"+searchTerm+"%");
+            caseInfos = namedParameterJdbcTemplate.query(
+                    caseInfoBySearchTermQWithoutTxn, params
+                    , caseInfoRowMapper.get()
+            );
+        } catch (EmptyResultDataAccessException ex) {
+            //throw new ObjectRetrievalFailureException(User.class, userName);
+            return null;
+        }
+        return caseInfos;
     }
 }

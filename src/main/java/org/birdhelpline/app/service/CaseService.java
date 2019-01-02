@@ -6,6 +6,7 @@ import org.birdhelpline.app.dataaccess.CaseDao;
 import org.birdhelpline.app.dataaccess.UserDao;
 import org.birdhelpline.app.model.CaseInfo;
 import org.birdhelpline.app.model.User;
+import org.birdhelpline.app.utils.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,7 +78,13 @@ public class CaseService {
         CaseInfo caseInfo = caseDao.getCaseInfoByCaseId(caseId);
         if (caseInfo != null) {
             List<User> top5Vol = userDao.getTop5Vol();
+            top5Vol = top5Vol.stream().filter(user -> {
+                return !user.getRole().equals(Role.ADMIN) || !user.getRole().equals(Role.Receptionist);
+            }).collect(Collectors.toList());
             List<User> nearestVol = userDao.getNearestVol(caseInfo.getLocationPincode());
+            nearestVol = nearestVol.stream().filter(user -> {
+                return !user.getRole().equals(Role.ADMIN) || !user.getRole().equals(Role.Receptionist);
+            }).collect(Collectors.toList());
             JsonObject jsonObject = new JsonObject();
             String top5VolStr = gson.toJson(top5Vol);
             String nearestVolStr = gson.toJson(nearestVol);
@@ -108,5 +115,10 @@ public class CaseService {
             return list;
         }
         return Collections.EMPTY_LIST;
+    }
+
+    public List<CaseInfo> getAllCaseInfo(String searchTerm) {
+        List<CaseInfo> list = caseDao.getAllCaseInfoBySearchTerm(searchTerm);
+        return list;
     }
 }
