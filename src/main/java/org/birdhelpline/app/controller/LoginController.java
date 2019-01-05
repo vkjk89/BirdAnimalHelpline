@@ -209,9 +209,9 @@ public class LoginController {
             for (int i = 0; i < selectedPinCodeIds.length; i++) {
                 serviceTimeInfo = new UserServiceTimeInfo();
                 serviceTimeInfo.setPincodeId(Long.parseLong(selectedPinCodeIds[i]));
-                String[] time = selectedTimings[i].split("-");
-                serviceTimeInfo.setFromTime(Integer.parseInt(time[0]));
-                serviceTimeInfo.setToTime(Integer.parseInt(time[1]));
+                String[] time = selectedTimings[i].trim().split("-");
+                serviceTimeInfo.setFromTime(Integer.parseInt(time[0].trim()));
+                serviceTimeInfo.setToTime(Integer.parseInt(time[1].trim()));
                 list.add(serviceTimeInfo);
             }
         }

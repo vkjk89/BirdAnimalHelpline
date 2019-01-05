@@ -48,6 +48,19 @@
             delay: 500,
             //define callback to format results
             source: function (request, response) {
+                var pinCodeIds = $('input[name="pincodeId"]').map(function() { return $(this).val();}).get();
+                console.info(pinCodeIds);
+                console.info(request.term);
+                console.info(JSON.stringify(request));
+                var pins ="";
+                for(i in pinCodeIds) {
+                    pins = pins+pinCodeIds[i]+",";
+                }
+                if(pins) {
+                    pins = pins.substr(0,pins.length-1);
+                }
+                request.selectedPinCodes = pins;
+                console.info(JSON.stringify(request));
                 $.getJSON("/getPinCodeLandMark", request, function (result) {
                     response($.map(result, function (item) {
                         return {
@@ -96,22 +109,28 @@
                         input_select.classList.add("select-timings");
                         input_select.classList.add("member" + counter);
                         var option1 = document.createElement("option");
-                        option1.innerHTML = "00:00 - 04:00";
+                        option1.innerHTML = "00 - 04";
                         var option2 = document.createElement("option");
-                        option2.innerHTML = "04:00 - 08:00";
+                        option2.innerHTML = "04 - 08";
                         var option3 = document.createElement("option");
-                        option3.innerHTML = "08:00 -12:00";
+                        option3.innerHTML = "08 - 12";
                         var option4 = document.createElement("option");
-                        option4.innerHTML = "12:00 - 16:00";
+                        option4.innerHTML = "12 - 16";
                         var option5 = document.createElement("option");
-                        option5.innerHTML = "16:00 - 20:00";
+                        option5.innerHTML = "16 - 20";
                         var option6 = document.createElement("option");
-                        option6.innerHTML = "20:00 - 24:00";
+                        option6.innerHTML = "20 - 24";
+
+                        var hidden_input = document.createElement("input");
+                        hidden_input.setAttribute("type", "hidden");
+                        hidden_input.setAttribute("name", "pincodeId");
+                        hidden_input.setAttribute("value",ui.item.value);
 
                         //-----APPEND-CHILDNODES-----------------------------------------------------------------------
                         span.innerHTML = "&times;";
                         inner_div.innerHTML += landmarks + " - " + pincodes;
                         inner_div.appendChild(span);
+                        inner_div.appendChild(hidden_input);
                         inner_div2.appendChild(input);
                         inner_div2.appendChild(label);
                         input_select.appendChild(option1);

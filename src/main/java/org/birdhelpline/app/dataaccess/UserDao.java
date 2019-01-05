@@ -74,7 +74,7 @@ public class UserDao {
                 }
         );
 
-        logger.info("VKJ : " + listPincodeLandMarks);
+        //logger.info("VKJ : " + listPincodeLandMarks);
 
         jdbcTemplate.query("select security_q_id, security_q_text from security_q order by 1 ",
                 (ResultSet resultSet) ->

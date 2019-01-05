@@ -1,5 +1,6 @@
 package org.birdhelpline.app.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.birdhelpline.app.dataaccess.UserDao;
 import org.birdhelpline.app.model.PinCodeLandmarkInfo;
 import org.birdhelpline.app.model.User;
@@ -11,8 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -45,9 +45,14 @@ public class UserService {
     }
 
 
-    public List<PinCodeLandmarkInfo> getPinCodeLandMarks(String term) {
+    public List<PinCodeLandmarkInfo> getPinCodeLandMarks(String term, String selectedPinCodes) {
+        Set<Long> setSelected = new HashSet<>();
+        if(StringUtils.isNotBlank(selectedPinCodes)) {
+            List<String> list = Arrays.asList(selectedPinCodes.split(",", -1));
+            list.stream().forEach(s -> setSelected.add(Long.parseLong(s)));
+        }
         List<PinCodeLandmarkInfo> list = userDao.getPinCodeLandMarks();
-        return list.stream().filter(p -> p.getLandmark().toLowerCase().indexOf(term) >= 0).collect(Collectors.toList());
+        return list.stream().filter(p -> !setSelected.contains(p.getPincodeId()) && p.getLandmark().toLowerCase().indexOf(term) >= 0 ).collect(Collectors.toList());
 
     }
 

@@ -40,9 +40,11 @@ public class UserController {
 
     @RequestMapping("/getPinCodeLandMark")
     public @ResponseBody
-    List<PinCodeLandmarkInfo> getPinCodeVsLandMarks(@RequestParam("term") String term) {
+    List<PinCodeLandmarkInfo> getPinCodeVsLandMarks(@RequestParam("term") String term,
+                                                    @RequestParam(name="selectedPinCodes" , required = false) String selectedPinCodes) {
         logger.info("vkj term : " + term);
-        return userService.getPinCodeLandMarks(term.toLowerCase());
+        logger.info("vkj selected : " + selectedPinCodes);
+        return userService.getPinCodeLandMarks(term.toLowerCase(),selectedPinCodes);
     }
 
     @RequestMapping("/getVolListForSearch")
