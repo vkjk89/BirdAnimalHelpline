@@ -8,12 +8,12 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>Bird Helpline</title>
 
-    <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
-    <link href="/static/css/receptionist-dashboard.css" rel="stylesheet" th:href="@{/css/receptionist-dashboard.css}">
     <link href="/static/css/jquery/jquery-ui.theme.min.css" rel="stylesheet" th:href="@{/css/jquery/jquery-ui.theme.min.css}">
     <link href="/static/css/jquery/jquery-ui.structure.min.css" rel="stylesheet" th:href="@{/css/jquery/jquery-ui.structure.min.css}">
     <link href="/static/css/jquery/jquery-ui.min.css" rel="stylesheet" th:href="@{/css/jquery/jquery-ui.min.css}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
+    <link href="/static/css/receptionist-dashboard.css" rel="stylesheet" th:href="@{/css/receptionist-dashboard.css}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <script src="/static/js/jquery.ui.widget.js" th:src="@{/js/jquery.ui.widget.js}"></script>
@@ -42,8 +42,7 @@
                 <span class="fa fa-refresh fa-lg" style="filter: invert(100%)"></span>
             </button>
             <span id="top-nav-search-wrapper">
-                <input autocomplete="off" id="top-nav-search" name="top-nav-search" placeholder="Search Members..."
-                       type="search">
+                <input autocomplete="off" id="top-nav-search" name="top-nav-search" placeholder="Search Members..." type="search">
             </span>
         </span>
     <span class="no-select" id="right-side">
@@ -64,13 +63,13 @@
 
 <main>
     <div id="heading-raise-a-case" class="no-select">
-        <span id="rac-heading-animation">Raise a Case</span>
+        <span id="rac-heading">Raise a Case</span>
     </div>
     <div id="heading-my-cases" class="no-select">
-        <span id="myc-heading-animation">My Cases</span>
+        <span id="myc-heading">My Cases</span>
     </div>
     <div id="heading-user-data-change-approvals" class="no-select">
-        <span id="usdca-heading-animation">Data Change Approvals</span>
+        <span id="usdca-heading">Data Change Approvals</span>
     </div>
     <!---------------------------------Top-Nav-Search-Results---------------------------------->
     <div id="top-nav-search-content">
@@ -81,18 +80,17 @@
         </div>
         <div id="top-nav-search-results">
             <div>
-                <li class="search-li-user-profile-onclick"><span class="top-nav-search-vol-name">#Vol_Name1</span> <span class="top-nav-search-vol-role">#Vol_Role</span></li>
-                <li class="search-li-user-profile-onclick"><span class="top-nav-search-vol-name">#Vol_Name2</span> <span class="top-nav-search-vol-role">#Vol_Role</span></li>
+                <li class="search-li-user-profile-onclick" onclick="top_nav_search_user_profile();"><span class="top-nav-search-vol-name">#Vol_Name1</span> <span class="top-nav-search-vol-role">#Vol_Role</span></li>
+                <li class="search-li-user-profile-onclick" onclick="top_nav_search_user_profile();"><span class="top-nav-search-vol-name">#Vol_Name2</span> <span class="top-nav-search-vol-role">#Vol_Role</span></li>
             </div>
-            <div>
+            <div class="no-select">
                 <div class="search-li-cases-header"><span class="">#Sr._No.</span><span class="">#Case_ID</span><span class="">#Case_Status</span><span class="">#Date</span><span class="">#Animal/Bird_Type</span><span class="">#Animal/Bird_Name</span></div>
-                <div class="search-li-cases search-li-cases-onclick"  onclick="top_nav_search_case_details();
+                <div class="search-li-cases search-li-cases-onclick"  onclick="top_nav_search_case_details('search_cases_details');
                 document.getElementById('top-nav-search').value = '';
                 document.getElementById('top-nav-search-heading-content').innerHTML = '#Search_Input - #Case_ID';
                 document.getElementById('top-nav-search-results').style.display = 'none';
                 document.getElementById('user-profile').style.display = 'none';
-                document.getElementById('top-nav-search-user-profile-back-button').style.display = 'none';
-                page_history.unshift('top_nav_search_cases_details');"><span>#Sr._No.</span><span>#Case_ID</span><span>#Case_Status</span><span>#Date</span><span>#Animal/Bird_Type</span><span>#Animal/Bird_Name</span></div>
+                document.getElementById('top-nav-search-user-profile-back-button').style.display = 'none';"><span>#Sr._No.</span><span>#Case_ID</span><span>#Case_Status</span><span>#Date</span><span>#Animal/Bird_Type</span><span>#Animal/Bird_Name</span></div>
             </div>
         </div>
         <div id="user-profile">
@@ -167,7 +165,7 @@
                                 <div class="case-name-div">Animal/Bird Name</div>
                             </div>
                             <div class="my-cases-result" style="width: 68.5vw;">
-                                <div class="row row11" onclick="top_nav_search_case_details();">
+                                <div class="row row11" onclick="top_nav_search_case_details('vol_cases_details');">
                                     <div class="sr-no">
                                         <li></li>
                                     </div>
@@ -191,7 +189,7 @@
                                 <div class="case-name-div">Animal/Bird Name</div>
                             </div>
                             <div class="my-cases-result" style="width: 68.5vw;">
-                                <div class="row row11" onclick="top_nav_search_case_details();">
+                                <div class="row row11" onclick="top_nav_search_case_details('vol_cases_details');">
                                     <div class="sr-no">
                                         <li></li>
                                     </div>
@@ -215,7 +213,7 @@
                                 <div class="case-name-div">Animal/Bird Name</div>
                             </div>
                             <div class="my-cases-result" style="width: 68.5vw;">
-                                <div class="row row11" onclick="top_nav_search_case_details();">
+                                <div class="row row11" onclick="top_nav_search_case_details('vol_cases_details');">
                                     <div class="sr-no">
                                         <li></li>
                                     </div>
@@ -227,6 +225,50 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="heading-top-nav-case-details">
+            <span id="top-nav-case-details-heading-animation" class="no-select">Case Details</span>
+            <span id="top-nav-case-details-heading-close-button" class="no-select">&times;</span>
+            <span id="top-nav-case-details-heading-back-button" class="no-select">&#10140;</span>
+        </div>
+        <div id="top-nav-case-details">
+            <div id="top-nav-case-details-form">
+                <div id="top-nav-form-left-side-case-details">
+                    <div id="header-top-nav-form-left-side-case-details">#Animal/Bird Information</div>
+                    <hr>
+                    <div id="body-top-nav-form-left-side-case-details">
+                        <div id="top-nav-id-and-bird-type-case-details">
+                            <label for="top-nav-case-id-case-details">Case ID </label>
+                            <input autocomplete="off" disabled id="top-nav-case-id-case-details" name="top-nav-case-id-case-details" required type="number">
+                        </div>
+                        <label for="top-nav-animal-type">#Animal/Bird type: </label>
+                        <input disabled id="top-nav-animal-type-case-details" type="text"><br>
+                        <label for="top-nav-animal-name-case-details">#Animal/Bird name: </label>
+                        <input disabled id="top-nav-animal-name-case-details" type="text"><br>
+                        <label for="top-nav-condition-case-details">Condition: </label>
+                        <input disabled id="top-nav-condition-case-details" type="text">
+                        <label for="top-nav-case-photos-case-details">Photos Uploaded</label>
+                        <div id="top-nav-case-photos-case-details"></div>
+                    </div>
+                </div>
+                <div id="top-nav-form-right-side-case-details">
+                    <div id="header-top-nav-form-right-side-case-details">Contact Information</div>
+                    <hr>
+                    <div id="body-top-nav-form-right-side-case-details">
+                        <label>Name: </label>
+                        <input autocomplete="off" disabled id="top-nav-contact-name-case-details" type="text"><br>
+                        <label>Contact Number: </label>
+                        <input disabled id="top-nav-nine-one-case-details" placeholder="" type="text">
+                        <input autocomplete="off" disabled id="top-nav-contact-number-case-details" type="number"><br>
+                        <label>Location: </label>
+                        <textarea cols="50" disabled id="top-nav-location-case-details" rows="3"></textarea>
+                        <label>Landmark </label>
+                        <input autocomplete="off" disabled id="top-nav-location-landmark-case-details" type="text">
+                        <label>Pincode </label>
+                        <input disabled id="top-nav-location-pincode-case-details" type="number">
                     </div>
                 </div>
             </div>
@@ -305,6 +347,18 @@
             <span id="recent-tab-header" style="border-right: 1px solid #CCCCCC72;border-left: 1px solid #CCCCCC72;">Recent</span>
             <span id="closed-tab-header" style="border-right: 1px solid #007AEA;border-left: 1px solid #CCCCCC72;">Closed</span>
         </div>
+        <div class="my-cases-result1" id="table4" style="width: 68.5vw;display: none;">
+            <div class="row row1" onclick="case_details()">
+                <div class="sr-no">
+                    <li></li>
+                </div>
+                <div class="case-id">#Case_ID</div>
+                <div class="case-status">#Case_Status</div>
+                <div class="date">#Date</div>
+                <div class="animal-type">#Animal/Bird_Type</div>
+                <div class="case-name">#Animal/Bird_Name</div>
+            </div>
+        </div>
         <div id="tab-content">
             <div id="active-tab-content">
                 <div class="content-table" id="active-content-table">
@@ -374,7 +428,6 @@
             </div>
         </div>
     </div>
-
 
     <div id="heading-case-details">
         <span id="myc-case-details-heading-animation" class="no-select">Case Details</span>
@@ -611,14 +664,12 @@
             document.getElementById('rac-body').classList.remove('right-side-card-rotate');
         }, 600);
 
-        document.getElementById('raise-a-case-content').style.display = "block";
         page_history.unshift("raise_a_case");
+        document.getElementById('raise-a-case-content').style.display = "block";
         document.getElementById('my-cases-content').style.display = "none";
-        document.getElementById('case-details').style.display = "none";
         document.getElementById('user-data-change-approvals-content').style.display = "none";
         document.getElementById('heading-raise-a-case').style.display = "block";
         document.getElementById('heading-my-cases').style.display = "none";
-        document.getElementById('heading-case-details').style.display = "none";
         document.getElementById('heading-user-data-change-approvals').style.display = "none";
         document.getElementById('top-nav-search-heading').style.display = "none";
         document.getElementById('top-nav-search-results').style.display = "none";
@@ -631,13 +682,13 @@
         document.getElementById('heading-case-details').style.opacity = 1;
         document.getElementById('heading-user-data-change-approvals').style.opacity = 1;
         document.getElementById("top-nav-search").value = "";
-        document.getElementById('top-nav-search-heading').style.display = "none";
-        document.getElementById('top-nav-search-results').style.display = "none";
         document.getElementById("user-profile").style.display = "none";
         document.getElementById("top-nav-search-heading-content").innerHTML = "";
-        document.getElementById('content-assign-case').style.display = "none";
-        document.getElementById('content-close-case').style.display = "none";
-        document.getElementById('case-details-form').style.pointerEvents = "";
+        document.getElementById('heading-case-details').style.display = "none";
+        document.getElementById('case-details').style.display = "none";
+        document.getElementById('top-nav-case-details').style.display = "none";
+        document.getElementById('heading-top-nav-case-details').style.display = "none";
+        document.getElementById('top-nav-case-details-form').style.display = "none";
     }
 
     document.getElementById('myc-body').onclick = function () {
@@ -655,19 +706,15 @@
             document.getElementById('myc-body').classList.remove('right-side-card-rotate');
         }, 600);
 
+        page_history.unshift("my_cases");
         document.getElementById('active-tab-header').classList.add('active-header');
         document.getElementById('raise-a-case-content').style.display = "none";
         document.getElementById('my-cases-content').style.display = "block";
         document.getElementById('search-case-input').value = "";
-        page_history.unshift("my_cases");
-        document.getElementById('case-details').style.display = "none";
         document.getElementById('user-data-change-approvals-content').style.display = "none";
         document.getElementById('heading-raise-a-case').style.display = "none";
         document.getElementById('heading-my-cases').style.display = "block";
-        document.getElementById('heading-case-details').style.display = "none";
         document.getElementById('heading-user-data-change-approvals').style.display = "none";
-        document.getElementById('top-nav-search-heading').style.display = "none";
-        document.getElementById('top-nav-search-results').style.display = "none";
         $('#tab-header').fadeIn(300);
         showresults();
         document.getElementById('raise-a-case-content').style.opacity = 1;
@@ -678,14 +725,19 @@
         document.getElementById('heading-my-cases').style.opacity = 1;
         document.getElementById('heading-case-details').style.opacity = 1;
         document.getElementById('heading-user-data-change-approvals').style.opacity = 1;
-        document.getElementById("top-nav-search").value = "";
         document.getElementById('top-nav-search-heading').style.display = "none";
         document.getElementById('top-nav-search-results').style.display = "none";
+        document.getElementById("top-nav-search").value = "";
         document.getElementById("user-profile").style.display = "none";
         document.getElementById("top-nav-search-heading-content").innerHTML = "";
+        document.getElementById('heading-case-details').style.display = "none";
+        document.getElementById('case-details').style.display = "none";
         document.getElementById('content-assign-case').style.display = "none";
         document.getElementById('content-close-case').style.display = "none";
         document.getElementById('case-details-form').style.pointerEvents = "";
+        document.getElementById('top-nav-case-details').style.display = "none";
+        document.getElementById('heading-top-nav-case-details').style.display = "none";
+        document.getElementById('top-nav-case-details-form').style.display = "none";
     }
 
     document.getElementById('usdca-body').onclick = function () {
@@ -703,15 +755,13 @@
             document.getElementById('usdca-body').classList.remove('right-side-card-rotate');
         }, 600);
 
+        page_history.unshift("user_data_change_approvals");
         document.getElementById('raise-a-case-content').style.display = "none";
         document.getElementById('my-cases-content').style.display = "none";
-        document.getElementById('case-details').style.display = "none";
         document.getElementById('user-data-change-approvals-content').style.display = "block";
-        page_history.unshift("user_data_change_approvals");
         document.getElementById('heading-raise-a-case').style.display = "none";
         document.getElementById('heading-my-cases').style.display = "none";
-        document.getElementById('heading-case-details').style.display = "none";
-        document.getElementById('heading-user-data-change-approvals').style.display = "block";
+        document.getElementById('heading-user-data-change-approvals').style.display = "block";     
         document.getElementById('top-nav-search-heading').style.display = "none";
         document.getElementById('top-nav-search-results').style.display = "none";
         document.getElementById('raise-a-case-content').style.opacity = 1;
@@ -723,13 +773,13 @@
         document.getElementById('heading-case-details').style.opacity = 1;
         document.getElementById('heading-user-data-change-approvals').style.opacity = 1;
         document.getElementById("top-nav-search").value = "";
-        document.getElementById('top-nav-search-heading').style.display = "none";
-        document.getElementById('top-nav-search-results').style.display = "none";
         document.getElementById("user-profile").style.display = "none";
         document.getElementById("top-nav-search-heading-content").innerHTML = "";
-        document.getElementById('content-assign-case').style.display = "none";
-        document.getElementById('content-close-case').style.display = "none";
-        document.getElementById('case-details-form').style.pointerEvents = "";
+        document.getElementById('heading-case-details').style.display = "none";
+        document.getElementById('case-details').style.display = "none";
+        document.getElementById('top-nav-case-details').style.display = "none";
+        document.getElementById('heading-top-nav-case-details').style.display = "none";
+        document.getElementById('top-nav-case-details-form').style.display = "none";
     }
 
     //------Active-Recent-Closed-Tabs-JS--------------------------------------------------------------------------------
@@ -791,7 +841,10 @@
             document.getElementById('heading-user-data-change-approvals').style.opacity = 0;
             document.getElementById('top-nav-search-heading').style.display = "block";
             document.getElementById('top-nav-search-results').style.display = "block";
+            document.getElementById('heading-top-nav-case-details').style.display = "none";
             document.getElementById("user-profile").style.display = "none";
+            document.getElementById('top-nav-case-details').style.display = "none";
+            document.getElementById('top-nav-case-details-form').style.display = "none";
             document.getElementById("top-nav-search-heading-content").innerHTML = "Searching results for - #Search_Input";
             document.getElementById("top-nav-search-user-profile-back-button").style.display = "none";
             page_history.unshift("top_nav_search_results");
@@ -815,7 +868,9 @@
         }
     };
     //---------Close-Button-------------------------------------------------------
-    document.getElementById("top-nav-search-close-button").onclick = function () {
+    document.getElementById("top-nav-search-close-button").onclick = function () {search_close_button();};
+
+    function search_close_button() {
         document.getElementById('raise-a-case-content').style.opacity = 1;
         document.getElementById('my-cases-content').style.opacity = 1;
         document.getElementById('case-details').style.opacity = 1;
@@ -824,51 +879,71 @@
         document.getElementById('heading-my-cases').style.opacity = 1;
         document.getElementById('heading-case-details').style.opacity = 1;
         document.getElementById('heading-user-data-change-approvals').style.opacity = 1;
+        document.getElementById('content-assign-case').style.opacity = 1;
+        document.getElementById('content-close-case').style.opacity = 1;
         document.getElementById("top-nav-search").value = "";
         document.getElementById('top-nav-search-heading').style.display = "none";
         document.getElementById('top-nav-search-results').style.display = "none";
         document.getElementById("user-profile").style.display = "none";
         document.getElementById("top-nav-search-heading-content").innerHTML = "";
-        document.getElementById('case-details').style.display = "none";
-        document.getElementById('heading-case-details').style.display = "none";
-        document.getElementById('case-details-form').style.display = "none";
-        if(document.getElementById('raise-a-case-content').style.display === "block"){page_history.unshift("raise_a_case")}
-        else if(document.getElementById('my-cases-content').style.display === "block"){page_history.unshift("my_cases")}
-        else if(document.getElementById('user-data-change-approvals-content').style.display === "block"){page_history.unshift("user_data_change_approvals")}
-    };
+        document.getElementById('top-nav-case-details').style.display = "none";
+        document.getElementById('heading-top-nav-case-details').style.display = "none";
+        document.getElementById('top-nav-case-details-form').style.display = "none";
+        for(let i=0; i<page_history.length; i++){
+            if (page_history[i] === "raise_a_case"){
+                raise_a_case();
+                page_history.unshift("raise_a_case");
+                break;
+            }
+            else if (page_history[i] === "my_cases"){
+                my_cases();
+                page_history.unshift("my_cases");
+                break;
+            }
+            else if (page_history[i] === "user_data_change_approvals"){
+                user_data_change_approvals();
+                page_history.unshift("user_data_change_approvals");
+                break;
+            }
+            else if(page_history[i] === "action_centre_assign_case"){
+                document.getElementById('content-assign-case').style.display = "block";
+                page_history.unshift("action_centre_assign_case");
+                break;
+            }
+            else if(page_history[i] === "action_close_assign_case"){
+                document.getElementById('content-close-case').style.display = "block";
+                page_history.unshift("action_close_assign_case");
+                break;
+            }
+        }
+    }
 
     document.getElementById("top-nav-search-user-profile-back-button").onclick = function () {
         navigate_back();
-        document.getElementById("top-nav-search-user-profile-back-button").style.display = "none";
     };
 
-    for (let i = 0; i < document.getElementsByClassName("search-li-user-profile-onclick").length; i++) {
-        document.getElementsByClassName("search-li-user-profile-onclick")[i].onclick = function () {
-            document.getElementById("top-nav-search").value = "";
-            document.getElementById("top-nav-search-heading-content").innerHTML = "#Search_Input - #User_Name";
-            document.getElementById("top-nav-search-results").style.display = "none";
-            document.getElementById("user-profile").style.display = "block";
-            document.getElementById("top-nav-search-user-profile-back-button").style.display = "block";
-            document.getElementById("user-profile-cases-content").style.display = "none";
-            page_history.unshift("top_nav_search_user_profile");
-            $("#user-profile-about-content").fadeIn();
-            user_profile_basic_details();
-        };
+    function top_nav_search_user_profile(){
+        document.getElementById("top-nav-search").value = "";
+        document.getElementById("top-nav-search-heading-content").innerHTML = "#Search_Input - #User_Name";
+        document.getElementById("top-nav-search-results").style.display = "none";
+        document.getElementById("user-profile").style.display = "block";
+        document.getElementById("top-nav-search-user-profile-back-button").style.display = "block";
+        document.getElementById("user-profile-cases-content").style.display = "none";
+        page_history.unshift("top_nav_search_user_profile");
+        $("#user-profile-about-content").fadeIn();
+        user_profile_basic_details();
     }
 
-    function top_nav_search_case_details() {
-        document.getElementById('case-details').style.display = "block";
-        document.getElementById('heading-case-details').style.display = "block";
-        document.getElementById('case-details-form').style.display = "flex";
-        document.getElementById('action-center').style.display = "none";
-        document.getElementById('heading-case-details').style.opacity = 1;
-        document.getElementById('case-details').style.opacity = 1;
+    function top_nav_search_case_details(identifier1) {
+        document.getElementById('top-nav-case-details').style.display = "block";
+        document.getElementById('heading-top-nav-case-details').style.display = "block";
+        document.getElementById('top-nav-case-details-form').style.display = "flex";
         document.getElementById("top-nav-search").value = "";
         document.getElementById('top-nav-search-heading').style.display = "none";
         document.getElementById('top-nav-search-results').style.display = "none";
         document.getElementById("user-profile").style.display = "none";
-        document.getElementById("form-left-side-case-details").style.width = "50%";
-        document.getElementById("form-right-side-case-details").style.width = "50%";
+        if(identifier1 === "vol_cases_details"){page_history.unshift("vol_cases_details");}
+        else if(identifier1 === "search_cases_details"){page_history.unshift("search_cases_details");}
     }
 
     //------Search-Active-Recent-Closed-Tabs-JS--------------------------------------
@@ -1019,11 +1094,11 @@
         document.getElementById('heading-my-cases').style.display = "none";
         document.getElementById('heading-case-details').style.display = "block";
         document.getElementById('case-details-form').style.display = "flex";
-        document.getElementById("form-left-side-case-details").style.width = "40%";
-        document.getElementById("form-right-side-case-details").style.width = "40%";
+        //document.getElementById("form-left-side-case-details").style.width = "40%";
+        //document.getElementById("form-right-side-case-details").style.width = "40%";
         document.getElementById('action-center').style.display = "block";
         document.getElementById('case-details-form').style.opacity = "";
-        page_history.unshift("case_details");
+        page_history.unshift("myc_case_details");
         //console.info(data);
         console.info(" vkj map : " + caseIdVsInfoMap);
         //console.info(" vkj data : "+data.getElementsByClassName("case-id"));
@@ -1051,45 +1126,28 @@
         document.getElementById('case-details-form').style.display = "none";
         document.getElementById('top-nav-search-heading').style.display = "none";
         document.getElementById('top-nav-search-results').style.display = "none";
+        document.getElementById('case-details').style.opacity = 1;
         document.getElementById('content-assign-case').style.display = "none";
         document.getElementById('content-close-case').style.display = "none";
         document.getElementById('case-details-form').style.pointerEvents = "";
-        for(let i=0; i<page_history.length; i++){
-            if(page_history[0 + i] === "my_cases"){
-               my_cases();
-               break;
-            }
-            else if (page_history[0 + i] === "user_cases_case_details" || page_history[0 + i] === "top_nav_search_cases_details"){
-                document.getElementById('raise-a-case-content').style.opacity = 1;
-                document.getElementById('my-cases-content').style.opacity = 1;
-                document.getElementById('case-details').style.opacity = 1;
-                document.getElementById('user-data-change-approvals-content').style.opacity = 1;
-                document.getElementById('heading-raise-a-case').style.opacity = 1;
-                document.getElementById('heading-my-cases').style.opacity = 1;
-                document.getElementById('heading-case-details').style.opacity = 1;
-                document.getElementById('heading-user-data-change-approvals').style.opacity = 1;
-                document.getElementById("top-nav-search").value = "";
-                document.getElementById('top-nav-search-heading').style.display = "none";
-                document.getElementById('top-nav-search-results').style.display = "none";
-                document.getElementById("user-profile").style.display = "none";
-                document.getElementById("top-nav-search-heading-content").innerHTML = "";
-                document.getElementById('case-details').style.display = "none";
-                document.getElementById('heading-case-details').style.display = "none";
-                document.getElementById('case-details-form').style.display = "none";
-                if(document.getElementById('raise-a-case-content').style.display === "block"){page_history.unshift("raise_a_case")}
-                else if(document.getElementById('my-cases-content').style.display === "block"){page_history.unshift("my_cases")}
-                else if(document.getElementById('user-data-change-approvals-content').style.display === "block"){page_history.unshift("user_data_change_approvals")}
-                break;
-            }
-        }
+        my_cases();
+        page_history.unshift("my_cases");
     };
 
+    document.getElementById("top-nav-case-details-heading-close-button").onclick = function(){
+        search_close_button();
+    };
+
+    document.getElementById('top-nav-case-details-heading-back-button').onclick = function () {
+        navigate_back();
+    };
     document.getElementById('myc-case-details-heading-back-button').onclick = function () {
         navigate_back();
     };
     //--Action-Centre--------------------------------------------------------------------------------
     document.getElementById('action-center-assign-case').onclick = function () {
         document.getElementById('case-details-form').style.display = "none";
+        document.getElementById('content-assign-case').style.opacity = "1";
         document.getElementById('content-assign-case').style.display = "block";
         document.getElementById('myc-case-details-heading-animation').innerHTML = "#CaseID - Assign Case";
         document.getElementById("myc-case-details-heading-close-button").style.display = "block";
@@ -1100,6 +1158,7 @@
     document.getElementById('action-center-close-case').onclick = function () {
         document.getElementById('case-details-form').style.opacity = "0.2";
         document.getElementById('case-details-form').style.pointerEvents = "none";
+        document.getElementById('content-close-case').style.opacity = "1";
         document.getElementById('content-close-case').style.display = "block";
         document.getElementById('myc-case-details-heading-animation').innerHTML = "#CaseID - Close Case";
         document.getElementById("myc-case-details-heading-close-button").style.display = "block";
@@ -1168,16 +1227,14 @@
 
     //------Navigation-Back-Button----------------------------------------------------------------------------------------------------------
     function navigate_back() {
-        if (page_history[0] === "case_details") {
+        if (page_history[0] === "myc_case_details") {
             document.getElementById('my-cases-content').style.display = "block";
-            document.getElementById('case-details').style.display = "none";
             document.getElementById('heading-my-cases').style.display = "block";
+            document.getElementById('case-details').style.display = "none";
             document.getElementById('heading-case-details').style.display = "none";
             document.getElementById('case-details-form').style.display = "none";
-            document.getElementById('top-nav-search-heading').style.display = "none";
-            document.getElementById('top-nav-search-results').style.display = "none";
             page_history.unshift("my_cases");
-        } 
+        }
         else if (page_history[0] === "action_centre_assign_case" || page_history[0] === "action_centre_close_case") {
             document.getElementById('case-details-form').style.display = "flex";
             document.getElementById('content-assign-case').style.display = "none";
@@ -1188,35 +1245,41 @@
             document.getElementById('top-nav-search-heading').style.display = "none";
             document.getElementById('top-nav-search-results').style.display = "none";
             document.getElementById('case-details-form').style.pointerEvents = "";
-            page_history.unshift("case_details");
-        } 
+            page_history.unshift("myc_case_details");
+        }/*
         else if (page_history[0] === "user_cases_case_details"){
-            document.getElementById('case-details').style.display = "none";
-            document.getElementById('heading-case-details').style.display = "none";
-            document.getElementById('case-details-form').style.display = "none";
-            document.getElementById('heading-case-details').style.opacity = 1;
-            document.getElementById('case-details').style.opacity = 1;
+            document.getElementById('top-nav-case-details').style.display = "none";
+            document.getElementById('heading-top-nav-case-details').style.display = "none";
+            document.getElementById('top-nav-case-details-form').style.display = "none";
             document.getElementById('top-nav-search-heading').style.display = "block";
             document.getElementById("top-nav-search-heading-content").innerHTML = "#Search_Input - #User_Name";
             document.getElementById("top-nav-search-user-profile-back-button").style.display = "block";
-            document.getElementById('top-nav-search-results').style.display = "none";
             document.getElementById("user-profile").style.display = "block";
-        } 
+        }*/
         else if (page_history[0] === "top_nav_search_user_profile"){
-            document.getElementById("top-nav-search-heading-content").innerHTML = "Searching results for - #Search_Input";
-            document.getElementById("top-nav-search-user-profile-back-button").style.display = "block";
-            document.getElementById("user-profile").style.display = "none";
-            document.getElementById('top-nav-search-results').style.display = "block";
-        }
-        else if (page_history[0] === "top_nav_search_cases_details"){
             document.getElementById('top-nav-search-heading').style.display = "block";
-            document.getElementById("top-nav-search-heading-content").innerHTML = "Searching results for - #Search_Input";
             document.getElementById('top-nav-search-results').style.display = "block";
-            document.getElementById('case-details').style.display = "none";
-            document.getElementById('heading-case-details').style.display = "none";
-            document.getElementById('case-details-form').style.display = "none";
-            document.getElementById('heading-case-details').style.opacity = 1;
-            document.getElementById('case-details').style.opacity = 1;
+            document.getElementById("top-nav-search-heading-content").innerHTML = "Searching results for - #Search_Input";
+            document.getElementById("user-profile").style.display = "none";
+            document.getElementById("top-nav-search-user-profile-back-button").style.display = "none";
+            page_history.unshift("top_nav_search_results");
+        }
+        else if(page_history[0] === "vol_cases_details"){
+            document.getElementById('top-nav-case-details').style.display = "none";
+            document.getElementById('heading-top-nav-case-details').style.display = "none";
+            document.getElementById('top-nav-case-details-form').style.display = "none";
+            document.getElementById('top-nav-search-heading').style.display = "block";
+            document.getElementById("user-profile").style.display = "block";
+            page_history.unshift("top_nav_search_user_profile");
+        }
+        else if(page_history[0] === "search_cases_details"){
+            document.getElementById('top-nav-search-heading').style.display = "block";
+            document.getElementById('top-nav-search-results').style.display = "block";
+            document.getElementById('top-nav-case-details').style.display = "none";
+            document.getElementById('heading-top-nav-case-details').style.display = "none";
+            document.getElementById('top-nav-case-details-form').style.display = "none";
+            document.getElementById("top-nav-search-user-profile-back-button").style.display = "none";
+            page_history.unshift("top_nav_search_results");
         }
     }
     //------Keyboard-Shortcuts---------------------------------------------------------------------------------------------------------------
@@ -1291,12 +1354,13 @@
     document.getElementById("refresh").onclick = function (e) {
         e.preventDefault();
         this.classList.add("fa-spin");
-        window.location.reload();
+        window.location.reload(true);
     };
 
     //------Tooltip-Vol-Assign-Case--------------------------------------------------------------------------------------------------------
 
     function show_vol_tooltip() {
+        clearTimeout(hide_tooltip_timeOut);
         console.info("vimal   1");
         console.info(event.srcElement);
         var userId = $(event.srcElement).parent().find("#vol_id").val();
@@ -1323,13 +1387,14 @@
     function hide_vol_tooltip() {
         hide_tooltip_timeOut = setTimeout(function () {
             $("#vol-description-tooltip").fadeOut();
+            $("#vol-description-tooltip").click();
             $("#vol-description-tooltip").css("display", "none");
             $('#tooltip-info-name').text("");
             $('#tooltip-info-role').text("");
             $('#address-line1').text("");
             $('#address-line2').text("");
             $('#tooltip-info-tel-number').text("");
-            $('#tooltip-dp').html('<img id="dp_image" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/User_font_awesome.svg" width="auto" height="70vh">');
+            $('#tooltip-dp').html('<img id="dp_image" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/User_font_awesome.svg" width="auto" height="70vh"><div id="decoy-for-img">.</div>');
         }, 200);
     }
 
@@ -1452,7 +1517,6 @@
     $(document).ready(function () {
         $('.top-five-and-nearest-and-search-results-ul').on("mouseover", ".vol_tooltip", show_vol_tooltip);
         $('.top-five-and-nearest-and-search-results-ul').on("mouseout", ".vol_tooltip", hide_vol_tooltip);
-
         var caseInfo = {};
 
         var responseHandler = function (event) {
@@ -1566,7 +1630,7 @@
                     iCnt = iCnt + 1;
                     var htm = aCase + caseDetails.caseId + bCase + (caseDetails.active ? "Active" : "Closed") + cCase + caseDetails.creationDateStr + dCase + caseDetails.typeAnimal + eCase + caseDetails.animalName + fCase;
                     $(container).append(htm);
-                    $('#table1').html(container);
+                    $('#table4').html(container);
                     $("#search-case-input").autocomplete("close");
                     $("#search-case-input").val('');
                     console.info(container);

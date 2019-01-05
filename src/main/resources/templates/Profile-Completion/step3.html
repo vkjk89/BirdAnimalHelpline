@@ -31,8 +31,7 @@
         <div class="selected-pincodes" id="selected-pincodes">
             <p>Selected Pincodes:</p>
             <div id = "selected-pin-content">
-                <ul id="selected-pincode-ul">
-                </ul>
+                <ul id="selected-pincode-ul"></ul>
             </div>
         </div>
         <button form="pincode" id="next" type="submit">Submit</button>
@@ -70,10 +69,64 @@
                 var iCnt = 0;
                 document.getElementById("selected-pincodes").style.display = "block";
                 if (ui.item) {
-                    //---------------function timings_create(){
-                        document.getElementById("selected-pincode-ul").innerHTML += "<li><div><input type=\"hidden\"  name =\"pincodeId\" value =\"" + ui.item.value + "\"><div>" + ui.item.landmarks + " - " + ui.item.pincode + "</div><div><input type=\"checkbox\" name=\"pincode-timing-check\" id=\"pincode-timing-check" + counter + "\" class=\"pincode-timing-check member" + counter + "\" onclick=\"select_timings_dropown(this)\"><label for=\"pincode-timing-check" + counter + "\">Specify Timings</label><select name = \"selectedTiming\" id=\"select-timings\" class=\"select-timings member" + counter + "\"><option>00-06</option><option>06-12</option><option>12-18</option><option>18-00</option></select></div></div></li>";
+                        //----CREATING-ELEMENTS-AND-ADD-ATTRIBUTES----------------------------------------------------
+                        var li = document.createElement("li");
+                        li.classList.add("li-member" + counter);
+                        var div = document.createElement("div");
+                        var inner_div = document.createElement("div");
+                        var inner_div2 = document.createElement("div");
+                        var landmarks = ui.item.landmarks;
+                        var pincodes = ui.item.pincode;
+                        var span = document.createElement("span");
+                        span.classList.add("remove-pincode");
+                        span.setAttribute("onclick","remove_pincode(this.parentElement.parentElement.parentElement.classList)");
+                        var input = document.createElement("input");
+                        input.setAttribute("type", "checkbox");
+                        input.setAttribute("name","pincode-timing-check");
+                        input.setAttribute("id","pincode-timing-check" + counter);
+                        input.classList.add("pincode-timing-check");
+                        input.classList.add("member" + counter);
+                        input.setAttribute("onclick", "select_timings_dropdown(this)");
+                        var label = document.createElement("label");
+                        label.setAttribute("for", "pincode-timing-check" + counter);
+                        label.innerHTML = "Specify Timings";
+                        var input_select = document.createElement("select");
+                        input_select.setAttribute("name", "selectedTiming");
+                        input_select.setAttribute("id", "select-timings");
+                        input_select.classList.add("select-timings");
+                        input_select.classList.add("member" + counter);
+                        var option1 = document.createElement("option");
+                        option1.innerHTML = "00:00 - 04:00";
+                        var option2 = document.createElement("option");
+                        option2.innerHTML = "04:00 - 08:00";
+                        var option3 = document.createElement("option");
+                        option3.innerHTML = "08:00 -12:00";
+                        var option4 = document.createElement("option");
+                        option4.innerHTML = "12:00 - 16:00";
+                        var option5 = document.createElement("option");
+                        option5.innerHTML = "16:00 - 20:00";
+                        var option6 = document.createElement("option");
+                        option6.innerHTML = "20:00 - 24:00";
+
+                        //-----APPEND-CHILDNODES-----------------------------------------------------------------------
+                        span.innerHTML = "&times;";
+                        inner_div.innerHTML += landmarks + " - " + pincodes;
+                        inner_div.appendChild(span);
+                        inner_div2.appendChild(input);
+                        inner_div2.appendChild(label);
+                        input_select.appendChild(option1);
+                        input_select.appendChild(option2);
+                        input_select.appendChild(option3);
+                        input_select.appendChild(option4);
+                        input_select.appendChild(option5);
+                        input_select.appendChild(option6);
+                        inner_div2.appendChild(input_select);
+                        div.appendChild(inner_div);
+                        div.appendChild(inner_div2);
+                        li.appendChild(div);
+                        document.getElementById("selected-pincode-ul").append(li);
                         counter++;
-                    //----------------------------------------}
+                    //-------------------------------------------------------------------------------------------------
                     $("#search-pincode").autocomplete("close");
                     $("#search-pincode").val('');
                     return false;
@@ -82,7 +135,7 @@
         });
     });
 
-    function select_timings_dropown(this_t){
+    function select_timings_dropdown(this_t){
         console.log(this_t);
         let y = [this_t.className.split(' ')];
         let member_number = y[0][1];
@@ -91,6 +144,13 @@
         }
         else {
             document.getElementsByClassName(member_number)[1].style.display = "none";
+        }
+    }
+
+    function remove_pincode(class_Name){
+        document.getElementsByClassName(class_Name)[0].remove();
+        if (document.getElementById("selected-pincode-ul").childNodes.length < 1){
+            document.getElementById("selected-pincodes").style.display = "none";
         }
     }
 </script>

@@ -49,8 +49,9 @@ main {
 }
 
 #selected-pin-content ul li {
-    margin-left: -2vw;
+    margin-left: -5vw;
     line-height: 3.5vh;
+    max-width: 60vw;
 }
 
 #selected-pincode-ul {
@@ -69,6 +70,15 @@ main {
     padding: 0.5vw 1vw;
     margin-left: 1vw;
     display:none;
+}
+
+.remove-pincode {
+    float: right;
+    margin-right: 5vw;
+    color: #374047;
+    font-size: 2em;
+    cursor: pointer;
+    font-weight: 900;
 }
 
 #next {

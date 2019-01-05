@@ -26,6 +26,19 @@ button {
     padding: unset;
 }
 
+.ui-menu, .ui-menu-item-wrapper {
+    border: 1px solid rgb(248,248,248);
+    background-color: rgb(248,248,248);
+    box-shadow: 0px 0px 5px #DDD;
+}
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
 /*-------------Loading-Gif-----------*/
 #loading-gif {
     box-sizing: border-box;
@@ -222,7 +235,7 @@ main {
     box-shadow: 00px 00px 40px #999;
 }
 
-#heading-raise-a-case, #heading-my-cases, #heading-user-data-change-approvals, #heading-case-details, #top-nav-search-heading {
+#heading-raise-a-case, #heading-my-cases, #heading-user-data-change-approvals, #heading-case-details, #top-nav-search-heading, #heading-top-nav-case-details {
     position: relative;
     display: block;
     box-sizing: border-box;
@@ -233,7 +246,7 @@ main {
     width: 75vw;
 }
 
-#heading-my-cases, #heading-user-data-change-approvals, #heading-case-details, #top-nav-search-heading {
+#heading-my-cases, #heading-user-data-change-approvals, #heading-case-details, #top-nav-search-heading, #heading-top-nav-case-details {
     display: none;
 }
 
@@ -243,7 +256,7 @@ main {
     top: 0vh;
 }
 
-#heading-raise-a-case span:first-child, #heading-my-cases span:first-child, #heading-user-data-change-approvals span:first-child, #heading-case-details span:first-child, #top-nav-search-heading span:first-child {
+#rac-heading, #heading-my-cases span:first-child, #heading-user-data-change-approvals span:first-child, #heading-case-details span:first-child, #top-nav-search-heading span:first-child, #heading-top-nav-case-details span:first-child, {
     position: relative;
     box-sizing: border-box;
     color: white;
@@ -256,17 +269,17 @@ main {
     font-weight: 400;
 }
 
-#heading-case-details span:nth-child(2), #heading-case-details span:nth-child(3), #top-nav-search-close-button, #top-nav-search-user-profile-back-button{
+#heading-case-details span:nth-child(2), #heading-case-details span:nth-child(3), #heading-top-nav-case-details span:nth-child(2), #heading-top-nav-case-details span:nth-child(3), #top-nav-search-close-button, #top-nav-search-user-profile-back-button{
     position: relative;
     box-sizing: border-box;
-    font-weight: 900;
+    font-weight: 700;
     font-size: 1.5em;
     float: right;
     transform: rotate(180deg);
     top: -0.75vh;
     cursor: pointer;
 }
-#heading-case-details span:nth-child(2) {
+#heading-case-details span:nth-child(2), #heading-top-nav-case-details span:nth-child(2) {
     font-size: 2em;
     font-weight: 700;
     top: -1.5vh;
@@ -277,10 +290,10 @@ main {
 }
 #top-nav-search-user-profile-back-button{
     margin: 0vw 0.75vw;
-    top: -0.75vh;
+    top: -0.55vh;
 }
 
-#raise-a-case-content, #my-cases-content, #user-data-change-approvals-content, #case-details, #top-nav-search-results, #user-profile {
+#raise-a-case-content, #my-cases-content, #user-data-change-approvals-content, #case-details, #top-nav-case-details, #top-nav-search-results, #user-profile {
     position: relative;
     box-sizing: border-box;
     display: block;
@@ -291,26 +304,32 @@ main {
     margin-right: 1.75vw;
 }
 
-#heading-case-details {
+#heading-case-details, #heading-top-nav-case-details {
     position: absolute;
     top: 0vh;
     z-index: 2;
 }
 
-#case-details {
+#case-details, #top-nav-case-details {
     position: absolute;
     top: 6vh;
     z-index: 2;
     width: 68.5vw;
 }
 
-#top-nav-search-results, #user-profile {
+#top-nav-search-results, #user-profile, #top-nav-case-details {
     z-index: 101;
     position: absolute;
     top: 3vh;
     margin-left: 0;
     width: 75vw;
     height: 78vh;
+}
+
+#top-nav-case-details {
+    display: none;
+    padding-top: 3vh;
+    padding-left: 2vw;
 }
 
 #my-cases-content, #user-data-change-approvals-content, #top-nav-search-results, #user-profile {
@@ -553,11 +572,11 @@ label:hover {
 }
 
 /*--------------------RAISE-A-CASE--------------------*/
-#raise-a-case-form, #case-details-form {
+#raise-a-case-form, #case-details-form, #top-nav-case-details-form {
     display: flex;
 }
 
-#case-details-form {
+#case-details-form, #top-nav-case-details-form {
     display: none;
     overflow-y: auto;
     overflow-x: hidden;
@@ -573,11 +592,11 @@ label:hover {
     width: 65%;
 }
 
-#form-left-side-case-details, #form-right-side-case-details {
+#form-left-side-case-details, #form-right-side-case-details, #top-nav-form-left-side-case-details, #top-nav-form-right-side-case-details {
     width: 40%;
 }
 
-#header-form-left-side, #header-form-right-side, #header-form-left-side-case-details, #header-form-right-side-case-details {
+#header-form-left-side, #header-form-right-side, #header-form-left-side-case-details, #header-form-right-side-case-details, #header-top-nav-form-left-side-case-details, #header-top-nav-form-right-side-case-details {
     font-size: 1.3em;
     font-weight: 500;
     padding-left: 1vw;
@@ -589,12 +608,12 @@ hr {
     width: 90%;
 }
 
-#body-form-left-side, #body-form-right-side, #body-form-left-side-case-details, #body-form-right-side-case-details {
+#body-form-left-side, #body-form-right-side, #body-form-left-side-case-details, #body-form-right-side-case-details, #body-top-nav-form-left-side-case-details, #body-top-nav-form-right-side-case-details {
     padding-left: 1vw;
 }
 
 #animal-name, #condition, #animal-type, #location, #case-photos, #contact-name, #nine-one, #contact-number, #location, #location-landmark, #location-pincode,
-#animal-name-case-details, #condition-case-details, #animal-type-case-details, #case-photos-case-details, #contact-name-case-details, #nine-one-case-details, #contact-number-case-details, #location-case-details, #location-landmark-case-details, #location-pincode-case-details {
+#animal-name-case-details, #top-nav-animal-name-case-details, #condition-case-details, #top-nav-condition-case-details, #animal-type-case-details, #top-nav-animal-type-case-details, #case-photos-case-details, #top-nav-case-photos-case-details, #contact-name-case-details, #top-nav-contact-name-case-details, #nine-one-case-details, #top-nav-nine-one-case-details, #contact-number-case-details, #top-nav-contact-number-case-details, #location-case-details, #top-nav-location-case-details, #location-landmark-case-details, #top-nav-location-landmark-case-details, #location-pincode-case-details, #top-nav-location-pincode-case-details {
     margin: 0vh 0vh;
     border-radius: 0px;
     font-size: 0.9em;
@@ -605,7 +624,7 @@ hr {
     border: 1px solid #CCC;
 }
 
-#case-id, #case-id-case-details {
+#case-id, #case-id-case-details, #top-nav-case-id-case-details {
     width: 5vw;
     margin: 0vw 1vw 1vh 1vw;
     height: 1vh;
@@ -621,17 +640,17 @@ hr {
     cursor: default;
 }
 
-#raise-a-case-content input[type="text"]:focus::placeholder, #raise-a-case-content input[type="number"]:focus::placeholder, #location:focus::placeholder, #raise-a-case-content input[type="file"]:focus::placeholder, #case-details input[type="text"]:focus::placeholder, #case-details input[type="number"]:focus::placeholder, #location-case-details:focus::placeholder, #case-details input[type="file"]:focus::placeholder, #close-case-other-reason:focus::placeholder {
+#raise-a-case-content input[type="text"]:focus::placeholder, #raise-a-case-content input[type="number"]:focus::placeholder, #location:focus::placeholder, #raise-a-case-content input[type="file"]:focus::placeholder, #case-details input[type="text"]:focus::placeholder, #case-details input[type="number"]:focus::placeholder, #location-case-details:focus::placeholder, #top-nav-location-case-details:focus::placeholder, #case-details input[type="file"]:focus::placeholder, #close-case-other-reason:focus::placeholder {
     opacity: 0.5;
     transition: opacity 0.3s ease-in-out;
 }
 
-#location, #location-case-details {
+#location, #location-case-details, #top-nav-location-case-details {
     padding-top: 1vh;
     resize: none;
 }
 
-#location-case-details {
+#location-case-details, #top-nav-location-case-details {
     padding: 0.5vh 0.5vw;
 }
 
@@ -639,16 +658,16 @@ hr {
     width: 78%;
 }
 
-#raise-a-case-content label, #case-details label {
+#raise-a-case-content label, #case-details label, #top-nav-case-details label {
     display: block;
     margin-bottom: 0.5vw;
 }
 
-#id-and-bird-type, #id-and-bird-type-case-details {
+#id-and-bird-type, #id-and-bird-type-case-details, #top-nav-id-and-bird-type-case-details {
     display: flex;
 }
 
-#id-and-bird-type label, #id-and-bird-type-case-details label {
+#id-and-bird-type label, #id-and-bird-type-case-details label, #top-nav-id-and-bird-type-case-details label {
     display: inline;
 }
 
@@ -659,14 +678,14 @@ hr {
     height: auto;
 }
 
-#case-photos-case-details {
+#case-photos-case-details, #top-nav-case-photos-case-details {
     display: flex;
     justify-content: space-around;
     max-height: 15vh;
     overflow: auto;
 }
 
-#location-case-details {
+#location-case-details, #top-nav-location-case-details {
     overflow-y: auto;
     overflow-x: hidden;
     resize: hidden;
@@ -677,11 +696,11 @@ hr {
     width: 5vw;
 }
 
-#nine-one-case-details {
+#nine-one-case-details, #top-nav-nine-one-case-details {
     width: 2.3vw;
 }
 
-#contact-number, #contact-number-case-details {
+#contact-number, #contact-number-case-details, #top-nav-contact-number-case-details {
     width: 57.3%;
 }
 

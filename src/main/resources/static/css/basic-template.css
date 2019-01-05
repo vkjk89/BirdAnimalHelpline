@@ -63,12 +63,11 @@ ul li {
     user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 
-/* clears the 'X' from Internet Explorer */
-input[type=search]::-ms-clear {  display: none; width : 0; height: 0; }
-input[type=search]::-ms-reveal {  display: none; width : 0; height: 0; }
 
-/* clears the 'X' from Chrome */
-input[type="search"]::-webkit-search-decoration,
+/*-----Clear-X-Button-Input-Search-Field--------------------------------------*/
+input[type=search]::-ms-clear {  display: none; width : 0; height: 0; }             /* clears the 'X' from Internet Explorer */
+input[type=search]::-ms-reveal {  display: none; width : 0; height: 0; }
+input[type="search"]::-webkit-search-decoration,                                    /* clears the 'X' from Chrome */
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration { display: none; }
