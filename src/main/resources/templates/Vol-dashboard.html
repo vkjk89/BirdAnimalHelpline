@@ -15,27 +15,22 @@
 <!--<body th:object="${user}">-->
 <nav id="top-nav">
     <span id="profile-options">&#9776;</span>
-    <span id="navbar-username" th:text="${user.userName}">#Username</span>
     <button id="user-dp" type="button">
-        <img alt="User-Display-Picture" height=""
-             src="/static/img/display-picture11.png" th:if="${user.getUserImage().getImage() == null}" th:src="@{/img/display-picture11.png}" width="">
-        <img alt="User-Display-Picture" height=""
-             src="/static/img/display-picture11.png" th:if="${user.getUserImage().getImage() != null}" th:src="${'data:image/png;base64,'+user.getEncodedImage()}" width="auto">
+        <img alt="User-Display-Picture" height="" src="/static/img/display-picture11.png" th:if="${user.getUserImage().getImage() == null}" th:src="@{/img/display-picture11.png}" width="">
+        <img alt="User-Display-Picture" height="" src="/static/img/display-picture11.png" th:if="${user.getUserImage().getImage() != null}" th:src="${'data:image/png;base64,'+user.getEncodedImage()}" width="auto">
     </button>
+    <span id="navbar-username" th:text="${user.userName}">#Username</span>
 </nav>
 
 <nav id="side-nav">
     <section id="top-part">
         <div id="background-img">
-            <img alt="Side-Nav-Background" id="bg-image"
-                 src="/static/img/side-nav-background-nav.png" th:src="@{/img/side-nav-background-nav.png}" width="75vw">
+            <img alt="Side-Nav-Background" id="bg-image" src="/static/img/side-nav-background-nav.png" th:src="@{/img/side-nav-background-nav.png}" width="75vw">
         </div>
         <span id="close-btn">&times;</span>
         <div id="side-nav-user-dp">
-            <img alt="Side-Nav-Display-Picture" height="auto"
-                 src="/static/img/display-picture1.png" th:if="${user.getUserImage().getImage() == null}" th:src="@{/img/display-picture1.png}" width="">
-            <img alt="Side-Nav-Display-Picture" height="auto"
-                 src="/static/img/display-picture1.png" th:if="${user.getUserImage().getImage() != null}" th:src="${'data:image/png;base64,'+user.getEncodedImage()}" width="">
+            <img alt="Side-Nav-Display-Picture" height="auto" src="/static/img/display-picture1.png" th:if="${user.getUserImage().getImage() == null}" th:src="@{/img/display-picture1.png}" width="">
+            <img alt="Side-Nav-Display-Picture" height="auto" src="/static/img/display-picture1.png" th:if="${user.getUserImage().getImage() != null}" th:src="${'data:image/png;base64,'+user.getEncodedImage()}" width="">
         </div>
         <span id="user_name" th:text="${user.firstName} +' '+ ${user.lastName}">#First_Last_Name</span>
         <span id="user_role" th:text="${user.role}">#User_Role</span>
@@ -66,12 +61,11 @@
 <section id="page-heading">
     <h1>Welome, <span id="#user_full_name" th:text="${user.firstName} +' '+ ${user.lastName}">#First_Last_Name</span>
     </h1>
-    <span id="cases-accepted">246</span>
 </section>
 
 <section id="my-cases">
     <div class="search-case" id="search-case">
-        <input id="search-case-input" name="search-case-input" placeholder="Search Case..." type="search">
+        <input id="search-case-input" name="search-case-input" placeholder="Search Case" type="search">
         <div id="search-results-div">
             <div id="results-tab-div">
                 <span class="active-active" id="results-tab-active">Active</span>
@@ -90,14 +84,13 @@
 <section class="accept-case" id="accept-case">
     <div class="accept-case-shadow">
         <div id="heading-accept-case">Accept Case</div>
-        <div id="case-details" title="Case details">
+        <div id="case-details">
             <div id="case-id">#Case-ID</div>
             <span id="animal-type">#Animal_Type</span>
             <span id="animal-name">#Animal_Name</span>
             <div id="case-condition">Condition: Eg: Broken leg.</div>
             <div id="contact-info">
-                <span onclick="case_details();">Contact Information</span><span id="downward-arrow-animation"
-                                                                                onclick="case_details();">&#x25BC;</span><br>
+                <span onclick="case_details();">Contact Information</span><span id="downward-arrow-animation" onclick="case_details();">&#x25BC;</span><br>
                 <span>Name: </span><span id="contact-name">#Name</span><br>
                 <span>Contact Number: </span><span id="contact-number">#Contact_Number</span><br>
                 <span>Location: </span><span id="contact-location">#Location</span>
@@ -105,23 +98,18 @@
             <div id="accept-decline">
                 <button id="accept" type="submit">Accept</button>
                 <button id="decline" type="submit">I am helpless</button>
-                <span id="celebrations"><img alt="Case-animal/bird" src="/static/img/pigeon.jpg" th:src="@{/img/pigeon.png}"
-                                             width="45vw"> Thank you! You just saved my life!</span>
+                <span id="celebrations"><img alt="Case-animal/bird" src="/static/img/pigeon.jpg" th:src="@{/img/pigeon.png}" width="45vw"> Thank you! You just saved my life!</span>
             </div>
         </div>
     </div>
 </section>
 
 <section id="bottom-action-bar">
-    <button class="action-bar-home-btn" id="home" type="button"><img alt="home"
-                                                                     src="/static/img/home-white.png" th:src="@{/img/home-white.png}">
+    <button class="action-bar-home-btn" id="home" type="button"><img alt="home" src="/static/img/home-white.png" th:src="@{/img/home-white.png}">
     </button>
-    <button class="action-bar-home-btn" id="logout" type="button"><img alt="logout"
-                                                                       src="/static/img/logout-white.png" th:src="@{/img/logout-white.png}">
+    <button class="action-bar-home-btn" id="logout" type="button"><img alt="logout" src="/static/img/logout-white.png" th:src="@{/img/logout-white.png}">
     </button>
-    <button class="action-bar-home-btn" id="contact-us" type="button"><img alt="contact-us"
-                                                                           src="/static/img/contact-us-white.png"
-                                                                           th:src="@{/img/contact-us-white.png}"></button>
+    <button class="action-bar-home-btn" id="contact-us" type="button"><img alt="contact-us" src="/static/img/contact-us-white.png" th:src="@{/img/contact-us-white.png}"></button>
 </section>
 
 <!--<table>-->
@@ -204,10 +192,6 @@
         document.getElementById('celebrations').style.display = "none";
         window.scrollTo(0, document.body.scrollHeight);
     };
-
-    if (document.getElementById('cases-accepted').innerHTML > 200) {
-        document.getElementById('cases-accepted').style.color = "burlywood";
-    }
 
     document.getElementById('profile-options').onclick = function openSideNav() {
         document.getElementById('side-nav').style.display = "block";

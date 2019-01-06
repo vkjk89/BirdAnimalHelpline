@@ -849,7 +849,7 @@
     };
 
     //-----Top-Nav-Search-----------------------------------------------------------------------------------
-    /*document.getElementById("top-nav-search").onkeyup = function () {
+    document.getElementById("top-nav-search").onkeyup = function () {
           if (this.value !== "") {
             document.getElementById('raise-a-case-content').style.opacity = 0;
             document.getElementById('my-cases-content').style.opacity = 0;
@@ -886,7 +886,7 @@
             else if(document.getElementById('my-cases-content').style.display === "block"){page_history.unshift("my_cases")}
             else if(document.getElementById('user-data-change-approvals-content').style.display === "block"){page_history.unshift("user_data_change_approvals")}
         }
-    };*/
+    };
     //---------Close-Button-------------------------------------------------------
     document.getElementById("top-nav-search-close-button").onclick = function () {search_close_button();};
 
@@ -1114,8 +1114,6 @@
         document.getElementById('heading-my-cases').style.display = "none";
         document.getElementById('heading-case-details').style.display = "block";
         document.getElementById('case-details-form').style.display = "flex";
-        //document.getElementById("form-left-side-case-details").style.width = "40%";
-        //document.getElementById("form-right-side-case-details").style.width = "40%";
         document.getElementById('action-center').style.display = "block";
         document.getElementById('case-details-form').style.opacity = "";
         page_history.unshift("myc_case_details");
@@ -1266,16 +1264,7 @@
             document.getElementById('top-nav-search-results').style.display = "none";
             document.getElementById('case-details-form').style.pointerEvents = "";
             page_history.unshift("myc_case_details");
-        }/*
-        else if (page_history[0] === "user_cases_case_details"){
-            document.getElementById('top-nav-case-details').style.display = "none";
-            document.getElementById('heading-top-nav-case-details').style.display = "none";
-            document.getElementById('top-nav-case-details-form').style.display = "none";
-            document.getElementById('top-nav-search-heading').style.display = "block";
-            document.getElementById("top-nav-search-heading-content").innerHTML = "#Search_Input - #User_Name";
-            document.getElementById("top-nav-search-user-profile-back-button").style.display = "block";
-            document.getElementById("user-profile").style.display = "block";
-        }*/
+        }
         else if (page_history[0] === "top_nav_search_user_profile"){
             document.getElementById('top-nav-search-heading').style.display = "block";
             document.getElementById('top-nav-search-results').style.display = "block";

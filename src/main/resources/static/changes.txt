@@ -58,3 +58,14 @@ case status
     //CheckBox Issue - Doesn't Retain State
     //Close-Case Other Issue
     //Remove button - Pincode
+
+06/01/2018
+    Assign-Page : Loading
+    Step3 - Server Error
+    +91 - 022 - Change Validation
+    Assign Case - Search and Alignment
+    Tarun - Date - My Cases
+    Raise-Caise Dropdown - Bird/Animal Type
+    Close Case
+    Refresh on Home instead Refresh
+
