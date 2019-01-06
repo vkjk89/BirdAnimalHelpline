@@ -557,12 +557,12 @@
                 <div style="margin-top: 10vh;">
                     <div>
                         <span id="close-case-reason-span">Select reason:</span>
-                        <select id="close-case-reason" name="close-case-reason">
+                        <select id="close-case-reason" name="closeCaseReason">
                             <option value="Dead">Dead</option>
                             <option value="Healthy">Healthy</option>
                             <option value="Other">Other</option>
                         </select>
-                        <textarea cols="25" id="close-case-other-reason" name="close-case-other-reason" placeholder="Specify Reason" rows="4"></textarea>
+                        <textarea cols="25" id="close-case-other-reason" name="closeRemark" placeholder="Specify Reason" rows="4"></textarea>
                     </div>
                     <div>
                         <button id="close-case-cancel-btn" onclick="navigate_back()">Cancel</button>
@@ -1236,8 +1236,9 @@
             document.getElementById('close-case-other-reason').style.border = "2px solid red";
             document.getElementById('close-case-other-reason').placeholder = "You must specify a Reason";
         } else {
-            navigate_back();
-            navigate_back();
+            closeCaseReq(currentCaseId);
+            // navigate_back();
+            // navigate_back();
         }
     };
     document.getElementById('close-case-other-reason').addEventListener("keyup", function () {  //Removes Red border while typing
@@ -1514,11 +1515,12 @@
         //event.preventDefault();
     }
 
-    function closeCaseReq(caseId, userId) {
+    function closeCaseReq(caseId) {
 
         var formData = {
-            'caseId': currentCaseId,
-            'userId': userId
+            'caseId': caseId,
+            'closeRemark': $("[name='closeRemark']").val(),
+            'closeCaseReason':$("[name='closeCaseReason']").val()
         };
         // process the form
         $.ajax({
@@ -1527,9 +1529,9 @@
             data: formData,
             dataType: 'json'
         })
-
             .done(function (data) {
-                console.info(data);
+                navigate_back();
+                navigate_back();
             });
         event.preventDefault();
     }

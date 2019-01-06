@@ -102,8 +102,8 @@ public class CaseService {
         return "success";
     }
 
-    public String closeCase(Long userId, Long caseId, String closeRemark) {
-        caseDao.closeCase(userId, caseId, closeRemark);
+    public String closeCase(Long userId, Long caseId, String closeRemark, String closeReason) {
+        caseDao.closeCase(userId, caseId, closeRemark,closeReason);
         return "success";
     }
 
