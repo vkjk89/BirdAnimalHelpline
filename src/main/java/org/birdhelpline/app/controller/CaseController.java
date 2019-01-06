@@ -52,7 +52,7 @@ public class CaseController {
         if (user == null) {
             return "Error";
         }
-        return String.valueOf(caseService.cloPreview.cssseCase(user.getUserId(), caseId, remark,closeReason));
+        return String.valueOf(caseService.closeCase(user.getUserId(), caseId, remark,closeReason));
 
     }
 
