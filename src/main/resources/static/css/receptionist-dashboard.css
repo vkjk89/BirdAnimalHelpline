@@ -249,8 +249,8 @@ main {
     display: none;
 }
 
-#top-nav-search-heading {
-    z-index: 101;
+#top-nav-search-heading, #heading-top-nav-case-details {
+    z-index: 1001;
     position: absolute;
     top: 0vh;
 }
@@ -303,10 +303,10 @@ main {
     margin-right: 1.75vw;
 }
 
-#heading-case-details, #heading-top-nav-case-details {
+#heading-case-details {
     position: absolute;
     top: 0vh;
-    z-index: 1001;
+    z-index: 101;
 }
 
 #case-details, #top-nav-case-details {
