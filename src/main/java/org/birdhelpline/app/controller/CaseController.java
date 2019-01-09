@@ -47,12 +47,12 @@ public class CaseController {
 
     @RequestMapping(value = "/closeCase", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
     public @ResponseBody
-    String closeCase(@RequestParam("caseId") Long caseId, @RequestParam("remark") String remark, HttpSession session) {
+    String closeCase(@RequestParam("caseId") Long caseId, @RequestParam("closeRemark") String remark, @RequestParam("closeCaseReason") String closeReason, HttpSession session) {
         User user = getUser(session);
         if (user == null) {
             return "Error";
         }
-        return String.valueOf(caseService.closeCase(user.getUserId(), caseId, remark));
+        return String.valueOf(caseService.closeCase(user.getUserId(), caseId, remark,closeReason));
 
     }
 

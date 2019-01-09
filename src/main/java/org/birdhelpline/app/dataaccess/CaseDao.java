@@ -189,25 +189,28 @@ public class CaseDao {
         }));
     }
 
-    public void closeCase(Long userId, Long caseId, String closeRemark) {
+    public void closeCase(Long userId, Long caseId, String closeRemark, String closeReason) {
         this.jdbcTemplate.update((connection -> {
-            insertCaseQ = "update case_info set current_user_id = NULL, status = " + CaseStatus.CLOSED.name() + " , user_id_closed = ? , close_remark = ? , close_date = now() where case_id = ?";
+            insertCaseQ = "update case_info set current_user_id = NULL, is_active=0, user_id_closed = ? , close_remark = ? , animal_condition = ?, close_date = now() where case_id = ?";
             PreparedStatement ps = connection.prepareStatement(
                     insertCaseQ);
 
             ps.setLong(1, userId);
             ps.setString(2, closeRemark);
-            ps.setLong(3, caseId);
+            ps.setString(3, closeReason);
+            ps.setLong(4, caseId);
             return ps;
         }));
 
+
         this.jdbcTemplate.update((connection -> {
-            insertCaseQ = "insert into case_txn (case_id, from_user_id, to_user_id) values (?,?,null)";
+            insertCaseQ = "insert into case_txn (case_id, from_user_id, to_user_id,status) values (?,?,NULL,?)";
             PreparedStatement ps = connection.prepareStatement(
                     insertCaseQ);
 
             ps.setLong(1, caseId);
             ps.setLong(2, userId);
+            ps.setString(3, CaseStatus.CLOSED.toString());
             return ps;
         }));
     }

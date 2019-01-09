@@ -14,13 +14,6 @@ Call - 13/11/2018
 
 Some Error page - Access Denied and Internal Server Error
 
-Tab change when search
-Reload button
-Accept - mapping
-logout confirmation
-req reg - home btn
-case status
-
 13/12/2018 - Update2
     Approval History
     Remove all heading divs - play around with innerHTML
@@ -60,12 +53,15 @@ case status
     //Remove button - Pincode
 
 06/01/2018
-    Assign-Page : Loading
-    Step3 - Server Error
+    //Assign-Page : Loading
+    //Step3 - Server Error
     +91 - 022 - Change Validation
-    Assign Case - Search and Alignment
-    Tarun - Date - My Cases
-    Raise-Caise Dropdown - Bird/Animal Type
-    Close Case
-    Refresh on Home instead Refresh
+    //Assign Case - Search and Alignment
+    //Tarun - Date - My Cases -> Creation Date
+    //Raise-Caise Dropdown - Bird/Animal Type
+    //Close Case
+    //Refresh on Home instead Refresh
 
+07/01/2018
+    Assign Case - Tick on assign - pointerEvents
+    Ability to add Bird/Animal - Raise a Case

@@ -107,6 +107,7 @@
                     console.log(e);
                     $('#dp-error').text(e.responseJSON.message);
                     $('#dp-error').show();
+                    document.getElementById("dp_loading").style.display = "none";
                 }
             });
         });

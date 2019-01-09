@@ -29,7 +29,6 @@ button {
 .ui-menu, .ui-menu-item-wrapper {
     border: 1px solid rgb(248,248,248);
     background-color: rgb(248,248,248);
-    box-shadow: 0px 0px 5px #DDD;
 }
 
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { 
@@ -307,7 +306,7 @@ main {
 #heading-case-details, #heading-top-nav-case-details {
     position: absolute;
     top: 0vh;
-    z-index: 2;
+    z-index: 1001;
 }
 
 #case-details, #top-nav-case-details {
@@ -612,7 +611,7 @@ hr {
     padding-left: 1vw;
 }
 
-#animal-name, #condition, #animal-type, #location, #case-photos, #contact-name, #nine-one, #contact-number, #location, #location-landmark, #location-pincode,
+#animal-name, #condition, #animal-type, #add-bird-animal, #location, #case-photos, #contact-name, #nine-one, #contact-number, #location, #location-landmark, #location-pincode,
 #animal-name-case-details, #top-nav-animal-name-case-details, #condition-case-details, #top-nav-condition-case-details, #animal-type-case-details, #top-nav-animal-type-case-details, #case-photos-case-details, #top-nav-case-photos-case-details, #contact-name-case-details, #top-nav-contact-name-case-details, #nine-one-case-details, #top-nav-nine-one-case-details, #contact-number-case-details, #top-nav-contact-number-case-details, #location-case-details, #top-nav-location-case-details, #location-landmark-case-details, #top-nav-location-landmark-case-details, #location-pincode-case-details, #top-nav-location-pincode-case-details {
     margin: 0vh 0vh;
     border-radius: 0px;
@@ -636,7 +635,7 @@ hr {
     border: 1px solid #CCC;
 }
 
-#case-details label {
+#case-details label, label[for="case-id"] {
     cursor: default;
 }
 
@@ -830,6 +829,15 @@ hr {
     top: 0;
 }
 
+#assign_case_loading {
+    position: absolute;
+    display: none;
+    top: 15vw;
+    left: 35vw;
+    width: 5vw;
+    height: auto;
+}
+
 #assign-case-search {
     height: 65vh;
 }
@@ -872,6 +880,7 @@ hr {
     padding-bottom: 5vh;
     margin-left: -2vw;
     max-width: 25vw;
+    min-width: 25vw;
 }
 
 .top-five-and-nearest-and-search-results-ul li span:hover {
