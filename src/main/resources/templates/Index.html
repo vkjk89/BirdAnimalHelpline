@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8" />
@@ -9,9 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="Description" content="Helpling Birds and Animals in distress is our Business. We cover most of Mumbai with the help of various other Ngo's.">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="/static/css/bootstrap.min.css">
-    <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
-    <link rel="stylesheet" th:href="@{/css/index.css}" href="/static/css/index.css">
 
     <link rel="apple-touch-icon" sizes="57x57" href="/static/icons/apple-icon-57x57.png" th:href="@{/icons/apple-icon-57x57.png}">
     <link rel="apple-touch-icon" sizes="60x60" href="/static/icons/apple-icon-60x60.png" th:href="@{/icons/apple-icon-60x60.png}">
@@ -29,11 +26,15 @@
     <link rel="icon" type="image/png" sizes="96x96" href="/static/icons/favicon-96x96.png" th:href="@{/icons/favicon-96x96.png}">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-16x16.png" th:href="@{/icons/favicon-16x16.png}">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-512x512.png" th:href="@{/icons/favicon-512x512.png}">
-    <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/icons/manifest.json}">
     <meta name="msapplication-TileColor" content="#333333">
     <meta name="msapplication-TileImage" content="/static/icons/ms-icon-144x144.png" th:href="@{/icons/ms-icon-144x144.png}">
     <meta name="msapplication-TileImage" content="/static/icons/ms-icon-512x512.png" th:href="@{/icons/ms-icon-512x512.png}">
     <meta name="theme-color" content="#CCCCCC">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
+    <link rel="stylesheet" th:href="@{/css/index.css}" href="/static/css/index.css">
+    <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/icons/manifest.json}">
 
     <script>
         //This is the "Offline page" service worker
@@ -42,8 +43,8 @@
                 console.log('[PWA Builder] active service worker found, no need to register');
         } else {
                 //Register the ServiceWorker
-                navigator.serviceWorker.register('pwabuider-sw.js', {
-                    scope: '/'
+                navigator.serviceWorker.register("/pwabuilder-sw.js", {
+                    scope: "./"
                 }).then(function(reg) {
                     console.log('Service worker has been registered for scope:'+ reg.scope);
             });

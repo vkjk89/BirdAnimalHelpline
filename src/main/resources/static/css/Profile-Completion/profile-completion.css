@@ -108,10 +108,9 @@
     width: 70vw;
 }
 
-input[type = "text"]:focus, input[type = "number"]:focus {
+#full-name:focus, #address-line1:focus, #address-line2:focus, #pincode:focus, #contact-number:focus, #nine-one:focus, #nature-of-business:focus {
     border: 1px solid black;
 }
-
 
 #address-line1, #address-line2 {
     margin-bottom: 0vw;
@@ -147,10 +146,6 @@ input[type = "text"]:focus, input[type = "number"]:focus {
 select * {
     background-color: transparent;
 }
-
-/*body * {
-  border: 1px solid burlywood;
-}*/
 
 #next img {
     width: 10vw;
