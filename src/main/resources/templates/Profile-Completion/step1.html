@@ -7,6 +7,7 @@
     <title>Profile Completion</title>
     <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
     <link href="/static/css/Profile-Completion/profile-completion.css" rel="stylesheet" th:href="@{/css/Profile-Completion/profile-completion.css}">
+    <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/static/icons/manifest.json}">
 </head>
 <body>
 
@@ -14,6 +15,13 @@
 <p id="header">
     We need a few more details.
 </p>
+<div class="progress-bar" id="progress-bar">
+    <div class="progress-bar-status" id="progress-bar-1">1</div>
+    <div class="progress-bar-status" id="progress-bar-2"></div>
+    <div id="progress-bar-3">2</div>
+    <div id="progress-bar-4"></div>
+    <div id="progress-bar-5">3</div>
+</div>
 <main>
     <div id="home-address">
         <form action="" id="home-address-form" method="POST" name="home-address-form" th:action="@{/profileCompletion}" th:object="${user}">

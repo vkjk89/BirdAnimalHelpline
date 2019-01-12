@@ -116,10 +116,11 @@ ul {
 ul li {
     box-sizing: border-box;
     position: relative;
-    width: 70vw;
+    width: 90vw;
+    margin-left: -10vw;
     color: rgb(255, 0, 0, 0.8);
-    padding: 2vw;
-    font-size: 0.73em;
+    font-weight: 500;
+    font-size: 0.8em;
 }
 
 main div img {
@@ -180,6 +181,7 @@ input[type = "password"] {
     float: right;
     top: 1vh;
     right: 0;
+    margin-right: 3vw;
 }
 
 button {

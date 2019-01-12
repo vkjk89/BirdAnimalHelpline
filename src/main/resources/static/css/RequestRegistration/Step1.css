@@ -79,18 +79,20 @@
 
 #step1 {
     display: block;
+    margin-top: 1vh;
 }
-
-/*body * {
-  border: 1px solid burlywood;
-}*/
 
 .volrole {
     margin-top: 3.8vh;
     font-size: 2em;
 }
 
-#role-row-1, #role-row-2 {
+#volrole-selector {
+    height: 65vh;
+
+}
+
+#role-row-1, #role-row-2, #role-row-3 {
     display: flex;
     justify-content: space-evenly;
 }
@@ -129,6 +131,8 @@ label {
     border-bottom-right-radius: 15px;
     background-color: #374047;
     color: white;
+    letter-spacing: 2px;
+    font-size: 1.05em;
     box-shadow: 10px 10px 10px 1px #CCC;
 }
 
@@ -141,11 +145,15 @@ button {
     display: none;
 }
 
+.footer {
+    position: absolute;
+    margin-top: 0vh;
+    right: 3vw;
+}
+
 .footer button {
     border: none;
     outline: none;
-    margin-top: 5vh;
-    padding-left: 80vw;
 }
 
 .footer img {

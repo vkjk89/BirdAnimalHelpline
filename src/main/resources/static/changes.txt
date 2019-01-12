@@ -4,19 +4,15 @@ Progress Bar
 change ALL file names to lower_case
 letter-spacing in px
 
-28/10/2018 - Sunday before Exam - Changes:
-    forgot password - ajax usage
-
-Call - 13/11/2018
-    Step3 - alignment issues : Issues with the name
-
 !important   Create Bootstrap like 2 buttons side by side   !important
 
 Some Error page - Access Denied and Internal Server Error
 
 13/12/2018 - Update2
     Approval History
+    Case Flow History
     Remove all heading divs - play around with innerHTML
+    Assign Case - Tick on assign
 
 30/12/2018
     //Reg-Step2 - Input Formatting
@@ -39,7 +35,6 @@ Some Error page - Access Denied and Internal Server Error
     //Top 5 and nearest - Styling
     //Success - Assign Case Navigation to Search Case
     //Assign and Close Case dont go on clicking my cases
-    Case Flow History
     //Vol - Tooltip Fix
     //Preview Page Password (V)
     //Pincode Page Backend (V)
@@ -55,7 +50,7 @@ Some Error page - Access Denied and Internal Server Error
 06/01/2018
     //Assign-Page : Loading
     //Step3 - Server Error
-    +91 - 022 - Change Validation
+    //+91 - 022 - Change Validation
     //Assign Case - Search and Alignment
     //Tarun - Date - My Cases -> Creation Date
     //Raise-Caise Dropdown - Bird/Animal Type
@@ -63,5 +58,15 @@ Some Error page - Access Denied and Internal Server Error
     //Refresh on Home instead Refresh
 
 07/01/2018
-    Assign Case - Tick on assign - pointerEvents
-    Ability to add Bird/Animal - Raise a Case
+    //Assign Case - pointerEvents
+    //CloseCase - Default on Select
+    //My Cases - Default Active Tab
+    //Ability to add Bird/Animal - Raise a Case
+
+11/01/2018
+    Mobile No. - Error - Styling
+    All Warnings/Errors
+    Mobile Number Validation - Explicit - or Try to remove msg
+    Toggle - Password - Step3
+    Home/Work Address - Full Name field backend integration
+    //Progress Bar - ProfileCompletion

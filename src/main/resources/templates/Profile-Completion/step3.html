@@ -14,7 +14,8 @@
     <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <!--<script src="/static/js/jquery.iframe-transport.js" th:src="@{/js/jquery.iframe-transport.js}"></script>-->
     <script src="/static/js/jquery.ui.widget.js" th:src="@{/js/jquery.ui.widget.js}"></script>
-    <script src="/static/js/jquery-ui.min.js" th:src="@{/js/jquery-ui.min.js}"></script>    
+    <script src="/static/js/jquery-ui.min.js" th:src="@{/js/jquery-ui.min.js}"></script>
+    <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/static/icons/manifest.json}">   
     <!------------------------------->
 </head>
 <body>
@@ -22,6 +23,13 @@
 <p id="heading">
     We need a few more details.
 </p>
+<div class="progress-bar" id="progress-bar">
+    <div class="progress-bar-status" id="progress-bar-1">1</div>
+    <div class="progress-bar-status" id="progress-bar-2"></div>
+    <div class="progress-bar-status" id="progress-bar-3">2</div>
+    <div class="progress-bar-status" id="progress-bar-4"></div>
+    <div class="progress-bar-status" id="progress-bar-5">3</div>
+</div>
 <main>
     <form action="" id="pincode" method="POST" name="pincode" th:action="@{/profileCompletion}" th:object="${user}">
         <div class="ui-widget" id="1pincode">

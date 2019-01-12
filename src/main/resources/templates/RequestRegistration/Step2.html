@@ -9,6 +9,7 @@
     <title>Request Registration</title>
     <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
     <link href="/static/css/RequestRegistration/Step2.css" rel="stylesheet" th:href="@{/css/RequestRegistration/Step2.css}">
+    <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/static/icons/manifest.json}">
 
 </head>
 <body>
@@ -22,8 +23,7 @@
     <div class="progress-bar-status" id="progress-bar-4"></div>
     <div id="progress-bar-5">3</div>
 </div>
-<form action="#" class="first-form" id="first-form" method="post" name="step2" th:action="@{/registration}"
-      th:object="${user}">
+<form action="#" class="first-form" id="first-form" method="post" name="step2" th:action="@{/registration}" th:object="${user}">
     <main>
         <div class="step2" id="step2" name="step2">
             <ul th:if="${#fields.hasErrors('*')}">
@@ -64,7 +64,7 @@
     </main>
 
     <div class="bottom-nav-bar" id="bottom-nav-bar">
-        <a href="Step1.html" th:href="@{/registration}"><img id="previous" th:src="@{/img/previous-button-1.png}" src="/static/img/previous-button-1.png"></button>
+        <a href="Step1.html" th:href="@{/registration}"><img id="previous" th:src="@{/img/previous-button-1.png}" src="/static/img/previous-button-1.png"></a>
             <button type="submit"><img id="next" th:src="@{/img/next-button11.png}" src="/static/img/next-button11.png"></button>
         </a>
     </div>
@@ -77,18 +77,6 @@
 
     var minyear = d.getFullYear() - 100;
     document.getElementById('birthdate').setAttribute('min', minyear + '-01-01');
-
-
-        /*-----Duplicate-ID's-----*/
-            var allElements = document.getElementsByTagName("*"), allIds = {}, dupIDs = [];
-            for (var i = 0, n = allElements.length; i < n; ++i) {
-            var el = allElements[i];
-            if (el.id) {
-                if (allIds[el.id] !== undefined) dupIDs.push(el.id);
-                allIds[el.id] = el.name || el.id;
-                }
-            }
-            if (dupIDs.length) { console.error("Duplicate ID's:", dupIDs);} else { console.log("No Duplicates Detected"); } /* --------------*/
 </script>
 
 </body>

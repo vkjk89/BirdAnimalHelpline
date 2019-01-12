@@ -111,6 +111,7 @@ function my_cases() {
     document.getElementById('top-nav-case-details').style.display = "none";
     document.getElementById('heading-top-nav-case-details').style.display = "none";
     document.getElementById('top-nav-case-details-form').style.display = "none";
+    document.getElementById('active-tab-header').click();    
 }
 
 function user_data_change_approvals() {
@@ -251,14 +252,16 @@ function assignCase(data) {
 }
 
 function other_reason_close_case() {
-    if (document.getElementById('close-case-reason').value == "Other") {
+    if (document.getElementById('close-case-reason').value === "Other") {
         document.getElementById('close-case-other-reason').style.display = "block";
         document.getElementById('close-case-other-reason').value = "";
         document.getElementById('close-case-other-reason').innerHTML = "";
         document.getElementById('close-case-other-reason').style.border = "1px solid #666";
+        document.getElementById('close-case-reason').style.border = "1px solid #666";
         document.getElementById('close-case-other-reason').placeholder = "Specify Reason";
     } else {
         document.getElementById('close-case-other-reason').style.display = "none";
+        document.getElementById('close-case-reason').style.border = "1px solid #666";
     }
 }
 
@@ -276,6 +279,7 @@ function navigate_back() {
         document.getElementById('content-close-case').style.display = "none";
         document.getElementById('myc-case-details-heading-animation').innerHTML = "Case Details";
         document.getElementById('assign-case-success').style.display = "none";
+        $("#content-assign-case").css("pointerEvents", "");
         document.getElementById('case-details-form').style.opacity = "1";
         document.getElementById('top-nav-search-heading').style.display = "none";
         document.getElementById('top-nav-search-results').style.display = "none";
@@ -443,7 +447,11 @@ function assignCaseReq(caseId, userId) {
         .done(function (data) {
             console.info("vkj");
             console.info(data);
-            $('#assign-case-success').fadeIn(500);
+            $('#assign-case-success').text("Success! Case " + caseId + " assigned successfully to " + userId);
+            setTimeout(function(){
+                $('#assign-case-success').fadeIn(200);
+                $("#content-assign-case").css("pointerEvents", "none");}
+            ,300)            
             //alert('Success div will show on server response');
             setTimeout(function () {
                 navigate_back();
@@ -532,7 +540,7 @@ $(document).ready(function () {
 
 
 //------Active-Recent-Closed-Tabs-JS--------------------------------------------------------------------------------
-    document.getElementById('active-tab-header').onclick = function search_results() {
+    document.getElementById('active-tab-header').onclick = function my_cases_search_results_active() {
         this.classList.add('active-header');
         document.getElementById('recent-tab-header').classList.remove('active-header');
         document.getElementById('closed-tab-header').classList.remove('active-header');
@@ -547,7 +555,7 @@ $(document).ready(function () {
         document.getElementById('closed-tab-content').style.display = "none";
     };
 
-    document.getElementById('recent-tab-header').onclick = function search_results() {
+    document.getElementById('recent-tab-header').onclick = function my_cases_search_results_recent() {
         this.classList.add('active-header');
         document.getElementById('active-tab-header').classList.remove('active-header');
         document.getElementById('closed-tab-header').classList.remove('active-header');
@@ -562,7 +570,7 @@ $(document).ready(function () {
         document.getElementById('active-tab-content').style.display = "none";
     };
 
-    document.getElementById('closed-tab-header').onclick = function search_results() {
+    document.getElementById('closed-tab-header').onclick = function my_cases_search_results_closed() {
         this.classList.add('active-header');
         document.getElementById('active-tab-header').classList.remove('active-header');
         document.getElementById('recent-tab-header').classList.remove('active-header');
@@ -744,9 +752,12 @@ $(document).ready(function () {
         $('#add-bird-animal').css("display", "none");
     };
 
-    document.getElementById("animal-type").onclick = function(){
+    document.getElementById("animal-type").onchange = function(){
         if(document.getElementById("animal-type").value === "add-new-bird-animal"){
             document.getElementById("add-bird-animal").style.display = "block";
+        }
+        else {
+            document.getElementById("add-bird-animal").style.display = "none";
         }
     };
 
@@ -772,6 +783,20 @@ $(document).ready(function () {
         }
     };
 
+
+//-----+91-022-Validation----------------------------------------------------------------------------------------------------------------
+    document.getElementById("nine-one").onchange = function(){
+        if(document.getElementById("nine-one").value === "+91"){
+            document.getElementById("contact-number").setAttribute("max", "99999999");
+            document.getElementById("contact-number").setAttribute("min", "50000000");
+            document.getElementById("contact-number").setAttribute("title", "Valid 10 digit mobile number without prefix");
+        }
+        else {
+            document.getElementById("contact-number").setAttribute("max", "99999999");
+            document.getElementById("contact-number").setAttribute("min", "10000000");
+            document.getElementById("contact-number").setAttribute("title", "Valid 8 digit landline number without prefix");
+        }
+    };
 
 
 //------Case-Details---------------------------------------------------------------------------------------------------------------------
@@ -813,6 +838,7 @@ $(document).ready(function () {
     };
 
     document.getElementById('action-center-close-case').onclick = function () {
+        document.getElementById("close-case-reason").selectedIndex = 0;
         document.getElementById('case-details-form').style.opacity = "0.2";
         document.getElementById('case-details-form').style.pointerEvents = "none";
         document.getElementById('content-close-case').style.opacity = "1";
@@ -841,17 +867,21 @@ $(document).ready(function () {
     };
 
 
-    document.getElementById('close-case-reason').onclick = function () {
+    document.getElementById('close-case-reason').onchange = function () {
         other_reason_close_case();
     };
 
 
 //------Close-Case-Button--aka--Submit-Close-Case----------------------------------------------------------------------
     document.getElementById('close-case-submit-btn').onclick = function () {
-        if (document.getElementById('close-case-reason').value == "Other" && document.getElementById('close-case-other-reason').value == "") {
+        if (document.getElementById('close-case-reason').value === "Other" && document.getElementById('close-case-other-reason').value === "") {
             document.getElementById('close-case-other-reason').style.border = "2px solid red";
             document.getElementById('close-case-other-reason').placeholder = "You must specify a Reason";
-        } else {
+        }
+        else if (document.getElementById('close-case-reason').value === ""){
+            document.getElementById('close-case-reason').style.border = "2px solid red";
+        } 
+        else {
             closeCaseReq(currentCaseId);
             // navigate_back();
             // navigate_back();

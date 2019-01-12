@@ -827,6 +827,7 @@ hr {
     display: none;
     position: absolute;
     top: 0;
+    pointer-events: all;
 }
 
 #assign_case_loading {
@@ -840,6 +841,7 @@ hr {
 
 #assign-case-search {
     height: 65vh;
+    margin-top: 2vh;
 }
 
 #assign-case-search-input {
@@ -852,7 +854,7 @@ hr {
     padding-left: 5vw;
     font-size: 1.2em;
     padding-bottom: 1.5vw;
-    width: 65.5vw;
+    width: 68.5vw;
 }
 #assign-case-search-input:focus {
     border: 1px solid black;
@@ -866,13 +868,13 @@ hr {
 
 #top-five {
     border: 1px solid #CCC;
-    width: 30.25vw;
+    width: 32.25vw;
 }
 
 #nearest-assigned-volunteers {
     border: 1px solid #CCC;
     border-left: none;
-    width: 31vw;
+    width: 32vw;
 }
 
 .top-five-and-nearest-and-search-results-ul li {
@@ -907,7 +909,7 @@ hr {
     margin-top: 3vh;
     padding-top: 2vh;
     padding-left: 2vw;
-    height: 48vh;
+    height: 50vh;
     overflow: auto;
     overflow-x: hidden;
 }
@@ -933,14 +935,14 @@ hr {
 #assign-case-success, #assign-case-error {
     display: none;
     position: absolute;
-    background: rgba(0, 160, 0, 0.4);
+    background-color: rgba(0, 160, 0, 0.2);
     color: green;
     letter-spacing: 0.5px;
     font-size: 1.2em;
     float: left;
     padding: 0.5vw 3vh;
     border: 3px solid rgb(0, 160, 0);
-    width: 25vw;
+    width: 30vw;
 }
 
 #assign-case-error {

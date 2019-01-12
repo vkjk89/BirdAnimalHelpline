@@ -1,7 +1,12 @@
-.logoImage {
-    margin-top: 5vw;
+#logoImage {
+    margin-top: 5vh;
+    margin-bottom: 5vh;
     max-width: 60vw;
     height: auto;
+}
+
+.btn {
+    border-radius: 0;
 }
 
 .btn-group {
@@ -16,11 +21,7 @@ main {
     text-align: center;
 }
 
-/*body * {
-    border: 1px solid burlywood;
-}*/
-
-.info-btn {
+#info-btn {
     outline: none;
     border: none;
     cursor: pointer;
@@ -58,7 +59,7 @@ main {
 
 #backbutton {
     margin-top: 10vw;
-    margin-right: 8%;
+    margin-right: 5%;
     float: right;
     background-color: rgb(230, 230, 230);
 }
@@ -87,8 +88,8 @@ main {
 }
 
 @media only screen and (min-width: 1024px) {
-    .logoImage {
-        margin-top: 5vw;
+    #logoImage {
+        margin-top: 7vw;
         max-width: 30vw;
         height: auto;
     }
@@ -97,8 +98,18 @@ main {
         margin-top: 5vw;
     }
 
-    .info-btn {
+    #info-btn {
         width: 5vw;
+    }
+
+    #aboutus {
+        padding-bottom: 1%;
+    }
+
+    #aboutus-info {
+        margin-top: 5%;
+        margin-left: 5%;
+        width: 90%;
     }
 }
 
@@ -111,13 +122,25 @@ main {
         font-size: 0.8em;
     }
 
-    .logoImage {
+    #logoImage {
         margin-top: 25vw;
+    }
+    #backbutton {
+        margin-right: 8%;
     }
 }
 
 @media only screen and (max-width: 768px) {
-    .logoImage {
-        margin-top: 35vw;
+    #logoImage {
+        margin-top: 20vh;
+    }
+    #backbutton {
+        margin-right: 8%;
+    }
+    #backbutton {
+        margin-right: 8%;
+    }
+    #aboutus-info {
+        font-size: 1em;        
     }
 }

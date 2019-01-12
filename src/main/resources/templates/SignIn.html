@@ -8,38 +8,32 @@
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
     <link href="/static/css/SignIn.css" rel="stylesheet" th:href="@{/css/SignIn.css}">
+    <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/static/icons/manifest.json}">
 </head>
 
 <body>
-<!-- div class="bg"></div -->
 
 <main id="main">
     <div>
-        <button class="info-btn"><a onclick="aboutus();"><img alt="About Us" src="/static/img/aboutus.png" style="width: 100%; height: auto; padding: 0vw;" th:src="@{/img/aboutus.png}"></a></button>
+        <button id="info-btn">
+            <a onclick="aboutus();"><img alt="About Us" src="/static/img/aboutus.png" style="width: 100%; height: auto; padding: 0vw;" th:src="@{/img/aboutus.png}"></a>
+        </button>
     </div>
     <form action="#" method="post" name="FirstForm" th:action="@{/login}">
-        <!--<form name = "FirstForm" action="" method="">-->
-        <div class="logo">
+        <div id="login-main">
             <div>
-                <img alt="Logo" class="logoImage" src="/static/img/Logo1.png" th:src="@{/img/Logo1.png}"><br><br>
+                <img alt="Logo" id="logoImage" src="/static/img/Logo1.png" th:src="@{/img/Logo1.png}">
             </div>
-            <div id="invalid" th:text="${error}">
-                Invalid Credentials
-            </div>
-            <br>
-            <div>
-                <input autocomplete="off" autofocus name="username" placeholder="Username" type="text"><br><br>
-                <input autocomplete="off" name="password" placeholder="Password" type="password"><br><br>
+            <div id="invalid" th:text="${error}">Invalid Credentials</div>
+            <div id="user-credentials">
+                <input autocomplete="off" autofocus name="username" placeholder="Username" type="text" id="username"><br>
+                <input autocomplete="off" name="password" placeholder="Password" type="password" id="pass">
             </div>
         </div>
-
-        <div>
-            <input name="login" type="submit" value="Sign In">
-        </div>
+        <input name="logIn" type="submit" value="Sign In" id="loginButton">
     </form>
-    <div class="footer1">
-        <a href="../templates/forgot-password.html" id="forgot-password" th:href="@{/forgotPassword}">Forgot
-            Password</a><br><br>
+    <div id="footer">
+        <a href="/templates/forgot-password.html" id="forgot-password" th:href="@{/forgotPassword}">Forgot Password</a>
         <a href="/templates/contact-us.html" id="ContactUs">Contact Us</a>
     </div>
 </main>
@@ -47,13 +41,13 @@
 <div id="aboutus">
     <div id="aboutus-info">
         Helpling Birds and Animals in distress is our Business.<br>
-        We cover most of Mumbai with the help of various other Ngo's.<br> <br>
+        We cover most of Mumbai with the help of various other Ngo's.<br><br>
         Call on - 8655370005 for HELP !!<br>
     </div>
-    <button class="btn" id="backbutton" onclick="gohome()" type="button">Back</button>
+    <button id="backbutton" onclick="gohome()" type="button">Back</button>
 </div>
 
-<script src="/static/js/index.js" th:src="@{/js/index.js}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
     function aboutus() {
         document.getElementById('main').style.display = "none";
@@ -64,6 +58,11 @@
         document.getElementById('aboutus').style.display = "none";
         document.getElementById('main').style.display = "block";
     }
+
+    //-----Disable-Right-Click-Menu-On-Image-----------------------------------------------------------------------------------------------
+    $("body").on("contextmenu", "img", function (e) {
+        return false;
+    });
 
 </script>
 </body>

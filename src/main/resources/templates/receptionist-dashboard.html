@@ -16,9 +16,11 @@
     <link href="/static/css/receptionist-dashboard.css" rel="stylesheet" th:href="@{/css/receptionist-dashboard.css}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <!--<script src="/static/js/jquery-3.3.1.min.js"></script>-->
     <script src="/static/js/jquery.ui.widget.js" th:src="@{/js/jquery.ui.widget.js}"></script>
     <script src="/static/js/jquery-ui.min.js" th:src="@{/js/jquery-ui.min.js}"></script>
     <script src="/static/js/receptionist-dashboard.js" th:src="@{/js/receptionist-dashboard.js}"></script>
+    <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/static/icons/manifest.json}">
 </head>
 <body>
 <div id="loading-gif"></div>
@@ -311,7 +313,7 @@
                     </div>
                     <label for="animal-type" id="animal-type-js">Bird/Animal type: </label>
                     <select autocomplete="off" id="animal-type" name="animal-type" required tabindex="3">
-                        <option id="raise-a-case-select-default" value="select-default"  selected>Choose Bird/Animal Type</option>
+                        <option id="raise-a-case-select-default" value="">Choose Bird/Animal Type</option>
                         <option id="select-bird" th:each="o : ${birds}" th:text="${o}" th:value="${o}" value="" style="display:none"></option>
                         <option id="select-animal" th:each="o : ${animals}" th:text="${o}" th:value="${o}" value="" style="display:none"></option>
                         <option id="add-new-bird-animal" value="add-new-bird-animal" style="display:none;">Other (Add)</option>
@@ -352,7 +354,7 @@
         <div id="cta-btns">
             <div id="raise-a-case-success"><span id="raise-a-case-checkmark"> &check;</span> Success! Case raised</div>
             <div id="raise-a-case-error"><span id="raise-a-case-cross"> &times;</span> Error!</div>
-            <button form="raise-a-case-form" id="submit-raise-case" tabindex="11" type="submit">Raise Case</button>
+            <button form="raise-a-case-form" id="submit-raise-case" tabindex="11" type="submit" onclick="$('raise-a-case-checkmark').fadeIn(100);$('raise-a-case-form').css('pointerEvents', 'none');setTimeout(function(){$('raise-a-case-checkmark').fadeOut(100);$('raise-a-case-form').css('pointerEvents', '');},100)">Raise Case</button>
             <button form="raise-a-case-form" id="reset-raise-case" tabindex="12" type="reset">Clear All</button>
         </div>
     </div>
@@ -556,7 +558,8 @@
                 <div style="margin-top: 10vh;">
                     <div>
                         <span id="close-case-reason-span">Select reason:</span>
-                        <select id="close-case-reason" name="closeCaseReason">
+                        <select id="close-case-reason" name="closeCaseReason" required>
+                            <option value="">Choose an Option:</option>
                             <option value="Dead">Dead</option>
                             <option value="Healthy">Healthy</option>
                             <option value="Other">Other</option>
@@ -644,20 +647,20 @@
 <section id="card-right-side">
     <div id="raise-a-case-side-card" tabindex="">
         <div id="rac-body">
-            <img alt="Raise a Case" class="right-side-card-img" height="" src="/static/img/raise-a-case.png" th:src="@{/img/raise-a-case.png}" width="">
-            <label for="right-side-card-img">Raise a Case</label>
+            <img alt="Raise a Case" class="right-side-card-img" height="" src="/static/img/raise-a-case.png" th:src="@{/img/raise-a-case.png}" width="" id="right-side-card-img-rac">
+            <label for="right-side-card-img-rac">Raise a Case</label>
         </div>
     </div>
     <div id="my-cases-side-card" tabindex="">
         <div id="myc-body">
-            <img alt="Raise a Case" class="right-side-card-img" height="" src="/static/img/my-cases1.png" style="left:-1.5vh;" th:src="@{/img/my-cases1.png}" width="">
-            <label for="right-side-card-img">My Cases</label>
+            <img alt="Raise a Case" class="right-side-card-img" height="" src="/static/img/my-cases1.png" style="left:-1.5vh;" th:src="@{/img/my-cases1.png}" width="" id="right-side-card-img-myc">
+            <label for="right-side-card-img-myc">My Cases</label>
         </div>
     </div>
     <div id="user-data-change-approvals-side-card" tabindex="">
         <div id="usdca-body">
-            <img alt="Raise a Case" class="right-side-card-img" height="" src="/static/img/user-data-change-approvals.png" th:src="@{/img/user-data-change-approvals.png}" width="">
-            <label for="right-side-card-img">Data Change Approvals</label>
+            <img alt="Raise a Case" class="right-side-card-img" height="" src="/static/img/user-data-change-approvals.png" th:src="@{/img/user-data-change-approvals.png}" width="" id="right-side-card-img-usdca">
+            <label for="right-side-card-img-usdca">Data Change Approvals</label>
         </div>
     </div>
 </section>
