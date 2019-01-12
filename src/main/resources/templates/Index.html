@@ -35,6 +35,7 @@
     <link rel="stylesheet" th:href="@{/css/basic-template.css}" href="/static/css/basic-template.css">
     <link rel="stylesheet" th:href="@{/css/index.css}" href="/static/css/index.css">
     <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/icons/manifest.json}">
+    <link rel="ServiceWorker" href="/pwabuilder-sw.js" th:href="@{/pwabuilder-sw.js}">
 
     <script>
         //This is the "Offline page" service worker
@@ -42,11 +43,11 @@
         if (navigator.serviceWorker.controller) {
                 console.log('[PWA Builder] active service worker found, no need to register');
         } else {
-                //Register the ServiceWorker
-                navigator.serviceWorker.register("/pwabuilder-sw.js", {
-                    scope: "./"
-                }).then(function(reg) {
-                    console.log('Service worker has been registered for scope:'+ reg.scope);
+            //Register the ServiceWorker
+            navigator.serviceWorker.register("/pwabuilder-sw.js", {
+                scope: "./"
+            }).then(function(reg) {
+                console.log('Service worker has been registered for scope:'+ reg.scope);
             });
         }
     </script>
