@@ -35,7 +35,7 @@
         <div class="ui-widget" id="1pincode">
             <label for="search-pincode" id="title">Your preffered pick-up locations:</label>
         </div>
-        <input class="ui-autocomplete-input" id="search-pincode" name="search-pincode" placeholder="Search Pincode" type="search">
+        <input class="ui-autocomplete-input" id="search-pincode" name="search-pincode" placeholder="Type your locality" type="search">
         <div class="selected-pincodes" id="selected-pincodes">
             <p>Selected Area:</p>
             <div id = "selected-pin-content">
@@ -118,17 +118,22 @@
                         input_select.classList.add("member" + counter);
                         var option1 = document.createElement("option");
                         option1.innerHTML = "00:00 - 04:00";
+                        option1.value="00-04";
                         var option2 = document.createElement("option");
                         option2.innerHTML = "04:00 - 08:00";
+                        option2.value="04-08";
                         var option3 = document.createElement("option");
                         option3.innerHTML = "08:00 - 12:00";
+                        option3.value="08-12";
                         var option4 = document.createElement("option");
                         option4.innerHTML = "12:00 - 16:00";
+                        option4.value="12-16";
                         var option5 = document.createElement("option");
                         option5.innerHTML = "16:00 - 20:00";
+                        option5.value="16-20";
                         var option6 = document.createElement("option");
-                        option6.innerHTML = "20:00 - 24:00";
-
+                        option6.innerHTML = "20:00 - 23:59";
+                        option6.value="20-00";
                         var hidden_input = document.createElement("input");
                         hidden_input.setAttribute("type", "hidden");
                         hidden_input.setAttribute("name", "pincodeId");
