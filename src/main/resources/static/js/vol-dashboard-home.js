@@ -77,7 +77,8 @@ function section_accept_case(){
 
     var case_photos = document.createElement("div");
         case_photos.classList.add("case-photos");
-        case_photos.innerHTML = "<img src=\"/static/img/animal.png\" onclick=\"enlargePhoto(this)\">";
+        //Make innerHTML "none" by default, if photos are there then attach them.
+        case_photos.innerHTML = "<img src=\"\" onclick=\"enlargePhoto(this)\">";
 
     var box3 = document.createElement("div");
         box3.classList.add("box3");

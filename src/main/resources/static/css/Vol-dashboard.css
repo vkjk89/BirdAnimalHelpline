@@ -442,7 +442,7 @@ h1 {
 
 .case-photos {
     max-height: 20vh;
-    overflow: scroll;
+    overflow: auto;
     text-align: center;
 }
 
