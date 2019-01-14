@@ -3,6 +3,7 @@ package org.birdhelpline.app.controller;
 import org.birdhelpline.app.model.CaseInfo;
 import org.birdhelpline.app.model.User;
 import org.birdhelpline.app.service.CaseService;
+import org.birdhelpline.app.utils.Role;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class CaseController {
         if (user == null) {
             return "Error";
         }
-        return String.valueOf(caseService.closeCase(user.getUserId(), caseId, remark,closeReason));
+        return String.valueOf(caseService.closeCase(user.getUserId(), caseId, remark, closeReason));
 
     }
 
@@ -74,32 +75,59 @@ public class CaseController {
 
     @RequestMapping(value = "/activeCases", method = RequestMethod.GET)
     public @ResponseBody
-    List<CaseInfo> getActiveCases(HttpSession session) {
+    List<CaseInfo> getActiveCases(@RequestParam(name = "userId", required = false) Long forUserId, HttpSession session) {
         User user = getUser(session);
         if (user == null) {
             return null;
         }
-        return caseService.getActiveCaseInfoByUserId(user.getUserId());
+        if (forUserId != null && forUserId != -1) {
+            if (user.getRole().equals(Role.ADMIN.name()) || user.getRole().equals(Role.Receptionist.name())) {
+                return caseService.getActiveCaseInfoByUserId(forUserId);
+            } else {
+                logger.warn("Unauthorized access by : " + user.getUserName() + " for : " + forUserId);
+                return null;
+            }
+        } else {
+            return caseService.getActiveCaseInfoByUserId(user.getUserId());
+        }
     }
 
     @RequestMapping(value = "/recentCases", method = RequestMethod.GET)
     public @ResponseBody
-    List<CaseInfo> getRecentCases(HttpSession session) {
+    List<CaseInfo> getRecentCases(@RequestParam(name = "userId", required = false) Long forUserId, HttpSession session) {
         User user = getUser(session);
         if (user == null) {
             return null;
         }
-        return caseService.getRecentCaseInfoByUserId(user.getUserId());
+        if (forUserId != null && forUserId != -1) {
+            if (user.getRole().equals(Role.ADMIN.name()) || user.getRole().equals(Role.Receptionist.name())) {
+                return caseService.getRecentCaseInfoByUserId(forUserId);
+            } else {
+                logger.warn("Unauthorized access by : " + user.getUserName() + " for : " + forUserId);
+                return null;
+            }
+        } else {
+            return caseService.getRecentCaseInfoByUserId(user.getUserId());
+        }
     }
 
     @RequestMapping(value = "/closedCases", method = RequestMethod.GET)
     public @ResponseBody
-    List<CaseInfo> getClosedCases(HttpSession session) {
+    List<CaseInfo> getClosedCases(@RequestParam(name = "userId", required = false) Long forUserId, HttpSession session) {
         User user = getUser(session);
         if (user == null) {
             return null;
         }
-        return caseService.getClosedCaseInfoByUserId(user.getUserId());
+        if (forUserId != null && forUserId != -1) {
+            if (user.getRole().equals(Role.ADMIN.name()) || user.getRole().equals(Role.Receptionist.name())) {
+                return caseService.getClosedCaseInfoByUserId(forUserId);
+            } else {
+                logger.warn("Unauthorized access by : " + user.getUserName() + " for : " + forUserId);
+                return null;
+            }
+        } else {
+            return caseService.getClosedCaseInfoByUserId(user.getUserId());
+        }
     }
 
     private User getUser(HttpSession session) {

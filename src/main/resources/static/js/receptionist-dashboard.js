@@ -480,16 +480,14 @@ function closeCaseReq(caseId) {
         type: 'POST',
         url: '/closeCase',
         data: formData,
-        dataType: 'json'
-    })
-        .done(function (data) {
+        // dataType: 'json'
+    }).done(function (data) {
+        console.info("vkj done close : "+data)
             navigate_back();
             navigate_back();
         });
-    event.preventDefault();
+    //event.preventDefault();
 }
-
-
 
 
 var responseHandler = function (event) {
@@ -497,15 +495,21 @@ var responseHandler = function (event) {
     var data = event.data.split(":");
     var url = data[0];
     var tableId = data[1];
-    console.info(" Clicked " + url + " " + tableId);
+    var userId = -1;
+    if (data.length == 3) {
+        userId = data[2];
+    }
+    var formData = {
+        'userId': userId,
+    };
+    console.info(" Clicked " + url + " " + tableId + " for user : " + userId);
     $.ajax({
-        type: 'GET', // define the type of HTTP verb we want to use (POST for our form)
-        url: url, // the url where we want to POST
-        dataType: 'json' // what type of data do we expect back from the server
-        //encode: true
+        type: 'GET',
+        data: formData,
+        url: url,
+        dataType: 'json'
     })
         .done(function (data) {
-                // log data to the console so we can see
                 console.log(data);
                 var cc = [];
                 $.each(data, function (i, item) {
@@ -530,7 +534,7 @@ $(document).ready(function () {
 
     $('.top-five-and-nearest-and-search-results-ul').on("mouseover", ".vol_tooltip", show_vol_tooltip);
     $('.top-five-and-nearest-and-search-results-ul').on("mouseout", ".vol_tooltip", hide_vol_tooltip);
-    $('#myc-body').click('/activeCases:table1', responseHandler);
+    // $('#myc-body').click('/activeCases:table1', responseHandler);
     $('#active-tab-header').click('/activeCases:table1', responseHandler);
     $('#recent-tab-header').click('/recentCases:table2', responseHandler);
     $('#closed-tab-header').click('/closedCases:table3', responseHandler);
@@ -747,8 +751,8 @@ $(document).ready(function () {
         document.getElementById('animal-name-js').innerHTML = "Bird Name";
         document.getElementById('animal-name').setAttribute("placeholder", "Eg: Cannary (Optional)");
         document.getElementById("raise-a-case-select-default").text = "Choose Bird Type:";
-        $('#select-bird').css("display", "block");
-        $('#select-animal').css("display", "none");
+        $('.select-bird-class').css("display", "block");
+        $('.select-animal-class').css("display", "none");
         $('#add-new-bird-animal').css("display", "block");
         $('#add-bird-animal').css("display", "none");
     };
@@ -760,8 +764,8 @@ $(document).ready(function () {
         document.getElementById('animal-name-js').innerHTML = "Animal Name";
         document.getElementById('animal-name').setAttribute("placeholder", "Eg: Rufus (Optional)");
         document.getElementById("raise-a-case-select-default").text = "Choose Animal Type:";
-        $('#select-bird').css("display", "none");
-        $('#select-animal').css("display", "block");
+        $('.select-bird-class').css("display", "none");
+        $('.select-animal-class').css("display", "block");
         $('#add-new-bird-animal').css("display", "block");
         $('#add-bird-animal').css("display", "none");
     };
@@ -780,8 +784,8 @@ $(document).ready(function () {
         document.getElementById('animal-type-js').innerHTML = "Bird/Animal type: ";
         document.getElementById('animal-name-js').innerHTML = "Bird/Animal name: ";
         document.getElementById('animal-name').setAttribute("placeholder", "");
-        $('#select-bird').css("display", "none");
-        $('#select-animal').css("display", "none");
+        $('.select-bird-class').css("display", "none");
+        $('.select-animal-class').css("display", "none");
         $('#add-new-bird-animal').css("display", "none");
         $('#add-bird-animal').css("display", "none");
     };
@@ -987,9 +991,6 @@ $(document).ready(function () {
     };
 
 //------BACKEND-INTEGRATION-------------------------------------------------------------------------------------------------------------
-
-
-    // process the form
     $('#raise-a-case-form').submit(function (event) {
         var formData = {
             'typeAnimal': $('select[name=animal-type]').val(),
@@ -1002,7 +1003,6 @@ $(document).ready(function () {
             'locationLandMark': $('input[name=location-landmark]').val(),
             'contactPrefix': $('select[name=nine-one]').val()
         };
-        // process the form
         $.ajax({
             type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
             url: '/addNewCase', // the url where we want to POST
@@ -1012,7 +1012,6 @@ $(document).ready(function () {
         })
         // using the done promise callback
             .done(function (data) {
-                // log data to the console so we can see
                 console.log(data);
                 if (data && data == 'error') {
                     $('#error').text(data);
@@ -1022,32 +1021,22 @@ $(document).ready(function () {
                 setTimeout(function () {
                     $('#case-id').val('');
                 }, 2000);
-                // here we will handle errors and validation messages
             });
 
         // stop the form from submitting the normal way and refreshing the page
         event.preventDefault();
     });
 
-    var container = $(document.createElement('div')).css({
-        //padding: '5px', margin: '20px', width: '170px', border: '1px dashed',
-        //borderTopColor: '#999', borderBottomColor: '#999',
-        //borderLeftColor: '#999', borderRightColor: '#999'
-    });
+    var container = $(document.createElement('div')).css({});
     $("#search-case-input").autocomplete({
         minLength: 1,
         delay: 500,
-        //define callback to format results
         source: function (request, response) {
             $.getJSON("/getCaseInfoForSearch", request, function (result) {
                 response($.map(result, function (item) {
                     return {
-                        // following property gets displayed in drop down
                         label: item.caseId,
-                        // following property gets entered in the textbox
                         value: item.caseId,
-                        // following property is added for our own use
-
                         caseDetails: item
                     }
 
@@ -1056,7 +1045,6 @@ $(document).ready(function () {
             console.info("vkjk " + request + " " + response);
         },
 
-        //define select handler
         select: function (event, ui) {
             var iCnt = 0;
             console.info(event);
@@ -1080,7 +1068,6 @@ $(document).ready(function () {
     $("#assign-case-search-input").autocomplete({
         minLength: 2,
         delay: 500,
-        //define callback to format results
         source: function (request, response) {
             $("#assign_case_loading").css("display", "block");
             $.getJSON("/getVolListForSearch", request, function (result) {
@@ -1099,18 +1086,14 @@ $(document).ready(function () {
             console.info("vkjk " + request + " " + response);
         },
 
-        //define select handler
         select: function (event, ui) {
             console.info(event);
             console.log(ui.item);
             $("#assign_case_loading").css("display", "none");
             if (ui.item) {
-                //var cc = [];
                 var html = aVol + ui.item.userDetails.userName + bVol + cVol + ui.item.userDetails.userId + dVol;
                 userIdVsInfoMap[ui.item.userDetails.userId] = ui.item.userDetails;
-                //cc.push(html);
                 $('#search_vol').html(html);
-                //console.info(cc);
                 $("#assign-case-search-input").autocomplete("close");
                 $("#assign-case-search-input").val('');
                 return false;
@@ -1128,30 +1111,21 @@ $(document).ready(function () {
                     response($.map(result, function (item) {
                         if (item.caseId) {
                             return {
-                                // following property gets displayed in drop down
                                 label: "Case : " + item.caseId,
-                                // following property gets entered in the textbox
                                 value: item.caseId,
-                                // following property is added for our own use
-
                                 caseDetails: item
                             }
                         } else {
                             return {
-                                // following property gets displayed in drop down
                                 label: "User : " + item.userName,
-                                // following property gets entered in the textbox
                                 value: item.userName,
-                                // following property is added for our own use
                                 userDetails: item
                             }
                         }
 
                     }));
                 });
-                // console.info("vkjk " + request + " " + response);
             },
-        //define select handler
         select: function (event, ui) {
             console.log("VKJ : " + JSON.stringify(ui.item));
             if (ui.item) {
@@ -1195,6 +1169,23 @@ $(document).ready(function () {
                     $('#ouser-profile-contact-number_prefix').text(ud.officeAddr.contactPrefix);
                     $('#ouser-profile-contact-number').text(ud.officeAddr.contact);
 
+                    $('#table11').html("");
+                    $('#table22').html("");
+                    $('#table33').html("");
+
+                    $('#user-profile-user-cases-btn').text(ud.userName+"'s cases");
+
+                    $('#user-profile-user-cases-btn').unbind('click');
+                    $('#user-profile-active-tab-header').unbind('click');
+                    $('#user-profile-recent-tab-header').unbind('click');
+                    $('#user-profile-closed-tab-header').unbind('click');
+
+
+                    $('#user-profile-user-cases-btn').click('/activeCases:table11:'+ud.userId, responseHandler);
+                    $('#user-profile-active-tab-header').click('/activeCases:table11:'+ud.userId, responseHandler);
+                    $('#user-profile-recent-tab-header').click('/recentCases:table22:'+ud.userId, responseHandler);
+                    $('#user-profile-closed-tab-header').click('/closedCases:table33:'+ud.userId, responseHandler);
+
                     top_nav_search_user_profile();
                     $('#user-profile').show();
                     //$('#search_vol').html(html);
@@ -1214,20 +1205,6 @@ $(document).ready(function () {
                     document.getElementById("top-nav-case-details-heading-back-button").style.display = "none";
 
                 }
-                /*document.getElementById('raise-a-case-content').style.opacity = 0;
-                document.getElementById('my-cases-content').style.opacity = 0;
-                document.getElementById('case-details').style.opacity = 0;
-                document.getElementById('user-data-change-approvals-content').style.opacity = 0;
-                document.getElementById('heading-raise-a-case').style.opacity = 0;
-                document.getElementById('heading-my-cases').style.opacity = 0;
-                document.getElementById('heading-case-details').style.opacity = 0;
-                document.getElementById('heading-user-data-change-approvals').style.opacity = 0;
-                document.getElementById('top-nav-search-heading').style.display = "block";
-                document.getElementById("user-profile").style.display = "none";
-                document.getElementById("top-nav-search-heading-content").innerHTML = "Searching results for - #Search_Input";
-                document.getElementById("top-nav-search-user-profile-back-button").style.display = "none";
-                page_history.unshift("top_nav_search_results");*/
-
                 $("#top-nav-search").autocomplete("close");
                 $("#top-nav-search").val(''); 
                 return false;
@@ -1235,6 +1212,4 @@ $(document).ready(function () {
         }
 
     });
-
 });
-
