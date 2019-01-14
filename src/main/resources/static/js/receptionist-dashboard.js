@@ -1,3 +1,10 @@
+setTimeout(function () {
+    let viewheight = $(window).height();
+    let viewwidth = $(window).width();
+    let viewport = document.querySelector("meta[name=viewport]");
+    viewport.setAttribute("content", "height=" + viewheight + "px, width=" + viewwidth + "px, initial-scale=1.0");
+}, 300);
+
 var page_history = ["raise_a_case"];
 function case_details(data) {
     document.getElementById('my-cases-content').style.display = "none";
@@ -512,6 +519,13 @@ var responseHandler = function (event) {
         );
 };
 
+function enlargePhoto(this_t) {
+    $('#dynamic_image_enlarge').css('display', 'block');
+    var enlarge_source = this_t.getAttribute('src');
+    $('#photo-enlarge').children('img').attr('src', enlarge_source);
+    $('#photo-enlarge').children('img').css("background-color", "#2D3047");
+}
+
 $(document).ready(function () {
 
     $('.top-five-and-nearest-and-search-results-ul').on("mouseover", ".vol_tooltip", show_vol_tooltip);
@@ -937,27 +951,20 @@ $(document).ready(function () {
 
 //------Enlarge-Old-or-New-Photo-------------------------------------------------------------------------------------------------------
     $('.old-photo').children("figure").children("img").click(function () {
-        $('#dynamic_image_enlarge').css('display', 'block');
-        var enlarge_source = this.getAttribute('src');
-        $('#photo-enlarge').children('img').attr('src', enlarge_source);
+        enlargePhoto(this);
     });
 //----User-Profile-DP-Enlarge-------------------------------------------------
     $('#user-profile-left-side').children('img').click(function () {
-        var dp_source = this.getAttribute('src');
-        $('#dynamic_image_enlarge').css('display', 'block');
-        $('#photo-enlarge').children('img').attr('src', dp_source);
+        enlargePhoto(this);
     });
 
     $('.new-photo').children("figure").children("img").click(function () {
-        $('#dynamic_image_enlarge').css('display', 'block');
-        var enlarge_source = this.getAttribute('src');
-        $('#photo-enlarge').children('img').attr('src', enlarge_source);
+        enlargePhoto(this);
     });
 
     $('#image_enlarge_back_button').click(function () {
         $('#dynamic_image_enlarge').css('display', 'none');
     });
-
 //-----Disable-Right-Click-Menu-On-Image-----------------------------------------------------------------------------------------------
     $("body").on("contextmenu", "img", function (e) {
         return false;
@@ -1230,3 +1237,4 @@ $(document).ready(function () {
     });
 
 });
+

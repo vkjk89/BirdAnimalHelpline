@@ -8,6 +8,7 @@
     <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
     <link href="/static/css/contact-us.css" rel="stylesheet" th:href="@{/css/contact-us.css}">
     <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/icons/manifest.json}">
+    <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
 
 </head>
 <body>
@@ -69,8 +70,7 @@
 
             <div id="cta-btns2">
                 <input id="post" name="Submit" type="submit" value="Submit">
-                <button id="home-btn"><a href="Index.html"><img src="/static/img/home-1.png"
-                                                                th:src="@{/img/home-1.png}"></a></button>
+                <button id="home-btn"><a href="Index.html"><img src="/static/img/home-1.png" th:src="@{/img/home-1.png}"></a></button>
             </div>
         </form>
     </div>
@@ -82,6 +82,12 @@
         document.getElementById('wrapper-big').style.display = "none";
         document.getElementById('wrapper-big2').style.display = "block";
     }
+    setTimeout(function () {
+        let viewheight = $(window).height();
+        let viewwidth = $(window).width();
+        let viewport = document.querySelector("meta[name=viewport]");
+        viewport.setAttribute("content", "height=" + viewheight + "px, width=" + viewwidth + "px, initial-scale=1.0");
+    }, 300);
 </script>
 
 </body>

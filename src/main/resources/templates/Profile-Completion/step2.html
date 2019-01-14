@@ -8,6 +8,7 @@
     <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
     <link href="/static/css/Profile-Completion/profile-completion.css" rel="stylesheet" th:href="@{/css/Profile-Completion/profile-completion.css}">
     <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/icons/manifest.json}">
+    <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
 </head>
 <body>
 
@@ -25,7 +26,7 @@
     <div id="work-address">
         <form action="" id="home-address-form" method="POST" name="home-address-form" th:action="@{/profileCompletion}" th:object="${user}">
             <p class="title">Work Address:</p>
-            <label for="address-line1">Full Name</label>
+            <label for="address-line1">Office Name</label>
             <input id="full-name" autofocus name="full-name" placeholder="Full Name" th:field="*{officeAddr.fullName}" type="text">
             <label for="address-line2">Street Address</label>
             <input id="address-line1" name="address-line1" placeholder="Address Line 1" th:field="*{officeAddr.addrLine1}" type="text">
@@ -39,6 +40,13 @@
     </div>
 </main>
 
-
+<script>
+    setTimeout(function () {
+        let viewheight = $(window).height();
+        let viewwidth = $(window).width();
+        let viewport = document.querySelector("meta[name=viewport]");
+        viewport.setAttribute("content", "height=" + viewheight + "px, width=" + viewwidth + "px, initial-scale=1.0");
+    }, 300);
+</script>
 </body>
 </html>

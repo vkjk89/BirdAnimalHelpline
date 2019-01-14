@@ -67,6 +67,17 @@ Some Error page - Access Denied and Internal Server Error
     Mobile No. - Error - Styling
     All Warnings/Errors
     Mobile Number Validation - Explicit - or Try to remove msg
-    Toggle - Password - Step3
+    Toggle - Password - Step3 - Any page where required
     Home/Work Address - Full Name field backend integration
     //Progress Bar - ProfileCompletion
+    Preview for ProfileCompletion
+    Multi-Select for Prefered Timings
+    Contact Name, Location - Mandate Raise a Case
+    Case Status - VolName and Role
+    Top - Nav - Role of volunteer
+    Top Case select - Top Vol - Break
+    Top - Nav -USer - Back Button
+    + Button - Pincode Timings
+    Loading Screen - Assign Case (First Screen)
+    My Cases - Search
+    Succues - Assign - msg

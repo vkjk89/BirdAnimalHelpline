@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Cases</title>
+    <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
+    <link rel="stylesheet" href="/static/css/Vol_Dashboard/vol-dashboard-my-cases.css" th:href="@{/css/Vol_Dashboard/vol-dashboard-my-cases.css}">
+</head>
+<body>
+    <nav id="top-nav">
+        <span id="profile-options">&#9776;</span>
+        <button id="user-dp" type="button">
+            <img alt="User-Display-Picture" height="" src="/static/img/display-picture11.png" th:if="${user.getUserImage().getImage() == null}" th:src="@{/img/display-picture11.png}" width="">
+            <img alt="User-Display-Picture" height="" src="/static/img/display-picture11.png" th:if="${user.getUserImage().getImage() != null}" th:src="${'data:image/png;base64,'+user.getEncodedImage()}" width="auto">
+        </button>
+        <span id="navbar-username" th:text="${user.userName}">#Username</span>
+    </nav>
+</body>
+</html>

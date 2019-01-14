@@ -9,6 +9,7 @@
     <link href="/static/css/vol-dashboard.css" rel="stylesheet" th:href="@{/css/Vol-dashboard.css}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
     <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/icons/manifest.json}">
 </head>
 <body>
@@ -60,57 +61,43 @@
 </nav>
 
 <section id="page-heading">
-    <h1>Welome, <span id="#user_full_name" th:text="${user.firstName} +' '+ ${user.lastName}">#First_Last_Name</span>
+    <h1>Welome, <span id="#user_full_name" th:text="${user.firstName} + ' ' + ${user.lastName}">#First_Last_Name</span>
     </h1>
 </section>
 
-<section id="my-cases">
-    <div class="search-case" id="search-case">
-        <input id="search-case-input" name="search-case-input" placeholder="Search Case" type="search">
-        <div id="search-results-div">
-            <div id="results-tab-div">
-                <span class="active-active" id="results-tab-active">Active</span>
-                <span id="results-tab-recent">Recent</span>
-                <span id="results-tab-closed">Closed</span>
-            </div>
-            <div id="results-content">
-                <div class="results-content-animation" id="results-content-active">#Active Cases</div>
-                <div id="results-content-recent">#Recent Cases</div>
-                <div id="results-content-closed">#Closed Cases</div>
+<main>
+    <section id="my-cases">
+        <div class="search-case" id="search-case">
+            <input id="search-case-input" name="search-case-input" placeholder="Search Case" type="search">
+            <div id="search-results-div">
+                <div id="results-tab-div">
+                    <span class="active-active" id="results-tab-active">Active</span>
+                    <span id="results-tab-recent">Recent</span>
+                    <span id="results-tab-closed">Closed</span>
+                </div>
+                <div id="results-content">
+                    <div class="results-content-animation" id="results-content-active">#Active Cases</div>
+                    <div id="results-content-recent">#Recent Cases</div>
+                    <div id="results-content-closed">#Closed Cases</div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="accept-case" id="accept-case">
-    <div class="accept-case-shadow">
-        <div id="heading-accept-case">Accept Case</div>
-        <div id="case-details">
-            <div id="case-id">#Case-ID</div>
-            <span id="animal-type">#Animal_Type</span>
-            <span id="animal-name">#Animal_Name</span>
-            <div id="case-condition">Condition: Eg: Broken leg.</div>
-            <div id="contact-info">
-                <span onclick="case_details();">Contact Information</span><span id="downward-arrow-animation" onclick="case_details();">&#x25BC;</span><br>
-                <span>Name: </span><span id="contact-name">#Name</span><br>
-                <span>Contact Number: </span><span id="contact-number">#Contact_Number</span><br>
-                <span>Location: </span><span id="contact-location">#Location</span>
-            </div>
-            <div id="accept-decline">
-                <button id="accept" type="submit">Accept</button>
-                <button id="decline" type="submit">I am helpless</button>
-                <span id="celebrations"><img alt="Case-animal/bird" src="/static/img/pigeon.jpg" th:src="@{/img/pigeon.png}" width="45vw"> Thank you! You just saved my life!</span>
-            </div>
-        </div>
-    </div>
-</section>
+    <section class="accept-case-wrapper" id="accept-case-wrapper">
+        <div class="heading-accept-case">Accept Case <span class="accept-decline-pending-cases">#10</span></div>
+        <div id="accept-case-empty">No cases pending for now.</div>
+        <div class="slider-navigation-buttons"> <div class="slider-nav-right" onclick="slide_accept_case(+1);">&#x27e8;</div><div class="slider-nav-left" onclick="slide_accept_case(-1);">&#x27e8;</div></div>
+        <div id="case-slider"></div>
+    </section>
+</main>
 
 <section id="bottom-action-bar">
-    <button class="action-bar-home-btn" id="home" type="button"><img alt="home" src="/static/img/home-white.png" th:src="@{/img/home-white.png}">
+    <button class="action-bar-btn" id="home" type="button"><img alt="home" src="/static/img/home-white.png" th:src="@{/img/home-white.png}">
     </button>
-    <button class="action-bar-home-btn" id="logout" type="button"><img alt="logout" src="/static/img/logout-white.png" th:src="@{/img/logout-white.png}">
+    <button class="action-bar-btn" id="logout" type="button"><img alt="logout" src="/static/img/logout-white.png" th:src="@{/img/logout-white.png}">
     </button>
-    <button class="action-bar-home-btn" id="contact-us" type="button"><img alt="contact-us" src="/static/img/contact-us-white.png" th:src="@{/img/contact-us-white.png}"></button>
+    <button class="action-bar-btn" id="contact-us" type="button"><img alt="contact-us" src="/static/img/contact-us-white.png" th:src="@{/img/contact-us-white.png}"></button>
 </section>
 
 <!--<table>-->
@@ -120,153 +107,6 @@
 <!--</tr>-->
 <!--</table>-->
 
-<script>
-    $("#logout").on("click", function (e) {
-        e.preventDefault();
-        window.location.assign("/logout");
-        // $.ajax({
-        //     url: "/logout",
-        //     method : "GET"
-        //     }
-        // )
-    });
-    document.getElementById('results-tab-active').onclick = function active_active() {
-        this.classList.add('active-active');
-        document.getElementById('results-tab-recent').classList.remove('active-recent');
-        document.getElementById('results-tab-closed').classList.remove('active-closed');
-
-        document.getElementById('results-content-active').style.display = "block";
-        document.getElementById('results-content-recent').style.display = "none";
-        document.getElementById('results-content-closed').style.display = "none";
-
-        document.getElementById('results-content-active').classList.add('results-content-animation');
-        document.getElementById('results-content-recent').classList.remove('results-content-animation');
-        document.getElementById('results-content-closed').classList.remove('results-content-animation');
-    };
-    document.getElementById('results-tab-recent').onclick = function recent_active() {
-        this.classList.add('active-recent');
-        document.getElementById('results-tab-active').classList.remove('active-active');
-        document.getElementById('results-tab-closed').classList.remove('active-closed');
-
-        document.getElementById('results-content-recent').style.display = "block";
-        document.getElementById('results-content-active').style.display = "none";
-        document.getElementById('results-content-closed').style.display = "none";
-
-        document.getElementById('results-content-active').classList.remove('results-content-animation');
-        document.getElementById('results-content-recent').classList.add('results-content-animation');
-        document.getElementById('results-content-closed').classList.remove('results-content-animation');
-    };
-    document.getElementById('results-tab-closed').onclick = function closed_active() {
-        this.classList.add('active-closed');
-        document.getElementById('results-tab-active').classList.remove('active-active');
-        document.getElementById('results-tab-recent').classList.remove('active-recent');
-
-        document.getElementById('results-content-closed').style.display = "block";
-        document.getElementById('results-content-active').style.display = "none";
-        document.getElementById('results-content-recent').style.display = "none";
-
-        document.getElementById('results-content-active').classList.remove('results-content-animation');
-        document.getElementById('results-content-recent').classList.remove('results-content-animation');
-        document.getElementById('results-content-closed').classList.add('results-content-animation');
-    };
-
-    var anim_state = false;
-
-    function case_details() {
-        anim_state = !anim_state;
-        if (anim_state === true) {
-            document.getElementById('case-details').style.height = "auto";
-            window.scrollTo(0, document.body.scrollHeight);
-            document.getElementById('downward-arrow-animation').innerHTML = "&#x25B2;";
-        } else {
-            document.getElementById('case-details').style.height = "100px";
-            document.getElementById('downward-arrow-animation').innerHTML = "&#x25BC;";
-        }
-    }
-
-    document.getElementById('accept').onclick = function accept() {
-        document.getElementById('celebrations').style.display = "block";
-        window.scrollTo(0, document.body.scrollHeight);
-    };
-
-    document.getElementById('decline').onclick = function decline() {
-        document.getElementById('celebrations').style.display = "none";
-        window.scrollTo(0, document.body.scrollHeight);
-    };
-
-    document.getElementById('profile-options').onclick = function openSideNav() {
-        document.getElementById('side-nav').style.display = "block";
-        document.getElementById('side-nav').classList.add('side-nav-anim');
-        document.getElementById('top-nav').style.opacity = "0.1";
-        document.getElementById('page-heading').style.opacity = "0.1";
-        document.getElementById('my-cases').style.opacity = "0.1";
-        document.getElementById('accept-case').style.opacity = "0.1";
-    };
-
-    document.getElementById('close-btn').onclick = function closeSideNav() {
-        document.getElementById('side-nav').classList.remove('side-nav-anim');
-        document.getElementById('side-nav').style.display = "none";
-        document.getElementById('page-heading').style.opacity = "1";
-        document.getElementById('top-nav').style.opacity = "1";
-        document.getElementById('my-cases').style.opacity = "1";
-        document.getElementById('accept-case').style.opacity = "1";
-    };
-
-    window.onclick = function (e) {
-        if (!e.target.matches('#close-btn') && !e.target.matches('#profile-options') && !e.target.matches('#bottom-action-bar')) {
-            if (document.getElementById('side-nav').classList.contains('side-nav-anim')) {
-                document.getElementById('side-nav').classList.remove('side-nav-anim');
-                document.getElementById('side-nav').style.display = "none";
-                document.getElementById('page-heading').style.opacity = "1";
-                document.getElementById('top-nav').style.opacity = "1";
-                document.getElementById('my-cases').style.opacity = "1";
-                document.getElementById('accept-case').style.opacity = "1";
-            }
-        }
-    };
-
-    $(document).ready(function () {
-
-        var responseHandler = function (url, tableId) {
-            console.info(" clicked " + url + " " + tableId);
-            $.ajax({
-                type: 'GET', // define the type of HTTP verb we want to use (POST for our form)
-                url: url, // the url where we want to POST
-                dataType: 'json' // what type of data do we expect back from the server
-                //encode: true
-            }).done(function (data) {
-                    var a = '<div class ="row row1"> <div class="sr-no"><li></li></div> <div class="case-id">';
-                    var b = '</div> <div class="case-status">';
-                    var c = '</div> <div class="date">';
-                    var d = '</div> <div class="animal-type">';
-                    var e = '</div> <div class="case-name">';
-                    var f = '</div> </div>';
-                    // log data to the console so we can see
-                    console.log(data);
-                    var cc = [];
-                    $.each(data, function (i, item) {
-                        var htm = a + item.caseId + b + (item.active ? "Active" : "Closed") + c + item.creationDate + d + item.typeAnimal + e + item.animalName + f;
-                        cc.push(htm);
-                        console.log(i);
-                        console.log(item);
-                        console.log(htm);
-                    });
-
-                    $('#' + tableId).html(cc.join(""));
-                }
-            );
-        };
-
-
-        $('.case-id').click(function (e) {
-            console.info("row clicked" + e);
-            $("#dialog").dialog();
-        });
-        $('#results-tab-active').click(responseHandler('/activeCases', 'results-content-active'));
-        $('#results-tab-active').click(responseHandler('/activeCases', 'results-content-active'));
-        $('#results-tab-recent').click(responseHandler('/recentCases', 'results-content-recent'));
-        $('#results-tab-closed').click(responseHandler('/closedCases', 'results-content-closed'));
-    });
-</script>
+<script src="/static/js/vol-dashboard-home.js" th:src="@{/js/vol-dashboard-home.js}"></script>
 </body>
 </html>

@@ -10,6 +10,7 @@
     <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
     <link href="/static/css/RequestRegistration/Step2.css" rel="stylesheet" th:href="@{/css/RequestRegistration/Step2.css}">
     <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/icons/manifest.json}">
+    <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
 
 </head>
 <body>
@@ -77,6 +78,13 @@
 
     var minyear = d.getFullYear() - 100;
     document.getElementById('birthdate').setAttribute('min', minyear + '-01-01');
+
+    setTimeout(function () {
+        let viewheight = $(window).height();
+        let viewwidth = $(window).width();
+        let viewport = document.querySelector("meta[name=viewport]");
+        viewport.setAttribute("content", "height=" + viewheight + "px, width=" + viewwidth + "px, initial-scale=1.0");
+    }, 300);
 </script>
 
 </body>

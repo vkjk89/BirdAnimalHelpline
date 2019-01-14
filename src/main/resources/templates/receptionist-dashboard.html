@@ -339,11 +339,11 @@
                         <option value="+91">+91</option>
                         <option value="022">022</option>
                     </select>
-                    <input autocomplete="off" id="contact-number" max="9999999999" min="5000000000" name="contact-number" placeholder="" required tabindex="7" title="Ten digit mobile no. without any code" type="number"><br>
+                    <input autocomplete="off" id="contact-number" max="9999999999" min="5000000000" name="contact-number" placeholder="(Mandatory)" required tabindex="7" title="Ten digit mobile no. without any code" type="number"><br>
                     <label for="location">Location: </label>
-                    <textarea cols="50" id="location" maxlength="250" name="location" rows="2" tabindex="8"></textarea>
-                    <input autocomplete="off" id="location-landmark" name="location-landmark" placeholder="Landmark - Eg: Near Regal Cinema" tabindex="9" type="text">
-                    <input autocomplete="off" id="location-pincode" max="500000" min="400000" name="location-pincode" placeholder="Pincode - Eg: 400002" required tabindex="10" title="Please enter valid pincode" type="number">
+                    <textarea cols="50" id="location" maxlength="250" name="location" rows="2" tabindex="8" placeholder=""></textarea>
+                    <input autocomplete="off" id="location-landmark" name="location-landmark" placeholder="Landmark - Eg: Near Regal Cinema (Recommended)" tabindex="9" type="text">
+                    <input autocomplete="off" id="location-pincode" max="500000" min="400000" name="location-pincode" placeholder="Pincode - Eg: 400002 (Mandatory)" required tabindex="10" title="Please enter valid pincode" type="number">
                 </div>
             </div>
             <div style = "background: forestgreen">
@@ -471,7 +471,9 @@
                     <label for="condition-case-details">Condition: </label>
                     <input disabled id="condition-case-details" type="text">
                     <label for="case-photos-case-details">Photos Uploaded</label>
-                    <div id="case-photos-case-details"></div>
+                    <div id="case-photos-case-details">
+                        <img src="/img/Call Attender-11.png" onclick="enlargePhoto(this);">
+                    </div>
                 </div>
             </div>
             <div id="form-right-side-case-details">
@@ -509,27 +511,15 @@
                     <div id="assign-case-search-body">
                         <div id="top-five">
                             <h2>Top Five Volunteers: </h2>
-                            <ul class="top-five-and-nearest-and-search-results-ul" id="top_five_vol">
-                                <li><span class="vol_tooltip">#Vol_Name5</span>
-                                    <button class="assign-case-assign-btn" onclick="assignCase(this)" type="button">Assign</button>
-                                </li>
-                            </ul>
+                            <ul class="top-five-and-nearest-and-search-results-ul" id="top_five_vol"></ul>
                         </div>
                         <div id="nearest-assigned-volunteers">
                             <h2>Nearest: </h2>
-                            <ul class="top-five-and-nearest-and-search-results-ul" id="nearest_5_vol">
-                                <li><span class="vol_tooltip">#Vol_Name7</span>
-                                    <button class="assign-case-assign-btn" onclick="assignCase(this)" type="button">Assign</button>
-                                </li>
-                            </ul>
+                            <ul class="top-five-and-nearest-and-search-results-ul" id="nearest_5_vol"></ul>
                         </div>
                     </div>
                     <div id="assign-case-search-results">
-                        <ul class="top-five-and-nearest-and-search-results-ul" id="search_vol">
-                            <li><span class="vol_tooltip">#Vol_Name3</span>
-                                <button class="assign-case-assign-btn" onclick="assignCase(this)" type="button">Assign</button>
-                            </li>
-                        </ul>
+                        <ul class="top-five-and-nearest-and-search-results-ul" id="search_vol"></ul>
                     </div>
                     <div id="assign-case-status-bar">
                         <div id="assign-case-success"><span id="assign-case-success-checkmark"> &check;</span> Success! Case assigned successfully

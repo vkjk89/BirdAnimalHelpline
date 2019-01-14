@@ -37,7 +37,7 @@
         </div>
         <input class="ui-autocomplete-input" id="search-pincode" name="search-pincode" placeholder="Search Pincode" type="search">
         <div class="selected-pincodes" id="selected-pincodes">
-            <p>Selected Pincodes:</p>
+            <p>Selected Area:</p>
             <div id = "selected-pin-content">
                 <ul id="selected-pincode-ul"></ul>
             </div>
@@ -180,6 +180,12 @@
             document.getElementById("selected-pincodes").style.display = "none";
         }
     }
+    setTimeout(function () {
+        let viewheight = $(window).height();
+        let viewwidth = $(window).width();
+        let viewport = document.querySelector("meta[name=viewport]");
+        viewport.setAttribute("content", "height=" + viewheight + "px, width=" + viewwidth + "px, initial-scale=1.0");
+    }, 300);
 </script>
     
 </body>
