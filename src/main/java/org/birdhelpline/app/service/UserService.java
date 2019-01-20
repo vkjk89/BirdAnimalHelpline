@@ -52,7 +52,7 @@ public class UserService {
             list.stream().forEach(s -> setSelected.add(Long.parseLong(s)));
         }
         List<PinCodeLandmarkInfo> list = userDao.getPinCodeLandMarks();
-        return list.stream().filter(p -> !setSelected.contains(p.getPincodeId()) && p.getLandmark().toLowerCase().indexOf(term) >= 0 ).collect(Collectors.toList());
+        return list.stream().filter(p -> !setSelected.contains(p.getPincodeId()) && (p.getLandmark().toLowerCase().indexOf(term) >= 0 || String.valueOf(p.getPincode()).indexOf(term) >=0) ).collect(Collectors.toList());
 
     }
 
@@ -84,11 +84,11 @@ public class UserService {
 
     }
 
-    public List<String> getListBirds() {
+    public Set<String> getListBirds() {
         return userDao.getListBirds();
     }
 
-    public List<String> getListAnimals() {
+    public Set<String> getListAnimals() {
         return userDao.getListAnimals();
     }
 

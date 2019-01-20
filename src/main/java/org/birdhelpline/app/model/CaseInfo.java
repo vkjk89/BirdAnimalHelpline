@@ -16,6 +16,8 @@ public class CaseInfo {
     private Long userIdClosed;
     private String closeRemark;
     private String typeAnimal;
+    private String birdOrAnimal;
+    private String newBirdAnimal;
     private Long currentUserId;
     private boolean active;
     private String animalName;
@@ -26,8 +28,78 @@ public class CaseInfo {
     private String location;
     private String locationPincode;
     private String locationLandMark;
+    private String userNameOpened;
+    private String userRoleOpened;
+    private String userNameClosed;
+    private String userRoleClosed;
+    private String userNameCurrent;
+    private String userRoleCurrent;
 
     private List<CaseTxn> caseTxnList = new ArrayList<>();
+
+    public String getBirdOrAnimal() {
+        return birdOrAnimal;
+    }
+
+    public void setBirdOrAnimal(String birdOrAnimal) {
+        this.birdOrAnimal = birdOrAnimal;
+    }
+
+    public String getNewBirdAnimal() {
+        return newBirdAnimal;
+    }
+
+    public void setNewBirdAnimal(String newBirdAnimal) {
+        this.newBirdAnimal = newBirdAnimal;
+    }
+
+    public String getUserRoleOpened() {
+        return userRoleOpened;
+    }
+
+    public void setUserRoleOpened(String userRoleOpened) {
+        this.userRoleOpened = userRoleOpened;
+    }
+
+    public String getUserRoleClosed() {
+        return userRoleClosed;
+    }
+
+    public void setUserRoleClosed(String userRoleClosed) {
+        this.userRoleClosed = userRoleClosed;
+    }
+
+    public String getUserRoleCurrent() {
+        return userRoleCurrent;
+    }
+
+    public void setUserRoleCurrent(String userRoleCurrent) {
+        this.userRoleCurrent = userRoleCurrent;
+    }
+
+    public String getUserNameOpened() {
+        return userNameOpened;
+    }
+
+    public void setUserNameOpened(String userNameOpened) {
+        this.userNameOpened = userNameOpened;
+    }
+
+    public String getUserNameClosed() {
+        return userNameClosed;
+    }
+
+    public void setUserNameClosed(String userNameClosed) {
+        this.userNameClosed = userNameClosed;
+    }
+
+    public String getUserNameCurrent() {
+        return userNameCurrent;
+    }
+
+    public void setUserNameCurrent(String userNameCurrent) {
+        this.userNameCurrent = userNameCurrent;
+    }
 
     @Override
     public String toString() {

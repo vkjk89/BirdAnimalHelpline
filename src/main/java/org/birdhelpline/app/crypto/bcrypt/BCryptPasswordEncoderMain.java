@@ -13,8 +13,7 @@ public class BCryptPasswordEncoderMain {
 
     public static String encode(String password) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encodedPassword = encoder.encode(password);
-        return encodedPassword;
+        return encoder.encode(password);
     }
 
     /**

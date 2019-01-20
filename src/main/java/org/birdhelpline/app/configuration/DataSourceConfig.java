@@ -25,13 +25,11 @@ public class DataSourceConfig {
     private String userName;
     @Value("${database.jdbc.password}")
     private String password;
-    private HikariConfig config;
-    private HikariDataSource dataSource;
 
     @Bean(name = "dataSource")
     public DataSource dataSource() {
         logger.info("VKJ DB : " + jdbcURL + "\t" + userName + "\t" + password);
-        config = new HikariConfig();
+        HikariConfig config = new HikariConfig();
         config.setJdbcUrl(jdbcURL);
         config.setUsername(userName);
         config.setPassword(password);
@@ -39,7 +37,7 @@ public class DataSourceConfig {
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        dataSource = new HikariDataSource(config);
+        HikariDataSource dataSource = new HikariDataSource(config);
         return dataSource;
     }
 
