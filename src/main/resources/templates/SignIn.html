@@ -5,7 +5,7 @@
     <meta charset="utf-8"/>
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <title>Bird & Animal Helpline</title>
-    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
     <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
     <link href="/static/css/SignIn.css" rel="stylesheet" th:href="@{/css/SignIn.css}">
     <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/icons/manifest.json}">
@@ -63,13 +63,6 @@
     $("body").on("contextmenu", "img", function (e) {
         return false;
     });
-
-    setTimeout(function () {
-        let viewheight = $(window).height();
-        let viewwidth = $(window).width();
-        let viewport = document.querySelector("meta[name=viewport]");
-        viewport.setAttribute("content", "height=" + viewheight + "px, width=" + viewwidth + "px, initial-scale=1.0");
-    }, 300);
 
 </script>
 </body>

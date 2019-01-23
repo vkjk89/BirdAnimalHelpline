@@ -80,4 +80,5 @@ Some Error page - Access Denied and Internal Server Error
     + Button - Pincode Timings
     Loading Screen - Assign Case (First Screen)
     My Cases - Search
-    Succues - Assign - msg
+    Success - Assign - msg
+    Action Center - Recpt dashboard

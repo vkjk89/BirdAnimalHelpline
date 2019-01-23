@@ -1,10 +1,3 @@
-setTimeout(function () {
-    let viewheight = $(window).height();
-    let viewwidth = $(window).width();
-    let viewport = document.querySelector("meta[name=viewport]");
-    viewport.setAttribute("content", "height=" + viewheight + "px, width=" + viewwidth + "px, initial-scale=1.0");
-}, 300);
-
 var page_history = ["raise_a_case"];
 function case_details(data) {
     document.getElementById('my-cases-content').style.display = "none";
@@ -351,12 +344,13 @@ function show_vol_tooltip() {
     $('#address-line2').text(userInfo.email);
     $('#tooltip-info-tel-number').text(userInfo.mobile);
     if (userInfo.image) {
-        $('#tooltip-dp').html('<img src="data:image/png;base64,"' + userInfo.image + '><div id="decoy-for-img">.</div>');
+        $('#tooltip-dp').html('<img src="data:image/png;base64,"' + userInfo.image + '><div id="decoy-for-img"></div>');
     } else {
-        $('#tooltip-dp').html('<img id="dp_image" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/User_font_awesome.svg" width="auto" height="70vh"><div id="decoy-for-img">.</div>');
+        $('#tooltip-dp').html('<img id="dp_image" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/User_font_awesome.svg" width="auto" height="70vh"><div id="decoy-for-img"></div>');
     }
     $("#vol-description-tooltip").fadeIn();
-    var tooltipHeight = document.getElementById("vol-description-tooltip").getBoundingClientRect().height;
+    var tooltip = document.getElementById("vol-description-tooltip").getBoundingClientRect();
+    var tooltipHeight = tooltip.height;
     document.getElementById("vol-description-tooltip").style.top = event.target.getBoundingClientRect().top - tooltipHeight / 2.2 + "px";
     document.getElementById("vol-description-tooltip").style.left = event.target.getBoundingClientRect().left + 10 + event.target.getBoundingClientRect().width + "px";
 }
@@ -367,13 +361,14 @@ function hide_vol_tooltip() {
     hide_tooltip_timeOut = setTimeout(function () {
         $("#vol-description-tooltip").fadeOut();
         $("#vol-description-tooltip").click();
-        $("#vol-description-tooltip").css("display", "none");
+        // $("#vol-description-tooltip").css("display", "none");
         $('#tooltip-info-name').text("");
         $('#tooltip-info-role').text("");
         $('#address-line1').text("");
         $('#address-line2').text("");
+        $('#tooltip-pincode').text("");
         $('#tooltip-info-tel-number').text("");
-        $('#tooltip-dp').html('<img id="dp_image" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/User_font_awesome.svg" width="auto" height="70vh"><div id="decoy-for-img">.</div>');
+        $('#tooltip-dp').html('<img id="dp_image" src="" width="0" height="0"><div id="decoy-for-img"></div>');
     }, 200);
 }
 

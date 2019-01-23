@@ -1,10 +1,3 @@
-setTimeout(function () {
-    let viewheight = $(window).height();
-    let viewwidth = $(window).width();
-    let viewport = document.querySelector("meta[name=viewport]");
-    viewport.setAttribute("content", "height=" + viewheight + "px, width=" + viewwidth + "px, initial-scale=1.0");
-}, 300);
-
 function accept() {
     $('.celebrations').fadeIn();
     $(".accept-case-container").css("pointerEvents", "none");
@@ -17,12 +10,12 @@ function decline() {
     window.scrollTo(0, document.body.scrollHeight);
 }
 
-/*function enlargePhoto(this_t) {
+function enlargePhoto(this_t) {
     $('#dynamic_image_enlarge').css('display', 'block');
     var enlarge_source = this_t.getAttribute('src');
     $('#photo-enlarge').children('img').attr('src', enlarge_source);
     $('#photo-enlarge').children('img').css("background-color", "#2D3047");
-}*/
+}
 
 /*---------------------------Creating-Dynamic-Accep/Decline-Case-Members--------------------------------------*/
 var slider_member_counter = 1;
@@ -55,7 +48,7 @@ function section_accept_case(){
 
     var bird_animal_info_header = document.createElement("div");
         bird_animal_info_header.classList.add("bird-animal-info-header");
-        bird_animal_info_header.innerHTML = "#Bird/Animal_Information " + slider_member_counter;
+        bird_animal_info_header.innerHTML = "#Bird/Animal_Information";
 
     var animal_type = document.createElement("div");
         animal_type.classList.add("animal-type");
@@ -317,6 +310,10 @@ $(document).ready(function () {
         document.getElementById('my-cases').style.opacity = "1";
         document.getElementById('accept-case-wrapper').style.opacity = "1";
     };
+    
+    $('#image_enlarge_back_button').click(function () {
+        $('#dynamic_image_enlarge').css('display', 'none');
+    });
 
     window.onclick = function (e) {
         if (!e.target.matches('#close-btn') && !e.target.matches('#profile-options') && !e.target.matches('#bottom-action-bar')) {
@@ -332,6 +329,8 @@ $(document).ready(function () {
     };
 
 });
+
+//---------BACKEND-INTEGRATION----------------------------------------------------------------------------------------
     $(document).ready(function () {
 
         var responseHandler = function (url, tableId) {
@@ -342,21 +341,70 @@ $(document).ready(function () {
                 dataType: 'json' // what type of data do we expect back from the server
                 //encode: true
             }).done(function (data) {
-                    var a = '<div class ="row row1"> <div class="sr-no"><li></li></div> <div class="case-id">';
-                    var b = '</div> <div class="case-status">';
-                    var c = '</div> <div class="date">';
-                    var d = '</div> <div class="animal-type">';
-                    var e = '</div> <div class="case-name">';
-                    var f = '</div> </div>';
+                    /*function results_list(caseID, active, creationDateStr, typeAnimal){
+                        //CREATION-AND-SETTING-OF-ELEMENTS------------------------------------
+
+                            //ACTIVE-CASES-------------------------------------------------
+                            var results_content_active = document.createElement("div");
+                            results_content_active.classList.add("results-content-active");
+                            var active_content_case_id = document.createElement("span");
+                            active_content_case_id.classList.add("active-content-case-id");
+                            var active_content_date = document.createElement("span");
+                            active_content_date.classList.add("active-content-date");
+                            var active_content_bird_animal = document.createElement("span");
+                            active_content_bird_animal.classList.add("active-content-bird-animal");
+
+                            //RECENT-CASES-------------------------------------------------
+                            var results_content_recent = document.createElement("div");
+                            results_content_recent.classList.add("results-content-recent");
+                            var recent_content_case_id = document.createElement("span");
+                            recent_content_case_id.classList.add("recent-content-case-id");
+                            var recent_content_date = document.createElement("span");
+                            recent_content_date.classList.add("recent-content-date");
+                            var recent_content_bird_animal = document.createElement("span");
+                            recent_content_bird_animal.classList.add("recent-content-bird-animal");
+
+                            //CLOSED-CASES-------------------------------------------------
+                            var results_content_closed = document.createElement("div");
+                            results_content_closed.classList.add("results-content-closed");
+                            var closed_content_case_id = document.createElement("span");
+                            closed_content_case_id.classList.add("closed-content-case-id");
+                            var closed_content_date = document.createElement("span");
+                            closed_content_date.classList.add("closed-content-date");
+                            var closed_content_bird_animal = document.createElement("span");
+                            closed_content_bird_animal.classList.add("closed-content-bird-animal");
+
+                        //APPENDING-ELEMENTS-----------------------------------------------------
+                        results_content_active.appendChild(active_content_case_id);
+                        results_content_active.appendChild(active_content_date);
+                        results_content_active.appendChild(active_content_bird_animal);
+
+                        results_content_recent.appendChild(recent_content_case_id);
+                        results_content_recent.appendChild(recent_content_date);
+                        results_content_recent.appendChild(recent_content_bird_animal);
+
+                        results_content_closed.appendChild(closed_content_case_id);
+                        results_content_closed.appendChild(closed_content_date);
+                        results_content_closed.appendChild(closed_content_bird_animal);
+                    }*/
+
+                    var a = '<div> <span class="case-id">';
+                    var b = '</span> <span class="case-status">';
+                    var c = '</span> <span class="date">';
+                    var d = '</span> <span class="animal-type">';
+                    var e = '</span> <span class="case-name">';
+                    var f = '</span> </div>';
                     // log data to the console so we can see
                     console.log(data);
                     var cc = [];
                     $.each(data, function (i, item) {
-                        var htm = a + item.caseId + b + (item.active ? "Active" : "Closed") + c + item.creationDate + d + item.typeAnimal + e + item.animalName + f;
+                        var htm;
+                        htm = a + item.caseId + b /*+ (item.active ? "Active" : "Closed")*/ + c + item.creationDateStr + d + item.typeAnimal + e + item.animalName + f;
                         cc.push(htm);
                         console.log(i);
                         console.log(item);
                         console.log(htm);
+                        //results_list(item.caseID, item.active, item.creationDateStr, item.typeAnimal);
                     });
 
                     $('#' + tableId).html(cc.join(""));

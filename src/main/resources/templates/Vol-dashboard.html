@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Dashboard</title>
     <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
@@ -71,14 +71,37 @@
             <input id="search-case-input" name="search-case-input" placeholder="Search Case" type="search">
             <div id="search-results-div">
                 <div id="results-tab-div">
-                    <span class="active-active" id="results-tab-active">Active</span>
-                    <span id="results-tab-recent">Recent</span>
-                    <span id="results-tab-closed">Closed</span>
+                    <div class="active-active" id="results-tab-active">Active</div>
+                    <div id="results-tab-recent">Recent</div>
+                    <div id="results-tab-closed">Closed</div>
                 </div>
                 <div id="results-content">
-                    <div class="results-content-animation" id="results-content-active">#Active Cases</div>
-                    <div id="results-content-recent">#Recent Cases</div>
-                    <div id="results-content-closed">#Closed Cases</div>
+                    <div class="case-headers" id="case-headers">
+                        <span>Case_ID</span>
+                        <span>Date</span>
+                        <span>Bird/Animal</span>
+                    </div>
+                    <div class="results-content-animation" id="results-content-active">
+                        <!--<div class="results-content-active">
+                            <span class="active-content-case-id">#CaseID</span>
+                            <span class="active-content-date">#Date</span>
+                            <span class="active-content-bird-animal">#Bird/Animal_Name</span>
+                        </div>--->
+                    </div>
+                    <div id="results-content-recent">
+                        <!---<div class="results-content-recent">
+                            <span class="recent-content-case-id">#CaseID</span>
+                            <span class="recent-content-date">#Date</span>
+                            <span class="recent-content-bird-animal">#Bird/Animal_Type</span>
+                        </div>-->
+                    </div>
+                    <div id="results-content-closed">
+                        <!--<div class="results-content-closed">
+                            <span class="closed-content-case-id">#CaseID</span>
+                            <span class="closed-content-date">#Date</span>
+                            <span class="closed-content-bird-animal">#Bird/Animal_Type</span>
+                        </div>-->
+                    </div>
                 </div>
             </div>
         </div>
