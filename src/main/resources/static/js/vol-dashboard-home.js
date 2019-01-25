@@ -305,10 +305,23 @@ $(document).ready(function () {
     document.getElementById('close-btn').onclick = function closeSideNav() {
         document.getElementById('side-nav').classList.remove('side-nav-anim');
         document.getElementById('side-nav').style.display = "none";
-        document.getElementById('page-heading').style.opacity = "1";
+        document.getElementById('page-heading').style.opacity = "1"; 
         document.getElementById('top-nav').style.opacity = "1";
         document.getElementById('my-cases').style.opacity = "1";
         document.getElementById('accept-case-wrapper').style.opacity = "1";
+    };
+
+    document.getElementById('search-case-input').onkeyup = function(){
+        //Actually-put-this-part-in-success-or-done-ajax
+        if(this.value.length > 1){
+            $("#search-results-div").css("display", "none");
+            $("#search-input-results").css("display", "block");
+        }
+        else {
+            $("#search-results-div").css("display", "block");
+            $("#search-input-results").css("display", "none");
+        }
+        
     };
     
     $('#image_enlarge_back_button').click(function () {
@@ -341,53 +354,6 @@ $(document).ready(function () {
                 dataType: 'json' // what type of data do we expect back from the server
                 //encode: true
             }).done(function (data) {
-                    /*function results_list(caseID, active, creationDateStr, typeAnimal){
-                        //CREATION-AND-SETTING-OF-ELEMENTS------------------------------------
-
-                            //ACTIVE-CASES-------------------------------------------------
-                            var results_content_active = document.createElement("div");
-                            results_content_active.classList.add("results-content-active");
-                            var active_content_case_id = document.createElement("span");
-                            active_content_case_id.classList.add("active-content-case-id");
-                            var active_content_date = document.createElement("span");
-                            active_content_date.classList.add("active-content-date");
-                            var active_content_bird_animal = document.createElement("span");
-                            active_content_bird_animal.classList.add("active-content-bird-animal");
-
-                            //RECENT-CASES-------------------------------------------------
-                            var results_content_recent = document.createElement("div");
-                            results_content_recent.classList.add("results-content-recent");
-                            var recent_content_case_id = document.createElement("span");
-                            recent_content_case_id.classList.add("recent-content-case-id");
-                            var recent_content_date = document.createElement("span");
-                            recent_content_date.classList.add("recent-content-date");
-                            var recent_content_bird_animal = document.createElement("span");
-                            recent_content_bird_animal.classList.add("recent-content-bird-animal");
-
-                            //CLOSED-CASES-------------------------------------------------
-                            var results_content_closed = document.createElement("div");
-                            results_content_closed.classList.add("results-content-closed");
-                            var closed_content_case_id = document.createElement("span");
-                            closed_content_case_id.classList.add("closed-content-case-id");
-                            var closed_content_date = document.createElement("span");
-                            closed_content_date.classList.add("closed-content-date");
-                            var closed_content_bird_animal = document.createElement("span");
-                            closed_content_bird_animal.classList.add("closed-content-bird-animal");
-
-                        //APPENDING-ELEMENTS-----------------------------------------------------
-                        results_content_active.appendChild(active_content_case_id);
-                        results_content_active.appendChild(active_content_date);
-                        results_content_active.appendChild(active_content_bird_animal);
-
-                        results_content_recent.appendChild(recent_content_case_id);
-                        results_content_recent.appendChild(recent_content_date);
-                        results_content_recent.appendChild(recent_content_bird_animal);
-
-                        results_content_closed.appendChild(closed_content_case_id);
-                        results_content_closed.appendChild(closed_content_date);
-                        results_content_closed.appendChild(closed_content_bird_animal);
-                    }*/
-
                     var a = '<div> <span class="case-id">';
                     var b = '</span> <span class="case-status">';
                     var c = '</span> <span class="date">';
@@ -404,10 +370,11 @@ $(document).ready(function () {
                         console.log(i);
                         console.log(item);
                         console.log(htm);
-                        //results_list(item.caseID, item.active, item.creationDateStr, item.typeAnimal);
                     });
-
                     $('#' + tableId).html(cc.join(""));
+                    if(cc.length === 0){
+                        $('#' + tableId).html("<li style='z-index: 1000000001;background-color: rgb(250,250,250)'>No Cases</li>");  //DISPLAY-No-Cases-on-Tab-that-has-none
+                    }
                 }
             );
         };

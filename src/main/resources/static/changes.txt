@@ -74,9 +74,9 @@ Some Error page - Access Denied and Internal Server Error
     Multi-Select for Prefered Timings
     Contact Name, Location - Mandate Raise a Case
     Case Status - VolName and Role
-    Top - Nav - Role of volunteer
+    //Top - Nav - Role of volunteer
     Top Case select - Top Vol - Break
-    Top - Nav -USer - Back Button
+    Top - Nav -User - Back Button
     + Button - Pincode Timings
     Loading Screen - Assign Case (First Screen)
     My Cases - Search

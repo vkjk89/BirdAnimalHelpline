@@ -61,8 +61,7 @@
 </nav>
 
 <section id="page-heading">
-    <h1>Welome, <span id="#user_full_name" th:text="${user.firstName} + ' ' + ${user.lastName}">#First_Last_Name</span>
-    </h1>
+    <h1>Welome, <span id="#user_full_name" th:text="${user.firstName} + ' ' + ${user.lastName}">#First_Last_Name</span></h1>
 </section>
 
 <main>
@@ -81,27 +80,25 @@
                         <span>Date</span>
                         <span>Bird/Animal</span>
                     </div>
-                    <div class="results-content-animation" id="results-content-active">
-                        <!--<div class="results-content-active">
-                            <span class="active-content-case-id">#CaseID</span>
-                            <span class="active-content-date">#Date</span>
-                            <span class="active-content-bird-animal">#Bird/Animal_Name</span>
-                        </div>--->
-                    </div>
-                    <div id="results-content-recent">
-                        <!---<div class="results-content-recent">
-                            <span class="recent-content-case-id">#CaseID</span>
-                            <span class="recent-content-date">#Date</span>
-                            <span class="recent-content-bird-animal">#Bird/Animal_Type</span>
-                        </div>-->
-                    </div>
-                    <div id="results-content-closed">
-                        <!--<div class="results-content-closed">
-                            <span class="closed-content-case-id">#CaseID</span>
-                            <span class="closed-content-date">#Date</span>
-                            <span class="closed-content-bird-animal">#Bird/Animal_Type</span>
-                        </div>-->
-                    </div>
+                    <div class="results-content-animation" id="results-content-active"></div>
+                    <div id="results-content-recent"></div>
+                    <div id="results-content-closed"></div>
+                </div>
+            </div>
+            <div id="search-input-results">
+                <div class="case-headers">
+                    <span>Case_ID</span>
+                    <span>Date</span>
+                    <span>Bird/Animal</span>
+                </div>
+                <div id="search-input-results-results">
+                    <!-- Put Case Results HERE -->
+                    <!--Format Below -->
+                    <!--<div>
+                        <span class="case-id">10</span>
+                        <span class="date">12-12-2015</span>
+                        <span class="animal-type">Parrot</span>
+                    </div>-->
                 </div>
             </div>
         </div>
@@ -118,9 +115,9 @@
 <section id="bottom-action-bar">
     <button class="action-bar-btn" id="home" type="button"><img alt="home" src="/static/img/home-white.png" th:src="@{/img/home-white.png}">
     </button>
+    <button class="action-bar-btn" id="contact-us" type="button"><img alt="contact-us" src="/static/img/contact-us-white.png" th:src="@{/img/contact-us-white.png}"></button>
     <button class="action-bar-btn" id="logout" type="button"><img alt="logout" src="/static/img/logout-white.png" th:src="@{/img/logout-white.png}">
     </button>
-    <button class="action-bar-btn" id="contact-us" type="button"><img alt="contact-us" src="/static/img/contact-us-white.png" th:src="@{/img/contact-us-white.png}"></button>
 </section>
 
 <!--<table>-->
