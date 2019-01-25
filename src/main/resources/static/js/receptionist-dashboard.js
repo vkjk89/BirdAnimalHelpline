@@ -8,11 +8,8 @@ function case_details(data) {
     document.getElementById('action-center').style.display = "block";
     document.getElementById('case-details-form').style.opacity = "";
     page_history.unshift("myc_case_details");
-    console.info(" vkj map : " + caseIdVsInfoMap);
     currentCaseId = $(data).find(".case-id").text();
-    console.info("vkj id : " + currentCaseId);
     var caseInfo = caseIdVsInfoMap[currentCaseId];
-    console.info(caseInfo);
     $('#case-id-case-details').val(caseInfo.caseId);
     $('#animal-type-case-details').val(caseInfo.typeAnimal);
     $('#animal-name-case-details').val(caseInfo.animalName);
@@ -23,6 +20,7 @@ function case_details(data) {
     $('#location-case-details').val(caseInfo.location);
     $('#location-landmark-case-details').val(caseInfo.locationLandMark);
     $('#location-pincode-case-details').val(caseInfo.locationPincode);
+    caseImageRetriever(caseInfo.caseId,"case-photos-case-details");
     if(!caseInfo.active) {
         $('#action-center').hide();
     }
@@ -245,9 +243,7 @@ function showresults() {
 
 
 function assignCase(data) {
-    console.info(data);
     var userId = $(data).parent().find("#vol_id").val();
-    console.info(userId);
     assignCaseReq(currentCaseId, userId);
 }
 
@@ -333,10 +329,7 @@ function navigate_back() {
 
 function show_vol_tooltip() {
     clearTimeout(hide_tooltip_timeOut);
-    console.info("vimal   1");
-    console.info(event.srcElement);
     var userId = $(event.srcElement).parent().find("#vol_id").val();
-    console.info(" vkj : " + userId);
     var userInfo = userIdVsInfoMap[userId];
     $('#tooltip-info-name').text(userInfo.userName);
     $('#tooltip-info-role').text(userInfo.role);
@@ -404,10 +397,6 @@ function getVolInfo() {
     })
 
         .done(function (data) {
-            // log data to the console so we can see
-            //console.log(data);
-            console.log(data.top5);
-            console.log(data.nearest);
             var cc = [];
             $.each(JSON.parse(data.top5), function (i, item) {
                 var html = aVol + item.userName + bVol + cVol + item.userId + dVol;
@@ -416,8 +405,6 @@ function getVolInfo() {
             });
             $('#top_five_vol').html(cc.join(""));
 
-            console.info(cc);
-
             var cc = [];
             $.each(JSON.parse(data.nearest), function (i, item) {
                 var html = aVol + item.userName + bVol + cVol + item.userId + dVol;
@@ -425,7 +412,6 @@ function getVolInfo() {
                 cc.push(html);
             });
             $('#nearest_5_vol').html(cc.join(""));
-            console.info(cc);
 
 
         });
@@ -447,20 +433,16 @@ function assignCaseReq(caseId, userId) {
     })
 
         .done(function (data) {
-            console.info("vkj");
-            console.info(data);
             $('#assign-case-success').text("Success! Case " + caseId + " assigned successfully to " + userId);
             setTimeout(function(){
                 $('#assign-case-success').fadeIn(200);
                 $("#content-assign-case").css("pointerEvents", "none");}
             ,300)            
-            //alert('Success div will show on server response');
             setTimeout(function () {
                 navigate_back();
                 navigate_back();
             }, 1200);
         });
-    //event.preventDefault();
 }
 
 function closeCaseReq(caseId) {
@@ -477,16 +459,36 @@ function closeCaseReq(caseId) {
         data: formData,
         // dataType: 'json'
     }).done(function (data) {
-        console.info("vkj done close : "+data)
             navigate_back();
             navigate_back();
         });
-    //event.preventDefault();
 }
 
+var caseImageRetriever = function (caseId,imageDiv) {
+    var formData = {
+        'caseId': caseId,
+    };
+    $.ajax({
+        type: 'GET',
+        data: formData,
+        url: '/getCaseImages',
+    })
+        .done(function (data) {
+            $('#'+imageDiv).html("");
+            // document.getElementById(imageDiv).innerHTML("");
+            $.each(data, function (i, item) {
+                    var image = document.createElement("img");
+                    image.setAttribute("src","data:image/png;base64,"+item);
+                    image.setAttribute("onclick","enlargePhoto(this);");
+                    $('#'+imageDiv).append(image);
+                // document.getElementById(imageDiv).appendChild(image);
+                    //var htm = '<img src="data:image/png;base64,"' + item +'onclick="enlargePhoto(this);">'
+                });
+            }
+        );
+};
 
 var responseHandler = function (event) {
-    console.info("vkj : " + event.data);
     var data = event.data.split(":");
     var url = data[0];
     var tableId = data[1];
@@ -505,11 +507,10 @@ var responseHandler = function (event) {
         dataType: 'json'
     })
         .done(function (data) {
-                console.log(data);
                 var cc = [];
                 $.each(data, function (i, item) {
                     caseIdVsInfoMap[item.caseId] = item;
-                    var htm = aCase + item.caseId + bCase + (item.active ? "Active" : "Closed") + cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + item.animalName + fCase;
+                    var htm = aCase + item.caseId + bCase + (item.userNameCurrent ? item.userNameCurrent+"("+item.userRoleCurrent+")" : "Closed" )  +  cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + item.animalName + fCase;
                     cc.push(htm);
                 });
 
@@ -987,7 +988,9 @@ $(document).ready(function () {
 
 //------BACKEND-INTEGRATION-------------------------------------------------------------------------------------------------------------
     $('#raise-a-case-form').submit(function (event) {
-        var formData = {
+        event.preventDefault();
+        //document.getElementById("dp_loading").style.display = "block";
+        let formData = {
             'typeAnimal': $('select[name=animal-type]').val(),
             'animalName': $('input[name=animal-name]').val(),
             'animalCondition': $('input[name=condition]').val(),
@@ -996,13 +999,16 @@ $(document).ready(function () {
             'location': $('textarea[name=location]').val(),
             'locationPincode': $('input[name=location-pincode]').val(),
             'locationLandMark': $('input[name=location-landmark]').val(),
-            'contactPrefix': $('select[name=nine-one]').val()
+            'contactPrefix': $('select[name=nine-one]').val(),
+            'birdOrAnimal': $('input[name=bird-or-animal]').val(),
+            'newBirdAnimal': $('input[name=add-bird-animal]').val()
         };
+
         $.ajax({
             type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
             url: '/addNewCase', // the url where we want to POST
             data: formData, // our data object
-            dataType: 'json' // what type of data do we expect back from the server
+            //dataType: 'json' // what type of data do we expect back from the server
             //encode: true
         })
         // using the done promise callback
@@ -1010,16 +1016,44 @@ $(document).ready(function () {
                 console.log(data);
                 if (data && data == 'error') {
                     $('#error').text(data);
-                }
-                $('#raise-a-case-form')[0].reset();
-                $('#case-id').val(data);
-                setTimeout(function () {
-                    $('#case-id').val('');
-                }, 2000);
-            });
+                    return;
+                } else {
+                    var form = $('#raise-a-case-form')[0];
+                    var formData = new FormData(form);
+                    formData.append("case_id", data);
+                    // formData = new FormData();
+                    // formData.append('case_photos', $('input[name=case-photos]'));
+                    // formData.append('case_id', case_id);
+                    $.ajax({
+                        url: 'casePicUpload',
+                        type: 'POST',
+                        data: formData,
+                        enctype: 'multipart/form-data',
+                        processData: false,  // tell jQuery not to process the data
+                        contentType: false,  // tell jQuery not to set contentType
+                        success: function (data) {
+                            console.log(data);
+                            // $('#dp-img1').attr('src', "data:image/png;base64," + data);//data:image/png;base64,${data}');
+                            // document.getElementById("dp_loading").style.display = "none";
+                            // $('#dp-error').text("")//data:image/png;base64,${data}');
+                            //alert(data);
+                        },
+                        error: function (e) {
+                            console.log(e);
+                            // $('#dp-error').text(e.responseJSON.message);
+                            // $('#dp-error').show();
+                            //document.getElementById("dp_loading").style.display = "none";
+                        }
+                    });
 
-        // stop the form from submitting the normal way and refreshing the page
-        event.preventDefault();
+                    $('#raise-a-case-form')[0].reset();
+                    $('#case-id').val(data);
+                    currentCaseId = data;
+                    setTimeout(function () {
+                        $('#case-id').val('');
+                    }, 5000);
+                }
+            });
     });
 
     var container = $(document.createElement('div')).css({});
@@ -1037,24 +1071,18 @@ $(document).ready(function () {
 
                 }));
             });
-            console.info("vkjk " + request + " " + response);
         },
 
         select: function (event, ui) {
-            var iCnt = 0;
-            console.info(event);
-            console.log(ui.item);
             if (ui.item) {
                 caseDetails = ui.item.caseDetails;
                 caseIdVsInfoMap[caseDetails.caseId] = caseDetails;
-                iCnt = iCnt + 1;
-                var htm = aCase + caseDetails.caseId + bCase + (caseDetails.active ? "Active" : "Closed") + cCase + caseDetails.creationDateStr + dCase + caseDetails.typeAnimal + eCase + caseDetails.animalName + fCase;
+                var htm = aCase + caseDetails.caseId + bCase + (caseDetails.userNameCurrent ? caseDetails.userNameCurrent+"("+caseDetails.userRoleCurrent+")" : "Closed" )  + cCase + caseDetails.creationDateStr + dCase + caseDetails.typeAnimal + eCase + caseDetails.animalName + fCase;
                 $(container).append(htm);
                 $('#table4').html(container);
                 $("#search-case-input").autocomplete("close");
                 $("#search-case-input").val('');
-                console.info(container);
-                return false;
+                $('.my-cases-result1').show();
             }
         }
 
@@ -1078,12 +1106,9 @@ $(document).ready(function () {
 
                 }));
             });
-            console.info("vkjk " + request + " " + response);
         },
 
         select: function (event, ui) {
-            console.info(event);
-            console.log(ui.item);
             $("#assign_case_loading").css("display", "none");
             if (ui.item) {
                 var html = aVol + ui.item.userDetails.userName + bVol + cVol + ui.item.userDetails.userId + dVol;
@@ -1106,13 +1131,13 @@ $(document).ready(function () {
                     response($.map(result, function (item) {
                         if (item.caseId) {
                             return {
-                                label: "Case : " + item.caseId,
+                                label: "Case : " + item.caseId+" - "+item.typeAnimal+" - "+item.animalName,
                                 value: item.caseId,
                                 caseDetails: item
                             }
                         } else {
                             return {
-                                label: "User : " + item.userName,
+                                label: item.role +" - "+ item.userName,
                                 value: item.userName,
                                 userDetails: item
                             }
@@ -1122,7 +1147,6 @@ $(document).ready(function () {
                 });
             },
         select: function (event, ui) {
-            console.log("VKJ : " + JSON.stringify(ui.item));
             if (ui.item) {
                 document.getElementById('raise-a-case-content').style.opacity = 0;
                 document.getElementById('my-cases-content').style.opacity = 0;
@@ -1188,17 +1212,32 @@ $(document).ready(function () {
                     cd = ui.item.caseDetails;
                     caseIdVsInfoMap[cd.caseId] = cd;
                     $('#raise-a-case-content').hide();
+                    // $('#case_profile_id').text(cd.caseId);
+                    // $('#case_profile_status').text(cd.active);
+                    // $('#case_profile_date').text(cd.creationDateStr);
+                    // $('#case_profile_type').text(cd.typeAnimal);
+                    // $('#case_profile_name').text(cd.animalName);
+                    //$('#case_profile').show();
 
-                    $('#case_profile_id').text(cd.caseId);
-                    $('#case_profile_status').text(cd.active);
-                    $('#case_profile_date').text(cd.creationDateStr);
-                    $('#case_profile_type').text(cd.typeAnimal);
-                    $('#case_profile_name').text(cd.animalName);
+                    $('#top-nav-case-id-case-details').val(cd.caseId);
+                    $('#top-nav-animal-type-case-details').val(cd.typeAnimal);
+                    $('#top-nav-animal-name-case-details').val(cd.animalName);
+                    $('#top-nav-condition-case-details').val(cd.animalCondition);
+                    //for photos
+                    //$('#top-nav-case-photos-case-details').val(cd.animalCondition);
+                    $('#top-nav-contact-name-case-details').val(cd.contactName);
+                    $('#top-nav-nine-one-case-details').val(cd.contactPrefix);
+                    $('#top-nav-contact-number-case-details').val(cd.contactNumber);
+                    $('#top-nav-location-landmark-case-details').val(cd.locationLandMark);
+                    $('#top-nav-location-pincode-case-details').val(cd.locationPincode);
 
-                    $('#case_profile').show();
                     top_nav_search_case_details("search_cases_details");
                     document.getElementById("top-nav-case-details-heading-back-button").style.display = "none";
-
+                    if (cd.active) {
+                        $('#action-center').show();
+                    } else {
+                        $('#action-center').hide();
+                    }
                 }
                 $("#top-nav-search").autocomplete("close");
                 $("#top-nav-search").val(''); 

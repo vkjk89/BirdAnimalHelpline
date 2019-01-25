@@ -1,5 +1,7 @@
 package org.birdhelpline.app.dataaccess;
 
+import org.apache.commons.io.IOUtils;
+import org.birdhelpline.app.model.CaseImage;
 import org.birdhelpline.app.model.CaseInfo;
 import org.birdhelpline.app.model.CaseTxn;
 import org.birdhelpline.app.utils.CaseStatus;
@@ -14,9 +16,9 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -59,18 +61,16 @@ public class CaseDao {
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private String caseInfoByCaseIdQWithoutTxn = "select * from case_info where case_id = ?";
-    private String caseInfoByUserIdQWithoutTxn = "select * from case_info where user_id_opened = :userId OR user_id_closed = :userId OR current_user_id = :userId";
-    private String caseInfoBySearchTermQWithoutTxn = "select * from case_info where case_id like :searchTerm";
-    private String caseTxnsQ = "select * from case_txn where case_id = ?";
+
+    private static final String caseInfoByCaseIdQWithoutTxn = "select * from case_info where case_id = ?";
+    private static final String caseInfoByUserIdQWithoutTxn = "select * from case_info where user_id_opened = :userId OR user_id_closed = :userId OR current_user_id = :userId";
+    private static final String caseInfoBySearchTermQWithoutTxn = "select * from case_info where case_id like :searchTerm";
+    private static final String caseTxnsQ = "select * from case_txn where case_id = ?";
     private String insertCaseQ;
 
     public CaseInfo getCaseInfoByCaseId(Long caseId) {
-        List<CaseInfo> caseInfos = null;
+        List<CaseInfo> caseInfos;
         try {
-            Map<String, Object> params = new HashMap<String, Object>();
-            params.put("caseId", caseId);
-
             caseInfos = jdbcTemplate.query(caseInfoByCaseIdQWithoutTxn, new Object[]{caseId}
                     , caseInfoRowMapper.get()
             );
@@ -219,7 +219,7 @@ public class CaseDao {
         List<CaseInfo> caseInfos = null;
         try {
             Map<String, Object> params = new HashMap<String, Object>();
-            params.put("searchTerm", "%"+searchTerm+"%");
+            params.put("searchTerm", "%" + searchTerm + "%");
             caseInfos = namedParameterJdbcTemplate.query(
                     caseInfoBySearchTermQWithoutTxn, params
                     , caseInfoRowMapper.get()
@@ -229,5 +229,48 @@ public class CaseDao {
             return null;
         }
         return caseInfos;
+    }
+
+    public void saveNewBirdAnimal(String birdOrAnimal, String newBirdAnimal) {
+        this.jdbcTemplate.update((connection -> {
+            String insertQ = "insert into bird_animal (bird_animal_name,type) values (?,?)";
+            PreparedStatement ps = connection.prepareStatement(
+                    insertQ);
+            ps.setString(1, newBirdAnimal);
+            ps.setString(2, birdOrAnimal.equalsIgnoreCase("Animal") ? "A" : "B");
+            return ps;
+        }));
+    }
+
+    public void saveCaseImages(CaseImage caseImage) {
+        for (int i = 0; i < caseImage.getImages().size(); i++) {
+            int j = i;
+            this.jdbcTemplate.update((connection -> {
+                String insertQ = "insert into case_image (case_id,image) values (?,?)";
+                PreparedStatement ps = connection.prepareStatement(
+                        insertQ);
+                ps.setLong(1, caseImage.getCaseId());
+                ps.setBlob(2, new ByteArrayInputStream(caseImage.getImages().get(j)));
+                return ps;
+            }));
+        }
+    }
+
+    public void loadCaseImages(CaseImage caseImage) {
+        try {
+            String query = "select image from case_image where case_id = ?";
+            List<Blob> list = jdbcTemplate.queryForList(query, new Object[]{caseImage.getCaseId()}, Blob.class);
+            for(Blob blob: list) {
+                try {
+                    caseImage.addImage(IOUtils.toByteArray(blob.getBinaryStream()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (EmptyResultDataAccessException ex) {
+            logger.error(ex.getMessage(),ex);
+        }
     }
 }

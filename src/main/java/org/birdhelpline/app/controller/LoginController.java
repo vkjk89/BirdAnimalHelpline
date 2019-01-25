@@ -267,11 +267,9 @@ public class LoginController {
     @RequestMapping(path = "/profilePicUpload", method = RequestMethod.POST)
     public @ResponseBody
     String profilePicUpload(@RequestParam(name = "dp-image", required = false) MultipartFile file,
-                            //@RequestPart(name = "dp-image", required = false) MultipartFile file1,
                             final HttpSession session, final @ModelAttribute("user") User user
     ) throws IOException {
         logger.info("Received data 1 : " + file);
-        //logger.info("Received data  2: " + file1);
         user.getUserImage().setImage(file.getBytes());
         return Base64.getEncoder().encodeToString(user.getUserImage().getImage());
     }

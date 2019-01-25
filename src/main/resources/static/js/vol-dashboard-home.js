@@ -174,7 +174,6 @@ function section_accept_case(){
         accept_case_container.classList.add("slider-member-count");
         accept_case_container.classList.add("slider-member-" + slider_member_counter);
         accept_case_container.appendChild(case_details);
-        //console.log(accept_case_container.classList);
         slider_member_counter++;
         slider_member_bullet++;
         //--------------------------------------------------------
@@ -361,15 +360,11 @@ $(document).ready(function () {
                     var e = '</span> <span class="case-name">';
                     var f = '</span> </div>';
                     // log data to the console so we can see
-                    console.log(data);
                     var cc = [];
                     $.each(data, function (i, item) {
                         var htm;
-                        htm = a + item.caseId + b /*+ (item.active ? "Active" : "Closed")*/ + c + item.creationDateStr + d + item.typeAnimal + e + item.animalName + f;
+                        htm = a + item.caseId + b /*+ item.userNameCurrent+"("+item.userRoleCurrent+")"*/ + c + item.creationDateStr + d + item.typeAnimal + e + item.animalName + f;
                         cc.push(htm);
-                        console.log(i);
-                        console.log(item);
-                        console.log(htm);
                     });
                     $('#' + tableId).html(cc.join(""));
                     if(cc.length === 0){
@@ -381,7 +376,6 @@ $(document).ready(function () {
 
 
         $('.case-id').click(function (e) {
-            console.info("row clicked" + e);
             $("#dialog").dialog();
         });
         $('#results-tab-active').click(responseHandler('/activeCases', 'results-content-active'));

@@ -31,8 +31,8 @@ public class UserDao {
     private Map<String, Integer> userRoleVsRoleId = new HashMap<>();
     private Map<Integer, String> securityQIdVSSecurityQ = new LinkedHashMap<>();
     private List<PinCodeLandmarkInfo> listPincodeLandMarks = new ArrayList<>();
-    private List<String> listBirds = new ArrayList<>();
-    private List<String> listAnimals = new ArrayList<>();
+    private Set<String> listBirds = new HashSet<>();
+    private Set<String> listAnimals = new HashSet<>();
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -87,8 +87,8 @@ public class UserDao {
 
         logger.info("VKJ : " + securityQIdVSSecurityQ);
 
-        listBirds = jdbcTemplate.queryForList("select bird_animal_name from bird_animal where type ='B'", String.class);
-        listAnimals = jdbcTemplate.queryForList("select bird_animal_name from bird_animal where type ='A'", String.class);
+        listBirds.addAll(jdbcTemplate.queryForList("select bird_animal_name from bird_animal where type ='B'", String.class));
+        listAnimals.addAll(jdbcTemplate.queryForList("select bird_animal_name from bird_animal where type ='A'", String.class));
 
         logger.info("VKJ : " + listBirds);
         logger.info("VKJ : " + listAnimals);
@@ -445,11 +445,31 @@ public class UserDao {
         return securityQIdVSSecurityQ;
     }
 
-    public List<String> getListBirds() {
+    public Set<String> getListBirds() {
         return listBirds;
     }
 
-    public List<String> getListAnimals() {
+    public Set<String> getListAnimals() {
         return listAnimals;
+    }
+
+    public boolean addBird(String bird) {
+        if(listBirds.contains(bird)) {
+            return true;
+        }
+        listBirds.add(bird);
+        return false;
+    }
+
+    public boolean addAnimal(String animal) {
+        if(listBirds.contains(animal)) {
+            return true;
+        }
+        listBirds.add(animal);
+        return false;
+    }
+
+    public boolean birdOrAnimalExists(String birdAnimal) {
+        return listBirds.contains(birdAnimal) || listAnimals.contains(birdAnimal);
     }
 }

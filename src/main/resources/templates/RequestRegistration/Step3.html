@@ -95,11 +95,9 @@
                 processData: false,  // tell jQuery not to process the data
                 contentType: false,  // tell jQuery not to set contentType
                 success: function (data) {
-                    console.log(data);
                     $('#dp-img1').attr('src', "data:image/png;base64," + data);//data:image/png;base64,${data}');
                     document.getElementById("dp_loading").style.display = "none";
                     $('#dp-error').text("")//data:image/png;base64,${data}');
-                    //alert(data);
                 },
                 error: function (e) {
                     console.log(e);
