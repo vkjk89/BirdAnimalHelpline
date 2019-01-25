@@ -327,11 +327,10 @@ public class UserDao {
     }
 
     public List<User> getTop5Vol() {
-        List<User> users = null;
         try {
             UserRowMapper rowMapper = new UserRowMapper("BI");
             namedParameterJdbcTemplate.query(
-                    userAllQ + "  order by ui.case_accepted_count desc limit 5", rowMapper
+                    userAllQ + "  order by ui.case_accepted_count desc", rowMapper
             );
             return new ArrayList<>(rowMapper.map.values());
         } catch (EmptyResultDataAccessException ex) {

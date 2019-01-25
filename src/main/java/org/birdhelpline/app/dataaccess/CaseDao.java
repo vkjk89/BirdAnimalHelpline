@@ -66,6 +66,7 @@ public class CaseDao {
     private static final String caseInfoByUserIdQWithoutTxn = "select * from case_info where user_id_opened = :userId OR user_id_closed = :userId OR current_user_id = :userId";
     private static final String caseInfoBySearchTermQWithoutTxn = "select * from case_info where case_id like :searchTerm";
     private static final String caseTxnsQ = "select * from case_txn where case_id = ?";
+    private static final String casePendingForAckQ = "select DISTINCT ci.* from case_info ci, case_txn ct where ci.case_id=ct.case_id and ct.is_ack = 0 and ct.to_user_id=ci.current_user_id and ci.current_user_id = :userId";
     private String insertCaseQ;
 
     public CaseInfo getCaseInfoByCaseId(Long caseId) {
@@ -117,6 +118,22 @@ public class CaseDao {
             params.put("userId", userId);
             caseInfos = namedParameterJdbcTemplate.query(
                     caseInfoByUserIdQWithoutTxn, params
+                    , caseInfoRowMapper.get()
+            );
+        } catch (EmptyResultDataAccessException ex) {
+            //throw new ObjectRetrievalFailureException(User.class, userName);
+            return null;
+        }
+        return caseInfos;
+    }
+
+    public List<CaseInfo> getAllPendingCaseInfoByUserId(Long userId) {
+        List<CaseInfo> caseInfos = null;
+        try {
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("userId", userId);
+            caseInfos = namedParameterJdbcTemplate.query(
+                    casePendingForAckQ, params
                     , caseInfoRowMapper.get()
             );
         } catch (EmptyResultDataAccessException ex) {
@@ -260,7 +277,7 @@ public class CaseDao {
         try {
             String query = "select image from case_image where case_id = ?";
             List<Blob> list = jdbcTemplate.queryForList(query, new Object[]{caseImage.getCaseId()}, Blob.class);
-            for(Blob blob: list) {
+            for (Blob blob : list) {
                 try {
                     caseImage.addImage(IOUtils.toByteArray(blob.getBinaryStream()));
                 } catch (IOException e) {
@@ -270,7 +287,37 @@ public class CaseDao {
                 }
             }
         } catch (EmptyResultDataAccessException ex) {
-            logger.error(ex.getMessage(),ex);
+            logger.error(ex.getMessage(), ex);
         }
+    }
+
+    public void updateCaseTxn(Long caseId, Long userId, boolean acceptReject) {
+        this.jdbcTemplate.update((connection -> {
+            String query = "update case_txn set is_ack = ? where case_id = ? and to_user_id =?";
+            PreparedStatement ps = connection.prepareStatement(
+                    query);
+
+            ps.setLong(1, acceptReject ? 1 : -1);
+            ps.setLong(2, caseId);
+            ps.setLong(3, userId);
+            return ps;
+        }));
+    }
+
+    public void updateUserInfo(Long userId, boolean acceptReject) {
+        this.jdbcTemplate.update((connection -> {
+            String query;
+            if (acceptReject) {
+                query = "update user_info set case_accepted_count=case_accepted_count+1 where user_id = ?";
+            } else {
+                query = "update user_info set case_rejected_count=case_rejected_count+1 where user_id = ?";
+            }
+            PreparedStatement ps = connection.prepareStatement(
+                    query);
+
+            ps.setLong(1, userId);
+            return ps;
+        }));
+
     }
 }

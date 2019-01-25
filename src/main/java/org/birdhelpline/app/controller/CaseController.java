@@ -71,7 +71,6 @@ public class CaseController {
             return "Error";
         }
         return String.valueOf(caseService.assignCase(user.getUserId(), toUserId, caseId));
-
     }
 
     @RequestMapping(value = "/closeCase", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
@@ -170,6 +169,36 @@ public class CaseController {
             list.add(Base64.getEncoder().encodeToString(bArr));
         }
         return list;
+    }
+
+    @RequestMapping(value = "/getPendingCases", method = RequestMethod.GET)
+    public @ResponseBody
+    List<CaseInfo> getPendingCases(@RequestParam(name = "userId", required = false) Long forUserId, HttpSession session) {
+        User user = getUser(session);
+        if (user == null) {
+            return null;
+        }
+        if (forUserId != null && forUserId != -1) {
+            if (user.getRole().equals(Role.ADMIN.name()) || user.getRole().equals(Role.Receptionist.name())) {
+                return caseService.getPendingCaseInfo(forUserId);
+            } else {
+                logger.warn("Unauthorized access by : " + user.getUserName() + " for : " + forUserId);
+                return null;
+            }
+        } else {
+            return caseService.getPendingCaseInfo(user.getUserId());
+        }
+    }
+
+    @RequestMapping(value = "/acceptRejectCase", method = RequestMethod.POST)
+    public @ResponseBody
+    String acceptRejectCase(@RequestParam("caseId") Long caseId, @RequestParam("acceptReject") boolean acceptReject, HttpSession session) {
+        User user = getUser(session);
+        if (user == null) {
+            return "Error";
+        }
+        return String.valueOf(caseService.acceptRejectCase(user.getUserId(), acceptReject, caseId));
+
     }
 
 }

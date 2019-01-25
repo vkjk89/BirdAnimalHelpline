@@ -88,9 +88,9 @@ public class CaseService {
         CaseInfo caseInfo = caseDao.getCaseInfoByCaseId(caseId);
         if (caseInfo != null) {
             List<User> top5Vol = userDao.getTop5Vol();
-            top5Vol = top5Vol.stream().filter(user -> !user.getRole().equals(Role.ADMIN) || !user.getRole().equals(Role.Receptionist)).collect(Collectors.toList());
+            top5Vol = top5Vol.stream().filter(user -> !user.getRole().equals(Role.ADMIN.name()) && !user.getRole().equals(Role.Receptionist.name())).limit(5).collect(Collectors.toList());
             List<User> nearestVol = userDao.getNearestVol(caseInfo.getLocationPincode());
-            nearestVol = nearestVol.stream().filter(user -> !user.getRole().equals(Role.ADMIN) || !user.getRole().equals(Role.Receptionist)).collect(Collectors.toList());
+            nearestVol = nearestVol.stream().filter(user -> !user.getRole().equals(Role.ADMIN.name()) && !user.getRole().equals(Role.Receptionist.name())).collect(Collectors.toList());
             String top5VolStr = gson.toJson(top5Vol);
             String nearestVolStr = gson.toJson(nearestVol);
             JsonObject obj = new JsonObject();
@@ -155,5 +155,21 @@ public class CaseService {
         caseImage.setCaseId(caseId);
         caseDao.loadCaseImages(caseImage);
         return caseImage;
+    }
+
+    public List<CaseInfo> getPendingCaseInfo(Long forUserId) {
+        List<CaseInfo> list = caseDao.getAllPendingCaseInfoByUserId(forUserId);
+        if (list != null && !list.isEmpty()) {
+            return list;
+        }
+        return Collections.EMPTY_LIST;
+
+    }
+
+    @Transactional
+    public String acceptRejectCase(Long userId, boolean acceptReject, Long caseId) {
+        caseDao.updateCaseTxn(caseId,userId,acceptReject);
+        caseDao.updateUserInfo(userId,acceptReject);
+        return "success";
     }
 }
