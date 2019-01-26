@@ -377,31 +377,39 @@
             <span id="recent-tab-header" style="border-right: 1px solid #CCCCCC72;border-left: 1px solid #CCCCCC72;">Recent</span>
             <span id="closed-tab-header" style="border-right: 1px solid #007AEA;border-left: 1px solid #CCCCCC72;">Closed</span>
         </div>
-        <div class="my-cases-result1" id="table4" style="width: 68.5vw;display: none;">
-            <div class="row row1" onclick="case_details()">
-                <div class="sr-no">
-                    <li></li>
-                </div>
-                <div class="case-id">#Case_ID</div>
-                <div class="case-status">#Case_Status</div>
-                <div class="date">#Date</div>
-                <div class="animal-type">#Animal/Bird_Type</div>
-                <div class="case-name">#Animal/Bird_Name</div>
-            </div>
-        </div>
         <div id="tab-content">
+            <div style="display: flex; position: fixed; width: 68.5vw; font-size: 1.2em; font-weight: 500; padding-bottom: 1vh; padding-top: 2vh;border-bottom: 1px solid #CCC; background-color: rgb(248,248,248);z-index: 3;">
+                <div class="sr-no-div">Sr. No.</div>
+                <div class="case-id-div">Case ID</div>
+                <div class="case-status-div">Case Status</div>
+                <div class="date-div">Date</div>
+                <div class="animal-type-div">Animal/Bird Type</div>
+                <div class="case-name-div">Animal/Bird Name</div>
+            </div>
+            <div class="my-cases-result1" id="table4" style="width: 68.5vw;display: none; margin-top: 6vh;">
+                <div class="row4" onclick="case_details()">
+                    <div class="sr-no">
+                        <li></li>
+                    </div>
+                    <div class="case-id">#Case_ID</div>
+                    <div class="case-status">#Case_Status</div>
+                    <div class="date">#Date</div>
+                    <div class="animal-type">#Animal/Bird_Type</div>
+                    <div class="case-name">#Animal/Bird_Name</div>
+                </div>
+            </div>
             <div id="active-tab-content">
                 <div class="content-table" id="active-content-table">
-                    <div style="display: flex; position: fixed; width: 68.5vw; font-size: 1.2em; font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC;">
+                    <!--<div style="display: flex; position: fixed; width: 68.5vw; font-size: 1.2em; font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC; background-color: rgb(248,248,248)">
                         <div class="sr-no-div">Sr. No.</div>
                         <div class="case-id-div">Case ID</div>
                         <div class="case-status-div">Case Status</div>
                         <div class="date-div">Date</div>
                         <div class="animal-type-div">Animal/Bird Type</div>
                         <div class="case-name-div">Animal/Bird Name</div>
-                    </div>
+                    </div>-->
                     <div class="my-cases-result" id="table1" style="width: 68.5vw;">
-                        <div class="row row1" onclick="case_details();">
+                        <div class="row row-my-cases-active" onclick="case_details();">
                             <div class="sr-no"><li></li></div>
                             <div class="case-id">#Case_ID</div>
                             <div class="case-status">#Case_Status</div>
@@ -414,16 +422,16 @@
             </div>
             <div id="recent-tab-content">
                 <div class="content-table" id="recent-content-table">
-                    <div style="display: flex; position: fixed; width: 68.5vw; font-size: 1.2em; font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC;">
+                    <!--<div style="display: flex; position: fixed; width: 68.5vw; font-size: 1.2em; font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC; background-color: rgb(248,248,248)">
                         <div class="sr-no-div">Sr. No.</div>
                         <div class="case-id-div">Case ID</div>
                         <div class="case-status-div">Case Status</div>
                         <div class="date-div">Date</div>
                         <div class="animal-type-div">Animal/Bird Type</div>
                         <div class="case-name-div">Animal/Bird Name</div>
-                    </div>
+                    </div>-->
                     <div class="my-cases-result" id="table2" style="width: 68.5vw;">
-                        <div class="row row1" onclick="case_details();">
+                        <div class="row row-my-cases-recent" onclick="case_details();">
                             <div class="sr-no"><li></li></div>
                             <div class="case-id">#Case_ID</div>
                             <div class="case-status">#Case_Status</div>
@@ -436,16 +444,16 @@
             </div>
             <div id="closed-tab-content">
                 <div class="content-table" id="closed-content-table">
-                    <div style="display: flex; position: fixed; width: 68.5vw; font-size: 1.2em; font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC;">
+                    <!--<div style="display: flex; position: fixed; width: 68.5vw; font-size: 1.2em; font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC; background-color: rgb(248,248,248)">
                         <div class="sr-no-div">Sr. No.</div>
                         <div class="case-id-div">Case ID</div>
                         <div class="case-status-div">Case Status</div>
                         <div class="date-div">Date</div>
                         <div class="animal-type-div">Animal/Bird Type</div>
                         <div class="case-name-div">Animal/Bird Name</div>
-                    </div>
+                    </div>-->
                     <div class="my-cases-result" id="table3" style="width: 68.5vw;">
-                        <div class="row row1" onclick="case_details();">
+                        <div class="row row-my-cases-closed" onclick="case_details();">
                             <div class="sr-no"><li></li></div>
                             <div class="case-id">#Case_ID</div>
                             <div class="case-status">#Case_Status</div>

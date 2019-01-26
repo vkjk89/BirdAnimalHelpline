@@ -28,7 +28,22 @@ import java.util.function.Supplier;
 
 @Repository
 public class CaseDao {
+    private static final Logger logger = LoggerFactory.getLogger(CaseDao.class);
     private static final SimpleDateFormat FORMATTED_DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    @Autowired
+    private UserDao userDao;
+
+    private static final String caseInfoByCaseIdQWithoutTxn = "select * from case_info where case_id = ?";
+    private static final String caseInfoByUserIdQWithoutTxn = "select * from case_info where user_id_opened = :userId OR user_id_closed = :userId OR current_user_id = :userId";
+    private static final String caseInfoBySearchTermQWithoutTxn = "select * from case_info where case_id like :searchTerm";
+    private static final String caseTxnsQ = "select * from case_txn where case_id = ?";
+    private static final String casePendingForAckQ = "select DISTINCT ci.* from case_info ci, case_txn ct where ci.case_id=ct.case_id and ct.is_ack = 0 and ct.to_user_id=ci.current_user_id and ci.current_user_id = :userId";
+    private String insertCaseQ;
 
     final Supplier<RowMapper<CaseInfo>> caseInfoRowMapper = () -> (ResultSet rs, int i) -> {
         CaseInfo caseInfo = new CaseInfo();
@@ -53,21 +68,10 @@ public class CaseDao {
         caseInfo.setContactNumber(rs.getString("contact_number"));
         caseInfo.setContactPrefix(rs.getString("contact_number_prefix"));
         caseInfo.setLocationLandMark(rs.getString("location_landmark"));
+        caseInfo.setBirdOrAnimal(userDao.isBird(caseInfo.getTypeAnimal()) ? "Bird":"Animal");
         return caseInfo;
     };
 
-    Logger logger = LoggerFactory.getLogger(CaseDao.class);
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-    @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
-    private static final String caseInfoByCaseIdQWithoutTxn = "select * from case_info where case_id = ?";
-    private static final String caseInfoByUserIdQWithoutTxn = "select * from case_info where user_id_opened = :userId OR user_id_closed = :userId OR current_user_id = :userId";
-    private static final String caseInfoBySearchTermQWithoutTxn = "select * from case_info where case_id like :searchTerm";
-    private static final String caseTxnsQ = "select * from case_txn where case_id = ?";
-    private static final String casePendingForAckQ = "select DISTINCT ci.* from case_info ci, case_txn ct where ci.case_id=ct.case_id and ct.is_ack = 0 and ct.to_user_id=ci.current_user_id and ci.current_user_id = :userId";
-    private String insertCaseQ;
 
     public CaseInfo getCaseInfoByCaseId(Long caseId) {
         List<CaseInfo> caseInfos;

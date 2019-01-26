@@ -66,7 +66,7 @@ function section_accept_case(data) {
 
     var bird_animal_info_header = document.createElement("div");
         bird_animal_info_header.classList.add("bird-animal-info-header");
-        bird_animal_info_header.innerHTML = "#Bird/Animal_Information";
+        bird_animal_info_header.innerHTML = data.birdOrAnimal+" Information";
 
     var animal_type = document.createElement("div");
         animal_type.classList.add("animal-type");
@@ -282,16 +282,15 @@ function displayPendingCases() {
         // dataType: 'json'
     })
         .done(function (data) {
-                $.each(data, function (i, item) {
-                    //caseIdVsInfoMap[item.caseId] = item;
-                    //var htm = aCase + item.caseId + bCase + (item.userNameCurrent ? item.userNameCurrent + "(" + item.userRoleCurrent + ")" : "Closed") + cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + item.animalName + fCase;
-                    //cc.push(htm);
-                    console.info(item);
-                    section_accept_case(item);
-                    caseImageRetriever(item.caseId,"case-photos-"+item.caseId);
-                });
+                if (data) {
+                    $('.accept-decline-pending-cases').text(data.length);
+                    $.each(data, function (i, item) {
+                        console.info(item);
+                        section_accept_case(item);
+                        caseImageRetriever(item.caseId, "case-photos-" + item.caseId);
+                    });
 
-                //$('#' + tableId).html(cc.join(""));
+                }
             }
         );
 }

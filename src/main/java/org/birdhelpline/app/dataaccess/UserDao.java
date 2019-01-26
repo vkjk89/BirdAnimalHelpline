@@ -469,6 +469,14 @@ public class UserDao {
     }
 
     public boolean birdOrAnimalExists(String birdAnimal) {
-        return listBirds.contains(birdAnimal) || listAnimals.contains(birdAnimal);
+        return isBird(birdAnimal) || isAnimal(birdAnimal);
+    }
+
+    public boolean isBird(String birdAnimal) {
+        return listBirds.contains(birdAnimal);
+    }
+
+    public boolean isAnimal(String birdAnimal) {
+        return listAnimals.contains(birdAnimal);
     }
 }

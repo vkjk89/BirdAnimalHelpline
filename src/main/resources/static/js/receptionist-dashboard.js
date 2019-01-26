@@ -60,6 +60,7 @@ function raise_a_case() {
     document.getElementById("top-nav-search-heading-content").innerHTML = "";
     document.getElementById('heading-case-details').style.display = "none";
     document.getElementById('case-details').style.display = "none";
+    document.getElementById("table4").style.display = "none";
     document.getElementById('top-nav-case-details').style.display = "none";
     document.getElementById('heading-top-nav-case-details').style.display = "none";
     document.getElementById('top-nav-case-details-form').style.display = "none";
@@ -87,6 +88,7 @@ function my_cases() {
     document.getElementById('heading-user-data-change-approvals').style.display = "none";
     $('#tab-header').fadeIn(300);
     showresults();
+    document.getElementById("table4").style.display = "none";
     document.getElementById('raise-a-case-content').style.opacity = 1;
     document.getElementById('my-cases-content').style.opacity = 1;
     document.getElementById('case-details').style.opacity = 1;
@@ -146,6 +148,7 @@ function user_data_change_approvals() {
     document.getElementById("top-nav-search-heading-content").innerHTML = "";
     document.getElementById('heading-case-details').style.display = "none";
     document.getElementById('case-details').style.display = "none";
+    document.getElementById("table4").style.display = "none";
     document.getElementById('top-nav-case-details').style.display = "none";
     document.getElementById('heading-top-nav-case-details').style.display = "none";
     document.getElementById('top-nav-case-details-form').style.display = "none";
@@ -233,12 +236,23 @@ function user_profile_basic_details() {
     }, 210);
 }
 
+var my_cases_tab_headers;
 function hideresults() {
-    $('.row').fadeOut(300);
+    //$('.row').fadeOut(300);
+    if(document.getElementById("active-tab-content").style.display === "block"){
+        my_cases_tab_headers = "active-tab-content";
+    } else if (document.getElementById("recent-tab-content").style.display === "block"){
+        my_cases_tab_headers = "recent-tab-content";
+    } else if (document.getElementById("closed-tab-content").style.display === "block"){
+        my_cases_tab_headers = "closed-tab-content";
+    }
+    document.getElementById(my_cases_tab_headers).style.display = "none";
 }
 
 function showresults() {
-    $('.row').fadeIn(300);
+    $('#table4').fadeOut(300);
+    $('#' + my_cases_tab_headers).fadeIn(300);
+    
 }
 
 
@@ -989,13 +1003,10 @@ $(document).ready(function () {
                 if (data && data == 'error') {
                     $('#error').text(data);
                     return;
-                } else if( document.getElementById('case-photos').files.length > 0 ) {
+                } else if($('#case-photos').val()) {
                     var form = $('#raise-a-case-form')[0];
                     var formData = new FormData(form);
                     formData.append("case_id", data);
-                    // formData = new FormData();
-                    // formData.append('case_photos', $('input[name=case-photos]'));
-                    // formData.append('case_id', case_id);
                     $.ajax({
                         url: 'casePicUpload',
                         type: 'POST',
@@ -1005,27 +1016,29 @@ $(document).ready(function () {
                         contentType: false,  // tell jQuery not to set contentType
                         success: function (data) {
                             console.log(data);
-                            // $('#dp-img1').attr('src', "data:image/png;base64," + data);//data:image/png;base64,${data}');
-                            // document.getElementById("dp_loading").style.display = "none";
-                            // $('#dp-error').text("")//data:image/png;base64,${data}');
-                            //alert(data);
                         },
                         error: function (e) {
                             console.log(e);
-                            // $('#dp-error').text(e.responseJSON.message);
-                            // $('#dp-error').show();
-                            //document.getElementById("dp_loading").style.display = "none";
                         }
                     });
+                }
 
+                if(data) {
                     $('#raise-a-case-form')[0].reset();
+                    document.getElementById("reset-raise-case").click();
                     $('#case-id').val(data);
+                    $('#raise-a-case-success').fadeIn();
                     currentCaseId = data;
                     setTimeout(function () {
                         $('#case-id').val('');
-                    }, 5000);
+                        $('#raise-a-case-success').fadeOut();
+                    }, 2000);
+                }
+                else {
+                    $('#raise-a-case-error').fadeIn();
                 }
             });
+
     });
 
     var container = $(document.createElement('div')).css({});

@@ -1122,7 +1122,7 @@ input[type="search"]:focus::placeholder {
 }
 
 .content-table {
-    width: 71.5vw;
+    width: 69.5vw;
     margin-top: 2vh;
     margin-bottom: 2vh;
 }
@@ -1161,8 +1161,8 @@ input[type="search"]:focus::placeholder {
     overflow-x: hidden;
 }
 
-.sr-no-div {width: 8vw;} .case-id-div {width: 15vw;} .case-status-div {width: 15vw;} .date-div {width: 13vw;} .animal-type-div {width: 28vw;} .case-name-div {width: 19vw;}
-.sr-no {width: 8vw;} .case-id {width: 15vw;} .case-status {width: 15vw;} .date {width: 13vw;} .animal-type {width: 28vw;} .case-name {width: 19vw;}
+.sr-no-div {width: 8vw;} .case-id-div {width: 10vw;} .case-status-div {width: 20vw;} .date-div {width: 13vw;} .animal-type-div {width: 28vw;} .case-name-div {width: 19vw;}
+.sr-no {width: 8vw;} .case-id {width: 10vw;} .case-status {width: 20vw;} .date {width: 13vw;} .animal-type {width: 28vw;} .case-name {width: 19vw;}
 
 .sr-no li {
     list-style-type: none;

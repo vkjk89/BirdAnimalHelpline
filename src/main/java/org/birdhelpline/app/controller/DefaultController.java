@@ -56,10 +56,7 @@ public class DefaultController {
 
         if (!ROLE_NOT_REQ_PROFILE_COMP.contains(user.getRole()) && (user.getLastLoginDate() == null || user.getLoginCount() == 0)) {
             logger.info("User login for first time so redirecting to profile completion page");
-            //modelAndView.setViewName("receptionist-dashboard");
-            //modelAndView.setViewName("Vol-dashboard");
             modelAndView.setViewName("Profile-Completion/step1");
-
             return modelAndView;
         }
 
@@ -79,7 +76,7 @@ public class DefaultController {
                 modelAndView.setViewName("receptionist-dashboard");
                 break;
             } else {
-                modelAndView.setViewName("Vol-dashboard");
+                modelAndView.setViewName("Vol_Dashboard/Vol-dashboard");
                 break;
             }
         }
