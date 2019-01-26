@@ -695,6 +695,7 @@ $(document).ready(function () {
             $("main").css("opacity", "0.1");
             $("#card-right-side").css("opacity", "0.1");
             document.getElementsByTagName("main")[0].style.pointerEvents = "none";
+            document.getElementById("card-right-side").style.pointerEvents = "none";
         }
     };
     window.onclick = function (e) {
@@ -703,7 +704,7 @@ $(document).ready(function () {
                 document.getElementById("dropdown-menu").style.display = "none";
                 $("main").css("opacity", "1");
                 $("#card-right-side").css("opacity", "1");
-                document.getElementsByTagName("body")[0].style.pointerEvents = "";
+                document.getElementsByTagName("main")[0].style.pointerEvents = "";
                 document.getElementById("card-right-side").style.pointerEvents = "";
                 dropdown_menu_state = !dropdown_menu_state;
             }
@@ -988,7 +989,7 @@ $(document).ready(function () {
                 if (data && data == 'error') {
                     $('#error').text(data);
                     return;
-                } else if($('#case-photos').files.length > 0) {
+                } else if( document.getElementById('case-photos').files.length > 0 ) {
                     var form = $('#raise-a-case-form')[0];
                     var formData = new FormData(form);
                     formData.append("case_id", data);

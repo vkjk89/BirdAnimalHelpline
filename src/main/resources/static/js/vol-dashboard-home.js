@@ -74,14 +74,18 @@ function section_accept_case(data) {
 
     var animal_name = document.createElement("div");
         animal_name.classList.add("animal-name");
-        animal_name.innerHTML = "#Bird/Animal_Name: " + data.animalName;
+        if(data.animalName != ""){
+            animal_name.innerHTML = "#Bird/Animal_Name: " + data.animalName;
+        } else animal_name.innerHTML = "#Bird/Animal_Name: Unspecified";
 
     var text_span_condition = document.createElement("span");
         text_span_condition.innerHTML = "Condition: ";
 
     var case_condition = document.createElement("span");
         case_condition.classList.add("case-condition");
+        if(data.animalCondition != ""){
         case_condition.innerHTML = data.animalCondition;
+        } else case_condition.innerHTML = "Unspecified";
 
     var text_div_photos_uploaded = document.createElement("div");
         text_div_photos_uploaded.innerHTML = "Photos Uploaded: ";
@@ -122,7 +126,16 @@ function section_accept_case(data) {
 
     var contact_location = document.createElement("div");
         contact_location.classList.add("contact-location");
+        if(data.location === ""){
+            if(data.locationLandMark === ""){
+            contact_location.innerHTML = data.locationPincode; 
+            }
+            else contact_location.innerHTML = data.locationLandMark+"<br>"+data.locationPincode;
+        }else if(data.locationLandMark === ""){
+            contact_location.innerHTML = data.locationPincode;
+        }else {
         contact_location.innerHTML = data.location+"<br>"+data.locationLandMark+"<br>"+data.locationPincode;
+        }
 
     var accept_decline = document.createElement("div");
         accept_decline.classList.add("accept-decline");
@@ -149,8 +162,8 @@ function section_accept_case(data) {
 
     var celebrations_image = document.createElement("img");
         celebrations_image.setAttribute("alt", "Case Animal/Bird");
-        celebrations_image.setAttribute("src", "/static/img/" + "");
-        celebrations_image.setAttribute("width", "45vw");
+        celebrations_image.setAttribute("th:src", "@{/img/pigeon.png}");        
+        celebrations_image.setAttribute("width", "10vw");
 
     //Appending-Children-to-Parents
     //Box3---------------------------------------------------
@@ -342,6 +355,7 @@ $(document).ready(function () {
         document.getElementById('page-heading').style.opacity = "0.1";
         document.getElementById('my-cases').style.opacity = "0.1";
         document.getElementById('accept-case-wrapper').style.opacity = "0.1";
+        document.getElementsByTagName("main")[0].style.pointerEvents = "none";
     };
 
     document.getElementById('close-btn').onclick = function closeSideNav() {
@@ -351,6 +365,7 @@ $(document).ready(function () {
         document.getElementById('top-nav').style.opacity = "1";
         document.getElementById('my-cases').style.opacity = "1";
         document.getElementById('accept-case-wrapper').style.opacity = "1";
+        document.getElementsByTagName("main")[0].style.pointerEvents = "";
     };
 
     document.getElementById('search-case-input').onkeyup = function(){
@@ -379,6 +394,7 @@ $(document).ready(function () {
                 document.getElementById('top-nav').style.opacity = "1";
                 document.getElementById('my-cases').style.opacity = "1";
                 document.getElementById('accept-case-wrapper').style.opacity = "1";
+                document.getElementsByTagName("main")[0].style.pointerEvents = "";
             }
         }
     };

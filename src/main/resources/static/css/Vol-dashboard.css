@@ -402,7 +402,7 @@ h1 {
     margin: 7.5vw;
     padding-bottom: 0;
     padding-top: 0;
-    margin-bottom: 6vh;
+    margin-bottom: 12vh;
 }
 
 #accept-case-empty {
@@ -523,6 +523,14 @@ h1 {
 
 .case-photos img {
     max-width: 23vw;
+}
+
+.contact-location {
+    width: 65vw;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
 }
 
 .accept-decline {
