@@ -988,13 +988,10 @@ $(document).ready(function () {
                 if (data && data == 'error') {
                     $('#error').text(data);
                     return;
-                } else if($('#case-photos').files.length > 0) {
+                } else if($('#case-photos').val()) {
                     var form = $('#raise-a-case-form')[0];
                     var formData = new FormData(form);
                     formData.append("case_id", data);
-                    // formData = new FormData();
-                    // formData.append('case_photos', $('input[name=case-photos]'));
-                    // formData.append('case_id', case_id);
                     $.ajax({
                         url: 'casePicUpload',
                         type: 'POST',
@@ -1004,27 +1001,28 @@ $(document).ready(function () {
                         contentType: false,  // tell jQuery not to set contentType
                         success: function (data) {
                             console.log(data);
-                            // $('#dp-img1').attr('src', "data:image/png;base64," + data);//data:image/png;base64,${data}');
-                            // document.getElementById("dp_loading").style.display = "none";
-                            // $('#dp-error').text("")//data:image/png;base64,${data}');
-                            //alert(data);
                         },
                         error: function (e) {
                             console.log(e);
-                            // $('#dp-error').text(e.responseJSON.message);
-                            // $('#dp-error').show();
-                            //document.getElementById("dp_loading").style.display = "none";
                         }
                     });
+                }
 
+                if(data) {
                     $('#raise-a-case-form')[0].reset();
                     $('#case-id').val(data);
+                    $('#raise-a-case-success').fadeIn();
                     currentCaseId = data;
                     setTimeout(function () {
                         $('#case-id').val('');
+                        $('#raise-a-case-success').fadeOut();
                     }, 5000);
                 }
+                else {
+                    $('#raise-a-case-error').fadeIn();
+                }
             });
+
     });
 
     var container = $(document.createElement('div')).css({});

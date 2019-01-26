@@ -276,16 +276,15 @@ function displayPendingCases() {
         // dataType: 'json'
     })
         .done(function (data) {
-                $.each(data, function (i, item) {
-                    //caseIdVsInfoMap[item.caseId] = item;
-                    //var htm = aCase + item.caseId + bCase + (item.userNameCurrent ? item.userNameCurrent + "(" + item.userRoleCurrent + ")" : "Closed") + cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + item.animalName + fCase;
-                    //cc.push(htm);
-                    console.info(item);
-                    section_accept_case(item);
-                    caseImageRetriever(item.caseId,"case-photos-"+item.caseId);
-                });
+                if (data) {
+                    $('.accept-decline-pending-cases').text(data.length);
+                    $.each(data, function (i, item) {
+                        console.info(item);
+                        section_accept_case(item);
+                        caseImageRetriever(item.caseId, "case-photos-" + item.caseId);
+                    });
 
-                //$('#' + tableId).html(cc.join(""));
+                }
             }
         );
 }
