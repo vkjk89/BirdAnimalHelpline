@@ -511,7 +511,8 @@ h1 {
 
 .bird-animal-info-header, .contact-info-header {
     margin: 1vh 0vw 0vw 0vh;
-    font-weight: 700;
+    font-weight: 600;
+    font-size: 1.2em;
 }
 
 .case-photos {
@@ -526,6 +527,7 @@ h1 {
 
 .accept-decline {
     text-align: right;
+    margin-top: 3vh;
 }
 
 .accept, .decline {

@@ -82,3 +82,4 @@ Some Error page - Access Denied and Internal Server Error
     My Cases - Search
     Success - Assign - msg
     Action Center - Recpt dashboard
+    Recpt Dashboard - My Cases - Add Column - Case accepted/not

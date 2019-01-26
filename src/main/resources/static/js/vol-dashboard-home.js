@@ -1,23 +1,13 @@
-setTimeout(function () {
-    let viewheight = $(window).height();
-    let viewwidth = $(window).width();
-    let viewport = document.querySelector("meta[name=viewport]");
-    viewport.setAttribute("content", "height=" + viewheight + "px, width=" + viewwidth + "px, initial-scale=1.0");
-}, 300);
-
-function accept(caseId) {
-    acceptReject(caseId,true);
+function accept() {
     $('.celebrations').fadeIn();
     $(".accept-case-container").css("pointerEvents", "none");
-    window.scrollTo(0, document.body.scrollHeight);
-
+    //window.scrollTo(0, document.body.scrollHeight);
 }
 
-function decline(caseId) {
-    acceptReject(caseId,false);
+function decline() {
     $('.celebrations').css("display", "none");
     $(".accept-case-container").css("pointerEvents", "none");
-    window.scrollTo(0, document.body.scrollHeight);
+    //window.scrollTo(0, document.body.scrollHeight);
 }
 
 function acceptReject(caseId,acceptReject) {
@@ -36,128 +26,131 @@ function acceptReject(caseId,acceptReject) {
             }
         );
 }
-/*function enlargePhoto(this_t) {
+
+function enlargePhoto(this_t) {
     $('#dynamic_image_enlarge').css('display', 'block');
     var enlarge_source = this_t.getAttribute('src');
     $('#photo-enlarge').children('img').attr('src', enlarge_source);
     $('#photo-enlarge').children('img').css("background-color", "#2D3047");
 }
 
-/*---------------------------Creating-Dynamic-Accep/Decline-Case-Members--------------------------------------*/
+/*---------------------------Creating-Dynamic-Accept/Decline-Case-Members--------------------------------------*/
 var slider_member_counter = 1;
 var slider_member_bullet = 1;
 
 function section_accept_case(data) {
     //Creating-and-Assigning-Attributes-----
     var slide_div = document.createElement("div");
-    slide_div.classList.add("slider-member-bullet");
-    slide_div.classList.add("slider-member-bullet-" + slider_member_bullet);
-    slide_div.innerHTML = "l";
+        slide_div.classList.add("slider-member-bullet");
+        slide_div.classList.add("slider-member-bullet-" + slider_member_bullet);
+        slide_div.innerHTML = "l";
 
     var accept_case_container = document.createElement("div");
-    accept_case_container.classList.add("accept-case-container");
+        accept_case_container.classList.add("accept-case-container");
 
     var case_details = document.createElement("div");
-    case_details.classList.add("case-details");
+        case_details.classList.add("case-details");
 
     var box1 = document.createElement("div");
-    box1.classList.add("box1");
+        box1.classList.add("box1");
 
     var text_case_id = document.createElement("span");
-    text_case_id.innerHTML = "Case ID: ";
+        text_case_id.innerHTML = "Case ID: ";
 
     var case_id = document.createElement("span");
-    case_id.classList.add("case-id");
-    case_id.innerHTML = data.caseId;
+        case_id.classList.add("case-id");
+        case_id.innerHTML = data.caseId;
 
     var box2 = document.createElement("div");
-    box2.classList.add("box2");
+        box2.classList.add("box2");
 
     var bird_animal_info_header = document.createElement("div");
         bird_animal_info_header.classList.add("bird-animal-info-header");
         bird_animal_info_header.innerHTML = "#Bird/Animal_Information";
 
     var animal_type = document.createElement("div");
-    animal_type.classList.add("animal-type");
-    animal_type.innerHTML = data.typeAnimal;
+        animal_type.classList.add("animal-type");
+        animal_type.innerHTML = "#Bird/Animal_Type: " + data.typeAnimal;
 
     var animal_name = document.createElement("div");
-    animal_name.classList.add("animal-name");
-    animal_name.innerHTML = data.animalName;
+        animal_name.classList.add("animal-name");
+        animal_name.innerHTML = "#Bird/Animal_Name: " + data.animalName;
 
     var text_span_condition = document.createElement("span");
-    text_span_condition.innerHTML = "Condition: ";
+        text_span_condition.innerHTML = "Condition: ";
 
     var case_condition = document.createElement("span");
-    case_condition.classList.add("case-condition");
-    case_condition.innerHTML = data.animalCondition;
+        case_condition.classList.add("case-condition");
+        case_condition.innerHTML = data.animalCondition;
 
     var text_div_photos_uploaded = document.createElement("div");
-    text_div_photos_uploaded.innerHTML = "Photos Uploaded: ";
+        text_div_photos_uploaded.innerHTML = "Photos Uploaded: ";
 
     var case_photos = document.createElement("div");
-    case_photos.classList.add("case-photos");
-    case_photos.setAttribute("id","case-photos-"+data.caseId);
-    //case_photos.id.add("case-photos");
-    //Make innerHTML "none" by default, if photos are there then attach them.
-    //case_photos.innerHTML = "<img src=\"\" onclick=\"enlargePhoto(this)\">";
+        case_photos.classList.add("case-photos");
+        case_photos.setAttribute("id","case-photos-"+data.caseId);
+        //case_photos.id.add("case-photos");
+        //Make innerHTML "none" by default, if photos are there then attach them.
+        //case_photos.innerHTML = "<img src=\"\" onclick=\"enlargePhoto(this)\">";
 
     var box3 = document.createElement("div");
-    box3.classList.add("box3");
+        box3.classList.add("box3");
 
     var contact_info_header = document.createElement("div");
-    contact_info_header.classList.add("contact-info-header");
-    contact_info_header.innerHTML = "Contact Information";
+        contact_info_header.classList.add("contact-info-header");
+        contact_info_header.innerHTML = "Contact Information";
 
     var contact_info = document.createElement("div");
-    contact_info.classList.add("contact-info");
+        contact_info.classList.add("contact-info");
 
     var text_span_name = document.createElement("span");
-    text_span_name.innerHTML = "Name: ";
+        text_span_name.innerHTML = "Name: ";
 
     var contact_name = document.createElement("span");
-    contact_name.classList.add("contact-name");
-    contact_name.innerHTML = data.contactName + "<br>";
+        contact_name.classList.add("contact-name");
+        contact_name.innerHTML = data.contactName + "<br>";
 
     var text_span_number = document.createElement("span");
-    text_span_number.innerHTML = "Contact Number: ";
+        text_span_number.innerHTML = "Contact Number: ";
 
     var contact_number = document.createElement("span");
-    contact_number.classList.add("contact-number");
-    contact_number.innerHTML = data.contactPrefix+"-"+data.contactNumber;
+        contact_number.classList.add("contact-number");
+        contact_number.innerHTML = data.contactPrefix+"-"+data.contactNumber;
 
     var text_location = document.createElement("div");
-    text_location.innerHTML = "Location";
+        text_location.innerHTML = "Location: ";
 
     var contact_location = document.createElement("div");
-    contact_location.classList.add("contact-location");
-    contact_location.innerHTML = data.locationPincode+"<br>"+data.location+"<br"+data.locationLandMark;
+        contact_location.classList.add("contact-location");
+        contact_location.innerHTML = data.location+"<br>"+data.locationLandMark+"<br>"+data.locationPincode;
 
     var accept_decline = document.createElement("div");
-    accept_decline.classList.add("accept-decline");
+        accept_decline.classList.add("accept-decline");
 
     var decline = document.createElement("button");
-    decline.innerHTML = "I am helpless";
-    decline.classList.add("decline");
-    decline.setAttribute("type", "submit");
-    decline.setAttribute("onclick", "decline("+data.caseId+");");
+        decline.innerHTML = "I am helpless";
+        decline.classList.add("decline");
+        decline.setAttribute("type", "submit");
+        decline.setAttribute("onclick", "decline("+data.caseId+");");
+        decline.classList.add("slider-member-" + slider_member_counter);
 
     var accept = document.createElement("button");
-    accept.innerHTML = "Accept";
-    accept.classList.add("accept");
-    accept.setAttribute("type", "submit");
-    accept.setAttribute("onclick", "accept("+data.caseId+");");
+        accept.innerHTML = "Accept";
+        accept.classList.add("accept");
+        accept.setAttribute("type", "submit");
+        accept.setAttribute("onclick", "accept("+data.caseId+");");
+        accept.classList.add("slider-member-" + slider_member_counter);
 
     var celebrations_container = document.createElement("div");
-    celebrations_container.classList.add("celebrations-container");
+        celebrations_container.classList.add("celebrations-container");
 
     var celebrations = document.createElement("span");
-    celebrations.classList.add("celebrations");
+        celebrations.classList.add("celebrations");
 
     var celebrations_image = document.createElement("img");
-    celebrations_image.setAttribute("alt", "Case Animal/Bird");
-    celebrations_image.setAttribute("src", "/static/img/" + "");
-    celebrations_image.setAttribute("width", "45vw");
+        celebrations_image.setAttribute("alt", "Case Animal/Bird");
+        celebrations_image.setAttribute("src", "/static/img/" + "");
+        celebrations_image.setAttribute("width", "45vw");
 
     //Appending-Children-to-Parents
     //Box3---------------------------------------------------
@@ -289,14 +282,19 @@ function displayPendingCases() {
             }
         );
 }
-$(document).ready(function () {
 
-    displayPendingCases();
+//-----------------------------------------------------------------------------------------------------------
+
+$(document).ready(function () {
     $("#logout").on("click", function (e) {
         e.preventDefault();
         window.location.assign("/logout");
+        // $.ajax({
+        //     url: "/logout",
+        //     method : "GET"
+        //     }
+        // )
     });
-
     document.getElementById('results-tab-active').onclick = function active_active() {
         this.classList.add('active-active');
         document.getElementById('results-tab-recent').classList.remove('active-recent');
@@ -349,7 +347,7 @@ $(document).ready(function () {
     document.getElementById('close-btn').onclick = function closeSideNav() {
         document.getElementById('side-nav').classList.remove('side-nav-anim');
         document.getElementById('side-nav').style.display = "none";
-        document.getElementById('page-heading').style.opacity = "1";
+        document.getElementById('page-heading').style.opacity = "1"; 
         document.getElementById('top-nav').style.opacity = "1";
         document.getElementById('my-cases').style.opacity = "1";
         document.getElementById('accept-case-wrapper').style.opacity = "1";
@@ -365,9 +363,9 @@ $(document).ready(function () {
             $("#search-results-div").css("display", "block");
             $("#search-input-results").css("display", "none");
         }
-
+        
     };
-
+    
     $('#image_enlarge_back_button').click(function () {
         $('#dynamic_image_enlarge').css('display', 'none');
     });
@@ -385,7 +383,12 @@ $(document).ready(function () {
         }
     };
 
-/*    var responseHandler = function (url, tableId) {
+});
+
+//---------BACKEND-INTEGRATION----------------------------------------------------------------------------------------
+$(document).ready(function () {
+
+    var responseHandler = function (url, tableId) {
         console.info(" clicked " + url + " " + tableId);
         $.ajax({
             type: 'GET', // define the type of HTTP verb we want to use (POST for our form)
@@ -393,23 +396,32 @@ $(document).ready(function () {
             dataType: 'json' // what type of data do we expect back from the server
             //encode: true
         }).done(function (data) {
-                var a = '<div class ="row row1"> <div class="sr-no"><li></li></div> <div class="case-id">';
-                var b = '</div> <div class="case-status">';
-                var c = '</div> <div class="date">';
-                var d = '</div> <div class="animal-type">';
-                var e = '</div> <div class="case-name">';
-                var f = '</div> </div>';
+                var a = '<div><span class="case-id">';
+                var b = '</span>';
+                var c = '<span class="date">';
+                var d = '</span><span class="animal-type">';
+                var e = '</span>';
+                var f = '</div>';
                 // log data to the console so we can see
                 var cc = [];
                 $.each(data, function (i, item) {
-                    var htm = a + item.caseId + b + item.userNameCurrent + "(" + item.userRoleCurrent + ")" + c + item.creationDate + d + item.typeAnimal + e + item.animalName + f;
+                    var htm;
+                    htm = a + item.caseId + b + c + item.creationDateStr + d + item.typeAnimal + e + f;
                     cc.push(htm);
                 });
-
                 $('#' + tableId).html(cc.join(""));
+                if(cc.length === 0){
+                    $('#' + tableId).html("<li style='z-index: 1000000001;background-color: rgb(250,250,250)'>No Cases</li>");  //DISPLAY-No-Cases-on-Tab-that-has-none
+                }
             }
         );
     };
+
+    displayPendingCases();
+    $("#logout").on("click", function (e) {
+        e.preventDefault();
+        window.location.assign("/logout");
+    });
 
 
     $('.case-id').click(function (e) {
@@ -418,5 +430,5 @@ $(document).ready(function () {
     $('#results-tab-active').click(responseHandler('/activeCases', 'results-content-active'));
     $('#results-tab-active').click(responseHandler('/activeCases', 'results-content-active'));
     $('#results-tab-recent').click(responseHandler('/recentCases', 'results-content-recent'));
-    $('#results-tab-closed').click(responseHandler('/closedCases', 'results-content-closed'));*/
+    $('#results-tab-closed').click(responseHandler('/closedCases', 'results-content-closed'));
 });
