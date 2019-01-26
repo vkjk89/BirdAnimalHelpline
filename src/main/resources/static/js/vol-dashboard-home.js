@@ -75,7 +75,7 @@ function section_accept_case(data) {
 
     var bird_animal_info_header = document.createElement("div");
         bird_animal_info_header.classList.add("bird-animal-info-header");
-        bird_animal_info_header.innerHTML = "#Bird/Animal_Information";
+        bird_animal_info_header.innerHTML = data.birdOrAnimal+" Information";
 
     var animal_type = document.createElement("div");
     animal_type.classList.add("animal-type");
