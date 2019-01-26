@@ -2,6 +2,7 @@ package org.birdhelpline.app.controller;
 
 import org.birdhelpline.app.model.User;
 import org.birdhelpline.app.service.UserService;
+import org.birdhelpline.app.utils.Role;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,9 @@ import java.util.List;
 
 @Controller
 public class DefaultController {
-    Logger logger = LoggerFactory.getLogger(DefaultController.class);
-    private static final List<String> ROLE_NOT_REQ_PROFILE_COMP = Arrays.asList("ADMIN","Receptionist");
+    private static final List<String> ROLE_NOT_REQ_PROFILE_COMP = Arrays.asList(Role.ADMIN.name(),Role.Receptionist.name());
+    private static final Logger logger = LoggerFactory.getLogger(DefaultController.class);
+
     @Autowired
     UserService userService;
 
@@ -42,9 +44,10 @@ public class DefaultController {
         modelAndView.addObject("user", user);
         session.setAttribute("user", user);
 
+        userService.updateUserLoginDetails(user);
         Boolean profileCompleted = (Boolean) model.asMap().get("profileCompleted");
         if (profileCompleted != null && profileCompleted) {
-            logger.info(" VKJ : from profile completion page so redirecting :" + profileCompleted);
+            logger.info("From profile completion page so redirecting ..");
             getViewBasedOnRole(modelAndView);
             return modelAndView;
         }

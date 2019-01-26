@@ -384,8 +384,19 @@ $(document).ready(function () {
         }
     };
 
-/*    var responseHandler = function (url, tableId) {
-        console.info(" clicked " + url + " " + tableId);
+    var responseHandler = function (event) {
+        var data = event.data.split(":");
+        var url = data[0];
+        var tableId = data[1];
+        var userId = -1;
+        if (data.length == 3) {
+            userId = data[2];
+        }
+        var formData = {
+            'userId': userId,
+        };
+        console.info(" Clicked " + url + " " + tableId + " for user : " + userId);
+
         $.ajax({
             type: 'GET', // define the type of HTTP verb we want to use (POST for our form)
             url: url, // the url where we want to POST
@@ -401,7 +412,7 @@ $(document).ready(function () {
                 // log data to the console so we can see
                 var cc = [];
                 $.each(data, function (i, item) {
-                    var htm = a + item.caseId + b + item.userNameCurrent + "(" + item.userRoleCurrent + ")" + c + item.creationDate + d + item.typeAnimal + e + item.animalName + f;
+                    var htm = a + item.caseId + b + item.userNameCurrent + "(" + item.userRoleCurrent + ")" + c + item.creationDateStr + d + item.typeAnimal + e + item.animalName + f;
                     cc.push(htm);
                 });
 
@@ -410,12 +421,9 @@ $(document).ready(function () {
         );
     };
 
+    $('#results-tab-active').click('/activeCases:results-content-active', responseHandler);
+    $('#results-tab-recent').click('/recentCases:results-content-recent', responseHandler);
+    $('#results-tab-closed').click('/closedCases:results-content-closed', responseHandler);
 
-    $('.case-id').click(function (e) {
-        $("#dialog").dialog();
-    });
-    $('#results-tab-active').click(responseHandler('/activeCases', 'results-content-active'));
-    $('#results-tab-active').click(responseHandler('/activeCases', 'results-content-active'));
-    $('#results-tab-recent').click(responseHandler('/recentCases', 'results-content-recent'));
-    $('#results-tab-closed').click(responseHandler('/closedCases', 'results-content-closed'));*/
+    $('#results-tab-active').click();
 });

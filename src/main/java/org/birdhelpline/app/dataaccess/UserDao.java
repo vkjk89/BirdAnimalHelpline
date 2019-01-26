@@ -36,7 +36,6 @@ public class UserDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -73,8 +72,6 @@ public class UserDao {
                     listPincodeLandMarks.add(new PinCodeLandmarkInfo(pinCodeId, pinCode, landMark));
                 }
         );
-
-        //logger.info("VKJ : " + listPincodeLandMarks);
 
         jdbcTemplate.query("select security_q_id, security_q_text from security_q order by 1 ",
                 (ResultSet resultSet) ->
@@ -284,8 +281,10 @@ public class UserDao {
                 return ps;
             });
         }
+        updateUserLoginDetails(user);
+    }
 
-
+    public void updateUserLoginDetails(User user) {
         jdbcTemplate.update((Connection con) -> {
             PreparedStatement ps = con.prepareStatement(
                     "update user_info u set u.last_login_date = now() , u.login_count = u.login_count+1 where u.user_id = ?"
@@ -293,8 +292,6 @@ public class UserDao {
             ps.setLong(1, user.getUserId());
             return ps;
         });
-
-
     }
 
     public void setNewPassword(Long userId, String encode) {
@@ -351,6 +348,50 @@ public class UserDao {
             //throw new ObjectRetrievalFailureException(User.class, userName);
             return null;
         }
+    }
+
+    public List<PinCodeLandmarkInfo> getPinCodeLandMarks() {
+        return listPincodeLandMarks;
+    }
+
+    public Map<Integer, String> getSecurityQs() {
+        return securityQIdVSSecurityQ;
+    }
+
+    public Set<String> getListBirds() {
+        return listBirds;
+    }
+
+    public Set<String> getListAnimals() {
+        return listAnimals;
+    }
+
+    public boolean addBird(String bird) {
+        if (listBirds.contains(bird)) {
+            return true;
+        }
+        listBirds.add(bird);
+        return false;
+    }
+
+    public boolean addAnimal(String animal) {
+        if (listBirds.contains(animal)) {
+            return true;
+        }
+        listBirds.add(animal);
+        return false;
+    }
+
+    public boolean birdOrAnimalExists(String birdAnimal) {
+        return isBird(birdAnimal) || isAnimal(birdAnimal);
+    }
+
+    public boolean isBird(String birdAnimal) {
+        return listBirds.contains(birdAnimal);
+    }
+
+    public boolean isAnimal(String birdAnimal) {
+        return listAnimals.contains(birdAnimal);
     }
 
     static class UserRowMapper implements RowMapper<User> {
@@ -434,49 +475,5 @@ public class UserDao {
             }
             return user;
         }
-    }
-
-    public List<PinCodeLandmarkInfo> getPinCodeLandMarks() {
-        return listPincodeLandMarks;
-    }
-
-    public Map<Integer, String> getSecurityQs() {
-        return securityQIdVSSecurityQ;
-    }
-
-    public Set<String> getListBirds() {
-        return listBirds;
-    }
-
-    public Set<String> getListAnimals() {
-        return listAnimals;
-    }
-
-    public boolean addBird(String bird) {
-        if(listBirds.contains(bird)) {
-            return true;
-        }
-        listBirds.add(bird);
-        return false;
-    }
-
-    public boolean addAnimal(String animal) {
-        if(listBirds.contains(animal)) {
-            return true;
-        }
-        listBirds.add(animal);
-        return false;
-    }
-
-    public boolean birdOrAnimalExists(String birdAnimal) {
-        return isBird(birdAnimal) || isAnimal(birdAnimal);
-    }
-
-    public boolean isBird(String birdAnimal) {
-        return listBirds.contains(birdAnimal);
-    }
-
-    public boolean isAnimal(String birdAnimal) {
-        return listAnimals.contains(birdAnimal);
     }
 }

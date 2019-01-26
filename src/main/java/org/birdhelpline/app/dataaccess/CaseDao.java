@@ -30,6 +30,13 @@ import java.util.function.Supplier;
 public class CaseDao {
     private static final Logger logger = LoggerFactory.getLogger(CaseDao.class);
     private static final SimpleDateFormat FORMATTED_DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+    private static final String caseInfoByCaseIdQWithoutTxn = "select * from case_info where case_id = ?";
+    private static final String caseInfoBySearchTermQWithoutTxn = "select * from case_info where case_id like :searchTerm";
+    private static final String caseTxnsQ = "select * from case_txn where case_id = ?";
+    private static final String casePendingForAckQ = "select DISTINCT ci.* from case_info ci, case_txn ct where ci.case_id=ct.case_id and ct.is_ack = 0 and ct.to_user_id=ci.current_user_id and ci.current_user_id = :userId";
+    private static final String caseAcceptedByUserIdQ = "select DISTINCT ci.* from case_info ci, case_txn ct where ci.case_id=ct.case_id  and ct.is_ack = 1 and ct.to_user_id = :userId";
+    private static final String caseInfoByUserIdQWithoutTxn = "select DISTINCT ci.* from case_info ci,case_txn ct where ci.case_id=ct.case_id  and ( ci.user_id_opened = :userId OR ci.user_id_closed = :userId OR ci.current_user_id = :userId )";
+
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -37,13 +44,6 @@ public class CaseDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     @Autowired
     private UserDao userDao;
-
-    private static final String caseInfoByCaseIdQWithoutTxn = "select * from case_info where case_id = ?";
-    private static final String caseInfoByUserIdQWithoutTxn = "select * from case_info where user_id_opened = :userId OR user_id_closed = :userId OR current_user_id = :userId";
-    private static final String caseInfoBySearchTermQWithoutTxn = "select * from case_info where case_id like :searchTerm";
-    private static final String caseTxnsQ = "select * from case_txn where case_id = ?";
-    private static final String casePendingForAckQ = "select DISTINCT ci.* from case_info ci, case_txn ct where ci.case_id=ct.case_id and ct.is_ack = 0 and ct.to_user_id=ci.current_user_id and ci.current_user_id = :userId";
-    private String insertCaseQ;
 
     final Supplier<RowMapper<CaseInfo>> caseInfoRowMapper = () -> (ResultSet rs, int i) -> {
         CaseInfo caseInfo = new CaseInfo();
@@ -68,10 +68,9 @@ public class CaseDao {
         caseInfo.setContactNumber(rs.getString("contact_number"));
         caseInfo.setContactPrefix(rs.getString("contact_number_prefix"));
         caseInfo.setLocationLandMark(rs.getString("location_landmark"));
-        caseInfo.setBirdOrAnimal(userDao.isBird(caseInfo.getTypeAnimal()) ? "Bird":"Animal");
+        caseInfo.setBirdOrAnimal(userDao.isBird(caseInfo.getTypeAnimal()) ? "Bird" : "Animal");
         return caseInfo;
     };
-
 
     public CaseInfo getCaseInfoByCaseId(Long caseId) {
         List<CaseInfo> caseInfos;
@@ -115,29 +114,13 @@ public class CaseDao {
         return list;
     }
 
-    public List<CaseInfo> getAllCaseInfoByUserId(Long userId) {
-        List<CaseInfo> caseInfos = null;
+    public List<CaseInfo> getCaseInfoByUserId(Long userId, Boolean pendingForAck) {
+        List<CaseInfo> caseInfos;
         try {
             Map<String, Object> params = new HashMap<String, Object>();
             params.put("userId", userId);
             caseInfos = namedParameterJdbcTemplate.query(
-                    caseInfoByUserIdQWithoutTxn, params
-                    , caseInfoRowMapper.get()
-            );
-        } catch (EmptyResultDataAccessException ex) {
-            //throw new ObjectRetrievalFailureException(User.class, userName);
-            return null;
-        }
-        return caseInfos;
-    }
-
-    public List<CaseInfo> getAllPendingCaseInfoByUserId(Long userId) {
-        List<CaseInfo> caseInfos = null;
-        try {
-            Map<String, Object> params = new HashMap<String, Object>();
-            params.put("userId", userId);
-            caseInfos = namedParameterJdbcTemplate.query(
-                    casePendingForAckQ, params
+                    pendingForAck == null ? caseInfoByUserIdQWithoutTxn : pendingForAck ? casePendingForAckQ : caseAcceptedByUserIdQ, params
                     , caseInfoRowMapper.get()
             );
         } catch (EmptyResultDataAccessException ex) {
@@ -151,9 +134,9 @@ public class CaseDao {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         this.jdbcTemplate.update((connection -> {
-            insertCaseQ = "insert into case_info (user_id_opened,animal_type,current_user_id,is_active,animal_name,animal_condition,contact_name,contact_number,location,location_pincode,location_landmark,contact_number_prefix) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+            String q = "insert into case_info (user_id_opened,animal_type,current_user_id,is_active,animal_name,animal_condition,contact_name,contact_number,location,location_pincode,location_landmark,contact_number_prefix) values (?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(
-                    insertCaseQ,
+                    q,
                     new String[]{"case_id"});
 
             ps.setLong(1, caseInfo.getUserIdOpened());
@@ -175,9 +158,9 @@ public class CaseDao {
 
     public void saveCaseTxn(CaseInfo caseInfo) {
         this.jdbcTemplate.update((connection -> {
-            insertCaseQ = "insert into case_txn (case_id, from_user_id, status) values (?,?,?)";
+            String q = "insert into case_txn (case_id, from_user_id, status) values (?,?,?)";
             PreparedStatement ps = connection.prepareStatement(
-                    insertCaseQ);
+                    q);
 
             ps.setLong(1, caseInfo.getCaseId());
             ps.setLong(2, caseInfo.getUserIdOpened());
@@ -186,12 +169,11 @@ public class CaseDao {
         }));
     }
 
-
     public void assignCase(Long userId, Long toUserId, Long caseId) {
         this.jdbcTemplate.update((connection -> {
-            insertCaseQ = "update case_info set current_user_id = ? where case_id = ?";
+            String q = "update case_info set current_user_id = ? where case_id = ?";
             PreparedStatement ps = connection.prepareStatement(
-                    insertCaseQ);
+                    q);
 
             ps.setLong(1, toUserId);
             ps.setLong(2, caseId);
@@ -199,9 +181,9 @@ public class CaseDao {
         }));
 
         this.jdbcTemplate.update((connection -> {
-            insertCaseQ = "insert into case_txn (case_id, from_user_id, to_user_id) values (?,?,?)";
+            String q = "insert into case_txn (case_id, from_user_id, to_user_id) values (?,?,?)";
             PreparedStatement ps = connection.prepareStatement(
-                    insertCaseQ);
+                    q);
 
             ps.setLong(2, userId);
             ps.setLong(3, toUserId);
@@ -212,9 +194,9 @@ public class CaseDao {
 
     public void closeCase(Long userId, Long caseId, String closeRemark, String closeReason) {
         this.jdbcTemplate.update((connection -> {
-            insertCaseQ = "update case_info set current_user_id = NULL, is_active=0, user_id_closed = ? , close_remark = ? , animal_condition = ?, close_date = now() where case_id = ?";
+            String q = "update case_info set current_user_id = NULL, is_active=0, user_id_closed = ? , close_remark = ? , animal_condition = ?, close_date = now() where case_id = ?";
             PreparedStatement ps = connection.prepareStatement(
-                    insertCaseQ);
+                    q);
 
             ps.setLong(1, userId);
             ps.setString(2, closeRemark);
@@ -225,9 +207,9 @@ public class CaseDao {
 
 
         this.jdbcTemplate.update((connection -> {
-            insertCaseQ = "insert into case_txn (case_id, from_user_id, to_user_id,status) values (?,?,NULL,?)";
+            String q = "insert into case_txn (case_id, from_user_id, to_user_id,status) values (?,?,NULL,?)";
             PreparedStatement ps = connection.prepareStatement(
-                    insertCaseQ);
+                    q);
 
             ps.setLong(1, caseId);
             ps.setLong(2, userId);
