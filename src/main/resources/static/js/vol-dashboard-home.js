@@ -1,16 +1,20 @@
-function accept() {
+var usersPendingCaseMap = new Map();
+var updateSliderMemeberCount;
+
+function accept(caseId) {
+    acceptReject(caseId,true);
     $('.celebrations').fadeIn();
     $(".accept-case-container").css("pointerEvents", "none");
     //window.scrollTo(0, document.body.scrollHeight);
 }
 
-function decline() {
+function decline(caseId) {
+    acceptReject(caseId,false);
     $('.celebrations').css("display", "none");
     $(".accept-case-container").css("pointerEvents", "none");
     //window.scrollTo(0, document.body.scrollHeight);
 }
 
-var updateSliderMemeberCount;
 function temp_accept_reject(this_t){
     var elementTemp = this_t.classList;
     var element = elementTemp[elementTemp.length-1];
@@ -34,7 +38,7 @@ function temp_accept_reject(this_t){
     }, 1000);
 }
 
-function acceptReject(caseId,acceptReject,this_t) {
+function acceptReject(caseId,acceptReject) {
     var formData = {
         'caseId': caseId,
         'acceptReject': acceptReject
@@ -47,7 +51,6 @@ function acceptReject(caseId,acceptReject,this_t) {
     })
         .done(function (data) {
                 console.log("done vvkj : "+data);
-                console.log(this_t);
             }
         );
 }
@@ -170,7 +173,7 @@ function section_accept_case(data) {
         decline.classList.add("decline");
         decline.setAttribute("type", "submit");
         decline.setAttribute("onclick", "decline("+data.caseId+");");
-        decline.setAttribute("onclick", "temp_accept_reject(this)");
+        //decline.setAttribute("onclick", "temp_accept_reject(this)");
         decline.classList.add("slider-member-" + slider_member_counter);
 
     var accept = document.createElement("button");
@@ -178,7 +181,7 @@ function section_accept_case(data) {
         accept.classList.add("accept");
         accept.setAttribute("type", "submit");
         accept.setAttribute("onclick", "accept("+data.caseId+");");
-        accept.setAttribute("onclick", "temp_accept_reject(this)");
+        //accept.setAttribute("onclick", "temp_accept_reject(this)");
         accept.classList.add("slider-member-" + slider_member_counter);
 
     var celebrations_container = document.createElement("div");
@@ -315,10 +318,13 @@ function displayPendingCases() {
                     $('.accept-decline-pending-cases').text(data.length);
                     $.each(data, function (i, item) {
                         console.info(item);
-                        section_accept_case(item);
-                        caseImageRetriever(item.caseId, "case-photos-" + item.caseId);
-                        slider_member_count = data.length;
-                        updateSliderMemeberCount = data.length;
+                        if(!usersPendingCaseMap.has(item.caseId)) {
+                            section_accept_case(item);
+                            caseImageRetriever(item.caseId, "case-photos-" + item.caseId);
+                            slider_member_count = data.length;
+                            updateSliderMemeberCount = data.length;
+                            usersPendingCaseMap.set(item.caseId,item);
+                        }
                     });
 
                 }
@@ -326,17 +332,23 @@ function displayPendingCases() {
         );
 }
 
+function goToCaseDetails(element) {
+    console.info(element);
+    var caseId = $(element).find(".case-id").text();
+    console.info(caseId);
+    window.location.href = "/caseDetails?caseId="+caseId;
+
+}
+
 //-----------------------------------------------------------------------------------------------------------
 
 $(document).ready(function () {
+    displayPendingCases();
+    setInterval(function () { displayPendingCases(); },30000 );
+    //displayPendingCases();
     $("#logout").on("click", function (e) {
         e.preventDefault();
         window.location.assign("/logout");
-        // $.ajax({
-        //     url: "/logout",
-        //     method : "GET"
-        //     }
-        // )
     });
     document.getElementById('results-tab-active').onclick = function active_active() {
         this.classList.add('active-active');
@@ -429,6 +441,13 @@ $(document).ready(function () {
         }
     };
 
+    var aCase = '<div onclick="goToCaseDetails(this)"><span class="case-id">';
+    var bCase = '</span>';
+    var cCase = '<span class="date">';
+    var dCase = '</span><span class="animal-type">';
+    var eCase = '</span>';
+    var fCase = '</div>';
+
     var responseHandler = function (event) {
         var data = event.data.split(":");
         var url = data[0];
@@ -448,17 +467,11 @@ $(document).ready(function () {
             dataType: 'json' // what type of data do we expect back from the server
             //encode: true
         }).done(function (data) {
-                var a = '<div><span class="case-id">';
-                var b = '</span>';
-                var c = '<span class="date">';
-                var d = '</span><span class="animal-type">';
-                var e = '</span>';
-                var f = '</div>';
                 // log data to the console so we can see
                 var cc = [];
                 $.each(data, function (i, item) {
-                    var htm = a + item.caseId + b + item.userNameCurrent + "(" + item.userRoleCurrent + ")" + c + item.creationDateStr + d + item.typeAnimal + e + item.animalName + f;
-                    htm = a + item.caseId + b + c + item.creationDateStr + d + item.typeAnimal + e + f;
+                    //var htm = aCase + item.caseId + b + item.userNameCurrent + "(" + item.userRoleCurrent + ")" + c + item.creationDateStr + d + item.typeAnimal + e + item.animalName + f;
+                    var htm = aCase + item.caseId + bCase + cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + fCase;
                     cc.push(htm);
                 });
                 $('#' + tableId).html(cc.join(""));

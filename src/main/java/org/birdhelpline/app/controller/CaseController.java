@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -196,5 +197,71 @@ public class CaseController {
             return "Error";
         }
         return caseService.acceptRejectCase(user.getUserId(), acceptReject, caseId);
+    }
+
+    @RequestMapping(value = "/caseDetails", method = RequestMethod.GET)
+    public ModelAndView caseDetails(@RequestParam("caseId") Long caseId, HttpSession session) {
+        UserAndModelView userAndModelView = new UserAndModelView(caseId, session).invoke();
+        if (userAndModelView.is()) return new ModelAndView("Error");
+        ModelAndView modelAndView = userAndModelView.getModelAndView();
+        modelAndView.setViewName("Vol_Dashboard/vol-dashboard-my-cases");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/updateCase", method = RequestMethod.GET)
+    public ModelAndView updateCase(@RequestParam("caseId") Long caseId, HttpSession session) {
+        UserAndModelView userAndModelView = new UserAndModelView(caseId, session).invoke();
+        if (userAndModelView.is()) return new ModelAndView("Error");
+        ModelAndView modelAndView = userAndModelView.getModelAndView();
+        modelAndView.setViewName("Vol_Dashboard/vol-dashboard-update-center");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/updateCase", method = RequestMethod.POST)
+    public ModelAndView updateCasePost(@RequestParam("caseId") Long caseId, HttpSession session) {
+        UserAndModelView userAndModelView = new UserAndModelView(caseId, session).invoke();
+        if (userAndModelView.is()) return new ModelAndView("Error");
+        ModelAndView modelAndView = userAndModelView.getModelAndView();
+        modelAndView.setViewName("Vol_Dashboard/Vol-dashboard");
+        return modelAndView;
+    }
+
+
+    private class UserAndModelView {
+        private boolean myResult;
+        private Long caseId;
+        private HttpSession session;
+        private ModelAndView modelAndView;
+
+        public UserAndModelView(Long caseId, HttpSession session) {
+            this.caseId = caseId;
+            this.session = session;
+        }
+
+        boolean is() {
+            return myResult;
+        }
+
+        public ModelAndView getModelAndView() {
+            return modelAndView;
+        }
+
+        public UserAndModelView invoke() {
+            User user = getUser(session);
+            if (user == null) {
+                myResult = true;
+                return this;
+            }
+            CaseInfo caseInfo = caseService.getCaseInfo(caseId);
+            if(caseInfo == null) {
+                myResult = true;
+                return this;
+            }
+            modelAndView = new ModelAndView();
+            modelAndView.addObject("caseInfo",caseInfo);
+            modelAndView.addObject("user",user);
+            myResult = false;
+            return this;
+        }
     }
 }

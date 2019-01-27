@@ -11,6 +11,10 @@
     <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
     <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/icons/manifest.json}">
+
+    <script src="/static/js/common.js" th:src="@{/js/common.js}"></script>
+    <script src="/static/js/vol-dashboard-my-cases.js" th:src="@{/js/vol-dashboard-my-cases.js}"></script>
+
 </head>
 <body>
     <div id="dynamic_image_enlarge">
@@ -71,14 +75,14 @@
                 <div id="body-form-top-side-case-details">
                     <div id="id-case-details">
                         <label for="case-id-case-details">Case ID </label>
-                        <input autocomplete="off" disabled id="case-id-case-details" name="case-id-case-details" required type="number">
+                        <input th:value="${caseInfo.caseId}" autocomplete="off" disabled id="case-id-case-details" name="case-id-case-details" required type="number">
                     </div>
                     <label for="animal-type-case-details">#Animal/Bird type: </label>
-                    <input disabled id="animal-type-case-details" type="text" placeholder=""><br>
+                    <input th:value="${caseInfo.typeAnimal}" disabled id="animal-type-case-details" type="text" placeholder=""><br>
                     <label for="animal-name-case-details">#Animal/Bird name: </label>
-                    <input disabled id="animal-name-case-details" type="text">
+                    <input th:value="${caseInfo.animalName}" disabled id="animal-name-case-details" type="text">
                     <label for="condition-case-details">Condition: </label>
-                    <input disabled id="condition-case-details" type="text">
+                    <input th:value="${caseInfo.animalCondition}" disabled id="condition-case-details" type="text">
                     <label for="case-photos-case-details">Photos Uploaded</label>
                     <div id="case-photos-case-details">
                         None<!-- Remove None While loading Images -->
@@ -91,16 +95,16 @@
                 <hr>
                 <div id="body-form-bottom-side-case-details">
                     <label>Name: </label>
-                    <input autocomplete="off" disabled id="contact-name-case-details" type="text">
+                    <input th:value="${caseInfo.contactName}" autocomplete="off" disabled id="contact-name-case-details" type="text">
                     <label>Contact Number: </label>
-                    <input disabled id="nine-one-case-details" placeholder="" type="text" style="width: 7vw;">
-                    <input autocomplete="off" disabled id="contact-number-case-details" type="number" style="width: 48vw;">
+                    <input th:value="${caseInfo.contactPrefix}" disabled id="nine-one-case-details" placeholder="" type="text" style="width: 7vw;">
+                    <input th:value="${caseInfo.contactNumber}" autocomplete="off" disabled id="contact-number-case-details" type="number" style="width: 48vw;">
                     <label>Location: </label>
-                    <textarea cols="36" disabled id="location-case-details" rows="3"></textarea>
+                    <textarea th:value="${caseInfo.location}" cols="36" disabled id="location-case-details" rows="3"></textarea>
                     <label>Landmark </label>
-                    <input autocomplete="off" disabled id="location-landmark-case-details" type="text">
+                    <input th:value="${caseInfo.locationLandMark}" autocomplete="off" disabled id="location-landmark-case-details" type="text">
                     <label>Pincode </label>
-                    <input disabled id="location-pincode-case-details" type="number">
+                    <input th:value="${caseInfo.locationPincode}" disabled id="location-pincode-case-details" type="number">
                 </div>
             </div>
         </section>
@@ -114,8 +118,5 @@
         <button class="action-bar-btn" id="contact-us" type="button"><img alt="contact-us" src="/static/img/contact-us-white.png" th:src="@{/img/contact-us-white.png}"></button>
     </nav>
 
-
-
-<script src="/static/js/vol-dashboard-my-cases.js" th:src="@{/js/vol-dashboard-my-cases.js}"></script>
 </body>
 </html>

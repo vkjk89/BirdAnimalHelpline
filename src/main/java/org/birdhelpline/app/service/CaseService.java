@@ -185,4 +185,8 @@ public class CaseService {
         caseDao.updateUserInfo(userId, acceptReject);
         return ResponseStatus.SUCCESS.name();
     }
+
+    public CaseInfo getCaseInfo(Long caseId) {
+        return caseDao.getCaseInfoByCaseId(caseId);
+    }
 }

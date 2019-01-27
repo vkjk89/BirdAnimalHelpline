@@ -12,7 +12,12 @@ function enlargePhoto(this_t) {
 }
 
 $(document).ready(function () {
-
+    caseImageRetriever($('#case-id-case-details').val(), "case-photos-case-details");
+    $('#action-center-main-div').click(
+        function () {
+            window.location.href="updateCase?caseId="+$('#case-id-case-details').val();
+        }
+    );
     document.getElementById('profile-options').onclick = function openSideNav() {
         document.getElementById('side-nav').style.display = "block";
         document.getElementById('side-nav').classList.add('side-nav-anim');

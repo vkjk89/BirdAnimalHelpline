@@ -70,7 +70,7 @@
 
     <main>
         <div id="assign-case-error">Please select a user to transfer case</div>
-        <form name="update-case-form" id="update-case-form">
+        <form name="update-case-form" id="update-case-form" th:action="@{/updateCase}" th:method="POST">
             <div id="update-case-wrapper">
                 <div id="update-case-basic-details">
                     <div id="caseID-wrapper">
@@ -103,12 +103,12 @@
 
                 <div id="cta-btns">
                     <div id="assign-case-cta-btns">
-                        <button type="submit" id="assign-case-assign">Assign Case</button>
-                        <button type="submit" id="assign-case-cancel">Cancel</button>
+                        <button type="submit" value="assign" id="assign-case-assign">Assign Case</button>
+                        <button type="button" id="assign-case-cancel">Cancel</button>
                     </div>
                     <div id="close-case-cta-btns">
-                        <button type="submit" id="close-case-close">Close Case</button>
-                        <button type="submit" id="close-case-cancel">Cancel</button>
+                        <button type="submit" value="close" id="close-case-close">Close Case</button>
+                        <button type="button" id="close-case-cancel">Cancel</button>
                     </div>
                     <input type="submit" id="assign-case-submit-final" mame="assign-case-submit-final" style="display:none">
                 </div>
