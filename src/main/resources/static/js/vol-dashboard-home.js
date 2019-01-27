@@ -457,7 +457,7 @@ $(document).ready(function () {
                 // log data to the console so we can see
                 var cc = [];
                 $.each(data, function (i, item) {
-                    var htm = a + item.caseId + b + item.userNameCurrent + "(" + item.userRoleCurrent + ")" + c + item.creationDateStr + d + item.typeAnimal + e + item.animalName + f;
+                    var htm;
                     htm = a + item.caseId + b + c + item.creationDateStr + d + item.typeAnimal + e + f;
                     cc.push(htm);
                 });
