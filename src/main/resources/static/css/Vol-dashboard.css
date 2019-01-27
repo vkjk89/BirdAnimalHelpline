@@ -170,7 +170,6 @@ main {
     position: relative;
     text-align: center;
     border-bottom: 1px solid white;
-    top: -2vh;
 }
 
 #profile-changes {
@@ -299,12 +298,12 @@ h1 {
     position: relative;
     box-sizing: border-box;
     border: 1px solid #CCC;
-    max-height: 35vh;
+    max-height: 30vh;
     min-height: 10vh;
     min-width: 85vw;
     padding: 3vw;
     padding-bottom: 1vh;
-    line-height: 6vw;
+    line-height: 8vw;
     border-top: none;
     overflow: auto;
     overflow-x: hidden;
@@ -389,7 +388,7 @@ h1 {
     margin-top: 0vh;
     padding-top: 1vh;
     padding-bottom: 1vh;
-    border-top: 1px solid #374047; 
+    border-top: 1px solid #374047;
 }
 
 #search-input-results-results div:last-child {
@@ -402,7 +401,7 @@ h1 {
     margin: 7.5vw;
     padding-bottom: 0;
     padding-top: 0;
-    margin-bottom: 12vh;
+    margin-bottom: 15vh;
 }
 
 #accept-case-empty {
@@ -426,14 +425,14 @@ h1 {
     border-radius: 50%;
     border: 2px solid #AAA;
     background-color: transparent;
-    padding: 0vh 2vw;
+    padding: 0.3vh 2vw;
     margin: 0vh 2vw -1.5vh 0vw;
     color: transparent;
 }
 
 .slider-nav-right {
     position: absolute;
-    margin-top: 33vh;
+    margin-top: 37vh;
     right: 7.5vw;
     font-size: 3em;
     font-weight: 900;
@@ -444,7 +443,7 @@ h1 {
 
 .slider-nav-left {
     position: absolute;
-    margin-top: 32vh;
+    margin-top: 36vh;
     font-size: 3em;
     font-weight: 900;
     display: none;
@@ -469,6 +468,10 @@ h1 {
 }
 .box2 {border-bottom: none; border-top: none;}
 
+.box2 div, .box2 span {
+    margin: 1vh 0vw;
+}
+
 .heading-accept-case {
     box-sizing: border-box;
     border: 1px solid transparent;
@@ -476,7 +479,7 @@ h1 {
     border-bottom-right-radius: 0;
     padding: 3vw;
     background-color: #b9ccc4;
-    font-size: 1em;
+    font-size: 1.2em;
     letter-spacing: 1px;
     font-weight: 700;
     border-bottom: none;
@@ -525,6 +528,10 @@ h1 {
     max-width: 23vw;
 }
 
+.contact-number {
+    font-size: 0.85em;
+}
+
 .contact-location {
     width: 65vw;
     overflow: hidden;
@@ -561,11 +568,11 @@ h1 {
 .celebrations-container {
     text-align: right;
     margin-top: 3vh;
+    display: none;
 }
 
 .celebrations {
     margin-top: 2vh;
-    display: none;
 }
 
 /*--------------------------BOTTOM-ACTION-BAR------------------------*/

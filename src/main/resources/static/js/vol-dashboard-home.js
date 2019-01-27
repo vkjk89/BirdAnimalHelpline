@@ -10,7 +10,31 @@ function decline() {
     //window.scrollTo(0, document.body.scrollHeight);
 }
 
-function acceptReject(caseId,acceptReject) {
+var updateSliderMemeberCount;
+function temp_accept_reject(this_t){
+    var elementTemp = this_t.classList;
+    var element = elementTemp[elementTemp.length-1];
+    var split = element.split("-");
+    var number = split[split.length-1];
+    updateSliderMemeberCount--;
+    $('.accept-decline-pending-cases').text(updateSliderMemeberCount);
+    $(".celebrations-container-"+number).fadeIn(100);
+    setTimeout(function(){
+        if(updateSliderMemeberCount === 0){
+            $('.slider-nav-right').fadeOut(100);
+            $('.slider-nav-left').fadeOut(100);
+            $('#case-slider').fadeOut();
+            $('#accept-case-empty').fadeIn();
+            $(".accept-case-wrapper").css("minHeight", "0vh");
+        }
+        $('.'+element).remove();
+        $(".slider-member-bullet-"+number).remove();
+        $("celebrations-container-"+number).fadeOut(100);
+        slide_accept_case(1);
+    }, 1000);
+}
+
+function acceptReject(caseId,acceptReject,this_t) {
     var formData = {
         'caseId': caseId,
         'acceptReject': acceptReject
@@ -23,6 +47,7 @@ function acceptReject(caseId,acceptReject) {
     })
         .done(function (data) {
                 console.log("done vvkj : "+data);
+                console.log(this_t);
             }
         );
 }
@@ -70,13 +95,13 @@ function section_accept_case(data) {
 
     var animal_type = document.createElement("div");
         animal_type.classList.add("animal-type");
-        animal_type.innerHTML = "#Bird/Animal_Type: " + data.typeAnimal;
+        animal_type.innerHTML = data.birdOrAnimal+" Type: " + data.typeAnimal;
 
     var animal_name = document.createElement("div");
         animal_name.classList.add("animal-name");
         if(data.animalName != ""){
-            animal_name.innerHTML = "#Bird/Animal_Name: " + data.animalName;
-        } else animal_name.innerHTML = "#Bird/Animal_Name: Unspecified";
+            animal_name.innerHTML = data.birdOrAnimal+" Name: " + data.animalName;
+        } else animal_name.innerHTML = data.birdOrAnimal+" Name: Unspecified";
 
     var text_span_condition = document.createElement("span");
         text_span_condition.innerHTML = "Condition: ";
@@ -119,7 +144,7 @@ function section_accept_case(data) {
 
     var contact_number = document.createElement("span");
         contact_number.classList.add("contact-number");
-        contact_number.innerHTML = data.contactPrefix+"-"+data.contactNumber;
+        contact_number.innerHTML = "<a style=\"color:black;text-decoration:underline\" href=\"tel:"+data.contactPrefix+data.contactNumber+"\">"+data.contactPrefix+"-"+data.contactNumber;
 
     var text_location = document.createElement("div");
         text_location.innerHTML = "Location: ";
@@ -145,6 +170,7 @@ function section_accept_case(data) {
         decline.classList.add("decline");
         decline.setAttribute("type", "submit");
         decline.setAttribute("onclick", "decline("+data.caseId+");");
+        decline.setAttribute("onclick", "temp_accept_reject(this)");
         decline.classList.add("slider-member-" + slider_member_counter);
 
     var accept = document.createElement("button");
@@ -152,17 +178,20 @@ function section_accept_case(data) {
         accept.classList.add("accept");
         accept.setAttribute("type", "submit");
         accept.setAttribute("onclick", "accept("+data.caseId+");");
+        accept.setAttribute("onclick", "temp_accept_reject(this)");
         accept.classList.add("slider-member-" + slider_member_counter);
 
     var celebrations_container = document.createElement("div");
         celebrations_container.classList.add("celebrations-container");
+        celebrations_container.classList.add("celebrations-container-" + slider_member_counter);
 
     var celebrations = document.createElement("span");
         celebrations.classList.add("celebrations");
 
     var celebrations_image = document.createElement("img");
         celebrations_image.setAttribute("alt", "Case Animal/Bird");
-        celebrations_image.setAttribute("th:src", "@{/img/pigeon.png}");        
+        celebrations_image.setAttribute("th:src", "@{/img/pigeon.png}");
+        celebrations_image.innerHTML = "Thank You for saving my life.";
         celebrations_image.setAttribute("width", "10vw");
 
     //Appending-Children-to-Parents
@@ -227,9 +256,9 @@ function section_accept_case(data) {
 
 //SLIDER-----------------------------------------------------------------------------------------------------
 var currentSlide = 1;
+var slider_member_count;
 
 function slide_accept_case(slide_direction) {
-    var slider_member_count = document.getElementsByClassName("slider-member-count").length;
     var slideIndex = currentSlide + slide_direction;
     if (slideIndex < 1) {
         slideIndex = slider_member_count;
@@ -288,6 +317,8 @@ function displayPendingCases() {
                         console.info(item);
                         section_accept_case(item);
                         caseImageRetriever(item.caseId, "case-photos-" + item.caseId);
+                        slider_member_count = data.length;
+                        updateSliderMemeberCount = data.length;
                     });
 
                 }
@@ -426,7 +457,8 @@ $(document).ready(function () {
                 });
                 $('#' + tableId).html(cc.join(""));
                 if(cc.length === 0){
-                    $('#' + tableId).html("<li style='z-index: 1000000001;background-color: rgb(250,250,250)'>No Cases</li>");  //DISPLAY-No-Cases-on-Tab-that-has-none
+                    //DISPLAY-No-Cases-on-Tab-that-has-none
+                    $('#' + tableId).html("<li style='z-index: 1000000001;background-color: rgb(250,250,250)'>No Cases</li>");
                 }
             }
         );

@@ -42,7 +42,7 @@ main {
     background-color: #374047;
     padding-top: 1.5vh;
     padding-bottom: 1vh;
-    z-index: 1;
+    z-index: 2;
 }
 
 #profile-options {
@@ -92,6 +92,7 @@ main {
     background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5ed 75%);
     color: white;
     z-index: 10;
+    font-size: 0.9em;
 }
 
 .side-nav-anim {
@@ -170,7 +171,15 @@ main {
     position: relative;
     text-align: center;
     border-bottom: 1px solid white;
-    top: -2vh;
+}
+
+#profile-links button {
+    padding-bottom: 1vw;
+}
+
+a {
+    font-size: 0.95em;
+    line-height: 0px;
 }
 
 #profile-changes {
@@ -191,6 +200,165 @@ main {
     padding-right: 3vw;
 }
 
+/*--------------------------MAIN--------------------------------------*/
+main {
+    margin-left: 5vw;
+    margin-right: unset;
+}
+
+#assign-case-error {
+    display: none;
+    justify-content: space-around;
+    font-size: 1em;
+    color: red;
+    font-weight: 700;
+    font-style: italic;
+}
+
+.btn-group {
+    margin-right: 5vw;
+}
+
+#update-case-type {
+    padding: 7vw;
+    padding-top: 20vw;
+    text-align: center;
+}
+
+.btn-secondary {
+    background-color: #333;
+    border-radius: 0;
+}
+
+.active {
+    z-index: 1;
+    font-size: 1.5em;
+}
+
+#update-case-wrapper {
+    padding: 7vw;
+    padding-top: 0;
+}
+
+#update-case-wrapper * {
+    margin-top: 1vh;
+}
+
+.update-case-label {
+    display: inline-block;
+    width: 30vw;
+}
+
+#caseID-wrapper {
+    margin-right: 5vw;
+}
+
+#case-id {
+    padding: 2vw;
+    max-width: 15vw;
+}
+
+#update-case-date {
+    box-sizing: border-box;
+    padding: 1vh 3vw;
+    background-color: transparent;
+    border: 1px solid #CCC;
+    outline: none;
+    vertical-align: middle;
+}
+
+#close-case-reason-wrapper {
+    display: none;
+}
+
+#search-input-assign-case {
+    background-image: url("/img/search-1.png");
+    background-size: 7vw;
+    background-repeat: no-repeat;
+    background-position: 3vw 3vw;
+    padding: 3vw 0vw;
+    padding-left: 12vw;
+    width: 76vw;
+}
+
+#assign-case-search-results {
+    display: none;
+    width: 76vw;
+    padding: 3vw;
+    padding-top: 1vw;
+    border: 1px solid #CCC;
+    max-height: 25vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.vol-details-radio {
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+.vol-name {
+    margin-right: 10vw;
+}
+
+#case-summary-input {
+    width: 76vw;
+    padding: 5vw;
+    overflow: auto;
+}
+
+#charges-incured-label {
+    vertical-align: middle;
+    width: 35vw;
+}
+
+#charges-incured {
+    vertical-align: middle;
+    padding: 3vw;
+    width: 40vw;
+}
+
+#close-case-reason-wrapper {
+    text-align: center;
+    width: 76vw;
+}
+
+#close-case-reason-select {
+    padding: 3vw;
+}
+
+#close-case-other-reason {
+    display: none;
+    padding: 3vw;
+    width: 65vw;
+    margin-left: 8vw;
+}
+
+#cta-btns {
+    margin-top: 3vh;
+    margin-bottom: 10vh;
+    text-align: right;
+    margin-right: 5vw;
+}
+
+#cta-btns button {
+    color: white;
+}
+
+#close-case-cta-btns {
+    display: none;
+}
+
+#assign-case-assign {
+    background-color: rgb(0,128,0);
+}
+#assign-case-cancel, #close-case-cancel {
+    background-color: #374047;
+}
+#close-case-close {
+    background-color: rgb(140,30,30);
+}
+
 /*--------------------------BOTTOM-ACTION-BAR------------------------*/
 #bottom-action-bar {
     box-sizing: border-box;
@@ -200,7 +368,7 @@ main {
     width: 100vw;
     background-color: #374047;
     color: white;
-    z-index: 1001;
+    z-index: 10;
 }
 
 .action-bar-btn {
@@ -223,4 +391,11 @@ main {
 
 #logout {
     float: right;
+}
+
+@media only screen and (max-width: 360px) {
+    #update-case-date {
+        width: 42vw;
+        vertical-align: top;
+    }
 }

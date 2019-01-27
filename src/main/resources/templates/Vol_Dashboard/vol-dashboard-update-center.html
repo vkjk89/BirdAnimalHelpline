@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Update Center</title>
     
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="/static/css/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
     <link href="/static/css/Vol_Dashboard/vol-dashboard-update-center.css" rel="stylesheet" th:href="@{/css/Vol_Dashboard/vol-dashboard-update-center.css}">
@@ -60,7 +61,60 @@
         </section>
     </nav>
 
-    
+    <main id="update-case-type">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-secondary active" id="assign-case-toggle-btn">Assign Case</button>
+            <button type="button" class="btn btn-secondary" id="close-case-toggle-btn">Close Case</button>
+        </div>
+    </main>
+
+    <main>
+        <div id="assign-case-error">Please select a user to transfer case</div>
+        <form name="update-case-form" id="update-case-form">
+            <div id="update-case-wrapper">
+                <div id="update-case-basic-details">
+                    <div id="caseID-wrapper">
+                        <div id="caseID-label" class="update-case-label">Case ID: </div>
+                        <input type="text" id="case-id" value="#Case_ID" disabled>
+                    </div>
+                    <div for="update-case-date" class="update-case-label">Date of Update: </div>
+                    <input type="date" id="update-case-date" required title="Enter Case Update Date">
+                </div>
+                <div id="assign-case-wrapper">
+                    <input type="search" name="search-input-assign-case" placeholder="Search User..." id="search-input-assign-case">
+                    <div id="assign-case-search-results"></div>
+                </div>
+                <div id="close-case-reason-wrapper">
+                    <label for="close-case-reason-select">Select Reason: </label>
+                    <select name="close-case-reason-select" id="close-case-reason-select" required>
+                        <option value="healthy">Healthy</option>
+                        <option value="dead">Dead</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <textarea placeholder="Specify Reason" id="close-case-other-reason" name="close-case-other-reason" rows="2" cols="30"></textarea>
+                </div>
+                <div id="case-summary-wrapper">
+                    <textarea name="case-summary-input" id="case-summary-input" cols="30" rows="2" placeholder="Case Summary (Optional)"></textarea>
+                </div>
+                <div id="charges-incured-wrapper">
+                    <span id="charges-incured-label" class="update-case-label">Charges Incured: </span>
+                    <input type="number" name="charges-incured" id="charges-incured" placeholder="If Any">
+                </div>
+
+                <div id="cta-btns">
+                    <div id="assign-case-cta-btns">
+                        <button type="submit" id="assign-case-assign">Assign Case</button>
+                        <button type="submit" id="assign-case-cancel">Cancel</button>
+                    </div>
+                    <div id="close-case-cta-btns">
+                        <button type="submit" id="close-case-close">Close Case</button>
+                        <button type="submit" id="close-case-cancel">Cancel</button>
+                    </div>
+                    <input type="submit" id="assign-case-submit-final" mame="assign-case-submit-final" style="display:none">
+                </div>
+            </div>
+        </form>
+    </main>
 
     <section id="bottom-action-bar">
         <button class="action-bar-btn" id="home" type="button"><img alt="home" src="/static/img/home-white.png" th:src="@{/img/home-white.png}">
