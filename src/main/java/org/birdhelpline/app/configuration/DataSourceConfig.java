@@ -17,7 +17,6 @@ import javax.sql.DataSource;
 @Repository
 @EnableTransactionManagement
 public class DataSourceConfig {
-
     private final static Logger logger = LoggerFactory.getLogger(DataSourceConfig.class);
     @Value("${database.jdbc.url}")
     private String jdbcURL;
@@ -40,5 +39,4 @@ public class DataSourceConfig {
         HikariDataSource dataSource = new HikariDataSource(config);
         return dataSource;
     }
-
 }

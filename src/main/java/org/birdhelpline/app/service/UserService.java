@@ -18,14 +18,12 @@ import java.util.stream.Collectors;
 
 @Service("userService")
 public class UserService {
-    Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static  final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     private UserDao userDao;
-
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
 
     public long saveUser(User user) {
         user.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -35,27 +33,21 @@ public class UserService {
             logger.error(e.getMessage(), e);
             return 0;
         }
-
-
     }
 
     public Map<Integer, String> getSecurityQs() {
         return userDao.getSecurityQs();
-
     }
-
 
     public List<PinCodeLandmarkInfo> getPinCodeLandMarks(String term, String selectedPinCodes) {
         Set<Long> setSelected = new HashSet<>();
-        if(StringUtils.isNotBlank(selectedPinCodes)) {
+        if (StringUtils.isNotBlank(selectedPinCodes)) {
             List<String> list = Arrays.asList(selectedPinCodes.split(",", -1));
             list.stream().forEach(s -> setSelected.add(Long.parseLong(s)));
         }
         List<PinCodeLandmarkInfo> list = userDao.getPinCodeLandMarks();
-        return list.stream().filter(p -> !setSelected.contains(p.getPincodeId()) && (p.getLandmark().toLowerCase().indexOf(term) >= 0 || String.valueOf(p.getPincode()).indexOf(term) >=0) ).collect(Collectors.toList());
-
+        return list.stream().filter(p -> !setSelected.contains(p.getPincodeId()) && (p.getLandmark().toLowerCase().indexOf(term) >= 0 || String.valueOf(p.getPincode()).indexOf(term) >= 0)).collect(Collectors.toList());
     }
-
     public boolean findUserByMobile(long mobile) {
         return userDao.getUserByMobile(mobile);
     }
@@ -63,15 +55,6 @@ public class UserService {
     public User findUserByUserName(String userName) {
         return userDao.getUserByUserName(userName);
     }
-
-//    public boolean isFirstTimeLogin(String name) {
-//        User user = findUserByUserName(name);
-//        if (user == null || user.getLastLoginDate() == null || user.getLoginCount() == 0) {
-//            return true;
-//        }
-//        userDao.updateLastLoginDate(name);
-//        return false;
-//    }
 
     public void enableUser(String userName) {
         User user = userDao.getUserByUserName(userName);
@@ -81,7 +64,6 @@ public class UserService {
         logger.info("Enabling user : " + user);
         userDao.enableUser(user);
         userDao.insertUserAuthority(user.getUserId(), user.getRole());
-
     }
 
     public Set<String> getListBirds() {
@@ -107,5 +89,9 @@ public class UserService {
 
     public List<User> getUserList(String term) {
         return userDao.getUserByTerm(term);
+    }
+
+    public void updateUserLoginDetails(User user) {
+        userDao.updateUserLoginDetails(user);
     }
 }

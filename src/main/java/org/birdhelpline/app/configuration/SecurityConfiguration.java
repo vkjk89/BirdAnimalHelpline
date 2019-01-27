@@ -39,20 +39,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-        auth.
-                jdbcAuthentication()
+        auth.jdbcAuthentication()
                 .usersByUsernameQuery(usersQuery)
                 .authoritiesByUsernameQuery(rolesQuery)
                 .dataSource(dataSource)
                 .passwordEncoder(bCryptPasswordEncoder);
-
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        http.
-                authorizeRequests()
+        http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/signIn").permitAll()
                 .antMatchers("/login").permitAll()
@@ -61,9 +57,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/validateForgotPasswdDetails").permitAll()
                 .antMatchers("/profilePicUpload").permitAll()
                 .antMatchers("/enableUser").permitAll()
-                //.antMatchers("/css/**").permitAll()
-                //.antMatchers("/img/**").permitAll()
-                //.antMatchers("/js/**").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
@@ -73,15 +66,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/default", true)
                 .usernameParameter("username")
                 .passwordParameter("password")
-                //.successHandler(successHandler)
-
                 .and().logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
-                //.logoutSuccessHandler(logoutSuccessHandler)
                 .and().exceptionHandling()
                 .accessDeniedPage("/access-denied");
-
     }
 
     @Override

@@ -15,8 +15,6 @@ public class WebUtils {
 
     private User getUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        //return user;
-        //SecurityContextHolder.getContext().getAuthentication().
         return userService.findUserByUserName(auth.getName());
     }
 }

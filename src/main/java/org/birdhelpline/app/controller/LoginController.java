@@ -147,16 +147,14 @@ public class LoginController {
     @RequestMapping(path = "/profileCompletion", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView processProfileCompletionPage(@RequestParam(name = "page", required = false) final Integer currentPage,
                                                      final @ModelAttribute("user") User user, BindingResult result,
-                                                     SessionStatus status,
                                                      @RequestParam(name = "action", required = false) String action,
                                                      HttpServletRequest request,
                                                      RedirectAttributes redirectAttrs) {
-        logger.info("vkj inside profile comple : " + user + " " + currentPage);
+        logger.info("vkj inside profile completion : " + user + " " + currentPage);
         logger.info("vkj action : " + action);
 
         ModelAndView modelAndView = new ModelAndView();
         if (currentPage == null) {
-            //modelAndView.setViewName("Vol-dashboard");
             modelAndView.setViewName("Profile-Completion/step1");
             return modelAndView;
         }
@@ -170,7 +168,6 @@ public class LoginController {
             case 3:
                 handleProfileStep3(modelAndView, user, request, redirectAttrs);
                 break;
-            //TODO create this page
             default:
                 modelAndView.setViewName("Error");
 
@@ -267,7 +264,7 @@ public class LoginController {
     @RequestMapping(path = "/profilePicUpload", method = RequestMethod.POST)
     public @ResponseBody
     String profilePicUpload(@RequestParam(name = "dp-image", required = false) MultipartFile file,
-                            final HttpSession session, final @ModelAttribute("user") User user
+                            final @ModelAttribute("user") User user
     ) throws IOException {
         logger.info("Received data 1 : " + file);
         user.getUserImage().setImage(file.getBytes());

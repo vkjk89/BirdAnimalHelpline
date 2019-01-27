@@ -5,6 +5,7 @@ import org.birdhelpline.app.model.PinCodeLandmarkInfo;
 import org.birdhelpline.app.model.User;
 import org.birdhelpline.app.service.CaseService;
 import org.birdhelpline.app.service.UserService;
+import org.birdhelpline.app.utils.ResponseStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,10 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
-
     @Autowired
     private CaseService caseService;
 
@@ -34,17 +34,17 @@ public class UserController {
     public @ResponseBody
     String enableUser(@RequestParam("userName") String name) {
         userService.enableUser(name);
-        return "SUCCESS";
+        return ResponseStatus.SUCCESS.name();
     }
 
 
     @RequestMapping("/getPinCodeLandMark")
     public @ResponseBody
     List<PinCodeLandmarkInfo> getPinCodeVsLandMarks(@RequestParam("term") String term,
-                                                    @RequestParam(name="selectedPinCodes" , required = false) String selectedPinCodes) {
+                                                    @RequestParam(name = "selectedPinCodes", required = false) String selectedPinCodes) {
         logger.info("vkj term : " + term);
         logger.info("vkj selected : " + selectedPinCodes);
-        return userService.getPinCodeLandMarks(term.toLowerCase(),selectedPinCodes);
+        return userService.getPinCodeLandMarks(term.toLowerCase(), selectedPinCodes);
     }
 
     @RequestMapping("/getVolListForSearch")
@@ -61,20 +61,12 @@ public class UserController {
         logger.info("vkj term : " + term);
         List<User> users = userService.getUserList(term.toLowerCase());
         List<CaseInfo> caseInfos = caseService.getAllCaseInfo(term);
-        if(!CollectionUtils.isEmpty(users)) {
+        if (!CollectionUtils.isEmpty(users)) {
             list.addAll(users);
         }
-        if(!CollectionUtils.isEmpty(caseInfos)) {
+        if (!CollectionUtils.isEmpty(caseInfos)) {
             list.addAll(caseInfos);
         }
         return list;
     }
-
 }
-
-
-
-
-
-
-

@@ -4,6 +4,7 @@ import org.birdhelpline.app.model.CaseImage;
 import org.birdhelpline.app.model.CaseInfo;
 import org.birdhelpline.app.model.User;
 import org.birdhelpline.app.service.CaseService;
+import org.birdhelpline.app.utils.ResponseStatus;
 import org.birdhelpline.app.utils.Role;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,9 +31,6 @@ public class CaseController {
     @RequestMapping(path = "/casePicUpload", method = RequestMethod.POST)
     public @ResponseBody
     String caseImageUpload(MultipartHttpServletRequest request) throws IOException {
-//    String profilePicUpload(@RequestParam(name = "case_photos") List<MultipartFile> files,
-//                            @RequestParam(name = "case_id") Long caseId,
-//                            final HttpSession session) throws IOException {
         Long caseId = Long.parseLong(request.getParameter("case_id"));
         logger.info("Received case images for : " + caseId);
         List<MultipartFile> multipartFileList = request.getFiles("case-photos");
@@ -46,14 +44,13 @@ public class CaseController {
             caseImage.setImages(list);
             caseService.saveCaseImages(caseImage);
         }
-        return "succees";
+        return ResponseStatus.SUCCESS.name();
     }
 
-    @RequestMapping(value = "/addNewCase", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
+    @RequestMapping(value = "/addNewCase", method = RequestMethod.POST)
     public @ResponseBody
     String addANewCase(@ModelAttribute CaseInfo caseInfo, HttpSession session) {
         logger.info("vkj : got " + caseInfo);
-
         User user = getUser(session);
         if (user == null) {
             return "Error";
@@ -63,24 +60,25 @@ public class CaseController {
         return String.valueOf(caseService.save(caseInfo));
     }
 
-    @RequestMapping(value = "/assignCase", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
+    @RequestMapping(value = "/assignCase", method = RequestMethod.POST)
     public @ResponseBody
     String assignCase(@RequestParam("caseId") Long caseId, @RequestParam("userId") Long toUserId, HttpSession session) {
         User user = getUser(session);
         if (user == null) {
             return "Error";
         }
-        return String.valueOf(caseService.assignCase(user.getUserId(), toUserId, caseId));
+        return caseService.assignCase(user.getUserId(), toUserId, caseId);
     }
 
-    @RequestMapping(value = "/closeCase", method = RequestMethod.POST, consumes = {"application/x-www-form-urlencoded"})
+    //, consumes = {"application/x-www-form-urlencoded"}
+    @RequestMapping(value = "/closeCase", method = RequestMethod.POST)
     public @ResponseBody
     String closeCase(@RequestParam("caseId") Long caseId, @RequestParam("closeRemark") String remark, @RequestParam("closeCaseReason") String closeReason, HttpSession session) {
         User user = getUser(session);
         if (user == null) {
             return "Error";
         }
-        return String.valueOf(caseService.closeCase(user.getUserId(), caseId, remark, closeReason));
+        return caseService.closeCase(user.getUserId(), caseId, remark, closeReason);
     }
 
     @RequestMapping(value = "/getCaseInfoForSearch", method = RequestMethod.GET)
@@ -108,13 +106,13 @@ public class CaseController {
         }
         if (forUserId != null && forUserId != -1) {
             if (user.getRole().equals(Role.ADMIN.name()) || user.getRole().equals(Role.Receptionist.name())) {
-                return caseService.getActiveCaseInfoByUserId(forUserId);
+                return caseService.getActiveCaseInfoByUserId(forUserId, user.getRole());
             } else {
                 logger.warn("Unauthorized access by : " + user.getUserName() + " for : " + forUserId);
                 return null;
             }
         } else {
-            return caseService.getActiveCaseInfoByUserId(user.getUserId());
+            return caseService.getActiveCaseInfoByUserId(user.getUserId(), user.getRole());
         }
     }
 
@@ -127,13 +125,13 @@ public class CaseController {
         }
         if (forUserId != null && forUserId != -1) {
             if (user.getRole().equals(Role.ADMIN.name()) || user.getRole().equals(Role.Receptionist.name())) {
-                return caseService.getRecentCaseInfoByUserId(forUserId);
+                return caseService.getRecentCaseInfoByUserId(forUserId, user.getRole());
             } else {
                 logger.warn("Unauthorized access by : " + user.getUserName() + " for : " + forUserId);
                 return null;
             }
         } else {
-            return caseService.getRecentCaseInfoByUserId(user.getUserId());
+            return caseService.getRecentCaseInfoByUserId(user.getUserId(), user.getRole());
         }
     }
 
@@ -146,13 +144,13 @@ public class CaseController {
         }
         if (forUserId != null && forUserId != -1) {
             if (user.getRole().equals(Role.ADMIN.name()) || user.getRole().equals(Role.Receptionist.name())) {
-                return caseService.getClosedCaseInfoByUserId(forUserId);
+                return caseService.getClosedCaseInfoByUserId(forUserId, user.getRole());
             } else {
                 logger.warn("Unauthorized access by : " + user.getUserName() + " for : " + forUserId);
                 return null;
             }
         } else {
-            return caseService.getClosedCaseInfoByUserId(user.getUserId());
+            return caseService.getClosedCaseInfoByUserId(user.getUserId(), user.getRole());
         }
     }
 
@@ -165,7 +163,7 @@ public class CaseController {
     List<String> getCaseImages(@RequestParam("caseId") Long caseId) throws IOException {
         List<String> list = new ArrayList<>();
         CaseImage caseImage = caseService.getCaseImages(caseId);
-        for(byte[] bArr : caseImage.getImages()) {
+        for (byte[] bArr : caseImage.getImages()) {
             list.add(Base64.getEncoder().encodeToString(bArr));
         }
         return list;
@@ -197,8 +195,6 @@ public class CaseController {
         if (user == null) {
             return "Error";
         }
-        return String.valueOf(caseService.acceptRejectCase(user.getUserId(), acceptReject, caseId));
-
+        return caseService.acceptRejectCase(user.getUserId(), acceptReject, caseId);
     }
-
 }

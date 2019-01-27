@@ -8,6 +8,8 @@ import org.birdhelpline.app.dataaccess.UserDao;
 import org.birdhelpline.app.model.CaseImage;
 import org.birdhelpline.app.model.CaseInfo;
 import org.birdhelpline.app.model.User;
+import org.birdhelpline.app.utils.AnimalType;
+import org.birdhelpline.app.utils.ResponseStatus;
 import org.birdhelpline.app.utils.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,6 @@ import java.util.stream.Collectors;
 
 
 @Service
-
 public class CaseService {
 
     Gson gson = new Gson();
@@ -29,13 +30,12 @@ public class CaseService {
     @Autowired
     private UserDao userDao;
 
-
     @Transactional
     public Long save(CaseInfo caseInfo) {
         if (StringUtils.isNotBlank(caseInfo.getNewBirdAnimal())) {
             boolean exists = userDao.birdOrAnimalExists(caseInfo.getNewBirdAnimal());
             if (!exists) {
-                if ("Bird".equalsIgnoreCase(caseInfo.getBirdOrAnimal())) {
+                if (AnimalType.Bird.name().equalsIgnoreCase(caseInfo.getBirdOrAnimal())) {
                     userDao.addBird(caseInfo.getNewBirdAnimal());
                 } else {
                     userDao.addAnimal(caseInfo.getNewBirdAnimal());
@@ -51,8 +51,9 @@ public class CaseService {
     }
 
 
-    public List getActiveCaseInfoByUserId(Long userId) {
-        List<CaseInfo> list = getAllCaseInfo(userId);
+    public List<CaseInfo> getActiveCaseInfoByUserId(Long userId, String role) {
+        Boolean pendingForAck = getTypeCaseStatus(role);
+        List<CaseInfo> list = getAllCaseInfo(userId, pendingForAck);
         if (list != null && !list.isEmpty()) {
             list = list.stream().filter(c -> c.isActive()).collect(Collectors.toList());
             Collections.sort(list,
@@ -62,8 +63,19 @@ public class CaseService {
         return Collections.EMPTY_LIST;
     }
 
-    public List getRecentCaseInfoByUserId(Long userId) {
-        List<CaseInfo> list = getAllCaseInfo(userId);
+    private Boolean getTypeCaseStatus(String role) {
+        Boolean pendingForAck;
+        if (Role.ADMIN.name().equalsIgnoreCase(role) || Role.Receptionist.name().equalsIgnoreCase(role)) {
+            pendingForAck = null;
+        } else {
+            pendingForAck = false;
+        }
+        return pendingForAck;
+    }
+
+    public List<CaseInfo> getRecentCaseInfoByUserId(Long userId, String role) {
+        Boolean pendingForAck = getTypeCaseStatus(role);
+        List<CaseInfo> list = getAllCaseInfo(userId, pendingForAck);
         if (list != null && !list.isEmpty()) {
             Collections.sort(list, (c1, c2) -> c2.getLastModificationDate().compareTo(c1.getLastModificationDate()));
             return list;
@@ -72,8 +84,9 @@ public class CaseService {
 
     }
 
-    public List getClosedCaseInfoByUserId(Long userId) {
-        List<CaseInfo> list = getAllCaseInfo(userId);
+    public List<CaseInfo> getClosedCaseInfoByUserId(Long userId, String role) {
+        Boolean pendingForAck = getTypeCaseStatus(role);
+        List<CaseInfo> list = getAllCaseInfo(userId, pendingForAck);
         if (list != null && !list.isEmpty()) {
             list = list.stream().filter(c -> !c.isActive()).collect(Collectors.toList());
             Collections.sort(list,
@@ -98,21 +111,21 @@ public class CaseService {
             obj.addProperty("nearest", nearestVolStr);
             return gson.toJson(obj);
         }
-        return "";
+        return new JsonObject().toString();
     }
 
     public String assignCase(Long userId, Long toUserId, Long caseId) {
         caseDao.assignCase(userId, toUserId, caseId);
-        return "success";
+        return ResponseStatus.SUCCESS.name();
     }
 
     public String closeCase(Long userId, Long caseId, String closeRemark, String closeReason) {
         caseDao.closeCase(userId, caseId, closeRemark, closeReason);
-        return "success";
+        return ResponseStatus.SUCCESS.name();
     }
 
-    public List getCaseInfo(Long userId, String searchTerm) {
-        List<CaseInfo> list = getAllCaseInfo(userId);
+    public List<CaseInfo> getCaseInfo(Long userId, String searchTerm) {
+        List<CaseInfo> list = getAllCaseInfo(userId, null);
         if (list != null && !list.isEmpty()) {
             list = list.stream().filter(c -> String.valueOf(c.getCaseId()).contains(searchTerm)).collect(Collectors.toList());
             Collections.sort(list, (c1, c2) -> c2.getLastModificationDate().compareTo(c1.getLastModificationDate()));
@@ -128,8 +141,8 @@ public class CaseService {
     }
 
 
-    private List<CaseInfo> getAllCaseInfo(Long userId) {
-        List<CaseInfo> list = caseDao.getAllCaseInfoByUserId(userId);
+    private List<CaseInfo> getAllCaseInfo(Long userId, Boolean pendingForAck) {
+        List<CaseInfo> list = caseDao.getCaseInfoByUserId(userId, pendingForAck);
         getUserDetailsForCase(list);
         return list;
     }
@@ -158,7 +171,7 @@ public class CaseService {
     }
 
     public List<CaseInfo> getPendingCaseInfo(Long forUserId) {
-        List<CaseInfo> list = caseDao.getAllPendingCaseInfoByUserId(forUserId);
+        List<CaseInfo> list = caseDao.getCaseInfoByUserId(forUserId, true);
         if (list != null && !list.isEmpty()) {
             return list;
         }
@@ -168,8 +181,8 @@ public class CaseService {
 
     @Transactional
     public String acceptRejectCase(Long userId, boolean acceptReject, Long caseId) {
-        caseDao.updateCaseTxn(caseId,userId,acceptReject);
-        caseDao.updateUserInfo(userId,acceptReject);
-        return "success";
+        caseDao.updateCaseTxn(caseId, userId, acceptReject);
+        caseDao.updateUserInfo(userId, acceptReject);
+        return ResponseStatus.SUCCESS.name();
     }
 }
