@@ -2,43 +2,43 @@ var usersPendingCaseMap = new Map();
 var updateSliderMemeberCount;
 
 function accept(caseId) {
-    acceptReject(caseId,true);
+    acceptReject(caseId, true);
     $('.celebrations').fadeIn();
     $(".accept-case-container").css("pointerEvents", "none");
     //window.scrollTo(0, document.body.scrollHeight);
 }
 
 function decline(caseId) {
-    acceptReject(caseId,false);
+    acceptReject(caseId, false);
     $('.celebrations').css("display", "none");
     $(".accept-case-container").css("pointerEvents", "none");
     //window.scrollTo(0, document.body.scrollHeight);
 }
 
-function temp_accept_reject(this_t){
+function temp_accept_reject(this_t) {
     var elementTemp = this_t.classList;
-    var element = elementTemp[elementTemp.length-1];
+    var element = elementTemp[elementTemp.length - 1];
     var split = element.split("-");
-    var number = split[split.length-1];
+    var number = split[split.length - 1];
     updateSliderMemeberCount--;
     $('.accept-decline-pending-cases').text(updateSliderMemeberCount);
-    $(".celebrations-container-"+number).fadeIn(100);
-    setTimeout(function(){
-        if(updateSliderMemeberCount === 0){
+    $(".celebrations-container-" + number).fadeIn(100);
+    setTimeout(function () {
+        if (updateSliderMemeberCount === 0) {
             $('.slider-nav-right').fadeOut(100);
             $('.slider-nav-left').fadeOut(100);
             $('#case-slider').fadeOut();
             $('#accept-case-empty').fadeIn();
             $(".accept-case-wrapper").css("minHeight", "0vh");
         }
-        $('.'+element).remove();
-        $(".slider-member-bullet-"+number).remove();
-        $("celebrations-container-"+number).fadeOut(100);
+        $('.' + element).remove();
+        $(".slider-member-bullet-" + number).remove();
+        $("celebrations-container-" + number).fadeOut(100);
         slide_accept_case(1);
     }, 1000);
 }
 
-function acceptReject(caseId,acceptReject) {
+function acceptReject(caseId, acceptReject) {
     var formData = {
         'caseId': caseId,
         'acceptReject': acceptReject
@@ -50,7 +50,7 @@ function acceptReject(caseId,acceptReject) {
         // dataType: 'json'
     })
         .done(function (data) {
-                console.log("done vvkj : "+data);
+                console.log("done vvkj : " + data);
             }
         );
 }
@@ -69,133 +69,132 @@ var slider_member_bullet = 1;
 function section_accept_case(data) {
     //Creating-and-Assigning-Attributes-----
     var slide_div = document.createElement("div");
-        slide_div.classList.add("slider-member-bullet");
-        slide_div.classList.add("slider-member-bullet-" + slider_member_bullet);
-        slide_div.innerHTML = "l";
+    slide_div.classList.add("slider-member-bullet");
+    slide_div.classList.add("slider-member-bullet-" + slider_member_bullet);
+    slide_div.innerHTML = "l";
 
     var accept_case_container = document.createElement("div");
-        accept_case_container.classList.add("accept-case-container");
+    accept_case_container.classList.add("accept-case-container");
 
     var case_details = document.createElement("div");
-        case_details.classList.add("case-details");
+    case_details.classList.add("case-details");
 
     var box1 = document.createElement("div");
-        box1.classList.add("box1");
+    box1.classList.add("box1");
 
     var text_case_id = document.createElement("span");
-        text_case_id.innerHTML = "Case ID: ";
+    text_case_id.innerHTML = "Case ID: ";
 
     var case_id = document.createElement("span");
-        case_id.classList.add("case-id");
-        case_id.innerHTML = data.caseId;
+    case_id.classList.add("case-id");
+    case_id.innerHTML = data.caseId;
 
     var box2 = document.createElement("div");
-        box2.classList.add("box2");
+    box2.classList.add("box2");
 
     var bird_animal_info_header = document.createElement("div");
-        bird_animal_info_header.classList.add("bird-animal-info-header");
-        bird_animal_info_header.innerHTML = data.birdOrAnimal+" Information";
+    bird_animal_info_header.classList.add("bird-animal-info-header");
+    bird_animal_info_header.innerHTML = data.birdOrAnimal + " Information";
 
     var animal_type = document.createElement("div");
-        animal_type.classList.add("animal-type");
-        animal_type.innerHTML = data.birdOrAnimal+" Type: " + data.typeAnimal;
+    animal_type.classList.add("animal-type");
+    animal_type.innerHTML = data.birdOrAnimal + " Type: " + data.typeAnimal;
 
     var animal_name = document.createElement("div");
-        animal_name.classList.add("animal-name");
-        if(data.animalName != ""){
-            animal_name.innerHTML = data.birdOrAnimal+" Name: " + data.animalName;
-        } else animal_name.innerHTML = data.birdOrAnimal+" Name: Unspecified";
+    animal_name.classList.add("animal-name");
+    if (data.animalName != "") {
+        animal_name.innerHTML = data.birdOrAnimal + " Name: " + data.animalName;
+    } else animal_name.innerHTML = data.birdOrAnimal + " Name: Unspecified";
 
     var text_span_condition = document.createElement("span");
-        text_span_condition.innerHTML = "Condition: ";
+    text_span_condition.innerHTML = "Condition: ";
 
     var case_condition = document.createElement("span");
-        case_condition.classList.add("case-condition");
-        if(data.animalCondition != ""){
+    case_condition.classList.add("case-condition");
+    if (data.animalCondition != "") {
         case_condition.innerHTML = data.animalCondition;
-        } else case_condition.innerHTML = "Unspecified";
+    } else case_condition.innerHTML = "Unspecified";
 
     var text_div_photos_uploaded = document.createElement("div");
-        text_div_photos_uploaded.innerHTML = "Photos Uploaded: ";
+    text_div_photos_uploaded.innerHTML = "Photos Uploaded: ";
 
     var case_photos = document.createElement("div");
-        case_photos.classList.add("case-photos");
-        case_photos.setAttribute("id","case-photos-"+data.caseId);
-        //case_photos.id.add("case-photos");
-        //Make innerHTML "none" by default, if photos are there then attach them.
-        //case_photos.innerHTML = "<img src=\"\" onclick=\"enlargePhoto(this)\">";
+    case_photos.classList.add("case-photos");
+    case_photos.setAttribute("id", "case-photos-" + data.caseId);
+    //case_photos.id.add("case-photos");
+    //Make innerHTML "none" by default, if photos are there then attach them.
+    //case_photos.innerHTML = "<img src=\"\" onclick=\"enlargePhoto(this)\">";
 
     var box3 = document.createElement("div");
-        box3.classList.add("box3");
+    box3.classList.add("box3");
 
     var contact_info_header = document.createElement("div");
-        contact_info_header.classList.add("contact-info-header");
-        contact_info_header.innerHTML = "Contact Information";
+    contact_info_header.classList.add("contact-info-header");
+    contact_info_header.innerHTML = "Contact Information";
 
     var contact_info = document.createElement("div");
-        contact_info.classList.add("contact-info");
+    contact_info.classList.add("contact-info");
 
     var text_span_name = document.createElement("span");
-        text_span_name.innerHTML = "Name: ";
+    text_span_name.innerHTML = "Name: ";
 
     var contact_name = document.createElement("span");
-        contact_name.classList.add("contact-name");
-        contact_name.innerHTML = data.contactName + "<br>";
+    contact_name.classList.add("contact-name");
+    contact_name.innerHTML = data.contactName + "<br>";
 
     var text_span_number = document.createElement("span");
-        text_span_number.innerHTML = "Contact Number: ";
+    text_span_number.innerHTML = "Contact Number: ";
 
     var contact_number = document.createElement("span");
-        contact_number.classList.add("contact-number");
-        contact_number.innerHTML = "<a style=\"color:black;text-decoration:underline\" href=\"tel:"+data.contactPrefix+data.contactNumber+"\">"+data.contactPrefix+"-"+data.contactNumber;
+    contact_number.classList.add("contact-number");
+    contact_number.innerHTML = "<a style=\"color:black;text-decoration:underline\" href=\"tel:" + data.contactPrefix + data.contactNumber + "\">" + data.contactPrefix + "-" + data.contactNumber;
 
     var text_location = document.createElement("div");
-        text_location.innerHTML = "Location: ";
+    text_location.innerHTML = "Location: ";
 
     var contact_location = document.createElement("div");
-        contact_location.classList.add("contact-location");
-        if(data.location === ""){
-            if(data.locationLandMark === ""){
-            contact_location.innerHTML = data.locationPincode; 
-            }
-            else contact_location.innerHTML = data.locationLandMark+"<br>"+data.locationPincode;
-        }else if(data.locationLandMark === ""){
+    contact_location.classList.add("contact-location");
+    if (data.location === "") {
+        if (data.locationLandMark === "") {
             contact_location.innerHTML = data.locationPincode;
-        }else {
-        contact_location.innerHTML = data.location+"<br>"+data.locationLandMark+"<br>"+data.locationPincode;
-        }
+        } else contact_location.innerHTML = data.locationLandMark + "<br>" + data.locationPincode;
+    } else if (data.locationLandMark === "") {
+        contact_location.innerHTML = data.locationPincode;
+    } else {
+        contact_location.innerHTML = data.location + "<br>" + data.locationLandMark + "<br>" + data.locationPincode;
+    }
 
     var accept_decline = document.createElement("div");
-        accept_decline.classList.add("accept-decline");
+    accept_decline.classList.add("accept-decline");
 
     var decline = document.createElement("button");
-        decline.innerHTML = "I am helpless";
-        decline.classList.add("decline");
-        decline.setAttribute("type", "submit");
-        decline.setAttribute("onclick", "decline("+data.caseId+");");
-        //decline.setAttribute("onclick", "temp_accept_reject(this)");
-        decline.classList.add("slider-member-" + slider_member_counter);
+    decline.innerHTML = "I am helpless";
+    decline.classList.add("decline");
+    decline.setAttribute("type", "submit");
+    decline.setAttribute("onclick", "decline(" + data.caseId + ");");
+    //decline.setAttribute("onclick", "temp_accept_reject(this)");
+    decline.classList.add("slider-member-" + slider_member_counter);
 
     var accept = document.createElement("button");
-        accept.innerHTML = "Accept";
-        accept.classList.add("accept");
-        accept.setAttribute("type", "submit");
-        accept.setAttribute("onclick", "accept("+data.caseId+");");
-        //accept.setAttribute("onclick", "temp_accept_reject(this)");
-        accept.classList.add("slider-member-" + slider_member_counter);
+    accept.innerHTML = "Accept";
+    accept.classList.add("accept");
+    accept.setAttribute("type", "submit");
+    accept.setAttribute("onclick", "accept(" + data.caseId + ");");
+    //accept.setAttribute("onclick", "temp_accept_reject(this)");
+    accept.classList.add("slider-member-" + slider_member_counter);
 
     var celebrations_container = document.createElement("div");
-        celebrations_container.classList.add("celebrations-container");
-        celebrations_container.classList.add("celebrations-container-" + slider_member_counter);
+    celebrations_container.classList.add("celebrations-container");
+    celebrations_container.classList.add("celebrations-container-" + slider_member_counter);
 
     var celebrations = document.createElement("span");
-        celebrations.classList.add("celebrations");
+    celebrations.classList.add("celebrations");
 
     var celebrations_image = document.createElement("img");
-        celebrations_image.setAttribute("alt", "Case Animal/Bird");
-        celebrations_image.setAttribute("th:src", "@{/img/pigeon.png}");
-        celebrations_image.innerHTML = "Thank You for saving my life.";
-        celebrations_image.setAttribute("width", "10vw");
+    celebrations_image.setAttribute("alt", "Case Animal/Bird");
+    celebrations_image.setAttribute("th:src", "@{/img/pigeon.png}");
+    celebrations_image.innerHTML = "Thank You for saving my life.";
+    celebrations_image.setAttribute("width", "10vw");
 
     //Appending-Children-to-Parents
     //Box3---------------------------------------------------
@@ -318,12 +317,12 @@ function displayPendingCases() {
                     $('.accept-decline-pending-cases').text(data.length);
                     $.each(data, function (i, item) {
                         console.info(item);
-                        if(!usersPendingCaseMap.has(item.caseId)) {
+                        if (!usersPendingCaseMap.has(item.caseId)) {
                             section_accept_case(item);
                             caseImageRetriever(item.caseId, "case-photos-" + item.caseId);
                             slider_member_count = data.length;
                             updateSliderMemeberCount = data.length;
-                            usersPendingCaseMap.set(item.caseId,item);
+                            usersPendingCaseMap.set(item.caseId, item);
                         }
                     });
 
@@ -336,16 +335,16 @@ function goToCaseDetails(element) {
     console.info(element);
     var caseId = $(element).find(".case-id").text();
     console.info(caseId);
-    window.location.href = "/caseDetails?caseId="+caseId;
-
+    window.location.href = "/caseDetails?caseId=" + caseId;
 }
 
 //-----------------------------------------------------------------------------------------------------------
 
 $(document).ready(function () {
     displayPendingCases();
-    setInterval(function () { displayPendingCases(); },30000 );
-    //displayPendingCases();
+    setInterval(function () {
+        displayPendingCases();
+    }, 30000);
     $("#logout").on("click", function (e) {
         e.preventDefault();
         window.location.assign("/logout");
@@ -403,26 +402,25 @@ $(document).ready(function () {
     document.getElementById('close-btn').onclick = function closeSideNav() {
         document.getElementById('side-nav').classList.remove('side-nav-anim');
         document.getElementById('side-nav').style.display = "none";
-        document.getElementById('page-heading').style.opacity = "1"; 
+        document.getElementById('page-heading').style.opacity = "1";
         document.getElementById('top-nav').style.opacity = "1";
         document.getElementById('my-cases').style.opacity = "1";
         document.getElementById('accept-case-wrapper').style.opacity = "1";
         document.getElementsByTagName("main")[0].style.pointerEvents = "";
     };
 
-    document.getElementById('search-case-input').onkeyup = function(){
+    document.getElementById('search-case-input').onkeyup = function () {
         //Actually-put-this-part-in-success-or-done-ajax
-        if(this.value.length > 1){
+        if (this.value.length > 1) {
             $("#search-results-div").css("display", "none");
             $("#search-input-results").css("display", "block");
-        }
-        else {
+        } else {
             $("#search-results-div").css("display", "block");
             $("#search-input-results").css("display", "none");
         }
-        
+
     };
-    
+
     $('#image_enlarge_back_button').click(function () {
         $('#dynamic_image_enlarge').css('display', 'none');
     });
@@ -475,7 +473,7 @@ $(document).ready(function () {
                     cc.push(htm);
                 });
                 $('#' + tableId).html(cc.join(""));
-                if(cc.length === 0){
+                if (cc.length === 0) {
                     //DISPLAY-No-Cases-on-Tab-that-has-none
                     $('#' + tableId).html("<li style='z-index: 1000000001;background-color: rgb(250,250,250)'>No Cases</li>");
                 }

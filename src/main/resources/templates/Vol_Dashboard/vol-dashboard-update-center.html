@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Update Center</title>
-    
+
+    <link href="/static/css/jquery/jquery-ui.theme.min.css" rel="stylesheet" th:href="@{/css/jquery/jquery-ui.theme.min.css}">
+    <link href="/static/css/jquery/jquery-ui.structure.min.css" rel="stylesheet" th:href="@{/css/jquery/jquery-ui.structure.min.css}">
+    <link href="/static/css/jquery/jquery-ui.min.css" rel="stylesheet" th:href="@{/css/jquery/jquery-ui.min.css}">
+
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="/static/css/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
@@ -13,6 +17,8 @@
     <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
     <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/icons/manifest.json}">
+    <script src="/static/js/jquery.ui.widget.js" th:src="@{/js/jquery.ui.widget.js}"></script>
+    <script src="/static/js/jquery-ui.min.js" th:src="@{/js/jquery-ui.min.js}"></script>
 </head>
 <body>
     
@@ -75,42 +81,43 @@
                 <div id="update-case-basic-details">
                     <div id="caseID-wrapper">
                         <div id="caseID-label" class="update-case-label">Case ID: </div>
-                        <input type="text" id="case-id" value="#Case_ID" disabled>
+                        <input type="text" th:value="${caseInfo.caseId}" name="caseId" id="case-id" value="#Case_ID" readonly>
                     </div>
                     <div for="update-case-date" class="update-case-label">Date of Update: </div>
-                    <input type="date" id="update-case-date" required title="Enter Case Update Date">
+                    <input type="date" name="caseUpdateDate" id="update-case-date" required title="Enter Case Update Date">
                 </div>
                 <div id="assign-case-wrapper">
-                    <input type="search" name="search-input-assign-case" placeholder="Search User..." id="search-input-assign-case">
+                    <input class="ui-autocomplete-input" type="search" name="search-input-assign-case" placeholder="Search User..." id="search-input-assign-case">
                     <div id="assign-case-search-results"></div>
                 </div>
                 <div id="close-case-reason-wrapper">
                     <label for="close-case-reason-select">Select Reason: </label>
-                    <select name="close-case-reason-select" id="close-case-reason-select" required>
+                    <select name="caseCloseReason" id="close-case-reason-select" required>
                         <option value="healthy">Healthy</option>
                         <option value="dead">Dead</option>
                         <option value="other">Other</option>
                     </select>
-                    <textarea placeholder="Specify Reason" id="close-case-other-reason" name="close-case-other-reason" rows="2" cols="30"></textarea>
+                    <textarea placeholder="Specify Reason" id="close-case-other-reason" name="caseCloseReasonOther" rows="2" cols="30"></textarea>
                 </div>
                 <div id="case-summary-wrapper">
-                    <textarea name="case-summary-input" id="case-summary-input" cols="30" rows="2" placeholder="Case Summary (Optional)"></textarea>
+                    <textarea name="caseSummary" id="case-summary-input" cols="30" rows="2" placeholder="Case Summary (Optional)"></textarea>
                 </div>
                 <div id="charges-incured-wrapper">
                     <span id="charges-incured-label" class="update-case-label">Charges Incured: </span>
-                    <input type="number" name="charges-incured" id="charges-incured" placeholder="If Any">
+                    <input type="number" name="chargesIncurred" id="charges-incured" placeholder="If Any">
                 </div>
 
                 <div id="cta-btns">
                     <div id="assign-case-cta-btns">
-                        <button type="submit" value="assign" id="assign-case-assign">Assign Case</button>
+                        <button type="button" id="assign-case-assign">Assign Case</button>
                         <button type="button" id="assign-case-cancel">Cancel</button>
                     </div>
                     <div id="close-case-cta-btns">
-                        <button type="submit" value="close" id="close-case-close">Close Case</button>
+                        <button type="button" id="close-case-close">Close Case</button>
                         <button type="button" id="close-case-cancel">Cancel</button>
                     </div>
-                    <input type="submit" id="assign-case-submit-final" mame="assign-case-submit-final" style="display:none">
+                    <input type="hidden" id="action" name="action">
+                    <input type="submit" id="assign-case-submit-final" style="display:none">
                 </div>
             </div>
         </form>

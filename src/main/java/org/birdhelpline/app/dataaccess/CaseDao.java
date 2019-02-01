@@ -19,24 +19,25 @@ import org.springframework.stereotype.Repository;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.DoubleBinaryOperator;
 import java.util.function.Supplier;
 
 @Repository
 public class CaseDao {
     private static final Logger logger = LoggerFactory.getLogger(CaseDao.class);
-    private static final SimpleDateFormat FORMATTED_DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+    private static final SimpleDateFormat FORMATTED_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     private static final String caseInfoByCaseIdQWithoutTxn = "select * from case_info where case_id = ?";
     private static final String caseInfoBySearchTermQWithoutTxn = "select * from case_info where case_id like :searchTerm";
     private static final String caseTxnsQ = "select * from case_txn where case_id = ?";
-    private static final String casePendingForAckQ = "select DISTINCT ci.* from case_info ci, case_txn ct where ci.case_id=ct.case_id and ct.is_ack = 0 and ct.to_user_id=ci.current_user_id and ci.current_user_id = :userId";
+    private static final String casePendingForAckQ = "select DISTINCT ci.* from case_info ci, case_txn ct where ci.case_id=ct.case_id and ct.is_ack = 0 and ci.current_user_id = :userId";
     private static final String caseAcceptedByUserIdQ = "select DISTINCT ci.* from case_info ci, case_txn ct where ci.case_id=ct.case_id  and ct.is_ack = 1 and ct.to_user_id = :userId";
     private static final String caseInfoByUserIdQWithoutTxn = "select DISTINCT ci.* from case_info ci,case_txn ct where ci.case_id=ct.case_id  and ( ci.user_id_opened = :userId OR ci.user_id_closed = :userId OR ci.current_user_id = :userId )";
-
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -69,6 +70,7 @@ public class CaseDao {
         caseInfo.setContactPrefix(rs.getString("contact_number_prefix"));
         caseInfo.setLocationLandMark(rs.getString("location_landmark"));
         caseInfo.setBirdOrAnimal(userDao.isBird(caseInfo.getTypeAnimal()) ? "Bird" : "Animal");
+        caseInfo.setIsAck(rs.getInt("is_ack"));
         return caseInfo;
     };
 
@@ -97,7 +99,7 @@ public class CaseDao {
                 return ps;
             }, (ResultSet rs, int i) -> {
                 CaseTxn caseTxn = new CaseTxn();
-                caseTxn.setAcked(rs.getBoolean("is_ack"));
+                caseTxn.setIsAck(rs.getInt("is_ack"));
                 caseTxn.setAmount(rs.getDouble("amount"));
                 caseTxn.setCaseId(rs.getLong("case_id"));
                 caseTxn.setFromUserId(rs.getLong("from_user_id"));
@@ -169,7 +171,9 @@ public class CaseDao {
         }));
     }
 
-    public void assignCase(Long userId, Long toUserId, Long caseId) {
+    public void assignCase(Long userId, Long toUserId, Long caseId, String description, Double amount, String transferDate) {
+        Timestamp transferCloseDate = getTransferCloseDate(transferDate);
+        Double amountIncurred = amount == null ? 0.0:amount;
         this.jdbcTemplate.update((connection -> {
             String q = "update case_info set current_user_id = ? where case_id = ?";
             PreparedStatement ps = connection.prepareStatement(
@@ -181,41 +185,59 @@ public class CaseDao {
         }));
 
         this.jdbcTemplate.update((connection -> {
-            String q = "insert into case_txn (case_id, from_user_id, to_user_id) values (?,?,?)";
+            String q = "insert into case_txn (case_id, from_user_id, to_user_id,description,amount,transfer_date) values (?,?,?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(
                     q);
 
+            ps.setLong(1, caseId);
             ps.setLong(2, userId);
             ps.setLong(3, toUserId);
-            ps.setLong(1, caseId);
+            ps.setString(4, description);
+            ps.setDouble(5, amountIncurred);
+            ps.setTimestamp(6, transferCloseDate);
             return ps;
         }));
     }
 
-    public void closeCase(Long userId, Long caseId, String closeRemark, String closeReason) {
+    public void closeCase(Long userId, Long caseId, String closeRemark, String closeReason, Double chargesIncurred, String closeDate) {
+        Timestamp closeDateToUse = getTransferCloseDate(closeDate);
+        Double amountIncurred = chargesIncurred == null ? 0.0:chargesIncurred;
         this.jdbcTemplate.update((connection -> {
-            String q = "update case_info set current_user_id = NULL, is_active=0, user_id_closed = ? , close_remark = ? , animal_condition = ?, close_date = now() where case_id = ?";
+            String q = "update case_info set current_user_id = NULL, is_active = 0, user_id_closed = ? , close_remark = ? , animal_condition = ?, close_date = ? where case_id = ?";
             PreparedStatement ps = connection.prepareStatement(
                     q);
-
             ps.setLong(1, userId);
             ps.setString(2, closeRemark);
             ps.setString(3, closeReason);
-            ps.setLong(4, caseId);
+            ps.setTimestamp(4, closeDateToUse);
+            ps.setLong(5, caseId);
             return ps;
         }));
 
 
         this.jdbcTemplate.update((connection -> {
-            String q = "insert into case_txn (case_id, from_user_id, to_user_id,status) values (?,?,NULL,?)";
+            String q = "insert into case_txn (case_id, from_user_id, to_user_id,status,amount) values (?,?,NULL,?,?)";
             PreparedStatement ps = connection.prepareStatement(
                     q);
 
             ps.setLong(1, caseId);
             ps.setLong(2, userId);
             ps.setString(3, CaseStatus.CLOSED.toString());
+            ps.setDouble(4,amountIncurred);
             return ps;
         }));
+    }
+
+    private Timestamp getTransferCloseDate(String closeDate) {
+        Timestamp closeDateToUse = new Timestamp(new Date().getTime());
+        try {
+            if (closeDate != null) {
+                closeDateToUse = new Timestamp(FORMATTED_DATE_FORMAT.parse(closeDate).getTime());
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return closeDateToUse;
     }
 
     public List<CaseInfo> getAllCaseInfoBySearchTerm(String searchTerm) {
@@ -277,6 +299,7 @@ public class CaseDao {
         }
     }
 
+
     public void updateCaseTxn(Long caseId, Long userId, boolean acceptReject) {
         this.jdbcTemplate.update((connection -> {
             String query = "update case_txn set is_ack = ? where case_id = ? and to_user_id =?";
@@ -286,6 +309,16 @@ public class CaseDao {
             ps.setLong(1, acceptReject ? 1 : -1);
             ps.setLong(2, caseId);
             ps.setLong(3, userId);
+            return ps;
+        }));
+
+        this.jdbcTemplate.update((connection -> {
+            String query = "update case_info set is_ack = ? where case_id = ?";
+            PreparedStatement ps = connection.prepareStatement(
+                    query);
+
+            ps.setLong(1, acceptReject ? 1 : -1);
+            ps.setLong(2, caseId);
             return ps;
         }));
     }

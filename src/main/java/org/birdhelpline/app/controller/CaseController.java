@@ -1,14 +1,15 @@
 package org.birdhelpline.app.controller;
 
-import org.birdhelpline.app.model.CaseImage;
-import org.birdhelpline.app.model.CaseInfo;
-import org.birdhelpline.app.model.User;
+import org.birdhelpline.app.model.*;
 import org.birdhelpline.app.service.CaseService;
+import org.birdhelpline.app.service.UserService;
 import org.birdhelpline.app.utils.ResponseStatus;
 import org.birdhelpline.app.utils.Role;
+import org.birdhelpline.app.utils.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +29,9 @@ public class CaseController {
 
     @Autowired
     private CaseService caseService;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(path = "/casePicUpload", method = RequestMethod.POST)
     public @ResponseBody
@@ -52,7 +56,7 @@ public class CaseController {
     public @ResponseBody
     String addANewCase(@ModelAttribute CaseInfo caseInfo, HttpSession session) {
         logger.info("vkj : got " + caseInfo);
-        User user = getUser(session);
+        User user = WebUtils.getUser(session);
         if (user == null) {
             return "Error";
         }
@@ -64,28 +68,38 @@ public class CaseController {
     @RequestMapping(value = "/assignCase", method = RequestMethod.POST)
     public @ResponseBody
     String assignCase(@RequestParam("caseId") Long caseId, @RequestParam("userId") Long toUserId, HttpSession session) {
-        User user = getUser(session);
+        User user = WebUtils.getUser(session);
         if (user == null) {
             return "Error";
         }
-        return caseService.assignCase(user.getUserId(), toUserId, caseId);
+        return caseService.assignCase(user.getUserId(), toUserId, caseId, null, null, null);
     }
 
     //, consumes = {"application/x-www-form-urlencoded"}
     @RequestMapping(value = "/closeCase", method = RequestMethod.POST)
     public @ResponseBody
     String closeCase(@RequestParam("caseId") Long caseId, @RequestParam("closeRemark") String remark, @RequestParam("closeCaseReason") String closeReason, HttpSession session) {
-        User user = getUser(session);
+        User user = WebUtils.getUser(session);
         if (user == null) {
             return "Error";
         }
-        return caseService.closeCase(user.getUserId(), caseId, remark, closeReason);
+        return caseService.closeCase(user.getUserId(), caseId, remark, closeReason, null,null);
+    }
+
+    @RequestMapping(value = "/getCaseTxn", method = RequestMethod.GET)
+    public @ResponseBody
+    List<CaseTxn> getCaseTxn(@RequestParam("caseId") Long caseId,HttpSession session) {
+        User user = WebUtils.getUser(session);
+        if (user == null) {
+            return null;
+        }
+        return caseService.getCaseTxn(caseId);
     }
 
     @RequestMapping(value = "/getCaseInfoForSearch", method = RequestMethod.GET)
     public @ResponseBody
     List<CaseInfo> getCaseInfo(@RequestParam("term") String searchTerm, HttpSession session) {
-        User user = getUser(session);
+        User user = WebUtils.getUser(session);
         if (user == null) {
             return null;
         }
@@ -101,13 +115,17 @@ public class CaseController {
     @RequestMapping(value = "/activeCases", method = RequestMethod.GET)
     public @ResponseBody
     List<CaseInfo> getActiveCases(@RequestParam(name = "userId", required = false) Long forUserId, HttpSession session) {
-        User user = getUser(session);
+        User user = WebUtils.getUser(session);
         if (user == null) {
             return null;
         }
         if (forUserId != null && forUserId != -1) {
+            User forUser = userService.findUserByUserId(forUserId);
+            if(forUser == null) {
+                return null;
+            }
             if (user.getRole().equals(Role.ADMIN.name()) || user.getRole().equals(Role.Receptionist.name())) {
-                return caseService.getActiveCaseInfoByUserId(forUserId, user.getRole());
+                return caseService.getActiveCaseInfoByUserId(forUserId, forUser.getRole());
             } else {
                 logger.warn("Unauthorized access by : " + user.getUserName() + " for : " + forUserId);
                 return null;
@@ -120,13 +138,17 @@ public class CaseController {
     @RequestMapping(value = "/recentCases", method = RequestMethod.GET)
     public @ResponseBody
     List<CaseInfo> getRecentCases(@RequestParam(name = "userId", required = false) Long forUserId, HttpSession session) {
-        User user = getUser(session);
+        User user = WebUtils.getUser(session);
         if (user == null) {
             return null;
         }
         if (forUserId != null && forUserId != -1) {
+            User forUser = userService.findUserByUserId(forUserId);
+            if(forUser == null) {
+                return null;
+            }
             if (user.getRole().equals(Role.ADMIN.name()) || user.getRole().equals(Role.Receptionist.name())) {
-                return caseService.getRecentCaseInfoByUserId(forUserId, user.getRole());
+                return caseService.getRecentCaseInfoByUserId(forUserId, forUser.getRole());
             } else {
                 logger.warn("Unauthorized access by : " + user.getUserName() + " for : " + forUserId);
                 return null;
@@ -139,13 +161,17 @@ public class CaseController {
     @RequestMapping(value = "/closedCases", method = RequestMethod.GET)
     public @ResponseBody
     List<CaseInfo> getClosedCases(@RequestParam(name = "userId", required = false) Long forUserId, HttpSession session) {
-        User user = getUser(session);
+        User user = WebUtils.getUser(session);
         if (user == null) {
             return null;
         }
         if (forUserId != null && forUserId != -1) {
+            User forUser = userService.findUserByUserId(forUserId);
+            if(forUser == null) {
+                return null;
+            }
             if (user.getRole().equals(Role.ADMIN.name()) || user.getRole().equals(Role.Receptionist.name())) {
-                return caseService.getClosedCaseInfoByUserId(forUserId, user.getRole());
+                return caseService.getClosedCaseInfoByUserId(forUserId, forUser.getRole());
             } else {
                 logger.warn("Unauthorized access by : " + user.getUserName() + " for : " + forUserId);
                 return null;
@@ -155,9 +181,6 @@ public class CaseController {
         }
     }
 
-    private User getUser(HttpSession session) {
-        return (User) session.getAttribute("user");
-    }
 
     @RequestMapping(path = "/getCaseImages", method = RequestMethod.GET)
     public @ResponseBody
@@ -173,7 +196,7 @@ public class CaseController {
     @RequestMapping(value = "/getPendingCases", method = RequestMethod.GET)
     public @ResponseBody
     List<CaseInfo> getPendingCases(@RequestParam(name = "userId", required = false) Long forUserId, HttpSession session) {
-        User user = getUser(session);
+        User user = WebUtils.getUser(session);
         if (user == null) {
             return null;
         }
@@ -192,7 +215,7 @@ public class CaseController {
     @RequestMapping(value = "/acceptRejectCase", method = RequestMethod.POST)
     public @ResponseBody
     String acceptRejectCase(@RequestParam("caseId") Long caseId, @RequestParam("acceptReject") boolean acceptReject, HttpSession session) {
-        User user = getUser(session);
+        User user = WebUtils.getUser(session);
         if (user == null) {
             return "Error";
         }
@@ -218,11 +241,26 @@ public class CaseController {
     }
 
     @RequestMapping(value = "/updateCase", method = RequestMethod.POST)
-    public ModelAndView updateCasePost(@RequestParam("caseId") Long caseId, HttpSession session) {
-        UserAndModelView userAndModelView = new UserAndModelView(caseId, session).invoke();
+    public ModelAndView updateCasePost(@ModelAttribute CaseUpdateVO caseUpdateVO, HttpSession session) {
+        logger.info("vkj update case : " + caseUpdateVO);
+        UserAndModelView userAndModelView = new UserAndModelView(caseUpdateVO.getCaseId(), session).invoke();
         if (userAndModelView.is()) return new ModelAndView("Error");
+        User fromUser = userAndModelView.getUser();
+
+        if (caseUpdateVO.getAction().equalsIgnoreCase("assign")) {
+            caseService.assignCase(fromUser.getUserId(), caseUpdateVO.getAssignedUserId(), caseUpdateVO.getCaseId(), caseUpdateVO.getCaseSummary(), caseUpdateVO.getChargesIncurred(), caseUpdateVO.getCaseUpdateDate());
+        } else if (caseUpdateVO.getAction().equalsIgnoreCase("close")) {
+            String closeReason = caseUpdateVO.getCaseCloseReason();
+            if (closeReason.equalsIgnoreCase("other")) {
+                closeReason = caseUpdateVO.getCaseCloseReasonOther();
+            }
+            caseService.closeCase(fromUser.getUserId(), caseUpdateVO.getCaseId(), caseUpdateVO.getCaseSummary(), closeReason,caseUpdateVO.getChargesIncurred(), caseUpdateVO.getCaseUpdateDate());
+        } else {
+            return new ModelAndView("Error");
+        }
+
         ModelAndView modelAndView = userAndModelView.getModelAndView();
-        modelAndView.setViewName("Vol_Dashboard/Vol-dashboard");
+        modelAndView.setViewName("redirect:/default");
         return modelAndView;
     }
 
@@ -232,6 +270,8 @@ public class CaseController {
         private Long caseId;
         private HttpSession session;
         private ModelAndView modelAndView;
+        private User user;
+        private CaseInfo caseInfo;
 
         public UserAndModelView(Long caseId, HttpSession session) {
             this.caseId = caseId;
@@ -247,21 +287,31 @@ public class CaseController {
         }
 
         public UserAndModelView invoke() {
-            User user = getUser(session);
+            User user = WebUtils.getUser(session);
             if (user == null) {
                 myResult = true;
                 return this;
             }
+            this.user = user;
             CaseInfo caseInfo = caseService.getCaseInfo(caseId);
-            if(caseInfo == null) {
+            if (caseInfo == null) {
                 myResult = true;
                 return this;
             }
+            this.caseInfo = caseInfo;
             modelAndView = new ModelAndView();
-            modelAndView.addObject("caseInfo",caseInfo);
-            modelAndView.addObject("user",user);
+            modelAndView.addObject("caseInfo", caseInfo);
+            modelAndView.addObject("user", user);
             myResult = false;
             return this;
+        }
+
+        public User getUser() {
+            return user;
+        }
+
+        public CaseInfo getCaseInfo() {
+            return caseInfo;
         }
     }
 }

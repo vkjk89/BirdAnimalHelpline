@@ -11,10 +11,17 @@
     <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
     <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/icons/manifest.json}">
-
+    <script src="/static/js/jquery.ui.widget.js" th:src="@{/js/jquery.ui.widget.js}"></script>
+    <script src="/static/js/jquery-ui.min.js" th:src="@{/js/jquery-ui.min.js}"></script>
     <script src="/static/js/common.js" th:src="@{/js/common.js}"></script>
     <script src="/static/js/vol-dashboard-my-cases.js" th:src="@{/js/vol-dashboard-my-cases.js}"></script>
-
+    <style type="text/css">
+        .tg  { border-collapse:collapse;border-spacing:0;border-color:#aaa;}
+        .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#aaa;color:#333;background-color:#fff;}
+        .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#aaa;color:#fff;background-color:#f38630;}
+        .tg .tg-baqh{text-align:center;vertical-align:top}
+        .tg .tg-0lax{text-align:left;vertical-align:top}
+    </style>
 </head>
 <body>
     <div id="dynamic_image_enlarge">
@@ -67,7 +74,8 @@
     </nav>
 
     <main>
-        <button id="action-center-main-div">Update Case</button>
+        <button th:if="${caseInfo.active and caseInfo.currentUserId == user.userId}" id="action-center-main-div">Update Case</button>
+        <button id="action-center-main-history-div">Case History</button>
         <section class="my-cases-case-details" id="my-cases-case-details">
             <div id="form-top-side-case-details">
                 <div id="header-form-top-side-case-details">#Animal/Bird Information</div>
@@ -108,6 +116,12 @@
                 </div>
             </div>
         </section>
+        <div hidden id="history-dialog" title="Case History">
+            <!--<p>This is the default dialog which is useful for displaying <i></i>nformation. The dialog window can be moved, resized and closed with the 'x' icon.</p>-->
+            <table id="history-dialog-table"class="tg">
+
+            </table>
+        </div>
     </main>
 
     <nav id="bottom-action-bar">

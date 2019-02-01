@@ -22,7 +22,13 @@ function case_details(data) {
     $('#location-pincode-case-details').val(caseInfo.locationPincode);
     caseImageRetriever(caseInfo.caseId,"case-photos-case-details");
     if(!caseInfo.active) {
-        $('#action-center').hide();
+        //$('#action-center').hide();
+        $('#action-center-assign-case').hide();
+        $('#action-center-close-case').hide();
+    }
+    else {
+        $('#action-center-assign-case').show();
+        $('#action-center-close-case').show();
     }
 }
 
@@ -386,6 +392,7 @@ var dVol = "\" ></li>";
 
 var aCase = '<div class ="row row1" onclick="case_details(this)"> <div class="sr-no"><li></li></div> <div class="case-id">';
 var bCase = '</div> <div class="case-status">';
+var b1Case = '</div> <div class="case-status">';
 var cCase = '</div> <div class="date">';
 var dCase = '</div> <div class="animal-type">';
 var eCase = '</div> <div class="case-name">';
@@ -401,15 +408,12 @@ function getVolInfo() {
     var formData = {
         'caseId': currentCaseId
     };
-
-    // process the form
     $.ajax({
         type: 'GET',
         url: '/getVolInfo',
         data: formData,
         dataType: 'json'
     })
-
         .done(function (data) {
             var cc = [];
             $.each(JSON.parse(data.top5), function (i, item) {
@@ -500,7 +504,7 @@ var responseHandler = function (event) {
                 var cc = [];
                 $.each(data, function (i, item) {
                     caseIdVsInfoMap[item.caseId] = item;
-                    var htm = aCase + item.caseId + bCase + (item.userNameCurrent ? item.userNameCurrent+"("+item.userRoleCurrent+")" : "Closed" )  +  cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + item.animalName + fCase;
+                    var htm = aCase + item.caseId + bCase + (item.userNameCurrent ? item.userNameCurrent+"("+item.userRoleCurrent+")" : "Closed" )  + b1Case+(item.isAck == 1 ? "Yes" : item.isAck == -1 ? "No" : "Pending" ) +cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + item.animalName + fCase;
                     cc.push(htm);
                 });
 
@@ -849,6 +853,44 @@ $(document).ready(function () {
         page_history.unshift("action_centre_close_case");
     };
 
+    document.getElementById('action-center-history-case').onclick = function () {
+        var formData = {
+            'caseId': currentCaseId
+        };
+        var a = '<tr>'
+        var b = '<td class="tg-0lax">';
+        var c = '</td>';
+        var d = '</tr>';
+        var tableHeader = '<tr><th class="tg-baqh">Sr</th><th class="tg-0lax">From User</th><th class="tg-0lax">To User</th><th class="tg-0lax">Ack</th><th class="tg-0lax">Amount</th><th class="tg-0lax">Description</th><th class="tg-0lax">Transfer Date</th></tr>';
+        $.ajax({
+            type: 'GET',
+            url: '/getCaseTxn',
+            data: formData,
+            dataType: 'json'
+        })
+            .done(function (data) {
+                $('#history-dialog-table').html('');
+                var cc = [];
+                cc.push(tableHeader);
+                $.each(data, function (i, item) {
+                    var html = a+b+(i+1)+c;
+                    html += b+item.fromUser+'('+item.fromUserRole+')'+c;
+                    html += b+item.toUser+'('+item.toUserRole+')'+c;
+                    html += b+(item.isAck == 1? "Yes": item.isAck == -1 ? "No":"Pending")+c;
+                    html += b+item.amount+c;
+                    html += b+item.desc+c;
+                    html += b+item.transferDate+c;
+                    html += d;
+                    cc.push(html);
+                });
+                $('#history-dialog-table').html(cc.join(""));
+            });
+        //$('#history-dialog').show();
+        $("#history-dialog").dialog({
+            width: 800,  height: 600
+        });
+    };
+
 //Assign-Case------------------------------------------------------------------------------------
     document.getElementById('assign-case-search-input').onkeyup = function () {
         if (this.value !== "") {
@@ -1062,7 +1104,7 @@ $(document).ready(function () {
             if (ui.item) {
                 caseDetails = ui.item.caseDetails;
                 caseIdVsInfoMap[caseDetails.caseId] = caseDetails;
-                var htm = aCase + caseDetails.caseId + bCase + (caseDetails.userNameCurrent ? caseDetails.userNameCurrent+"("+caseDetails.userRoleCurrent+")" : "Closed" )  + cCase + caseDetails.creationDateStr + dCase + caseDetails.typeAnimal + eCase + caseDetails.animalName + fCase;
+                var htm = aCase + caseDetails.caseId + bCase + (caseDetails.userNameCurrent ? caseDetails.userNameCurrent+"("+caseDetails.userRoleCurrent+")" : "Closed" )  + b1Case+(item.isAck == 1 ? "Yes" : item.isAck == -1 ? "No" : "Pending" ) + cCase + caseDetails.creationDateStr + dCase + caseDetails.typeAnimal + eCase + caseDetails.animalName + fCase;
                 $(container).append(htm);
                 $('#table4').html(container);
                 $("#search-case-input").autocomplete("close");
@@ -1219,9 +1261,13 @@ $(document).ready(function () {
                     top_nav_search_case_details("search_cases_details");
                     document.getElementById("top-nav-case-details-heading-back-button").style.display = "none";
                     if (cd.active) {
-                        $('#action-center').show();
+                        //$('#action-center').show();
+                        $('#action-center-assign-case').show();
+                        $('#action-center-close-case').show();
                     } else {
-                        $('#action-center').hide();
+                        //$('#action-center').hide();
+                        $('#action-center-assign-case').hide();
+                        $('#action-center-close-case').hide();
                     }
                 }
                 $("#top-nav-search").autocomplete("close");

@@ -7,6 +7,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpSession;
+
 @Component
 public class WebUtils {
 
@@ -16,5 +18,9 @@ public class WebUtils {
     private User getUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return userService.findUserByUserName(auth.getName());
+    }
+
+    public static User getUser(HttpSession session) {
+        return (User) session.getAttribute("user");
     }
 }

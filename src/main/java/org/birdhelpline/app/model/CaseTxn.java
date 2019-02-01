@@ -7,27 +7,47 @@ public class CaseTxn {
     private Long caseId;
     private Long fromUserId;
     private Long toUserId;
+    private String fromUser;
+    private String fromUserRole;
+    private String toUser;
+    private String toUserRole;
     private String status;
     private Double amount;
     private Timestamp transferDate;
-    private boolean acked;
+    private int isAck;
     private Timestamp updateTimeStamp;
     private String desc;
 
-    @Override
-    public String toString() {
-        return "CaseTxn{" +
-                "caseTxnId=" + caseTxnId +
-                ", caseId=" + caseId +
-                ", fromUserId=" + fromUserId +
-                ", toUserId=" + toUserId +
-                ", status='" + status + '\'' +
-                ", amount=" + amount +
-                ", transferDate=" + transferDate +
-                ", acked=" + acked +
-                ", updateTimeStamp=" + updateTimeStamp +
-                ", desc='" + desc + '\'' +
-                '}';
+    public String getFromUserRole() {
+        return fromUserRole;
+    }
+
+    public void setFromUserRole(String fromUserRole) {
+        this.fromUserRole = fromUserRole;
+    }
+
+    public String getToUserRole() {
+        return toUserRole;
+    }
+
+    public void setToUserRole(String toUserRole) {
+        this.toUserRole = toUserRole;
+    }
+
+    public String getFromUser() {
+        return fromUser;
+    }
+
+    public void setFromUser(String fromUser) {
+        this.fromUser = fromUser;
+    }
+
+    public String getToUser() {
+        return toUser;
+    }
+
+    public void setToUser(String toUser) {
+        this.toUser = toUser;
     }
 
     public Long getCaseTxnId() {
@@ -86,14 +106,6 @@ public class CaseTxn {
         this.transferDate = transferDate;
     }
 
-    public boolean isAcked() {
-        return acked;
-    }
-
-    public void setAcked(boolean acked) {
-        this.acked = acked;
-    }
-
     public Timestamp getUpdateTimeStamp() {
         return updateTimeStamp;
     }
@@ -108,5 +120,29 @@ public class CaseTxn {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public int getIsAck() {
+        return isAck;
+    }
+
+    public void setIsAck(int isAck) {
+        this.isAck = isAck;
+    }
+
+    @Override
+    public String toString() {
+        return "CaseTxn{" +
+                "caseTxnId=" + caseTxnId +
+                ", caseId=" + caseId +
+                ", fromUserId=" + fromUserId +
+                ", toUserId=" + toUserId +
+                ", status='" + status + '\'' +
+                ", amount=" + amount +
+                ", transferDate=" + transferDate +
+                ", isAck=" + isAck +
+                ", updateTimeStamp=" + updateTimeStamp +
+                ", desc='" + desc + '\'' +
+                '}';
     }
 }

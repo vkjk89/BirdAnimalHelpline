@@ -1,0 +1,1 @@
+﻿alter TABLE case_info add COLUMN is_ack tinyint(1) DEFAULT 0;

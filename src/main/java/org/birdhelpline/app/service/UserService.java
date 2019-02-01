@@ -55,6 +55,9 @@ public class UserService {
     public User findUserByUserName(String userName) {
         return userDao.getUserByUserName(userName);
     }
+    public User findUserByUserId(Long userId) {
+        return userDao.getUser(userId);
+    }
 
     public void enableUser(String userName) {
         User user = userDao.getUserByUserName(userName);
