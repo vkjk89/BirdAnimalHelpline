@@ -276,6 +276,23 @@ main hr {
     letter-spacing: 1px;
 }
 
+#action-center-main-history-div {
+    box-sizing: border-box;
+    border: 1px solid #CCC;
+    position: fixed;
+    top: 45vh;
+    left: -15vw;
+    width: 38vw;
+    padding: 3vw;
+    padding-left: 3vw;
+    transform: rotate(90deg);
+    border-radius: 5px;
+    background-color: #374047;
+    color: white;
+    font-size: 1em;
+    letter-spacing: 1px;
+}
+
 /*--------------------------BOTTOM-ACTION-BAR------------------------*/
 #bottom-action-bar {
     box-sizing: border-box;

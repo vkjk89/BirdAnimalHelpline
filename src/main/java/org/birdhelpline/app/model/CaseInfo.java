@@ -34,6 +34,7 @@ public class CaseInfo {
     private String userRoleClosed;
     private String userNameCurrent;
     private String userRoleCurrent;
+    private int isAck;
 
     private List<CaseTxn> caseTxnList = new ArrayList<>();
 
@@ -99,30 +100,6 @@ public class CaseInfo {
 
     public void setUserNameCurrent(String userNameCurrent) {
         this.userNameCurrent = userNameCurrent;
-    }
-
-    @Override
-    public String toString() {
-        return "CaseInfo{" +
-                "caseId=" + caseId +
-                ", userIdOpened=" + userIdOpened +
-                ", creationDate=" + creationDate +
-                ", lastModificationDate=" + lastModificationDate +
-                ", closeDate=" + closeDate +
-                ", desc='" + desc + '\'' +
-                ", userIdClosed=" + userIdClosed +
-                ", closeRemark='" + closeRemark + '\'' +
-                ", typeAnimal='" + typeAnimal + '\'' +
-                ", currentUserId=" + currentUserId +
-                ", active=" + active +
-                ", animalName='" + animalName + '\'' +
-                ", animalCondition='" + animalCondition + '\'' +
-                ", contactName='" + contactName + '\'' +
-                ", contactNumber='" + contactNumber + '\'' +
-                ", location='" + location + '\'' +
-                ", locationPincode='" + locationPincode + '\'' +
-                ", caseTxnList=" + caseTxnList +
-                '}';
     }
 
     public String getAnimalName() {
@@ -295,5 +272,49 @@ public class CaseInfo {
 
     public void setCreationDateStr(String creationDateStr) {
         this.creationDateStr = creationDateStr;
+    }
+
+    public int getIsAck() {
+        return isAck;
+    }
+
+    public void setIsAck(int isAck) {
+        this.isAck = isAck;
+    }
+
+    @Override
+    public String toString() {
+        return "CaseInfo{" +
+                "caseId=" + caseId +
+                ", userIdOpened=" + userIdOpened +
+                ", creationDate=" + creationDate +
+                ", creationDateStr='" + creationDateStr + '\'' +
+                ", lastModificationDate=" + lastModificationDate +
+                ", closeDate=" + closeDate +
+                ", desc='" + desc + '\'' +
+                ", userIdClosed=" + userIdClosed +
+                ", closeRemark='" + closeRemark + '\'' +
+                ", typeAnimal='" + typeAnimal + '\'' +
+                ", birdOrAnimal='" + birdOrAnimal + '\'' +
+                ", newBirdAnimal='" + newBirdAnimal + '\'' +
+                ", currentUserId=" + currentUserId +
+                ", active=" + active +
+                ", animalName='" + animalName + '\'' +
+                ", animalCondition='" + animalCondition + '\'' +
+                ", contactName='" + contactName + '\'' +
+                ", contactPrefix='" + contactPrefix + '\'' +
+                ", contactNumber='" + contactNumber + '\'' +
+                ", location='" + location + '\'' +
+                ", locationPincode='" + locationPincode + '\'' +
+                ", locationLandMark='" + locationLandMark + '\'' +
+                ", userNameOpened='" + userNameOpened + '\'' +
+                ", userRoleOpened='" + userRoleOpened + '\'' +
+                ", userNameClosed='" + userNameClosed + '\'' +
+                ", userRoleClosed='" + userRoleClosed + '\'' +
+                ", userNameCurrent='" + userNameCurrent + '\'' +
+                ", userRoleCurrent='" + userRoleCurrent + '\'' +
+                ", isAck=" + isAck +
+                ", caseTxnList=" + caseTxnList +
+                '}';
     }
 }

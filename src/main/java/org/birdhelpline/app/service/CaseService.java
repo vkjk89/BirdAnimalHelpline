@@ -7,6 +7,7 @@ import org.birdhelpline.app.dataaccess.CaseDao;
 import org.birdhelpline.app.dataaccess.UserDao;
 import org.birdhelpline.app.model.CaseImage;
 import org.birdhelpline.app.model.CaseInfo;
+import org.birdhelpline.app.model.CaseTxn;
 import org.birdhelpline.app.model.User;
 import org.birdhelpline.app.utils.AnimalType;
 import org.birdhelpline.app.utils.ResponseStatus;
@@ -55,7 +56,7 @@ public class CaseService {
         Boolean pendingForAck = getTypeCaseStatus(role);
         List<CaseInfo> list = getAllCaseInfo(userId, pendingForAck);
         if (list != null && !list.isEmpty()) {
-            list = list.stream().filter(c -> c.isActive()).collect(Collectors.toList());
+            list = list.stream().filter(c -> c.isActive() && c.getCurrentUserId().equals(userId)).collect(Collectors.toList());
             Collections.sort(list,
                     ((c1, c2) -> c2.getLastModificationDate().compareTo(c1.getLastModificationDate())));
             return list;
@@ -114,13 +115,13 @@ public class CaseService {
         return new JsonObject().toString();
     }
 
-    public String assignCase(Long userId, Long toUserId, Long caseId) {
-        caseDao.assignCase(userId, toUserId, caseId);
+    public String assignCase(Long userId, Long toUserId, Long caseId, String description,Double amount,String transferDate) {
+        caseDao.assignCase(userId, toUserId, caseId,description,amount,transferDate);
         return ResponseStatus.SUCCESS.name();
     }
 
-    public String closeCase(Long userId, Long caseId, String closeRemark, String closeReason) {
-        caseDao.closeCase(userId, caseId, closeRemark, closeReason);
+    public String closeCase(Long userId, Long caseId, String closeRemark,String closeReason,  Double chargesIncurred, String transferDate) {
+        caseDao.closeCase(userId, caseId, closeRemark, closeReason,chargesIncurred,transferDate);
         return ResponseStatus.SUCCESS.name();
     }
 
@@ -136,18 +137,18 @@ public class CaseService {
 
     public List<CaseInfo> getAllCaseInfo(String searchTerm) {
         List<CaseInfo> list = caseDao.getAllCaseInfoBySearchTerm(searchTerm);
-        getUserDetailsForCase(list);
+        getUserDetailsForCaseInfo(list);
         return list;
     }
 
 
     private List<CaseInfo> getAllCaseInfo(Long userId, Boolean pendingForAck) {
         List<CaseInfo> list = caseDao.getCaseInfoByUserId(userId, pendingForAck);
-        getUserDetailsForCase(list);
+        getUserDetailsForCaseInfo(list);
         return list;
     }
 
-    private void getUserDetailsForCase(List<CaseInfo> list) {
+    private void getUserDetailsForCaseInfo(List<CaseInfo> list) {
         list.stream().forEach(c -> {
             if (c.getCurrentUserId() != null) {
                 User u = userDao.getUser(c.getCurrentUserId());
@@ -158,6 +159,28 @@ public class CaseService {
             }
         });
     }
+
+    private void getUserDetailsForCaseTxn(List<CaseTxn> list) {
+        list.stream().forEach(c -> {
+            if (c.getFromUserId() != null) {
+                User u = userDao.getUser(c.getFromUserId());
+                if (u != null) {
+                    c.setFromUser(u.getUserName());
+                    c.setFromUserRole(u.getRole());
+                }
+            }
+
+            if (c.getToUserId() != null) {
+                User u = userDao.getUser(c.getToUserId());
+                if (u != null) {
+                    c.setToUser(u.getUserName());
+                    c.setToUserRole(u.getRole());
+                }
+            }
+        });
+    }
+
+
 
     public void saveCaseImages(CaseImage caseImage) {
         caseDao.saveCaseImages(caseImage);
@@ -184,5 +207,15 @@ public class CaseService {
         caseDao.updateCaseTxn(caseId, userId, acceptReject);
         caseDao.updateUserInfo(userId, acceptReject);
         return ResponseStatus.SUCCESS.name();
+    }
+
+    public CaseInfo getCaseInfo(Long caseId) {
+        return caseDao.getCaseInfoByCaseId(caseId);
+    }
+
+    public List<CaseTxn> getCaseTxn(Long caseId) {
+        List<CaseTxn> list = caseDao.getCaseTxn(caseId);
+        getUserDetailsForCaseTxn(list);
+        return list;
     }
 }

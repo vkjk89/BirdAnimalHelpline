@@ -22,6 +22,13 @@
     <script src="/static/js/common.js" th:src="@{/js/common.js}"></script>
     <script src="/static/js/receptionist-dashboard.js" th:src="@{/js/receptionist-dashboard.js}"></script>
     <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/icons/manifest.json}">
+    <style type="text/css">
+        .tg  { border-collapse:collapse;border-spacing:0;border-color:#aaa;}
+        .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#aaa;color:#333;background-color:#fff;}
+        .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#aaa;color:#fff;background-color:#f38630;}
+        .tg .tg-baqh{text-align:center;vertical-align:top}
+        .tg .tg-0lax{text-align:left;vertical-align:top}
+    </style>
 </head>
 <body>
 <div id="loading-gif"></div>
@@ -180,6 +187,7 @@
                                 <div class="sr-no-div">Sr. No.</div>
                                 <div class="case-id-div">Case ID</div>
                                 <div class="case-status-div">Case Status</div>
+                                <div>Accepted</div>
                                 <div class="date-div">Date</div>
                                 <div class="animal-type-div">Animal/Bird Type</div>
                                 <div class="case-name-div">Animal/Bird Name</div>
@@ -204,6 +212,7 @@
                                 <div class="sr-no-div">Sr. No.</div>
                                 <div class="case-id-div">Case ID</div>
                                 <div class="case-status-div">Case Status</div>
+                                <div >Accepted</div>
                                 <div class="date-div">Date</div>
                                 <div class="animal-type-div">Animal/Bird Type</div>
                                 <div class="case-name-div">Animal/Bird Name</div>
@@ -228,6 +237,7 @@
                                 <div class="sr-no-div">Sr. No.</div>
                                 <div class="case-id-div">Case ID</div>
                                 <div class="case-status-div">Case Status</div>
+                                <div >Accepted</div>
                                 <div class="date-div">Date</div>
                                 <div class="animal-type-div">Animal/Bird Type</div>
                                 <div class="case-name-div">Animal/Bird Name</div>
@@ -382,6 +392,7 @@
                 <div class="sr-no-div">Sr. No.</div>
                 <div class="case-id-div">Case ID</div>
                 <div class="case-status-div">Case Status</div>
+                <div>Accepted</div>
                 <div class="date-div">Date</div>
                 <div class="animal-type-div">Animal/Bird Type</div>
                 <div class="case-name-div">Animal/Bird Name</div>
@@ -518,6 +529,7 @@
                 <div id="action-center-body">
                     <a class="action-center-links no-select" id="action-center-assign-case" >Assign Case</a>
                     <a class="action-center-links no-select" id="action-center-close-case" >Close Case</a>
+                    <a class="action-center-links no-select" id="action-center-history-case" >History</a>
                 </div>
             </div>
         </div>
@@ -647,8 +659,11 @@
             </div>
         </div>
     </div>
-    <div hidden id="dialog" title="Basic dialog">
-        <p>This is the default dialog which is useful for displaying <i></i>nformation. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+    <div hidden id="history-dialog" title="Case History">
+        <!--<p>This is the default dialog which is useful for displaying <i></i>nformation. The dialog window can be moved, resized and closed with the 'x' icon.</p>-->
+        <table id="history-dialog-table"class="tg">
+
+        </table>
     </div>
 </main>
 
