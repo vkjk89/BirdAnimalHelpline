@@ -11,8 +11,6 @@
     <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
     <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/icons/manifest.json}">
-    <script src="/static/js/common.js" th:src="@{/js/common.js}"></script>
-    <script src="/static/js/vol-dashboard-home.js" th:src="@{/js/vol-dashboard-home.js}"></script>
 
 </head>
 <body>
@@ -108,10 +106,47 @@
     </section>
 
     <section class="accept-case-wrapper" id="accept-case-wrapper">
-        <div class="heading-accept-case">Accept Case <span class="accept-decline-pending-cases">#10</span></div>
+        <div class="heading-accept-case">Accept Case <span class="accept-decline-pending-cases">0</span></div>
         <div id="accept-case-empty">No cases pending for now.</div>
         <div class="slider-navigation-buttons"><div class="slider-nav-right" onclick="slide_accept_case(+1);">&#x27e8;</div><div class="slider-nav-left" onclick="slide_accept_case(-1);">&#x27e8;</div></div>
         <div id="case-slider"></div>
+        <div class="accept-case-container">
+            <div class="case-details">
+                <div class="box1">
+                    <span>Case ID: </span>
+                    <span class="case-id"></span>
+                </div>
+                <div class="box2">
+                    <div class="bird-animal-info-header">#Bird/Animal_Information</div>
+                    <div class="animal-type">#Bird/Animal_Type: #Pigeon</div>
+                    <div class="animal-name">#Bird/Animal_Name: asd</div>
+                    <span>Condition: </span>
+                    <span class="case-condition">qwerty</span>
+                    <div>Photos Uploaded: </div>
+                    <div class="case-photos"></div>
+                </div>
+                <div class="box3">
+                    <div class="contact-info-header">Contact Information</div>
+                    <div class="contact-info">
+                        <span>Name: </span>
+                        <span class="contact-name">#Contact_Name</span><br>
+                        <span>Contact Number: </span>
+                        <span class="contact-number">#Contact_Number</span>
+                        <div>Location: </div>
+                        <div class="contact-location">#Location</div>
+                    </div>
+                    <div class="accept-decline">
+                        <button type="submit" class = "decline" onclick="decline()">I m helpless</button>
+                        <button type="submit" class="accept" onclick="accept()">Accept</button>
+                        <div class="celebrations-container">
+                            <span class="celebrations">
+                                <img alt="Case Animal/Bird" th:src="@{/img/pigeon.png}" width="10vw">Thank You for saving my life
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
     </section>
 </main>
 
@@ -129,6 +164,9 @@
 <!--<td th:text="${var.value}"></td>-->
 <!--</tr>-->
 <!--</table>-->
+
+<script src="/static/js/common.js" th:src="@{/js/common.js}"></script>
+<script src="/static/js/vol-dashboard-home.js" th:src="@{/js/vol-dashboard-home.js}"></script>
 
 </body>
 </html>

@@ -1,12 +1,12 @@
-function accept() {
+function accept(caseId) {
+    acceptReject(caseId,true);
     $('.celebrations').fadeIn();
-    $(".accept-case-container").css("pointerEvents", "none");
     //window.scrollTo(0, document.body.scrollHeight);
 }
 
-function decline() {
+function decline(caseId) {
+    acceptReject(caseId,false);
     $('.celebrations').css("display", "none");
-    $(".accept-case-container").css("pointerEvents", "none");
     //window.scrollTo(0, document.body.scrollHeight);
 }
 
@@ -26,6 +26,7 @@ function temp_accept_reject(this_t){
             $('#case-slider').fadeOut();
             $('#accept-case-empty').fadeIn();
             $(".accept-case-wrapper").css("minHeight", "0vh");
+            $(".accept-case-wrapper").css("marginBottom", "5vh");
         }
         $('.'+element).remove();
         $(".slider-member-bullet-"+number).remove();
@@ -169,16 +170,14 @@ function section_accept_case(data) {
         decline.innerHTML = "I am helpless";
         decline.classList.add("decline");
         decline.setAttribute("type", "submit");
-        decline.setAttribute("onclick", "decline("+data.caseId+");");
-        decline.setAttribute("onclick", "temp_accept_reject(this)");
+        decline.setAttribute("onclick", "decline("+data.caseId+"); temp_accept_reject(this)");
         decline.classList.add("slider-member-" + slider_member_counter);
 
     var accept = document.createElement("button");
         accept.innerHTML = "Accept";
         accept.classList.add("accept");
         accept.setAttribute("type", "submit");
-        accept.setAttribute("onclick", "accept("+data.caseId+");");
-        accept.setAttribute("onclick", "temp_accept_reject(this)");
+        accept.setAttribute("onclick", "accept("+data.caseId+"); temp_accept_reject(this)");
         accept.classList.add("slider-member-" + slider_member_counter);
 
     var celebrations_container = document.createElement("div");
@@ -329,6 +328,7 @@ function displayPendingCases() {
 //-----------------------------------------------------------------------------------------------------------
 
 $(document).ready(function () {
+    displayPendingCases();
     $("#logout").on("click", function (e) {
         e.preventDefault();
         window.location.assign("/logout");
@@ -455,10 +455,11 @@ $(document).ready(function () {
                 var e = '</span>';
                 var f = '</div>';
                 // log data to the console so we can see
+                console.log(data);
                 var cc = [];
                 $.each(data, function (i, item) {
-                    var htm;
-                    htm = a + item.caseId + b + c + item.creationDateStr + d + item.typeAnimal + e + f;
+                    var htm = a + item.caseId + b + c + item.creationDateStr + d + item.typeAnimal + e + f;
+                    console.log("htm = " + htm);
                     cc.push(htm);
                 });
                 $('#' + tableId).html(cc.join(""));

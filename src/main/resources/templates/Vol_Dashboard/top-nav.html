@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+
+<!--<body th:object="${user}">-->
+<nav id="top-nav">
+    <span id="profile-options">&#9776;</span>
+    <button id="user-dp" type="button">
+        <img alt="User-Display-Picture" height="" src="/static/img/display-picture11.png" th:if="${user.getUserImage().getImage() == null}" th:src="@{/img/display-picture11.png}" width="">
+        <img alt="User-Display-Picture" height="" src="/static/img/display-picture11.png" th:if="${user.getUserImage().getImage() != null}" th:src="${'data:image/png;base64,'+user.getEncodedImage()}" width="auto">
+    </button>
+    <span id="navbar-username" th:text="${user.userName}">#Username</span>
+</nav>
+
+<script>
+    document.getElementById('profile-options').onclick = function openSideNav() {
+        document.getElementById('side-nav').style.display = "block";
+        document.getElementById('side-nav').classList.add('side-nav-anim');
+        document.getElementById('top-nav').style.opacity = "0.1";
+        document.getElementsByTagName("main")[0].style.opacity = "0.1";
+        document.getElementsByTagName("main")[0].style.pointerEvents = "none";
+    };
+
+    document.getElementById('close-btn').onclick = function closeSideNav() {
+        document.getElementById('side-nav').classList.remove('side-nav-anim');
+        document.getElementById('side-nav').style.display = "none";
+        document.getElementById('top-nav').style.opacity = "1";
+        document.getElementsByTagName("main")[0].style.opacity = "1";
+        document.getElementsByTagName("main")[0].style.pointerEvents = "";
+    };
+
+    window.onclick = function (e) {
+        if (!e.target.matches('#close-btn') && !e.target.matches('#profile-options') && !e.target.matches('#bottom-action-bar')) {
+            if (document.getElementById('side-nav').classList.contains('side-nav-anim')) {
+                document.getElementById('side-nav').classList.remove('side-nav-anim');
+                document.getElementById('side-nav').style.display = "none";
+                document.getElementById('top-nav').style.opacity = "1";
+                document.getElementsByTagName("main")[0].style.opacity = "1";
+                document.getElementsByTagName("main")[0].style.pointerEvents = "";
+            }
+        }
+    };
+</script>
+</body>
+</html>

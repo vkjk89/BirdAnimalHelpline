@@ -401,7 +401,7 @@ h1 {
     margin: 7.5vw;
     padding-bottom: 0;
     padding-top: 0;
-    margin-bottom: 15vh;
+    margin-bottom: 400vh;
 }
 
 #accept-case-empty {
@@ -459,7 +459,6 @@ h1 {
     pointer-events: all;
     position: absolute;
     width: 85vw;
-    display: none;
 }
 
 .box1, .box2, .box3 {

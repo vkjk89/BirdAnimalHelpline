@@ -5,10 +5,98 @@
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <title>Bird Helpline</title>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
     <link href="/static/css/admin-dashboard.css" rel="stylesheet" th:href="@{/css/admin-dashboard.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
     <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/icons/manifest.json}">
 </head>
 <body>
-WELCOME ADMIN
+
+<!--<body th:object="${user}">-->
+<div data-include="top-nav"></div>
+
+<nav id="side-nav">
+    <section id="top-part">
+        <div id="background-img">
+            <img alt="Side-Nav-Background" id="bg-image" src="/static/img/side-nav-background-nav.png" th:src="@{/img/side-nav-background-nav.png}" width="75vw">
+        </div>
+        <span id="close-btn">&times;</span>
+        <div id="side-nav-user-dp">
+            <img alt="Side-Nav-Display-Picture" height="auto" src="/static/img/display-picture1.png" th:if="${user.getUserImage().getImage() == null}" th:src="@{/img/display-picture1.png}" width="">
+            <img alt="Side-Nav-Display-Picture" height="auto" src="/static/img/display-picture1.png" th:if="${user.getUserImage().getImage() != null}" th:src="${'data:image/png;base64,'+user.getEncodedImage()}" width="">
+        </div>
+        <span id="user_name" th:text="${user.firstName} +' '+ ${user.lastName}">#First_Last_Name</span>
+        <span id="user_role" th:text="${user.role}">#User_Role</span>
+    </section>
+    <section id="profile-links">
+        <button><a href="#">Profile</a></button>
+        <!--<button><a href="#" th:href="@{}">Profile</a></button>-->
+        <button><a href="#">Selected Pincodes and Addresses</a></button>
+        <!--<button><a href="#" th:href="@{}">Selected Pincodes and Addresses</a></button>-->
+    </section>
+    <section id="profile-changes">
+        <button><a href="#">Change PIN</a></button>
+        <!--<button><a href="#" th:href="@{}">Change PIN</a></button>-->
+        <button><a href="#">Change Mobile No.</a></button>
+        <!--<button><a href="#" th:href="@{}">Change Mobile No.</a></button>-->
+        <button><a href="#">Change Email Address</a></button>
+        <!--<button><a href="#" th:href="@{}">Change Email Address</a></button>-->
+    </section>
+    <section id="social-links">
+        <div style="font-size:1.3em; letter-spacing:0.75px">Spread the word!</div>
+        <br>
+        <a class="fa fa-lg fa-facebook" href="https://www.facebook.com/birdhelpline/"></a>
+        <a class="fa fa-lg fa-whatsapp"></a>
+        <a class="fa fa-lg fa-twitter"></a>
+    </section>
+</nav>
+
+<main>
+    <div class="slider-navigation-buttons"><div class="slider-nav-right" onclick="slide_member(+1);">&#x27e8;</div><div class="slider-nav-left" onclick="slide_member(-1);">&#x27e8;</div></div>
+    <div class="user-accept-dp"><img src="/static/img/display-picture11.png" th:src="@{/img/display-picture11.png}" alt="DP"></div>
+    <div class="user-role">#User_Role</div>
+    <div class="user-name-wrapper">
+        <span>User Name: </span>
+        <span class="user-name">#User_Name</span>
+    </div>
+    <div class="dob-wrapper">
+        <span class="dob-label">Date of Birth: </span>
+        <span class="dob">#13-07-1999</span>
+    </div>
+    <div class="mobile-number-wrapper">
+        <span class="mobile-number-label">Mobile No.: </span>
+        <span class="mobile-number-prefix">#+91-</span>
+        <span class="mobile-number">#9874561230</span>
+    </div>
+    <div class="gender-wrapper">
+        <span class="gender-label">Gender: </span>
+        <span class="gender">#Male</span>
+    </div>
+    <div class="email-wrapper">
+        <span class="email-label">Email: </span>
+        <span class="email">#abc@example.com</span>
+    </div>
+    
+    <div class="cta-btns">
+        <button class="reject-btn">Reject</button>
+        <button class="accept-btn">Accept</button>
+    </div>
+</main>
+
+
+<section id="bottom-action-bar">
+    <button class="action-bar-btn" id="home" type="button"><img alt="home" src="/static/img/home-white.png" th:src="@{/img/home-white.png}">
+    </button>
+    <button class="action-bar-btn" id="contact-us" type="button"><img alt="contact-us" src="/static/img/contact-us-white.png" th:src="@{/img/contact-us-white.png}"></button>
+    <button class="action-bar-btn" id="logout" type="button"><img alt="logout" src="/static/img/logout-white.png" th:src="@{/img/logout-white.png}">
+    </button>
+</section>
+
+
+<script src="/static/js/common.js" th:src="@{/js/common.js}"></script>
+<script src="/static/js/admin-dashboard.js" th:src="@{/js/vol-dashboard-home.js}"></script>
+
 </body>
 </html>

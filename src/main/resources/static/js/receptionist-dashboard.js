@@ -920,7 +920,8 @@ $(document).ready(function () {
     for (let i = 0; i < document.getElementsByClassName("approve").length; i++) {
         document.getElementsByClassName("approve")[i].onclick = function () {
             if (event.target.tagName == "IMG" && event.target.parentElement.parentElement.classList.contains('approve')) {
-                event.target.setAttribute('src', '/static/img/approved-click.png');
+                console.log(event.target);
+                event.target.setAttribute('src', '/img/approved-click.png');
                 $(event.target.parentElement.parentElement.parentElement.parentElement).fadeOut();
             } else return false;
         }
@@ -929,7 +930,7 @@ $(document).ready(function () {
     for (let i = 0; i < document.getElementsByClassName("reject").length; i++) {
         document.getElementsByClassName("reject")[i].onclick = function () {
             if (event.target.tagName == "IMG" && event.target.parentElement.parentElement.classList.contains('reject')) {
-                event.target.setAttribute('src', '/static/img/rejected-click.png');
+                event.target.setAttribute('th:src', '@{/img/rejected-click.png}');
                 $(event.target.parentElement.parentElement.parentElement.parentElement).fadeOut();
             } else alert("Error");
         }

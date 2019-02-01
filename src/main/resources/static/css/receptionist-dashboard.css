@@ -688,6 +688,7 @@ hr {
 #case-photos-case-details img {
     max-width: 6vw;
     cursor: crosshair;
+    height: auto;
 }
 
 #location-case-details, #top-nav-location-case-details {

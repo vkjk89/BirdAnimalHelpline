@@ -1,0 +1,349 @@
+/*------------------------------GLOBAL------------------------------*/
+a {
+    color: white;
+    font-size: 1.1em;
+    letter-spacing: 1px;
+}
+
+main {
+    text-align: left;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+    cursor: pointer;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #EAEAEA;
+}
+
+::-webkit-scrollbar-thumb:start {
+    background-color: transparent;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #CCC;
+}
+
+/*----------------------------TOP-NAV-BAR---------------------------*/
+#top-nav {
+    box-sizing: border-box;
+    position: fixed;
+    width: 100vw;
+    height: 15vw;
+    color: #374047;
+    background-color: #374047;
+    padding-top: 1.5vh;
+    padding-bottom: 1vh;
+    z-index: 1;
+}
+
+#profile-options {
+    box-sizing: border-box;
+    float: right;
+    font-size: 2em;
+    padding: 1vw 1.5vw 1vw 1.5vw;
+    margin: -2vw 3vw;
+    color: white;
+}
+
+#navbar-username {
+    box-sizing: border-box;
+    float: left;
+    line-height: 11vw;
+    padding-right: 1vw;
+    padding-left: 3vw;
+    font-size: 1.1em;
+    letter-spacing: 1px;
+    color: white;
+}
+
+#user-dp {
+    box-sizing: border-box;
+    margin-top: 1.5vw;
+    padding: 0;
+    float: left;
+}
+#user-dp img {
+    border-radius: 50%;
+    background-color: rgb(248, 248, 248);
+    border: 2px solid rgb(248, 248, 248);
+    max-width: 7vw;
+    max-height: 5vh;
+    overflow: hidden;
+    margin: -0.25vh 0vw 0vw 2vw;
+}
+
+/*------------------------------SIDE-NAV-----------------------------*/
+#side-nav {
+    display: none;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #1fc8db;
+    background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5ed 75%);
+    color: white;
+    z-index: 10;
+}
+
+.side-nav-anim {
+    animation: side-nav-anim 0.5s forwards 0s ease-in-out;
+}
+
+@keyframes side-nav-anim {
+    0% {
+        opacity: 0;
+        width: 0;
+    }
+    100% {
+        opacity: 1;
+        width: 75vw;
+        height: 100vh;
+    }
+}
+
+#close-btn {
+    position: absolute;
+    font-size: 4em;
+    font-weight: 100;
+    top: -6vw;
+    left: 2vw;
+    color: black;
+    z-index: 11;
+}
+
+#bg-image {
+    width: 75vw;
+}
+
+#side-nav-user-dp {
+    position: relative;
+    width: 20vw;
+    height: 20vw;
+    border-radius: 50%;
+    border: 1px solid white;
+    top: -6vw;
+    left: 3vw;
+    overflow: hidden;
+    text-align: center;
+    background-color: white;
+}
+
+#side-nav-user-dp img {
+    width: 20vw;
+    height: 20vw;
+    border-radius: 50%;
+}
+
+#user_name {
+    position: relative;
+    display: block;
+    top: -20vw;
+    float: right;
+    margin-right: 3vw;
+    font-size: 1.2em;
+}
+
+#user_role {
+    position: relative;
+    display: block;
+    top: -13vw;
+    right: -24.5vw;
+    float: right;
+    font-size: 1.2em;
+}
+
+#top-part {
+    border-bottom: 1px solid white;
+}
+
+#profile-links {
+    padding: 7vw;
+    position: relative;
+    text-align: center;
+    border-bottom: 1px solid white;
+}
+
+#profile-changes {
+    position: relative;
+    border-bottom: 1px solid white;
+}
+
+#social-links {
+    box-sizing: border-box;
+    position: relative;
+    padding: 7vw;
+    padding-top: 5vw;
+}
+
+.fa {
+    display: inline-block;
+    padding-left: 3vw;
+    padding-right: 3vw;
+}
+
+/*-------------------------MAIN---------------------------------------*/
+main {
+    padding-top: 20vw;
+    padding-left: 15vw;
+    padding-right: 15vw;
+    font-size: 1.15em;
+}
+
+main div {
+    line-height: 6vh;
+}
+
+#case-slider {
+    border-right: 1px solid #CCC;
+    border-left: 1px solid #CCC;
+    border-bottom: none;
+    display: none;
+    justify-content: center;
+    padding: 1vh 0vw 0vw 0vh;
+    max-width: 85vw;
+}
+
+#case-slider div {
+    border-radius: 50%;
+    border: 2px solid #AAA;
+    background-color: transparent;
+    padding: 0.3vh 2vw;
+    margin: 0vh 0vw -1.5vh 0vw;
+    color: transparent;
+}
+
+.slider-nav-right {
+    position: absolute;
+    margin-top: 33vh;
+    right: 3vw;
+    font-size: 3em;
+    font-weight: 900;
+    transform: rotate(180deg);
+    display: block;
+    z-index: 101;
+}
+
+.slider-nav-left {
+    position: absolute;
+    left: 3vw;
+    margin-top: 30.5vh;
+    font-size: 3em;
+    font-weight: 900;
+    display: block;
+    z-index: 101;
+}
+
+.user-accept-dp {
+    text-align: center;
+}
+
+.user-accept-dp img {
+    max-width: 20vw;
+}
+
+.user-role {
+    text-align: center;
+    padding-top: 2vh;
+    font-size: 1.2em;
+}
+
+.user-name-wrapper {
+    padding-top: 5vh;
+    font-size: 1.1em;
+}
+
+.user-name {
+    text-align: left;
+    max-width: 50vw;
+    padding-left: 2vw;
+}
+
+.cta-btns {
+    float: right;
+    margin-top: 5vh;
+}
+
+.accept-btn {
+    padding: 3vw 4vw;
+    background-color: rgb(0,126,0);
+    color: white;
+    letter-spacing: 1.5px;
+    font-size: 1.1em;
+}
+
+.reject-btn {
+    padding: 3vw 4vw;
+    background-color: rgb(150,0,0);
+    color: white;
+    letter-spacing: 1.5px;
+    font-size: 1.1em;
+    margin-right: 5vw;
+}
+
+
+/*--------------------------BOTTOM-ACTION-BAR------------------------*/
+#bottom-action-bar {
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0vh;
+    height: 14vw;
+    width: 100vw;
+    background-color: #374047;
+    color: white;
+    z-index: 1001;
+}
+
+.action-bar-btn {
+    padding: 2vw;
+    padding-top: 3vw;
+}
+
+.action-bar-btn img {
+    box-sizing: border-box;
+    max-height: 4.5vh;
+}
+
+#home {
+    float: left;
+}
+
+#contact-us {
+    float: left;
+}
+
+#logout {
+    float: right;
+}
+
+@media only screen and (max-width: 360px) {
+    body {
+        font-size: 0.9em;
+    }
+}
+
+@media only screen and (min-width: 361px) {
+    #side-nav {
+        height: 100vh;
+    }
+}
+
+@media only screen and (min-height: 761px) {
+    .slider-nav-right{
+        margin-top: 34vh;
+    }
+    .slider-nav-left {
+        margin-top: 32vh;
+    }
+    main {
+        padding-top: 25vw;
+    }
+}
