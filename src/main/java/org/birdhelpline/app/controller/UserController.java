@@ -6,6 +6,7 @@ import org.birdhelpline.app.model.User;
 import org.birdhelpline.app.service.CaseService;
 import org.birdhelpline.app.service.UserService;
 import org.birdhelpline.app.utils.ResponseStatus;
+import org.birdhelpline.app.utils.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -68,5 +71,15 @@ public class UserController {
             list.addAll(caseInfos);
         }
         return list;
+    }
+
+    @RequestMapping("/getUsersForActivation")
+    public @ResponseBody
+    List<User> getListUsersPendingForActivation(HttpSession session) {
+        User user = WebUtils.getUser(session);
+        if (user == null) {
+            return Collections.EMPTY_LIST;
+        }
+        return userService.getUsersPendingForActivation();
     }
 }

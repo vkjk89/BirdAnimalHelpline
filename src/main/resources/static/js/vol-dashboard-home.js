@@ -307,9 +307,7 @@ function slide_accept_case(slide_direction) {
 function displayPendingCases() {
     $.ajax({
         type: 'GET',
-        // data: formData,
         url: '/getPendingCases'
-        // dataType: 'json'
     })
         .done(function (data) {
                 if (data) {
@@ -346,7 +344,7 @@ $(document).ready(function () {
     }, 30000);
     $("#logout").on("click", function (e) {
         e.preventDefault();
-        window.location.assign("/logout");
+        window.location.href="/logout";
     });
     document.getElementById('results-tab-active').onclick = function active_active() {
         this.classList.add('active-active');

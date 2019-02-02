@@ -307,7 +307,6 @@ public class UserDao {
     }
 
     public List<User> getUserByTerm(String term) {
-        List<User> users = null;
         try {
             UserRowMapper rowMapper = new UserRowMapper("BIA");
             Map<String, Object> params = new HashMap<String, Object>();
@@ -315,6 +314,20 @@ public class UserDao {
             namedParameterJdbcTemplate.query(
                     userAllWithAddressQ + " where u.user_name like :userName ",
                     params, rowMapper
+            );
+            return new ArrayList<>(rowMapper.map.values());
+        } catch (EmptyResultDataAccessException ex) {
+            //throw new ObjectRetrievalFailureException(User.class, userName);
+            return null;
+        }
+    }
+
+    public List<User> getUsersPendingForActivation() {
+        try {
+            UserRowMapper rowMapper = new UserRowMapper("BIA");
+            namedParameterJdbcTemplate.query(
+                    userAllQ + " and u.enabled = 0 ",
+                     rowMapper
             );
             return new ArrayList<>(rowMapper.map.values());
         } catch (EmptyResultDataAccessException ex) {

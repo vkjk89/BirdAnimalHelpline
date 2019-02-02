@@ -97,4 +97,8 @@ public class UserService {
     public void updateUserLoginDetails(User user) {
         userDao.updateUserLoginDetails(user);
     }
+
+    public List<User> getUsersPendingForActivation() {
+        return userDao.getUsersPendingForActivation();
+    }
 }
