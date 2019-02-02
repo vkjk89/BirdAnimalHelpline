@@ -324,7 +324,7 @@ public class UserDao {
 
     public List<User> getUsersPendingForActivation() {
         try {
-            UserRowMapper rowMapper = new UserRowMapper("BIA");
+            UserRowMapper rowMapper = new UserRowMapper("BI");
             namedParameterJdbcTemplate.query(
                     userAllQ + " and u.enabled = 0 ",
                      rowMapper
