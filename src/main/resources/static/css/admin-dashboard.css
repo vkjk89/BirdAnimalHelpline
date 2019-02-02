@@ -192,14 +192,44 @@ main {
 
 /*-------------------------MAIN---------------------------------------*/
 main {
-    padding-top: 20vw;
-    padding-left: 15vw;
-    padding-right: 15vw;
+    padding-top: 10vw;
+    padding-left: 5vw;
+    padding-right: 5vw;
     font-size: 1.15em;
 }
 
 main div {
     line-height: 6vh;
+}
+
+#slider-wrapper {
+    box-sizing: border-box;
+    box-shadow: 0px 0px 20px #BBB;
+    margin-top: 5vh;
+}
+
+.slider-header {
+    background-color: #a8bbb4;
+    color: #374047;
+    padding: 2vw 5vw;
+}
+
+.slider-header-text {
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+.slider-member-count {
+    box-sizing: border-box;
+    float: right;
+    border: 1px solid #374047;
+    background-color: #374047;
+    color: white;
+    padding: 0vh 2vw;
+    font-size: 1.3em;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    border-radius: 50%;
 }
 
 #case-slider {
@@ -223,9 +253,9 @@ main div {
 
 .slider-nav-right {
     position: absolute;
-    margin-top: 33vh;
-    right: 3vw;
-    font-size: 3em;
+    margin-top: 15vh;
+    right: 6vw;
+    font-size: 2.5em;
     font-weight: 900;
     transform: rotate(180deg);
     display: block;
@@ -234,15 +264,19 @@ main div {
 
 .slider-nav-left {
     position: absolute;
-    left: 3vw;
-    margin-top: 30.5vh;
-    font-size: 3em;
+    left: 6vw;
+    margin-top: 13.5vh;
+    font-size: 2.5em;
     font-weight: 900;
     display: block;
     z-index: 101;
 }
+.slider-info-wrapper {
+    padding: 0vh 5vw 5vw 11vw;
+}
 
 .user-accept-dp {
+    padding-top: 4vh;
     text-align: center;
 }
 
@@ -252,12 +286,11 @@ main div {
 
 .user-role {
     text-align: center;
-    padding-top: 2vh;
     font-size: 1.2em;
 }
 
 .user-name-wrapper {
-    padding-top: 5vh;
+    padding-top: 2vh;
     font-size: 1.1em;
 }
 
@@ -268,8 +301,10 @@ main div {
 }
 
 .cta-btns {
-    float: right;
+    position: relative;
+    text-align: right;
     margin-top: 5vh;
+    margin-bottom: 2vh;
 }
 
 .accept-btn {
@@ -338,12 +373,15 @@ main div {
 
 @media only screen and (min-height: 761px) {
     .slider-nav-right{
-        margin-top: 34vh;
+        margin-top: 15vh;
     }
     .slider-nav-left {
-        margin-top: 32vh;
+        margin-top: 13vh;
     }
     main {
         padding-top: 25vw;
+    }
+    #slider-wrapper {
+        margin-top: -1vh;
     }
 }

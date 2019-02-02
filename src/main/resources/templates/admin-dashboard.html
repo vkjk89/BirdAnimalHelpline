@@ -54,34 +54,42 @@
 </nav>
 
 <main>
-    <div class="slider-navigation-buttons"><div class="slider-nav-right" onclick="slide_member(+1);">&#x27e8;</div><div class="slider-nav-left" onclick="slide_member(-1);">&#x27e8;</div></div>
-    <div class="user-accept-dp"><img src="/static/img/display-picture11.png" th:src="@{/img/display-picture11.png}" alt="DP"></div>
-    <div class="user-role">#User_Role</div>
-    <div class="user-name-wrapper">
-        <span>User Name: </span>
-        <span class="user-name">#User_Name</span>
-    </div>
-    <div class="dob-wrapper">
-        <span class="dob-label">Date of Birth: </span>
-        <span class="dob">#13-07-1999</span>
-    </div>
-    <div class="mobile-number-wrapper">
-        <span class="mobile-number-label">Mobile No.: </span>
-        <span class="mobile-number-prefix">#+91-</span>
-        <span class="mobile-number">#9874561230</span>
-    </div>
-    <div class="gender-wrapper">
-        <span class="gender-label">Gender: </span>
-        <span class="gender">#Male</span>
-    </div>
-    <div class="email-wrapper">
-        <span class="email-label">Email: </span>
-        <span class="email">#abc@example.com</span>
-    </div>
-    
-    <div class="cta-btns">
-        <button class="reject-btn">Reject</button>
-        <button class="accept-btn">Accept</button>
+    <div id="slider-wrapper">
+        <div class="slider-header">
+            <span class="slider-header-text">User Approvals</span>
+            <span class="slider-member-count">#10</span>
+        </div>
+        <div class="user-accept-dp"><img src="/static/img/display-picture11.png" th:src="@{/img/display-picture11.png}" alt="DP"></div>
+        <div class="user-role">#User_Role</div>
+        <div class="slider-navigation-buttons"><div class="slider-nav-right" onclick="slide_member(+1);">&#x27e8;</div><div class="slider-nav-left" onclick="slide_member(-1);">&#x27e8;</div></div>
+        <div class="slider-info-wrapper">
+            <div class="user-name-wrapper">
+                <span>Name: </span>
+                <span class="user-name">#Full_Name</span>
+            </div>
+            <div class="dob-wrapper">
+                <span class="dob-label">Date of Birth: </span>
+                <span class="dob">#13-07-1999</span>
+            </div>
+            <div class="mobile-number-wrapper">
+                <span class="mobile-number-label">Mobile No.: </span>
+                <span class="mobile-number-prefix">#+91-</span>
+                <span class="mobile-number">#9874561230</span>
+            </div>
+            <div class="gender-wrapper">
+                <span class="gender-label">Gender: </span>
+                <span class="gender">#Male</span>
+            </div>
+            <div class="email-wrapper">
+                <span class="email-label">Email: </span>
+                <span class="email">#abc@example.com</span>
+            </div>
+            
+            <div class="cta-btns">
+                <button class="reject-btn">Reject</button>
+                <button class="accept-btn">Accept</button>
+            </div>
+        </div> 
     </div>
 </main>
 
