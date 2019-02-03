@@ -1,5 +1,9 @@
 package org.birdhelpline.app.service;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.CacheStats;
+import com.google.common.cache.LoadingCache;
 import org.apache.commons.lang3.StringUtils;
 import org.birdhelpline.app.dataaccess.UserDao;
 import org.birdhelpline.app.model.PinCodeLandmarkInfo;
@@ -7,23 +11,62 @@ import org.birdhelpline.app.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
 @Service("userService")
 public class UserService {
-    private static  final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     private UserDao userDao;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Value("${cache.expiry.time.hours}")
+    private long cacheExpiryHours;
+    @Value("${cache.refresh.time.mins}")
+    private long cacheRefreshMins;
+
+    private LoadingCache<Long, Optional<User>> userCache;
+
+    private ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(2);
+    private Runnable cacheStatsPrinter = () -> {
+        CacheStats cacheStats = userCache.stats();
+        logger.info(cacheStats.toString());
+    };
+
+
+    @PostConstruct
+    public void init() {
+        userCache = CacheBuilder.newBuilder()
+                .expireAfterAccess(cacheExpiryHours, TimeUnit.HOURS)
+                .refreshAfterWrite(cacheRefreshMins, TimeUnit.MINUTES)
+                //.expireAfterWrite(5L, TimeUnit.MINUTES)
+                .maximumSize(500L)
+                .recordStats()
+                //.removalListener(new TradeAccountRemovalListener())
+                //.ticker(Ticker.systemTicker())
+                .build(new CacheLoader<Long, Optional<User>>() {
+                    @Override
+                    public Optional<User> load(Long key) {
+                        return userDao.getUser(key);
+                    }
+                });
+
+        scheduledExecutorService.scheduleAtFixedRate(cacheStatsPrinter,0,15,TimeUnit.MINUTES);
+    }
 
     public long saveUser(User user) {
         user.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -48,6 +91,7 @@ public class UserService {
         List<PinCodeLandmarkInfo> list = userDao.getPinCodeLandMarks();
         return list.stream().filter(p -> !setSelected.contains(p.getPincodeId()) && (p.getLandmark().toLowerCase().indexOf(term) >= 0 || String.valueOf(p.getPincode()).indexOf(term) >= 0)).collect(Collectors.toList());
     }
+
     public boolean findUserByMobile(long mobile) {
         return userDao.getUserByMobile(mobile);
     }
@@ -55,8 +99,17 @@ public class UserService {
     public User findUserByUserName(String userName) {
         return userDao.getUserByUserName(userName);
     }
+
     public User findUserByUserId(Long userId) {
-        return userDao.getUser(userId);
+        try {
+            Optional<User> value =  userCache.get(userId);
+            if(value.isPresent()){
+                return value.get();
+            }
+        } catch (ExecutionException e) {
+            logger.error(e.getMessage(),e);
+        }
+        return null;
     }
 
     public void enableUser(String userName) {
@@ -100,5 +153,25 @@ public class UserService {
 
     public List<User> getUsersPendingForActivation() {
         return userDao.getUsersPendingForActivation();
+    }
+
+    public boolean birdOrAnimalExists(String newBirdAnimal) {
+        return userDao.birdOrAnimalExists(newBirdAnimal);
+    }
+
+    public void addBird(String newBirdAnimal) {
+        userDao.addBird(newBirdAnimal);
+    }
+
+    public void addAnimal(String newBirdAnimal) {
+        userDao.addAnimal(newBirdAnimal);
+    }
+
+    public List<User> getTop5Vol() {
+        return userDao.getTop5Vol();
+    }
+
+    public List<User> getNearestVol(String locationPincode) {
+        return userDao.getNearestVol(locationPincode);
     }
 }
