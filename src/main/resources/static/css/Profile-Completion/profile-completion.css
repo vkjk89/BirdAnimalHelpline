@@ -90,7 +90,7 @@
     font-size: 1.2em;
 }
 
-#home-address p:first-child, #work-address p:first-child {
+#home-address p:first-child, #work-address p:first-child{
     width: calc(70vw + 3vh);
     border-bottom: 1px solid #374047;
     font-size: 1.2em;

@@ -1,0 +1,63 @@
+#header {
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    margin: 0;
+    padding: 3vh;
+    width: 100vw;
+    color: white;
+    background-color: #374047;
+    font-size: 1.2em;
+}
+
+main {
+    text-align: left;
+    margin-top: 15vh;
+}
+
+#home-address-preview, #work-address-preview, #selected-pincodes-preview {
+    margin: 10vw;
+    padding: 3vw;
+    border: 1px solid #374047;
+    line-height: 30px;
+}
+
+#heading-home-address, #heading-work-address, #heading-selected-pincodes {
+    border-bottom: 1px solid #374047;
+    font-size: 1.2em;
+    margin-top: 0;
+}
+
+#edit-home-address, #edit-work-address, #edit-selected-pincodes {
+    position: absolute;
+    right: 15vw;
+    max-width: 7vw;
+}
+
+#full-name-wrapper, #address-wrapper, #alternate-number-wrapper, #office-name-wrapper, #address-wrapper-work, #nature-of-business-wrapper {
+    margin-top: 1.8vh;
+}
+.label{
+    margin-bottom: 0vh;
+}
+
+#selected-pincodes-preview {
+    margin-bottom: 3vh;
+}
+ul li {
+    list-style-type: decimal;
+}
+
+#cta-btns {
+    box-sizing: border-box;
+    width: 100vw;
+    text-align: right;
+}
+#submit_Application {
+    background-color: rgb(0,160,0);
+    color: white;
+    font-size: 1.2em;
+    padding: 3vw 5vw;
+    margin-right: 10vw;
+    margin-bottom: 3vh;
+}

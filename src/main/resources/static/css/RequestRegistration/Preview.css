@@ -53,12 +53,10 @@ main {
     float: right;
 }
 
-#next {
+#submitApplication {
     position: relative;
     box-sizing: border-box;
-    width: 25vw;
     margin-left: 70vw;
-    padding-left: 4vw;
     background-color: #374047;
     color: white;
     border-radius: 5px;

@@ -101,16 +101,15 @@ main {
 #search-pincode {
     box-sizing: border-box;
     margin-top: 2vh;
-    padding: 5vw;
+    padding: 4vw;
     border-radius: 5px;
     padding-left: 13vw;
     background-image: url("/img/search-1.png");
     background-repeat: no-repeat;
-    background-size: 8vw;
+    background-size: 7vw;
     background-position: 3vw 1.5vh;
     font-size: 1em;
     width: 75vw;
-    transition: width 0.4s ease-in-out;
 }
 
 #selected-pincodes {
@@ -171,15 +170,11 @@ main {
     position: relative;
     float: right;
     bottom: 0;
-    margin-top:2vh; 
+    margin-top: 5vh;
+    margin-right: 5vw;
     background-color: #374047;
     color: white;
     border-radius: 5px;
     letter-spacing: 2px;
     font-size: 1em;
-    padding: 3vw 5vw;
 }
-/*
-body * {
-    border: 1px solid burlywood;
-}*/

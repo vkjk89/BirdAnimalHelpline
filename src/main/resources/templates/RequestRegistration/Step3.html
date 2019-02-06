@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Request Registration</title>
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
     <link href="/static/css/RequestRegistration/Step3.css" rel="stylesheet" th:href="@{/css/RequestRegistration/Step3.css}">
     <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
@@ -29,32 +28,37 @@
 
     <main>
         <div class="step3" id="step3">
-            <label for="dp-img" id="dp-label">
-                <img src="/img/loading-simple.gif" id="dp_loading" alt="Loading" style="position:absolute; display:none">
-                <img id="dp-img1" src="/static/img/display-picture11.png" th:src="@{/img/display-picture11.png}">
-            </label>
-            <label for="dp-img" id="dp-error">Select valid Profile picture.</label>
-            <label for="dp-img" id="dp-label-2">Upload your profile picture</label>
+            <div id="loading-gif">
+                <img src="/static/img/loading-simple.gif" th:src="@{/img/loading-simple.gif}" id="dp_loading" alt="Loading" style="position:absolute; display:none">
+            </div>
+            <div id="upload-dp-wrapper">
+                <label for="dp-img" id="dp-label">
+                    <img id="dp-img1" src="/static/img/display-picture11.png" th:src="@{/img/display-picture11.png}">
+                </label>
+                <label for="dp-img" id="dp-error">Select valid Profile picture.</label>
+                <label for="dp-img" id="dp-label-2">Upload your profile picture</label>
+                <input accept="image/*" id="dp-img" name="dp-image" required style="display:none; top: 0; right: 0; position: absolute;" type="file">
+            </div>
             <div id="warning">
                 <b>Please make sure that the picture you choose to upload doesn't contain any quotes or any picture other than yourself, as this picture will be used for further identifiction and verification.</b>
             </div>
-            <input accept="image/*" id="dp-img" name="dp-image" required style="display:none; top: 0; right: 0; position: absolute;" type="file">
-            <input autocomplete="off" name="username-selection" pattern="[A-Za-z0-9+@+_+-]{4,}" placeholder="Username" required th:field="*{userName}" title="4 characters minimum" type="text">
-            <ul th:if="${#fields.hasErrors('userName')}">
-                <li th:each="err : ${#fields.errors('userName')}" th:text="${err}">That username is taken. Try another.
-                </li>
-            </ul>
-            <input autocomplete="off" id="password" name="password-selection" pattern="[0-9]{4}" placeholder="4 digit password" required th:field="*{password}" title="4 digit password" type="password">
-            <ul th:if="${#fields.hasErrors('password')}">
-                <li th:each="err : ${#fields.errors('password')}" th:text="${err}">Password is invalid</li>
-            </ul>
+            <div id="credentials-wrapper">
+                <input autocomplete="off" name="username-selection" pattern="[A-Za-z0-9+@+_+-]{4,}" placeholder="Username" required th:field="*{userName}" title="4 characters minimum" type="text" id="username">
+                <ul th:if="${#fields.hasErrors('userName')}">
+                    <li th:each="err : ${#fields.errors('userName')}" th:text="${err}">That username is taken. Try another.</li>
+                </ul><br>
+                <input autocomplete="off" id="password" name="password-selection" pattern="[0-9]{4}" placeholder="4 digit password" required th:field="*{password}" title="4 digit password" type="password">
+                <button id="show_pass" type="button"><img src="/static/img/eye-1.png" th:src="@{/img/eye-1.png}" alt="Show Password"></button>
+                <ul th:if="${#fields.hasErrors('password')}">
+                    <li th:each="err : ${#fields.errors('password')}" th:text="${err}">Password is invalid</li>
+                </ul>
+            </div>
         </div>
 
         <div class="footer-btns" id="footer-btns">
-            <a href="/registration?page=1"><img id="previous" src="/static/img/previous-button-1.png" th:src="@{/img/previous-button-1.png}"></a>    
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <button id="preview" name="action" type="submit" value="preview">Preview</button>
-                <button id="submit" name="action" type="submit" value="submit">Submit</button>
+            <a href="/registration?page=1"><img id="previous" src="/static/img/previous-button-1.png" th:src="@{/img/previous-button-1.png}"></a>
+            <div class = "cta-preview-btn">
+                <button type="submit" id="preview-btn">Preview</button>
             </div>
         </div>
         <input name="page" type="hidden" value="3">
@@ -62,9 +66,10 @@
 </form>
 
 <script>
+    var show_pass = true;
     $(document).ready(function () {
         $('#preview, #submit').click(dp_error);
-        $('input[name="dp-image"]').change(dp_error);
+        $("#dp-image").change(dp_error);
 
         function dp_error() {
             if (document.getElementById("dp-img").files.length == 0) {
@@ -82,6 +87,18 @@
             }
         }
 
+        $("#show_pass img").click(function(){
+            if(show_pass === true){
+                $("#password").attr("type", "text");
+                $("#show_pass img").attr("th:src", "/img/eye-1-pass.png");
+                $("#show_pass img").attr("src", "/static/img/eye-1-pass.png");
+            }else {
+                $("#password").attr("type", "password");
+                $("#show_pass img").attr("th:src", "/img/eye-1.png");
+                $("#show_pass img").attr("src", "/static/img/eye-1.png");
+            }
+            show_pass = !show_pass;
+        });
 
         $('#dp-img').change(function () {
             document.getElementById("dp_loading").style.display = "block";

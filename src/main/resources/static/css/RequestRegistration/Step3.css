@@ -104,6 +104,11 @@ main {
     margin-left: 5vw;
 }
 
+main div {
+    position: relative;
+    text-align: center;
+}
+
 ul {
     list-style: none;
     padding: 0;
@@ -123,9 +128,15 @@ ul li {
     font-size: 0.8em;
 }
 
-main div img {
-    margin-top: 1.5vh;
-    width: 15vh;
+#loading-gif img {
+    left: 30vw;
+    width: 35vw;
+    z-index: 1;
+}
+
+#dp-label img {
+    margin-top: 3vh;
+    width: 12vh;
 }
 
 #dp-label-2 {
@@ -140,26 +151,30 @@ main div img {
     border: red;
 }
 
-main div {
-    position: relative;
-    text-align: center;
-}
-
-input[type = "text"], input[type = "password"] {
+#username, #password {
     box-sizing: border-box;
     width: 60vw;
-    margin-top: 3vh;
     display: block;
     border: 1px solid #cccccc;
     border-radius: 5px;
-    padding: 2vw;
+    padding: 3vw;
+    padding-left: 4vw;
     margin-left: 15vw;
     letter-spacing: 1px;
     font-size: 0.9em;
 }
 
-input[type = "password"] {
-    margin-top: 1vh;
+#password {
+    margin-left: 2.75vw;
+    display: inline;
+}
+#show_pass {
+    display: inline;
+    padding: 0;
+    vertical-align: bottom;
+}
+#show_pass img {
+    max-width: 7vw;
 }
 
 #warning {
@@ -175,48 +190,33 @@ input[type = "password"] {
 
 .footer-btns {
     margin-top: 5vh;
+    text-align: left;
 }
 
-.btn-group {
-    float: right;
+.cta-preview-btn {
     top: 1vh;
-    right: 0;
-    margin-right: 3vw;
+    float: right;
+    margin-right: 5vw;
 }
 
-button {
-    padding: 0;
-    margin: 0;
-}
-
-.btn-group button {
-    width: 18vw;
-    padding: 2vw;
-    padding-right: 17.5vw;
-    margin: 0;
+.cta-preview-btn button {
+    padding: 3vw;
+    border-radius: 5px;
     letter-spacing: 1px;
-    font-weight: 300;
+    font-size: 1.2em;
 }
 
-.btn-group button:first-child {
+.cta-preview-btn button:first-child {
     background-color: #374047c9;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    color: white;
-}
-
-.btn-group button:nth-child(2) {
-    background-color: black;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
     color: white;
 }
 
 #previous {
+    display: inline-block;
     box-sizing: border-box;
     width: 10vw;
     margin-top: 1vh;
-    margin-left: -36vw;
+    vertical-align: middle;
 }
 
 /*body * {
@@ -224,7 +224,7 @@ button {
 }*/
 
 @media only screen and (max-width: 320px) {
-    main div img {
+    #dp-label img {
         padding-top: 1vh;
         width: 10vh;
     }
@@ -273,7 +273,7 @@ button {
 }
 
 @media only screen and (min-height: 520px) {
-    main div img {
+    #dp-label img {
         margin-top: 4vh;
         width: 12vh;
     }

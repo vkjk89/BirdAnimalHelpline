@@ -254,7 +254,7 @@ main div {
 .slider-nav-right {
     position: absolute;
     margin-top: 15vh;
-    right: 6vw;
+    right: 7vw;
     font-size: 2.5em;
     font-weight: 900;
     transform: rotate(180deg);

@@ -1,12 +1,12 @@
 var usersPendingMap = new Map();
 
-/*$(function(){
+$(function(){
     var includes = $('[data-include]');
     jQuery.each(includes, function(){
       var file = '/templates/Vol_Dashboard/' + $(this).data('include') + '.html';
       $(this).load(file);
     });
-});*/
+});
 
 function getUsersListPendingForActivation() {
     $.ajax({
@@ -21,6 +21,7 @@ function getUsersListPendingForActivation() {
                     $.each(data, function (i, item) {
                         console.info(item);
                         if (!usersPendingMap.has(item.userId)) {
+                            console.log(item);
                             // Make your changes here
                             // section_accept_case(item);
                             // slider_member_count = data.length;
@@ -38,9 +39,7 @@ $(document).ready(function (){
     $('#image_enlarge_back_button').click(function () {
         $('#dynamic_image_enlarge').css('display', 'none');
     });
-
-    //BACKEND-INTEGRATION-----------------------------------------------------------------------
-    ///JUST MAKE THE ARRAY - ILL PUT IT IN THE RIGHT PLACE-------------------------------
+    
     getUsersListPendingForActivation();
     setInterval(function () {
         getUsersListPendingForActivation();
