@@ -93,11 +93,11 @@ public class UserDao {
     }
 
     @Transactional(readOnly = true)
-    public User getUser(long id) {
+    public Optional<User> getUser(long id) {
         try {
-            return jdbcTemplate.queryForObject(userAllQ + " and u.user_id = ?", new UserRowMapper("BI"), id);
+            return Optional.of(jdbcTemplate.queryForObject(userAllQ + " and u.user_id = ?", new UserRowMapper("BI"), id));
         } catch (EmptyResultDataAccessException ex) {
-            return null;
+            return Optional.empty();
         }
     }
 
@@ -324,7 +324,7 @@ public class UserDao {
 
     public List<User> getUsersPendingForActivation() {
         try {
-            UserRowMapper rowMapper = new UserRowMapper("BIA");
+            UserRowMapper rowMapper = new UserRowMapper("BI");
             namedParameterJdbcTemplate.query(
                     userAllQ + " and u.enabled = 0 ",
                      rowMapper

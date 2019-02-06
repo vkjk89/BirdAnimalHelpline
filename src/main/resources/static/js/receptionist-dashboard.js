@@ -1,4 +1,55 @@
 var page_history = ["raise_a_case"];
+var hide_tooltip_timeOut;
+var my_cases_tab_headers;
+
+var aVol = "<li> <span class=\"vol_tooltip\">";
+var bVol = "</span> <button onclick='assignCase(this)' type=\"button\" class=\"assign-case-assign-btn\">Assign</button>";
+var cVol = "<input type=\"hidden\" id=\"vol_id\" value=\"";
+var dVol = "\" ></li>";
+
+var aCase = '<div class ="row row1" onclick="case_details(this)"> <div class="sr-no"><li></li></div> <div class="case-id">';
+var bCase = '</div> <div class="case-status">';
+var b1Case = '</div> <div class="case-status">';
+var cCase = '</div> <div class="date">';
+var dCase = '</div> <div class="animal-type">';
+var eCase = '</div> <div class="case-name">';
+var fCase = '</div> </div>';
+
+var caseIdVsInfoMap = {};
+var userIdVsInfoMap = {};
+var currentCaseId = -1;
+
+var responseHandler = function (event) {
+    var data = event.data.split(":");
+    var url = data[0];
+    var tableId = data[1];
+    var userId = -1;
+    if (data.length == 3) {
+        userId = data[2];
+    }
+    var formData = {
+        'userId': userId,
+    };
+    console.info(" Clicked " + url + " " + tableId + " for user : " + userId);
+    $.ajax({
+        type: 'GET',
+        data: formData,
+        url: url,
+        dataType: 'json'
+    })
+        .done(function (data) {
+                var cc = [];
+                $.each(data, function (i, item) {
+                    caseIdVsInfoMap[item.caseId] = item;
+                    var htm = aCase + item.caseId + bCase + (item.userNameCurrent ? item.userNameCurrent+"("+item.userRoleCurrent+")" : "Closed" )  + b1Case+(item.isAck == 1 ? "Yes" : item.isAck == -1 ? "No" : "Pending" ) +cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + item.animalName + fCase;
+                    cc.push(htm);
+                });
+
+                $('#' + tableId).html(cc.join(""));
+            }
+        );
+};
+
 function case_details(data) {
     document.getElementById('my-cases-content').style.display = "none";
     document.getElementById('case-details').style.display = "block";
@@ -22,7 +73,6 @@ function case_details(data) {
     $('#location-pincode-case-details').val(caseInfo.locationPincode);
     caseImageRetriever(caseInfo.caseId,"case-photos-case-details");
     if(!caseInfo.active) {
-        //$('#action-center').hide();
         $('#action-center-assign-case').hide();
         $('#action-center-close-case').hide();
     }
@@ -242,7 +292,6 @@ function user_profile_basic_details() {
     }, 210);
 }
 
-var my_cases_tab_headers;
 function hideresults() {
     //$('.row').fadeOut(300);
     if(document.getElementById("active-tab-content").style.display === "block"){
@@ -260,7 +309,6 @@ function showresults() {
     $('#' + my_cases_tab_headers).fadeIn(300);
     
 }
-
 
 function assignCase(data) {
     var userId = $(data).parent().find("#vol_id").val();
@@ -347,7 +395,7 @@ function navigate_back() {
     }
 }
 
-function show_vol_tooltip() {
+function show_vol_tooltip(event) {
     clearTimeout(hide_tooltip_timeOut);
     var userId = $(event.srcElement).parent().find("#vol_id").val();
     var userInfo = userIdVsInfoMap[userId];
@@ -368,8 +416,6 @@ function show_vol_tooltip() {
     document.getElementById("vol-description-tooltip").style.left = event.target.getBoundingClientRect().left + 10 + event.target.getBoundingClientRect().width + "px";
 }
 
-var hide_tooltip_timeOut;
-
 function hide_vol_tooltip() {
     hide_tooltip_timeOut = setTimeout(function () {
         $("#vol-description-tooltip").fadeOut();
@@ -385,26 +431,7 @@ function hide_vol_tooltip() {
     }, 200);
 }
 
-var aVol = "<li> <span class=\"vol_tooltip\">";
-var bVol = "</span> <button onclick='assignCase(this)' type=\"button\" class=\"assign-case-assign-btn\">Assign</button>";
-var cVol = "<input type=\"hidden\" id=\"vol_id\" value=\"";
-var dVol = "\" ></li>";
-
-var aCase = '<div class ="row row1" onclick="case_details(this)"> <div class="sr-no"><li></li></div> <div class="case-id">';
-var bCase = '</div> <div class="case-status">';
-var b1Case = '</div> <div class="case-status">';
-var cCase = '</div> <div class="date">';
-var dCase = '</div> <div class="animal-type">';
-var eCase = '</div> <div class="case-name">';
-var fCase = '</div> </div>';
-
-
-var caseIdVsInfoMap = {};
-var userIdVsInfoMap = {};
-var currentCaseId = -1;
-
 function getVolInfo() {
-
     var formData = {
         'caseId': currentCaseId
     };
@@ -433,7 +460,6 @@ function getVolInfo() {
 
 
         });
-    event.preventDefault();
 }
 
 function assignCaseReq(caseId, userId) {
@@ -481,39 +507,6 @@ function closeCaseReq(caseId) {
             navigate_back();
         });
 }
-
-var responseHandler = function (event) {
-    var data = event.data.split(":");
-    var url = data[0];
-    var tableId = data[1];
-    var userId = -1;
-    if (data.length == 3) {
-        userId = data[2];
-    }
-    var formData = {
-        'userId': userId,
-    };
-    console.info(" Clicked " + url + " " + tableId + " for user : " + userId);
-    $.ajax({
-        type: 'GET',
-        data: formData,
-        url: url,
-        dataType: 'json'
-    })
-        .done(function (data) {
-                var cc = [];
-                $.each(data, function (i, item) {
-                    caseIdVsInfoMap[item.caseId] = item;
-                    var htm = aCase + item.caseId + bCase + (item.userNameCurrent ? item.userNameCurrent+"("+item.userRoleCurrent+")" : "Closed" )  + b1Case+(item.isAck == 1 ? "Yes" : item.isAck == -1 ? "No" : "Pending" ) +cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + item.animalName + fCase;
-                    cc.push(htm);
-                });
-
-                $('#' + tableId).html(cc.join(""));
-            }
-        );
-};
-
-
 
 $(document).ready(function () {
 

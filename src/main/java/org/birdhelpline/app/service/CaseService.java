@@ -29,17 +29,17 @@ public class CaseService {
     @Autowired
     private CaseDao caseDao;
     @Autowired
-    private UserDao userDao;
+    private UserService userService;
 
     @Transactional
     public Long save(CaseInfo caseInfo) {
         if (StringUtils.isNotBlank(caseInfo.getNewBirdAnimal())) {
-            boolean exists = userDao.birdOrAnimalExists(caseInfo.getNewBirdAnimal());
+            boolean exists = userService.birdOrAnimalExists(caseInfo.getNewBirdAnimal());
             if (!exists) {
                 if (AnimalType.Bird.name().equalsIgnoreCase(caseInfo.getBirdOrAnimal())) {
-                    userDao.addBird(caseInfo.getNewBirdAnimal());
+                    userService.addBird(caseInfo.getNewBirdAnimal());
                 } else {
-                    userDao.addAnimal(caseInfo.getNewBirdAnimal());
+                    userService.addAnimal(caseInfo.getNewBirdAnimal());
                 }
                 caseDao.saveNewBirdAnimal(caseInfo.getBirdOrAnimal(), caseInfo.getNewBirdAnimal());
                 caseInfo.setTypeAnimal(caseInfo.getNewBirdAnimal());
@@ -101,9 +101,9 @@ public class CaseService {
     public String getVolInfoForCase(Long caseId) {
         CaseInfo caseInfo = caseDao.getCaseInfoByCaseId(caseId);
         if (caseInfo != null) {
-            List<User> top5Vol = userDao.getTop5Vol();
+            List<User> top5Vol = userService.getTop5Vol();
             top5Vol = top5Vol.stream().filter(user -> !user.getRole().equals(Role.ADMIN.name()) && !user.getRole().equals(Role.Receptionist.name())).limit(5).collect(Collectors.toList());
-            List<User> nearestVol = userDao.getNearestVol(caseInfo.getLocationPincode());
+            List<User> nearestVol = userService.getNearestVol(caseInfo.getLocationPincode());
             nearestVol = nearestVol.stream().filter(user -> !user.getRole().equals(Role.ADMIN.name()) && !user.getRole().equals(Role.Receptionist.name())).collect(Collectors.toList());
             String top5VolStr = gson.toJson(top5Vol);
             String nearestVolStr = gson.toJson(nearestVol);
@@ -151,7 +151,7 @@ public class CaseService {
     private void getUserDetailsForCaseInfo(List<CaseInfo> list) {
         list.stream().forEach(c -> {
             if (c.getCurrentUserId() != null) {
-                User u = userDao.getUser(c.getCurrentUserId());
+                User u = userService.findUserByUserId(c.getCurrentUserId());
                 if (u != null) {
                     c.setUserNameCurrent(u.getUserName());
                     c.setUserRoleCurrent(u.getRole());
@@ -163,7 +163,7 @@ public class CaseService {
     private void getUserDetailsForCaseTxn(List<CaseTxn> list) {
         list.stream().forEach(c -> {
             if (c.getFromUserId() != null) {
-                User u = userDao.getUser(c.getFromUserId());
+                User u = userService.findUserByUserId(c.getFromUserId());
                 if (u != null) {
                     c.setFromUser(u.getUserName());
                     c.setFromUserRole(u.getRole());
@@ -171,7 +171,7 @@ public class CaseService {
             }
 
             if (c.getToUserId() != null) {
-                User u = userDao.getUser(c.getToUserId());
+                User u = userService.findUserByUserId(c.getToUserId());
                 if (u != null) {
                     c.setToUser(u.getUserName());
                     c.setToUserRole(u.getRole());

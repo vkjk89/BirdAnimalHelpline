@@ -125,6 +125,13 @@
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>27.0.1-jre</version>
+            <!-- or, for Android: -->
+            <!--<version>27.0.1-android</version>-->
+        </dependency>
     </dependencies>
 
     <!--<dependencyManagement>-->
