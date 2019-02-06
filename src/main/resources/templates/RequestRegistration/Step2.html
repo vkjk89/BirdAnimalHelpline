@@ -55,8 +55,6 @@
             <p id="security-para">We will be using this question in case you forget your password, so choose wisely.</p>
             <select id="securityquestion" name="securityquestion" required th:field="*{securityQId}">
                 <option th:each="o : ${securityQs}" th:text="${o.getValue()}" th:value="${o.getKey()}" value="1">
-                    1. What is your favourite Sport?
-                </option>
             </select>
             <input name="security-answer" id="sec_answer" placeholder="Your response" required th:field="*{securityQAns}" type="text">
             <input name="page" type="hidden" value="2">

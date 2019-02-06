@@ -450,15 +450,13 @@ function getVolInfo() {
             });
             $('#top_five_vol').html(cc.join(""));
 
-            var cc = [];
+            cc = [];
             $.each(JSON.parse(data.nearest), function (i, item) {
                 var html = aVol + item.userName + bVol + cVol + item.userId + dVol;
                 userIdVsInfoMap[item.userId] = item;
                 cc.push(html);
             });
             $('#nearest_5_vol').html(cc.join(""));
-
-
         });
 }
 

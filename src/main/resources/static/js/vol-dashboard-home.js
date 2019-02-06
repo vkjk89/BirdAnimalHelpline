@@ -466,7 +466,7 @@ $(document).ready(function () {
                 console.log(data);
                 var cc = [];
                 $.each(data, function (i, item) {
-                    var htm = a + item.caseId + b + c + item.creationDateStr + d + item.typeAnimal + e + f;
+                    var htm = aCase + item.caseId + bCase + cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + fCase;
                     //var htm = aCase + item.caseId + b + item.userNameCurrent + "(" + item.userRoleCurrent + ")" + c + item.creationDateStr + d + item.typeAnimal + e + item.animalName + f;
                     //var htm = aCase + item.caseId + bCase + cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + fCase;
                     cc.push(htm);
