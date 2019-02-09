@@ -48,8 +48,9 @@
 </main>
 
 <script>
+    let counter = 1;
+    let timing_counter = 111;
     $(document).ready(function () {
-        let counter = 1;
         $("#search-pincode").autocomplete({
             //appendTo  : "#search-pincode-results",
             minLength: 2,
@@ -86,75 +87,7 @@
                 var iCnt = 0;
                 document.getElementById("selected-pincodes").style.display = "block";
                 if (ui.item) {
-                        //----CREATING-ELEMENTS-AND-ADD-ATTRIBUTES----------------------------------------------------
-                        var li = document.createElement("li");
-                        li.classList.add("li-member" + counter);
-                        var div = document.createElement("div");
-                        var inner_div = document.createElement("div");
-                        var inner_div2 = document.createElement("div");
-                        var landmarks = ui.item.landmarks;
-                        var pincodes = ui.item.pincode;
-                        var span = document.createElement("span");
-                        span.classList.add("remove-pincode");
-                        span.setAttribute("onclick","remove_pincode(this.parentElement.parentElement.parentElement.classList)");
-                        var input = document.createElement("input");
-                        input.setAttribute("type", "checkbox");
-                        input.setAttribute("name","pincode-timing-check");
-                        input.setAttribute("id","pincode-timing-check" + counter);
-                        input.classList.add("pincode-timing-check");
-                        input.classList.add("member" + counter);
-                        input.setAttribute("onclick", "select_timings_dropdown(this)");
-                        var label = document.createElement("label");
-                        label.setAttribute("for", "pincode-timing-check" + counter);
-                        label.innerHTML = "Specify Timings";
-                        var input_select = document.createElement("select");
-                        input_select.setAttribute("name", "selectedTiming");
-                        input_select.setAttribute("id", "select-timings");
-                        input_select.classList.add("select-timings");
-                        input_select.classList.add("member" + counter);
-                        var option1 = document.createElement("option");
-                        option1.innerHTML = "00:00 - 04:00";
-                        option1.value="00-04";
-                        var option2 = document.createElement("option");
-                        option2.innerHTML = "04:00 - 08:00";
-                        option2.value="04-08";
-                        var option3 = document.createElement("option");
-                        option3.innerHTML = "08:00 - 12:00";
-                        option3.value="08-12";
-                        var option4 = document.createElement("option");
-                        option4.innerHTML = "12:00 - 16:00";
-                        option4.value="12-16";
-                        var option5 = document.createElement("option");
-                        option5.innerHTML = "16:00 - 20:00";
-                        option5.value="16-20";
-                        var option6 = document.createElement("option");
-                        option6.innerHTML = "20:00 - 23:59";
-                        option6.value="20-00";
-                        var hidden_input = document.createElement("input");
-                        hidden_input.setAttribute("type", "hidden");
-                        hidden_input.setAttribute("name", "pincodeId");
-                        hidden_input.setAttribute("value",ui.item.value);
-
-                        //-----APPEND-CHILDNODES-----------------------------------------------------------------------
-                        span.innerHTML = "&times;";
-                        inner_div.innerHTML += landmarks + " - " + pincodes;
-                        inner_div.appendChild(span);
-                        inner_div.appendChild(hidden_input);
-                        inner_div2.appendChild(input);
-                        inner_div2.appendChild(label);
-                        input_select.appendChild(option1);
-                        input_select.appendChild(option2);
-                        input_select.appendChild(option3);
-                        input_select.appendChild(option4);
-                        input_select.appendChild(option5);
-                        input_select.appendChild(option6);
-                        inner_div2.appendChild(input_select);
-                        div.appendChild(inner_div);
-                        div.appendChild(inner_div2);
-                        li.appendChild(div);
-                        document.getElementById("selected-pincode-ul").append(li);
-                        counter++;
-                    //-------------------------------------------------------------------------------------------------
+                    timings(ui.item); 
                     $("#search-pincode").autocomplete("close");
                     $("#search-pincode").val('');
                     return false;
@@ -163,14 +96,124 @@
         });
     });
 
+    function timings(ui_item){
+        //----CREATING-ELEMENTS-AND-ADD-ATTRIBUTES----------------------------------------------------
+        var landmarks = ui_item.landmarks;
+        var pincodes = ui_item.pincode;
+        var li = document.createElement("li");
+            li.classList.add("li-member" + counter);
+
+        var div = document.createElement("div");
+
+        var inner_div = document.createElement("div");
+            inner_div.innerHTML += landmarks + " - " + pincodes;
+
+        var inner_div2 = document.createElement("div");
+            inner_div2.classList.add("inner-div-select-member"+counter);
+
+        var span = document.createElement("span");
+            span.classList.add("remove-pincode");
+            span.setAttribute("onclick","remove_pincode(this.parentElement.parentElement.parentElement.classList)");
+            span.innerHTML = "&times;";
+
+        var input = document.createElement("input");
+            input.setAttribute("type", "checkbox");
+            input.setAttribute("name","pincode-timing-check");
+            input.setAttribute("id","pincode-timing-check" + counter);
+            input.classList.add("pincode-timing-check");
+            input.classList.add("member" + counter);
+            input.setAttribute("onclick", "select_timings_dropdown(this)");
+
+        var label = document.createElement("label");
+            label.setAttribute("for", "pincode-timing-check" + counter);
+            label.innerHTML = "Specify Timings";
+
+        var inner_div_2_select = document.createElement("div");
+            inner_div_2_select.classList.add("inner-div-select-member"+counter);
+
+        var input_select = document.createElement("select");
+            input_select.setAttribute("name", "selectedTiming"+counter);
+            input_select.setAttribute("multiple","");
+            input_select.setAttribute("id", "select-timings"+counter);
+            input_select.classList.add("select-timings");
+            input_select.classList.add("member" + counter);
+
+        var option1 = document.createElement("option");
+            option1.innerHTML = "00:00 - 04:00";
+            option1.value="00-04";
+
+        var option2 = document.createElement("option");
+            option2.innerHTML = "04:00 - 08:00";
+            option2.value="04-08";
+
+        var option3 = document.createElement("option");
+            option3.innerHTML = "08:00 - 12:00";
+            option3.value="08-12";
+
+        var option4 = document.createElement("option");
+            option4.innerHTML = "12:00 - 16:00";
+            option4.value="12-16";
+
+        var option5 = document.createElement("option");
+            option5.innerHTML = "16:00 - 20:00";
+            option5.value="16-20";
+
+        var option6 = document.createElement("option");
+            option6.innerHTML = "20:00 - 23:59";
+            option6.value="20-00";
+            
+        /*var add_timings = document.createElement("span");
+            add_timings.setAttribute("onclick","add_timing_select(this);");
+            add_timings.innerHTML = "&plus;";
+            add_timings.classList.add("add-timing-icon");
+            add_timings.classList.add("add-timing-icon-member"+counter);
+
+        var remove_timings = document.createElement("span");
+            remove_timings.setAttribute("onclick","remove_timing_select(this);");
+            remove_timings.innerHTML = "&minus;";
+            remove_timings.classList.add("remove-timing-icon");
+            remove_timings.classList.add("remove-timing-icon-member"+counter);*/
+        //add_timing_select();
+        var hidden_input = document.createElement("input");
+            hidden_input.setAttribute("type", "hidden");
+            hidden_input.setAttribute("name", "pincodeId");
+            hidden_input.setAttribute("value",ui_item.value);
+
+        //-----APPEND-CHILDNODES-----------------------------------------------------------------------
+        inner_div.appendChild(span);
+        inner_div.appendChild(hidden_input);
+        inner_div2.appendChild(input);
+        inner_div2.appendChild(label);
+        input_select.appendChild(option1);
+        input_select.appendChild(option2);
+        input_select.appendChild(option3);
+        input_select.appendChild(option4);
+        input_select.appendChild(option5);
+        input_select.appendChild(option6);
+        inner_div_2_select.appendChild(input_select);
+        //inner_div_2_select.appendChild(remove_timings);
+        //inner_div_2_select.appendChild(add_timings);
+        inner_div2.appendChild(inner_div_2_select);
+        div.appendChild(inner_div);
+        div.appendChild(inner_div2);
+        li.appendChild(div);
+        document.getElementById("selected-pincode-ul").append(li);
+        counter++;
+        //-------------------------------------------------------------------------------------------------
+    }
+
     function select_timings_dropdown(this_t){
         let y = [this_t.className.split(' ')];
         let member_number = y[0][1];
         if(event.target.checked){
             document.getElementsByClassName(member_number)[1].style.display = "inline-block";
+            //document.getElementsByClassName("add-timing-icon-"+member_number)[0].style.display = "inline";
+            //document.getElementsByClassName("remove-timing-icon-"+member_number)[0].style.display = "inline";
         }
         else {
             document.getElementsByClassName(member_number)[1].style.display = "none";
+            //document.getElementsByClassName("add-timing-icon-"+member_number)[0].style.display = "none";
+            //document.getElementsByClassName("remove-timing-icon-"+member_number)[0].style.display = "none";
         }
     }
 
@@ -180,6 +223,63 @@
             document.getElementById("selected-pincodes").style.display = "none";
         }
     }
+
+    /*function add_timing_select(this_t){
+        let y = [this_t.className.split(' ')];
+        let bricks = [y[0][1].split('-')];
+        let member_number = bricks[0][3];
+        
+        var input_select = document.createElement("select");
+            input_select.setAttribute("name", "selectedTiming"+timing_counter);
+            input_select.setAttribute("id", "select-timings"+timing_counter);
+            input_select.classList.add("select-timings");
+            input_select.classList.add("member" + timing_counter);
+        var option1 = document.createElement("option");
+            option1.innerHTML = "00:00 - 04:00";
+            option1.value="00-04";
+
+        var option2 = document.createElement("option");
+            option2.innerHTML = "04:00 - 08:00";
+            option2.value="04-08";
+
+        var option3 = document.createElement("option");
+            option3.innerHTML = "08:00 - 12:00";
+            option3.value="08-12";
+
+        var option4 = document.createElement("option");
+            option4.innerHTML = "12:00 - 16:00";
+            option4.value="12-16";
+
+        var option5 = document.createElement("option");
+            option5.innerHTML = "16:00 - 20:00";
+            option5.value="16-20";
+
+        var option6 = document.createElement("option");
+            option6.innerHTML = "20:00 - 23:59";
+            option6.value="20-00";
+            
+        var add_timings = document.createElement("span");
+            add_timings.setAttribute("onclick","add_timing_select(this);");
+            add_timings.innerHTML = "&plus;";
+            add_timings.classList.add("add-timing-icon");
+            add_timings.classList.add("add-timing-icon-member"+timing_counter);
+
+        var remove_timings = document.createElement("span");
+            remove_timings.setAttribute("onclick","remove_timing_select(this);");
+            remove_timings.innerHTML = "&minus;";
+            remove_timings.classList.add("remove-timing-icon");
+            remove_timings.classList.add("remove-timing-icon-member"+timing_counter);
+            
+        input_select.appendChild(option1);
+        input_select.appendChild(option2);
+        input_select.appendChild(option3);
+        input_select.appendChild(option4);
+        input_select.appendChild(option5);
+        input_select.appendChild(option6);
+        input_select.style.display = "block";
+        document.getElementsByClassName("inner-div-select-"+member_number)[0].appendChild(input_select);
+        timing_counter++;
+    }*/
 </script>
     
 </body>

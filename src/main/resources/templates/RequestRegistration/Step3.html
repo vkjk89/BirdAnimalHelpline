@@ -37,7 +37,7 @@
                 </label>
                 <label for="dp-img" id="dp-error">Select valid Profile picture.</label>
                 <label for="dp-img" id="dp-label-2">Upload your profile picture</label>
-                <input accept="image/*" id="dp-img" name="dp-image" required style="display:none; top: 0; right: 0; position: absolute;" type="file">
+                <input accept="image/*" id="dp-img" name="dp-image" required style="top: -50vh; right: 0; position: absolute;" type="file">
             </div>
             <div id="warning">
                 <b>Please make sure that the picture you choose to upload doesn't contain any quotes or any picture other than yourself, as this picture will be used for further identifiction and verification.</b>
@@ -48,7 +48,7 @@
                     <li th:each="err : ${#fields.errors('userName')}" th:text="${err}">That username is taken. Try another.</li>
                 </ul><br>
                 <input autocomplete="off" id="password" name="password-selection" pattern="[0-9]{4}" placeholder="4 digit password" required th:field="*{password}" title="4 digit password" type="password">
-                <button id="show_pass" type="button"><img src="/static/img/eye-1.png" th:src="@{/img/eye-1.png}" alt="Show Password"></button>
+                <button id="show_pass" type="button"><img src="/static/img/eye-1.png" th:src="@{/img/eye-1.png}" alt="ShowPass"></button>
                 <ul th:if="${#fields.hasErrors('password')}">
                     <li th:each="err : ${#fields.errors('password')}" th:text="${err}">Password is invalid</li>
                 </ul>
@@ -67,35 +67,37 @@
 
 <script>
     var show_pass = true;
-    $(document).ready(function () {
-        $('#preview, #submit').click(dp_error);
-        $("#dp-image").change(dp_error);
-
-        function dp_error() {
-            if (document.getElementById("dp-img").files.length == 0) {
-                document.getElementById('dp-error').style.display = "block";
-                document.getElementById('dp-img1').style.border = "3px dashed red";
-                document.getElementById('dp-label-2').style.display = "none";
-            } else if (document.getElementById("dp-img").files.length == 1) {
-                document.getElementById('dp-error').style.display = "none";
-                document.getElementById('dp-img1').style.border = "none";
-                document.getElementById('dp-label-2').style.display = "block";
-            } else {
-                document.getElementById('dp-error').style.display = "block";
-                document.getElementById('dp-img1').style.border = "3px dashed red";
-                document.getElementById('dp-label-2').style.display = "none";
-            }
+    function dp_error() {
+        if (document.getElementById("dp-img").files.length == 0) {
+            document.getElementById('dp-error').style.display = "block";
+            document.getElementById('dp-img1').style.border = "3px dashed red";
+            document.getElementById('dp-label-2').style.display = "none";
+        } else if (document.getElementById("dp-img").files.length == 1) {
+            document.getElementById('dp-error').style.display = "none";
+            document.getElementById('dp-img1').style.border = "0";
+            document.getElementById('dp-label-2').style.display = "none";
+        } else {
+            document.getElementById('dp-error').style.display = "block";
+            document.getElementById('dp-img1').style.border = "3px dashed red";
+            document.getElementById('dp-label-2').style.display = "none";
         }
+    }
+
+    $(document).ready(function () {
+        $('#preview-btn').click(function(){
+            dp_error();
+        });
+        $("#dp-image, #dp-img").on("change",function(){
+            dp_error();
+        });
 
         $("#show_pass img").click(function(){
             if(show_pass === true){
                 $("#password").attr("type", "text");
                 $("#show_pass img").attr("th:src", "/img/eye-1-pass.png");
-                $("#show_pass img").attr("src", "/static/img/eye-1-pass.png");
             }else {
                 $("#password").attr("type", "password");
                 $("#show_pass img").attr("th:src", "/img/eye-1.png");
-                $("#show_pass img").attr("src", "/static/img/eye-1.png");
             }
             show_pass = !show_pass;
         });

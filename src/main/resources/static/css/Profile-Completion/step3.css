@@ -148,12 +148,26 @@ main {
 }
 
 .select-timings {
+    display: none;
     box-sizing: border-box;
     background-color: transparent;
     border-radius: 5px;
-    padding: 0.5vw 1vw;
+    padding: 1vh;
     margin-left: 1vw;
-    display:none;
+    margin-top: 1vh;
+    max-height: 8vh;
+    font-size: 1em;
+}
+.select-timings:first-child {
+    margin-top: 0;
+}
+
+.add-timing-icon, .remove-timing-icon{
+    display: none;
+    float: right;
+    font-size: 2em;
+    font-weight: 900;
+    margin-right: 5vw;
 }
 
 .remove-pincode {

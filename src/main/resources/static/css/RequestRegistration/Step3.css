@@ -92,16 +92,18 @@
 }
 
 /* ------------------------------------------------------------------------------------------------------------------*/
-
+body {
+    height: 100vh;
+}
+main {
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
 
 #step3 {
     display: block;
     text-align: center;
     z-index: 2;
-}
-
-main {
-    margin-left: 5vw;
 }
 
 main div {
@@ -129,7 +131,7 @@ ul li {
 }
 
 #loading-gif img {
-    left: 30vw;
+    left: 28vw;
     width: 35vw;
     z-index: 1;
 }
@@ -151,6 +153,18 @@ ul li {
     border: red;
 }
 
+#warning {
+    box-sizing: border-box;
+    margin: 3vw;
+    padding: 3vw;
+    outline: rgb(0, 128, 0);
+    background-color: rgba(144, 238, 144, 0.7);
+    color: rgb(0, 0, 0);
+    font-weight: 400;
+    font-size: 0.85em;
+    margin-bottom: 3vh;
+}
+
 #username, #password {
     box-sizing: border-box;
     width: 60vw;
@@ -165,7 +179,7 @@ ul li {
 }
 
 #password {
-    margin-left: 2.75vw;
+    margin-left: 8vw;
     display: inline;
 }
 #show_pass {
@@ -177,26 +191,17 @@ ul li {
     max-width: 7vw;
 }
 
-#warning {
-    box-sizing: border-box;
-    margin: 3vw;
-    padding: 3vw;
-    outline: rgb(0, 128, 0);
-    background-color: rgba(144, 238, 144, 0.7);
-    color: rgb(0, 0, 0);
-    font-weight: 400;
-    font-size: 0.85em;
-}
-
 .footer-btns {
+    position: absolute;
     margin-top: 5vh;
     text-align: left;
+    bottom: 3vh;
+    width: 90vw;
 }
 
 .cta-preview-btn {
-    top: 1vh;
     float: right;
-    margin-right: 5vw;
+    margin-top: 0.5vh;
 }
 
 .cta-preview-btn button {

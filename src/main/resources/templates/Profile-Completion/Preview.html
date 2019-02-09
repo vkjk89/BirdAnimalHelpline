@@ -13,6 +13,7 @@
 <body>
     <p id="header">Preview</p>
     <main>
+        <button id="go-to-bottom"><img src="/static/img/go-to-bottom.png"></button>
         <div id="home-address-preview">
             <span id="heading-home-address">Home Address:</span>
             <img id="edit-home-address" onclick="window.location = '' " src="/static/img/edit.png" th:src="@{/img/edit.png}">
@@ -80,6 +81,36 @@
             
         };*/
         $(document).ready(function (){
+            $("#go-to-bottom").click(function(){
+                window.scrollTo(0,document.getElementsByTagName('main')[0].scrollHeight);
+            });
+        });
+
+        document.addEventListener("scroll", function(){
+            if(document.documentElement.clientHeight > 780){
+                if(document.documentElement.scrollTop > 0.15 * document.getElementsByTagName('main')[0].scrollHeight ){
+                    $("#go-to-bottom").fadeOut(400);
+                }
+                else $("#go-to-bottom").fadeIn(400);
+            }
+            else if(document.documentElement.clientHeight < 780 && document.documentElement.clientHeight > 630){
+                if(document.documentElement.scrollTop > 0.2 * document.getElementsByTagName('main')[0].scrollHeight ){
+                    $("#go-to-bottom").fadeOut(400);
+                }
+                else $("#go-to-bottom").fadeIn(400);
+            }
+            else if(document.documentElement.clientHeight < 630 && document.documentElement.clientHeight > 520){
+                if(document.documentElement.scrollTop > 0.3 * document.getElementsByTagName('main')[0].scrollHeight ){
+                    $("#go-to-bottom").fadeOut(400);
+                }
+                else $("#go-to-bottom").fadeIn(400);
+            }
+            else if(document.documentElement.clientHeight < 520 && document.documentElement.clientHeight > 420){
+                if(document.documentElement.scrollTop > 0.4 * document.getElementsByTagName('main')[0].scrollHeight ){
+                    $("#go-to-bottom").fadeOut(400);
+                }
+                else $("#go-to-bottom").fadeIn(400);
+            } else $("#go-to-bottom").fadeIn(400);
         });
     </script>
 </body>

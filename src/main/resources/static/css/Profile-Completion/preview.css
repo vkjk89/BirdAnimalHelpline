@@ -1,3 +1,6 @@
+html {
+    scroll-behavior: smooth;
+}
 #header {
     box-sizing: border-box;
     position: fixed;
@@ -13,6 +16,15 @@
 main {
     text-align: left;
     margin-top: 15vh;
+}
+#go-to-bottom {
+    padding: 0;
+    position: fixed;
+    bottom: 5vh;
+    right: 1vw;
+}
+#go-to-bottom img {
+    width: 12vw;
 }
 
 #home-address-preview, #work-address-preview, #selected-pincodes-preview {
