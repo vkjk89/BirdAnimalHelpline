@@ -1,6 +1,7 @@
 var usersPendingCaseMap = new Map();
 
-function accept(caseId) {
+function accept() {
+    var caseId = $('.case-id').text();
     data1.splice(slideIndex,1);
     $('.celebrations').fadeIn(200);
     acceptReject(caseId, true);
@@ -10,7 +11,8 @@ function accept(caseId) {
     }, 200);
 }
 
-function decline(caseId) {
+function decline() {
+    var caseId = $('.case-id').text();
     $('.celebrations').css("display", "none");
     data1.splice(slideIndex,1);
     acceptReject(caseId, false);
@@ -145,7 +147,7 @@ function displayPendingCases() {
 
 function goToCaseDetails(element) {
     //console.info(element);
-    var caseId = $(element).find(".case-id").text();
+    var caseId = $(element).find(".case-id-my-cases").text();
     //console.info(caseId);
     window.location.href = "/caseDetails?caseId=" + caseId;
 }
