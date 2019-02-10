@@ -1,40 +1,23 @@
 var usersPendingCaseMap = new Map();
-var updateSliderMemeberCount;
 
 function accept(caseId) {
+    data1.splice(slideIndex,1);
+    $('.celebrations').fadeIn(200);
     acceptReject(caseId, true);
-    $('.celebrations').fadeIn();
-    //window.scrollTo(0, document.body.scrollHeight);
+    slide_accept_case(1);
+    setTimeout(function(){
+        $('.celebrations').fadeOut(200);
+    }, 200);
 }
 
 function decline(caseId) {
-    acceptReject(caseId, false);
     $('.celebrations').css("display", "none");
-    //window.scrollTo(0, document.body.scrollHeight);
-}
-
-function temp_accept_reject(this_t) {
-    var elementTemp = this_t.classList;
-    var element = elementTemp[elementTemp.length - 1];
-    var split = element.split("-");
-    var number = split[split.length - 1];
-    updateSliderMemeberCount--;
-    $('.accept-decline-pending-cases').text(updateSliderMemeberCount);
-    $(".celebrations-container-" + number).fadeIn(100);
-    setTimeout(function () {
-        if (updateSliderMemeberCount === 0) {
-            $('.slider-nav-right').fadeOut(100);
-            $('.slider-nav-left').fadeOut(100);
-            $('#case-slider').fadeOut();
-            $('#accept-case-empty').fadeIn();
-            $(".accept-case-wrapper").css("minHeight", "0vh");
-            $(".accept-case-wrapper").css("marginBottom", "5vh");
-        }
-        $('.' + element).remove();
-        $(".slider-member-bullet-" + number).remove();
-        $("celebrations-container-" + number).fadeOut(100);
-        slide_accept_case(1);
-    }, 1000);
+    data1.splice(slideIndex,1);
+    acceptReject(caseId, false);
+    slide_accept_case(1);
+    setTimeout(function(){
+        $('.celebrations').fadeOut(200);
+    }, 200);
 }
 
 function acceptReject(caseId, acceptReject) {
@@ -49,7 +32,7 @@ function acceptReject(caseId, acceptReject) {
         // dataType: 'json'
     })
         .done(function (data) {
-                console.log("done vvkj : " + data);
+                //console.log("done vvkj : " + data);
             }
         );
 }
@@ -62,242 +45,72 @@ function enlargePhoto(this_t) {
 }
 
 /*---------------------------Creating-Dynamic-Accept/Decline-Case-Members--------------------------------------*/
-var slider_member_counter = 1;
-var slider_member_bullet = 1;
+var slider_member_counter = 0;
+var slider_member_bullet = 0;
 
-function section_accept_case(data) {
-    //Creating-and-Assigning-Attributes-----
-    var slide_div = document.createElement("div");
-    slide_div.classList.add("slider-member-bullet");
-    slide_div.classList.add("slider-member-bullet-" + slider_member_bullet);
-    slide_div.innerHTML = "l";
-
-    var accept_case_container = document.createElement("div");
-    accept_case_container.classList.add("accept-case-container");
-
-    var case_details = document.createElement("div");
-    case_details.classList.add("case-details");
-
-    var box1 = document.createElement("div");
-    box1.classList.add("box1");
-
-    var text_case_id = document.createElement("span");
-    text_case_id.innerHTML = "Case ID: ";
-
-    var case_id = document.createElement("span");
-    case_id.classList.add("case-id");
-    case_id.innerHTML = data.caseId;
-
-    var box2 = document.createElement("div");
-    box2.classList.add("box2");
-
-    var bird_animal_info_header = document.createElement("div");
-    bird_animal_info_header.classList.add("bird-animal-info-header");
-    bird_animal_info_header.innerHTML = data.birdOrAnimal + " Information";
-
-    var animal_type = document.createElement("div");
-    animal_type.classList.add("animal-type");
-    animal_type.innerHTML = data.birdOrAnimal + " Type: " + data.typeAnimal;
-
-    var animal_name = document.createElement("div");
-    animal_name.classList.add("animal-name");
-    if (data.animalName != "") {
-        animal_name.innerHTML = data.birdOrAnimal + " Name: " + data.animalName;
-    } else animal_name.innerHTML = data.birdOrAnimal + " Name: Unspecified";
-
-    var text_span_condition = document.createElement("span");
-    text_span_condition.innerHTML = "Condition: ";
-
-    var case_condition = document.createElement("span");
-    case_condition.classList.add("case-condition");
-    if (data.animalCondition != "") {
-        case_condition.innerHTML = data.animalCondition;
-    } else case_condition.innerHTML = "Unspecified";
-
-    var text_div_photos_uploaded = document.createElement("div");
-    text_div_photos_uploaded.innerHTML = "Photos Uploaded: ";
-
-    var case_photos = document.createElement("div");
-    case_photos.classList.add("case-photos");
-    case_photos.setAttribute("id", "case-photos-" + data.caseId);
-    //case_photos.id.add("case-photos");
-    //Make innerHTML "none" by default, if photos are there then attach them.
-    //case_photos.innerHTML = "<img src=\"\" onclick=\"enlargePhoto(this)\">";
-
-    var box3 = document.createElement("div");
-    box3.classList.add("box3");
-
-    var contact_info_header = document.createElement("div");
-    contact_info_header.classList.add("contact-info-header");
-    contact_info_header.innerHTML = "Contact Information";
-
-    var contact_info = document.createElement("div");
-    contact_info.classList.add("contact-info");
-
-    var text_span_name = document.createElement("span");
-    text_span_name.innerHTML = "Name: ";
-
-    var contact_name = document.createElement("span");
-    contact_name.classList.add("contact-name");
-    contact_name.innerHTML = data.contactName + "<br>";
-
-    var text_span_number = document.createElement("span");
-    text_span_number.innerHTML = "Contact Number: ";
-
-    var contact_number = document.createElement("span");
-    contact_number.classList.add("contact-number");
-    contact_number.innerHTML = "<a style=\"color:black;text-decoration:underline\" href=\"tel:" + data.contactPrefix + data.contactNumber + "\">" + data.contactPrefix + "-" + data.contactNumber;
-
-    var text_location = document.createElement("div");
-    text_location.innerHTML = "Location: ";
-
-    var contact_location = document.createElement("div");
-    contact_location.classList.add("contact-location");
-    if (data.location === "") {
-        if (data.locationLandMark === "") {
-            contact_location.innerHTML = data.locationPincode;
-        } else contact_location.innerHTML = data.locationLandMark + "<br>" + data.locationPincode;
-    } else if (data.locationLandMark === "") {
-        contact_location.innerHTML = data.locationPincode;
-    } else {
-        contact_location.innerHTML = data.location + "<br>" + data.locationLandMark + "<br>" + data.locationPincode;
+function createBullets(){
+    $("#case-slider-bullets").empty();
+    slider_member_bullet = 0;
+    for(var i = 0; i < data1.length; i++){
+        //CREATING-BULLETS-ACCEPT-CASE-HEADER
+        var slide_div = document.createElement("div");
+        slide_div.classList.add("slider-member-bullet");
+        slide_div.classList.add("slider-member-bullet-" + slider_member_bullet);
+        slide_div.innerHTML = "l";
+        //APPENDING-ELEMENTS-------------------
+        document.getElementById("case-slider-bullets").appendChild(slide_div);
+        slider_member_bullet++;
     }
+}
 
-    var accept_decline = document.createElement("div");
-    accept_decline.classList.add("accept-decline");
-
-    var decline = document.createElement("button");
-    decline.innerHTML = "I am helpless";
-    decline.classList.add("decline");
-    decline.setAttribute("type", "submit");
-    decline.setAttribute("onclick", "decline(" + data.caseId + ");");
-    //decline.setAttribute("onclick", "temp_accept_reject(this)");
-    decline.classList.add("slider-member-" + slider_member_counter);
-
-    var accept = document.createElement("button");
-    accept.innerHTML = "Accept";
-    accept.classList.add("accept");
-    accept.setAttribute("type", "submit");
-    accept.setAttribute("onclick", "accept(" + data.caseId + ");");
-    //accept.setAttribute("onclick", "temp_accept_reject(this)");
-    accept.classList.add("slider-member-" + slider_member_counter);
-
-    var celebrations_container = document.createElement("div");
-    celebrations_container.classList.add("celebrations-container");
-    celebrations_container.classList.add("celebrations-container-" + slider_member_counter);
-
-    var celebrations = document.createElement("span");
-    celebrations.classList.add("celebrations");
-
-    var celebrations_image = document.createElement("img");
-    celebrations_image.setAttribute("alt", "Case Animal/Bird");
-    celebrations_image.setAttribute("th:src", "@{/img/pigeon.png}");
-    celebrations_image.innerHTML = "Thank You for saving my life.";
-    celebrations_image.setAttribute("width", "10vw");
-
-    //Appending-Children-to-Parents
-    //Box3---------------------------------------------------
-    celebrations.appendChild(celebrations_image);
-    celebrations_container.appendChild(celebrations);
-    accept_decline.appendChild(decline);
-    accept_decline.appendChild(accept);
-    accept_decline.appendChild(celebrations_container);
-
-    contact_info.appendChild(text_span_name);
-    contact_info.appendChild(contact_name);
-    contact_info.appendChild(text_span_number);
-    contact_info.appendChild(contact_number);
-    contact_info.appendChild(text_location);
-    contact_info.appendChild(contact_location);
-
-    box3.appendChild(contact_info_header);
-    box3.appendChild(contact_info);
-    box3.appendChild(accept_decline);
-    //--------------------------------------------------------
-
-    //Box2----------------------------------------------------
-    box2.appendChild(bird_animal_info_header);
-    box2.appendChild(animal_type);
-    box2.appendChild(animal_name);
-    box2.appendChild(text_span_condition);
-    box2.appendChild(case_condition);
-    box2.appendChild(text_div_photos_uploaded);
-    box2.appendChild(case_photos);
-    //--------------------------------------------------------
-
-    //Box1----------------------------------------------------
-    box1.appendChild(text_case_id);
-    box1.appendChild(case_id);
-
-    //Case-Details--------------------------------------------
-    case_details.appendChild(box1);
-    case_details.appendChild(box2);
-    case_details.appendChild(box3);
-    //--------------------------------------------------------
-
-    //Accept-Case-Container-----------------------------------
-    accept_case_container.classList.add("slider-member-count");
-    accept_case_container.classList.add("slider-member-" + slider_member_counter);
-    accept_case_container.appendChild(case_details);
-    slider_member_counter++;
-    slider_member_bullet++;
-    //--------------------------------------------------------
-
-    //Accept-Case---------------------------------------------
-    document.getElementById("accept-case-wrapper").appendChild(accept_case_container);
-    document.getElementById("accept-case-empty").style.display = "none";
-    $(".accept-case-wrapper").css("minHeight", "85vh");
-    document.getElementById("case-slider").style.display = "flex";
-    document.getElementById("case-slider").appendChild(slide_div);
-    $(".slider-nav-left").css("display", "inline-block");
-    $(".slider-nav-right").css("display", "inline-block");
-    slide_accept_case(0);
-    //--------------------------------------------------------
+function section_accept_case(slideIndex, data) {
+    if(data != undefined){
+        data1 = data;
+    }
+    $(".slider-member-bullet-*").removeClass("case-slider-active-div");
+    $(".slider-member-bullet-"+slideIndex).addClass("case-slider-active-div");
+    $(".case-details").fadeOut(200);
+    $(".case-details").fadeIn(200);
+    setTimeout(function(){
+        $(".case-id").html(data1[slideIndex].caseId);
+        if(data1[slideIndex].birdOrAnimal === "Animal"){
+            $(".bird-animal-info-header").html("Animal Information");
+            $(".animal-type").html("Animal Type: " + data1[slideIndex].typeAnimal);
+            if(data1[slideIndex].animalName) $(".animal-name").html("Animal Name: " + data1[slideIndex].animalName);
+            else $(".animal-name").html("Animal Name: ");
+            if(data1[slideIndex].animalCondition) $(".animalCondition").html(data1[slideIndex].animalCondition);
+            else $(".animalCondition").html("");
+        }else {
+            $(".bird-animal-info-header").html("Bird Information");
+            $(".animal-type").html("Bird Type: " + data1[slideIndex].typeAnimal);
+            if(data1[slideIndex].animalName) $(".animal-name").html("Bird Name: " + data1[slideIndex].animalName);
+            else $(".animal-name").html("Bird Name: ");
+            if(data1[slideIndex].animalCondition) $(".animalCondition").html(data1[slideIndex].animalCondition);
+            else $(".animalCondition").html("");
+        }
+        $(".contact-name").html(data1[slideIndex].contactName);
+        $(".contact-number").html("<a href='tel:" +  data1[slideIndex].contactPrefix  + data1[slideIndex].contactNumber + "'>" + data1[slideIndex].contactPrefix + "-" + data1[slideIndex].contactNumber + "</a>");
+        if(data1[slideIndex].locationLandMark){
+            $(".contact-location").html(data1[slideIndex].location + "<br>" + data1[slideIndex].locationLandMark + "<br>" + data1[slideIndex].locationPincode);
+        }
+        else $(".contact-location").html(data1[slideIndex].location + "<br>" + data1[slideIndex].locationPincode);
+    }, 200);
 }
 
 //SLIDER-----------------------------------------------------------------------------------------------------
-var currentSlide = 1;
-var slider_member_count;
+var currentSlide = 0;
+var slideIndex = 0;
 
 function slide_accept_case(slide_direction) {
-    var slideIndex = currentSlide + slide_direction;
-    if (slideIndex < 1) {
-        slideIndex = slider_member_count;
-        //console.log("slider-member-" + (slideIndex) );
-        //console.log( document.getElementsByClassName("slider-member-" + (slideIndex - 1) ) );
-        $(".slider-member-count").css("display", "none");
-        $(".slider-member-" + slideIndex).fadeIn(300);
-        $(".slider-member-bullet").removeClass("case-slider-active-div");
-        $(".slider-member-bullet-" + slideIndex).addClass("case-slider-active-div");
-    } else if (slideIndex > 1 && slideIndex <= slider_member_count) {
-        if (slide_direction === 1) {
-            //console.log( document.getElementsByClassName("slider-member-" + (slideIndex - 1) ) );
-            $(".slider-member-" + (slideIndex - 1)).css("display", "none");
-            $(".slider-member-" + slideIndex).fadeIn(300);
-            $(".slider-member-bullet").removeClass("case-slider-active-div");
-            $(".slider-member-bullet-" + slideIndex).addClass("case-slider-active-div");
-        } else {
-            $(".slider-member-" + (slideIndex + 1)).css("display", "none");
-            $(".slider-member-" + slideIndex).fadeIn(300);
-            $(".slider-member-bullet").removeClass("case-slider-active-div");
-            $(".slider-member-bullet-" + slideIndex).addClass("case-slider-active-div");
-        }
-    } else if (slideIndex === 1) {
-        $(".slider-member-count").css("display", "none");
-        $(".slider-member-1").fadeIn(300);
-        $(".slider-member-bullet").removeClass("case-slider-active-div");
-        $(".slider-member-bullet-" + slideIndex).addClass("case-slider-active-div");
-        //console.log("slider-member-" + (slideIndex) );
-        //console.log( document.getElementsByClassName("slider-member-" + (slider_member_count) ) );
-        //setTimeout(function(){$(".slider-member-").fadeOut(500);}, 550);
-    } else if (slideIndex > slider_member_count) {
-        slideIndex = 1;
-        //console.log("slider-member-" + (slideIndex) );
-        //console.log( document.getElementsByClassName("slider-member-" + (slideIndex - 1) ) );
-        $(".slider-member-count").css("display", "none");
-        $(".slider-member-" + slideIndex).fadeIn(300);
-        $(".slider-member-bullet").removeClass("case-slider-active-div");
-        $(".slider-member-bullet-" + slideIndex).addClass("case-slider-active-div");
+    slideIndex = currentSlide + slide_direction;
+    if (slideIndex < 0) {
+        slideIndex = data1.length-1;
+        section_accept_case(slideIndex);
+    } else if (slideIndex >= 0 && slideIndex < data1.length) {
+        section_accept_case(slideIndex);
+    } else if (slideIndex+1 >= data1.length) {
+        slideIndex = 0;
+        section_accept_case(slideIndex);
     }
     currentSlide = slideIndex;
 }
@@ -312,26 +125,28 @@ function displayPendingCases() {
         .done(function (data) {
                 if (data) {
                     $('.accept-decline-pending-cases').text(data.length);
+                    if(data.length == 0){
+                        $("#accept-case-empty").show();
+                        $(".accept-case-container").hide();
+                    }
+                    section_accept_case(0, data);
+                    createBullets();
+
                     $.each(data, function (i, item) {
-                        console.info(item);
                         if (!usersPendingCaseMap.has(item.caseId)) {
-                            section_accept_case(item);
                             caseImageRetriever(item.caseId, "case-photos-" + item.caseId);
-                            slider_member_count = data.length;
-                            updateSliderMemeberCount = data.length;
                             usersPendingCaseMap.set(item.caseId, item);
                         }
                     });
-
                 }
             }
         );
 }
 
 function goToCaseDetails(element) {
-    console.info(element);
+    //console.info(element);
     var caseId = $(element).find(".case-id").text();
-    console.info(caseId);
+    //console.info(caseId);
     window.location.href = "/caseDetails?caseId=" + caseId;
 }
 
@@ -436,10 +251,10 @@ $(document).ready(function () {
         }
     };
 
-    var aCase = '<div onclick="goToCaseDetails(this)"><span class="case-id">';
+    var aCase = '<div onclick="goToCaseDetails(this)"><span class="case-id-my-cases">';
     var bCase = '</span>';
-    var cCase = '<span class="date">';
-    var dCase = '</span><span class="animal-type">';
+    var cCase = '<span class="date-my-cases">';
+    var dCase = '</span><span class="animal-type-my-cases">';
     var eCase = '</span>';
     var fCase = '</div>';
 
@@ -454,7 +269,7 @@ $(document).ready(function () {
         var formData = {
             'userId': userId,
         };
-        console.info(" Clicked " + url + " " + tableId + " for user : " + userId);
+        //console.info(" Clicked " + url + " " + tableId + " for user : " + userId);
 
         $.ajax({
             type: 'GET', // define the type of HTTP verb we want to use (POST for our form)
@@ -463,7 +278,7 @@ $(document).ready(function () {
             //encode: true
         }).done(function (data) {
                 // log data to the console so we can see
-                console.log(data);
+                //console.log(data);
                 var cc = [];
                 $.each(data, function (i, item) {
                     var htm = aCase + item.caseId + bCase + cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + fCase;

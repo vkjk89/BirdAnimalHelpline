@@ -73,10 +73,12 @@
         var pass_state = true;
         document.getElementById("show_pass").onclick = function(){
             if(pass_state === true){
+                document.getElementById("show_pass").innerHTML = "Hide Password";
                 document.getElementById('password').setAttribute('type','text');
                 pass_state = !pass_state;
             }
             else {
+                document.getElementById("show_pass").innerHTML = "Show Password";
                 document.getElementById('password').setAttribute('type','password');
                 pass_state = !pass_state;
             }

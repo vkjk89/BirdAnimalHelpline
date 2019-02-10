@@ -37,6 +37,9 @@ a:hover{color: #007AEA;}
     border-radius: 0px;
     border: 1px solid #cccccc;
 }
+#pass:focus, #username:focus {
+    border: 1px solid #333;
+}
 
 #loginButton {
     margin-top: 1vh;
