@@ -65,11 +65,11 @@ public class LoginController {
 
 
     @RequestMapping(path = "/registration", method = {RequestMethod.GET, RequestMethod.POST})
-    public String processPage(@RequestParam(name = "page", required = false) final Integer currentPage,
-                              @ModelAttribute("user") User user, BindingResult result,
-                              SessionStatus status,
-                              @RequestParam(name = "action", required = false) String action,
-                              Model model) {
+    public String processRegPage(@RequestParam(name = "page", required = false) final Integer currentPage,
+                                 @ModelAttribute("user") User user, BindingResult result,
+                                 SessionStatus status,
+                                 @RequestParam(name = "action", required = false) String action,
+                                 Model model) {
         logger.info(" vkj inside reg : " + user + " " + currentPage);
         logger.info("vkj action : " + action);
         model.addAttribute("securityQs", userService.getSecurityQs());
@@ -168,11 +168,20 @@ public class LoginController {
             case 3:
                 handleProfileStep3(modelAndView, user, request, redirectAttrs);
                 break;
+            case 4:
+                handleSubmission(modelAndView, user, request, redirectAttrs);
+                break;
             default:
                 modelAndView.setViewName("Error");
 
         }
         return modelAndView;
+    }
+
+    private void handleSubmission(ModelAndView modelAndView, User user, HttpServletRequest request, RedirectAttributes redirectAttrs) {
+        userService.saveUserAddrPinDetails(user);
+        redirectAttrs.addFlashAttribute("profileCompleted", true);
+        modelAndView.setViewName("redirect:/default");
     }
 
     private void handleProfileStep1(ModelAndView modelAndView, User user, BindingResult result) {
@@ -191,22 +200,30 @@ public class LoginController {
             logger.info(entry.getKey() + " : " + Arrays.toString(entry.getValue()));
         }
         populateUserServiceTimeInfo(user, request);
-        userService.saveUserAddrPinDetails(user);
-        redirectAttrs.addFlashAttribute("profileCompleted", true);
-        modelAndView.setViewName("redirect:/default");
+        modelAndView.setViewName("Profile-Completion/Preview");
     }
 
     private void populateUserServiceTimeInfo(User user, HttpServletRequest request) {
         List<UserServiceTimeInfo> list = new ArrayList<>();
         UserServiceTimeInfo serviceTimeInfo = null;
-        String[] selectedPinCodeIds = request.getParameterMap().get("pincodeId");
-        String[] selectedTimings = request.getParameterMap().get("selectedTiming");
-
-        if (selectedPinCodeIds != null && selectedTimings != null && selectedPinCodeIds.length == selectedTimings.length) {
-            for (int i = 0; i < selectedPinCodeIds.length; i++) {
+        int j = 1;
+        String[] selectedPinCodeIds;
+        String[] selectedTimings;
+        while (true) {
+            selectedPinCodeIds = request.getParameterMap().get("pincodeId" + j);
+            selectedTimings = request.getParameterMap().get("selectedTiming" + j);
+            if (selectedPinCodeIds == null) {
+                break;
+            }
+            j++;
+            String pinCodeId = selectedPinCodeIds[0];
+            if(selectedTimings == null) {
+                selectedTimings = new String [] { "00-23" };
+            }
+            for (String t : selectedTimings) {
                 serviceTimeInfo = new UserServiceTimeInfo();
-                serviceTimeInfo.setPincodeId(Long.parseLong(selectedPinCodeIds[i]));
-                String[] time = selectedTimings[i].trim().split("-");
+                serviceTimeInfo.setPincodeId(Long.parseLong(pinCodeId));
+                String[] time = t.trim().split("-");
                 serviceTimeInfo.setFromTime(Integer.parseInt(time[0].trim()));
                 serviceTimeInfo.setToTime(Integer.parseInt(time[1].trim()));
                 list.add(serviceTimeInfo);
@@ -215,6 +232,7 @@ public class LoginController {
         user.setUserServiceTimeInfos(list);
         logger.info("vkj user service time : " + list);
     }
+
 
     @RequestMapping(path = "/forgotPassword", method = {RequestMethod.GET})
     public String forgotPassword(Model model) throws IOException {

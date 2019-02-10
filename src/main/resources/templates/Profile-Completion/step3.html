@@ -141,6 +141,7 @@
         var option1 = document.createElement("option");
             option1.innerHTML = "00:00 - 04:00";
             option1.value="00-04";
+            //soption1.selected='selected';
 
         var option2 = document.createElement("option");
             option2.innerHTML = "04:00 - 08:00";
@@ -164,7 +165,7 @@
 
         var hidden_input = document.createElement("input");
             hidden_input.setAttribute("type", "hidden");
-            hidden_input.setAttribute("name", "pincodeId");
+            hidden_input.setAttribute("name", "pincodeId"+counter);
             hidden_input.setAttribute("value",ui_item.value);
 
         //-----APPEND-CHILDNODES-----------------------------------------------------------------------
