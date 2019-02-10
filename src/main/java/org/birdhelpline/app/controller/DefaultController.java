@@ -35,7 +35,9 @@ public class DefaultController {
         Principal principal = request.getUserPrincipal();
         logger.info("Inside handleLogin for user : " + principal.getName());
         logger.info(" vkj model" + model.asMap());
+
         User user = userService.findUserByUserName(principal.getName());
+
         if (user == null) {
             return modelAndView;
         }
@@ -44,18 +46,15 @@ public class DefaultController {
         modelAndView.addObject("user", user);
         session.setAttribute("user", user);
 
-        userService.updateUserLoginDetails(user);
+        logger.info("VKJ user is : " + user);
+
         Boolean profileCompleted = (Boolean) model.asMap().get("profileCompleted");
         if (profileCompleted != null && profileCompleted) {
             logger.info("From profile completion page so redirecting ..");
             getViewBasedOnRole(modelAndView);
+            userService.updateUserLoginDetails(user);
             return modelAndView;
         }
-
-        modelAndView.addObject("birds", userService.getListBirds());
-        modelAndView.addObject("animals", userService.getListAnimals());
-
-        logger.info("VKJ user is : " + user);
 
         if (!ROLE_NOT_REQ_PROFILE_COMP.contains(user.getRole()) && (user.getLastLoginDate() == null || user.getLoginCount() == 0)) {
             logger.info("User login for first time so redirecting to profile completion page");
@@ -63,8 +62,10 @@ public class DefaultController {
             return modelAndView;
         }
 
+        modelAndView.addObject("birds", userService.getListBirds());
+        modelAndView.addObject("animals", userService.getListAnimals());
         getViewBasedOnRole(modelAndView);
-
+        userService.updateUserLoginDetails(user);
         return modelAndView;
     }
 

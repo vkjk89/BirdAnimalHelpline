@@ -82,6 +82,9 @@ public class UserService {
         return userDao.getSecurityQs();
     }
 
+    public List<PinCodeLandmarkInfo> getPinCodeLandmarkInfoList() {
+        return userDao.getPinCodeLandMarks();
+    }
     public List<PinCodeLandmarkInfo> getPinCodeLandMarks(String term, String selectedPinCodes) {
         Set<Long> setSelected = new HashSet<>();
         if (StringUtils.isNotBlank(selectedPinCodes)) {

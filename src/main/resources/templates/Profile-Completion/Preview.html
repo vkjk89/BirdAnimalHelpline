@@ -1,62 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Preview</title>
     <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
-    <link rel="stylesheet" href="/static/css/Profile-Completion/preview.css" th:href="@{/css/preview.css}">
+    <link rel="stylesheet" href="/static/css/Profile-Completion/preview.css" th:href="@{/css/Profile-Completion/preview.css}">
     <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
 </head>
 <body>
+<!--<form action="" id="preview" method="POST" name="preview" th:action="@{/profileCompletion}" th:object="${user}">-->
+<form action="" id="preview" method="POST" name="preview" th:action="@{/profileCompletion}" >
+
     <p id="header">Preview</p>
     <main>
-        <button id="go-to-bottom"><img src="/static/img/go-to-bottom.png"></button>
+        <button id="go-to-bottom"><img th:src="@{/img/go-to-bottom.png}" src="/static/img/go-to-bottom.png"></button>
         <div id="home-address-preview">
             <span id="heading-home-address">Home Address:</span>
-            <img id="edit-home-address" onclick="window.location = '' " src="/static/img/edit.png" th:src="@{/img/edit.png}">
+            <img id="edit-home-address" onclick="window.location = '/profileCompletion' " src="/static/img/edit.png" th:src="@{/img/edit.png}">
             <div id="full-name-wrapper">
                 <div id="full-name-label" class="label">Full Name: </div>
-                <div id="full-name">#Full_Name</div>
+                <div id="full-name" th:text="${user.homeAddr.fullName}">#Full_Name</div>
             </div>
             <div id="address-wrapper">
                 <div id="address-label" class="label">Street Address: </div>
-                <div id="address-line1">#Street_Address_Line1</div>
-                <div id="address-line2">#Street_Address_Line2</div>
-                <div id="address-pincode">#Street_Address_Pincode</div>
+                <div id="address-line1" th:text="${user.homeAddr.addrLine1}">#Street_Address_Line1</div>
+                <div id="address-line2" th:text="${user.homeAddr.addrLine2}">#Street_Address_Line2</div>
+                <div id="address-pincode" th:text="${user.homeAddr.pincode}">#Street_Address_Pincode</div>
             </div>
             <div id="alternate-number-wrapper">
                 <div id="alternate-number-label" class="label">Alternate Number: </div>
-                <span id="alternate-number-prefix">#022/+91 </span>
-                <span id="alternate-number">#Alternate_Number</span>
+                <span id="alternate-number-prefix" th:text="${user.homeAddr.contactPrefix}">#022/+91 </span>
+                <span id="alternate-number" th:text="${user.homeAddr.contact}">#Alternate_Number</span>
             </div>
         </div>
         <div id="work-address-preview">
             <span id="heading-work-address">Work Address:</span>
-            <img id="edit-work-address" onclick="window.location = '' " src="/static/img/edit.png" th:src="@{/img/edit.png}">
+            <img id="edit-work-address" onclick="window.location = '/profileCompletion?page=1' " src="/static/img/edit.png" th:src="@{/img/edit.png}">
             <div id="office-name-wrapper">
-                <div id="office-name-label" class="label">Office Name: </div>
-                <div id="office-name">#Office_Name</div>
+                <div id="office-name-label" class="label" >Office Name: </div>
+                <div id="office-name" th:text="${user.officeAddr.addrLine1}">#Office_Name</div>
             </div>
             <div id="address-wrapper-work">
                 <div id="address-label-work" class="label">Street Address: </div>
-                <div id="address-line1-work">#Street_Address_Line1</div>
-                <div id="address-line2-work">#Street_Address_Line2</div>
-                <div id="address-pincode-work">#Street_Address_Pincode</div>
+                <div id="address-line1-work" th:text="${user.officeAddr.addrLine1}">#Street_Address_Line1</div>
+                <div id="address-line2-work" th:text="${user.officeAddr.addrLine2}">#Street_Address_Line2</div>
+                <div id="address-pincode-work" th:text="${user.officeAddr.pincode}">#Street_Address_Pincode</div>
             </div>
             <div id="nature-of-business-wrapper">
                 <div id="nature-of-business-label" class="label">Nature of Business: </div>
-                <div id="nature-of-business">#Nature_of_Business</div>
+                <div id="nature-of-business" th:text="${user.officeAddr.natureBusiness}">#Nature_of_Business</div>
             </div>
         </div>
         
         <div id="selected-pincodes-preview">
             <span id="heading-selected-pincodes">Pincodes:</span>
-            <img id="edit-selected-pincodes" onclick="window.location = '' " src="/static/img/edit.png" th:src="@{/img/edit.png}">
+            <img id="edit-selected-pincodes" onclick="window.location = '/profileCompletion?page=2' " src="/static/img/edit.png" th:src="@{/img/edit.png}">
             <div id="pincode-results">
-                <ul id="pincode-results-ul">
+                <ul  id="pincode-results-ul">
+                    <li th:each="r : ${user.getUserServiceTimeInfos()}">
+                        <div th:text="${r.pincodeId}"></div>
+                        <div th:text="${r.fromTime}+'-'+ ${r.toTime}"></div>
+                    </li>
                     <!--<li>
                         <div>C.P. Tank</div>
                         <div>09:00 - 12:00</div>
@@ -69,6 +76,7 @@
             <button type="submit" id="submit_Application">Submit</button>
         </div>
     </main>
+    <input name="page" type="hidden" value="4">
 
 
     <script>
@@ -113,5 +121,7 @@
             } else $("#go-to-bottom").fadeIn(400);
         });
     </script>
+</form>
 </body>
+
 </html>

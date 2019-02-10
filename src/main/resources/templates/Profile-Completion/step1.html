@@ -27,7 +27,7 @@
         <form action="" id="home-address-form" method="POST" name="home-address-form" th:action="@{/profileCompletion}" th:object="${user}">
             <p class="title">Home Address:</p>
             <label for="address-line1">Full Name</label>
-            <input autofocus id="full-name" name="full-name" placeholder="Full Name" th:value='${user.firstName +" "+user.lastName}' type="text">
+            <input autofocus id="full-name" name="full-name" placeholder="Full Name" th:name="homeAddr.fullName" th:value='${user.firstName +" "+user.lastName}' type="text">
             <label for="address-line2">Street Address</label>
             <input id="address-line1" name="address-line1" placeholder="Address Line 1" th:field="*{homeAddr.addrLine1}" type="text">
             <input id="address-line2" name="address-line2" placeholder="Adderss Line 2" th:field="*{homeAddr.addrLine2}" type="text">

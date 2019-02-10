@@ -281,7 +281,7 @@ public class UserDao {
                 return ps;
             });
         }
-        updateUserLoginDetails(user);
+        //updateUserLoginDetails(user);
     }
 
     public void updateUserLoginDetails(User user) {
