@@ -35,7 +35,7 @@ public class CaseDao {
     private static final String caseInfoByCaseIdQWithoutTxn = "select * from case_info where case_id = ?";
     private static final String caseInfoBySearchTermQWithoutTxn = "select * from case_info where case_id like :searchTerm";
     private static final String caseTxnsQ = "select * from case_txn where case_id = ?";
-    private static final String casePendingForAckQ = "select DISTINCT ci.* from case_info ci, case_txn ct where ci.case_id=ct.case_id and ct.is_ack = 0 and ci.current_user_id = :userId";
+    private static final String casePendingForAckQ = "select DISTINCT ci.* from case_info ci, case_txn ct where ci.case_id=ct.case_id and ct.is_ack = 0 and ci.current_user_id = :userId and ct.to_user_id = :userId ";
     private static final String caseAcceptedByUserIdQ = "select DISTINCT ci.* from case_info ci, case_txn ct where ci.case_id=ct.case_id  and ct.is_ack = 1 and ct.to_user_id = :userId";
     private static final String caseInfoByUserIdQWithoutTxn = "select DISTINCT ci.* from case_info ci,case_txn ct where ci.case_id=ct.case_id  and ( ci.user_id_opened = :userId OR ci.user_id_closed = :userId OR ci.current_user_id = :userId )";
 
