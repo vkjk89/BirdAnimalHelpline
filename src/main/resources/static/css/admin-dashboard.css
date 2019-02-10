@@ -206,6 +206,7 @@ main div {
     box-sizing: border-box;
     box-shadow: 0px 0px 20px #BBB;
     margin-top: 5vh;
+    margin-bottom: 10vh;
 }
 
 .slider-header {
@@ -232,28 +233,31 @@ main div {
     border-radius: 50%;
 }
 
-#case-slider {
+#case-slider-bullets {
     border-right: 1px solid #CCC;
     border-left: 1px solid #CCC;
     border-bottom: none;
-    display: none;
+    display: flex;
     justify-content: center;
     padding: 1vh 0vw 0vw 0vh;
-    max-width: 85vw;
 }
 
-#case-slider div {
+#case-slider-bullets div {
     border-radius: 50%;
     border: 2px solid #AAA;
     background-color: transparent;
-    padding: 0.3vh 2vw;
-    margin: 0vh 0vw -1.5vh 0vw;
-    color: transparent;
+    padding: 0vh 3vw;
+    margin: 0vh 2vw -1.5vh 0vw;
+}
+
+.case-slider-active-div {
+    border: 1px solid #CCC;
+    box-shadow: 0px 0px 10px #AAA inset;
 }
 
 .slider-nav-right {
     position: absolute;
-    margin-top: 15vh;
+    margin-top: 10vh;
     right: 7vw;
     font-size: 2.5em;
     font-weight: 900;
@@ -265,7 +269,7 @@ main div {
 .slider-nav-left {
     position: absolute;
     left: 6vw;
-    margin-top: 13.5vh;
+    margin-top: 8.5vh;
     font-size: 2.5em;
     font-weight: 900;
     display: block;

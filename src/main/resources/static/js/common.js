@@ -9,14 +9,11 @@ var caseImageRetriever = function (caseId, imageDiv) {
     })
         .done(function (data) {
                 $('#' + imageDiv).html("");
-                // document.getElementById(imageDiv).innerHTML("");
                 $.each(data, function (i, item) {
                     var image = document.createElement("img");
                     image.setAttribute("src", "data:image/png;base64," + item);
                     image.setAttribute("onclick", "enlargePhoto(this);");
                     $('#' + imageDiv).append(image);
-                    // document.getElementById(imageDiv).appendChild(image);
-                    //var htm = '<img src="data:image/png;base64,"' + item +'onclick="enlargePhoto(this);">'
                 });
             }
         );

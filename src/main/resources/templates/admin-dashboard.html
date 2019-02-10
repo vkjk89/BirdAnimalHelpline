@@ -63,6 +63,7 @@
             <span class="slider-header-text">User Approvals</span>
             <span class="slider-member-count">#10</span>
         </div>
+        <div id="case-slider-bullets"></div>
         <div class="user-accept-dp"><img src="/static/img/display-picture11.png" th:src="@{/img/display-picture11.png}" alt="DP"></div>
         <div class="user-role">#User_Role</div>
         <div class="slider-navigation-buttons"><div class="slider-nav-right" onclick="slide_member(+1);">&#x27e8;</div><div class="slider-nav-left" onclick="slide_member(-1);">&#x27e8;</div></div>
@@ -77,7 +78,7 @@
             </div>
             <div class="mobile-number-wrapper">
                 <span class="mobile-number-label">Mobile No.: </span>
-                <span class="mobile-number-prefix">#+91-</span>
+                <span class="mobile-number-prefix">+91-</span>
                 <span class="mobile-number">#9874561230</span>
             </div>
             <div class="gender-wrapper">
@@ -90,8 +91,8 @@
             </div>
             
             <div class="cta-btns">
-                <button class="reject-btn">Reject</button>
-                <button class="accept-btn">Accept</button>
+                <button class="reject-btn" onclick="decline()">Reject</button>
+                <button class="accept-btn" onclick="accept()">Accept</button>
             </div>
         </div> 
     </div>

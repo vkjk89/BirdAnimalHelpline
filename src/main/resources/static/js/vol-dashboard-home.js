@@ -56,18 +56,19 @@ function createBullets(){
         var slide_div = document.createElement("div");
         slide_div.classList.add("slider-member-bullet");
         slide_div.classList.add("slider-member-bullet-" + slider_member_bullet);
-        slide_div.innerHTML = "l";
+        slide_div.innerHTML = slider_member_bullet+1;
         //APPENDING-ELEMENTS-------------------
         document.getElementById("case-slider-bullets").appendChild(slide_div);
         slider_member_bullet++;
     }
+    $(".slider-member-bullet-"+slideIndex).addClass("case-slider-active-div");
 }
 
 function section_accept_case(slideIndex, data) {
     if(data != undefined){
         data1 = data;
     }
-    $(".slider-member-bullet-*").removeClass("case-slider-active-div");
+    $(".slider-member-bullet").removeClass("case-slider-active-div");
     $(".slider-member-bullet-"+slideIndex).addClass("case-slider-active-div");
     $(".case-details").fadeOut(200);
     $(".case-details").fadeIn(200);
