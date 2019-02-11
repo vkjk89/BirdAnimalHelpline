@@ -164,6 +164,11 @@ $(document).ready(function () {
         e.preventDefault();
         window.location.href="/logout";
     });
+    $("#home").on("click", function (e) {
+        e.preventDefault();
+        window.location.href="/";
+    });
+
     document.getElementById('results-tab-active').onclick = function active_active() {
         this.classList.add('active-active');
         document.getElementById('results-tab-recent').classList.remove('active-recent');

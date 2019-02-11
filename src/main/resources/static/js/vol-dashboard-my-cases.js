@@ -13,6 +13,14 @@ function enlargePhoto(this_t) {
 }
 
 $(document).ready(function () {
+    $("#logout").on("click", function (e) {
+        e.preventDefault();
+        window.location.href="/logout";
+    });
+    $("#home").on("click", function (e) {
+        e.preventDefault();
+        window.location.href="/";
+    });
     caseImageRetriever($('#case-id-case-details').val(), "case-photos-case-details");
     $('#action-center-main-div').click(
         function () {

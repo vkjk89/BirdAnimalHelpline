@@ -8,11 +8,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.birdhelpline.app.dataaccess.UserDao;
 import org.birdhelpline.app.model.PinCodeLandmarkInfo;
 import org.birdhelpline.app.model.User;
+import org.birdhelpline.app.utils.ResponseStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -115,14 +115,15 @@ public class UserService {
         return null;
     }
 
-    public void enableUser(String userName) {
-        User user = userDao.getUserByUserName(userName);
-        if (user == null) {
-            throw new UsernameNotFoundException(userName);
+    public String enableUser(Long userId) {
+        Optional<User> user = userDao.getUser(userId);
+        if (!user.isPresent()) {
+            return ResponseStatus.ERROR.name();
         }
         logger.info("Enabling user : " + user);
-        userDao.enableUser(user);
-        userDao.insertUserAuthority(user.getUserId(), user.getRole());
+        userDao.enableUser(user.get());
+        userDao.insertUserAuthority(user.get().getUserId(), user.get().getRole());
+        return ResponseStatus.SUCCESS.name();
     }
 
     public Set<String> getListBirds() {
@@ -146,8 +147,8 @@ public class UserService {
         userDao.setNewPassword(userId, bCryptPasswordEncoder.encode(newPasswd));
     }
 
-    public List<User> getUserList(String term) {
-        return userDao.getUserByTerm(term);
+    public List<User> getUserList(Long userId, String term) {
+        return userDao.getUserByTerm(userId,term);
     }
 
     public void updateUserLoginDetails(User user) {
@@ -176,5 +177,15 @@ public class UserService {
 
     public List<User> getNearestVol(String locationPincode) {
         return userDao.getNearestVol(locationPincode);
+    }
+
+    public String disableUser(Long userId) {
+        Optional<User> user = userDao.getUser(userId);
+        if (!user.isPresent()) {
+            return ResponseStatus.ERROR.name();
+        }
+        logger.info("Disabling user : " + user);
+        userDao.disableUser(user.get());
+        return ResponseStatus.SUCCESS.name();
     }
 }

@@ -1,41 +1,39 @@
 var usersPendingMap = new Map();
-/*
-$(function(){
+var currentUserForApproval = -1;
+/*$(function(){
     var includes = $('[data-include]');
     jQuery.each(includes, function(){
       var file = '/templates/Vol_Dashboard/' + $(this).data('include') + '.html';
       $(this).load(file);
     });
 });*/
-/*
 function accept() {
     data.splice(slideIndex,1);
-    acceptReject(caseId, true);
+    acceptReject(true);
     createBullets(1);
 }
 
 function decline() {
     data.splice(slideIndex,1);
-    acceptReject(caseId, false);
+    acceptReject(false);
     createBullets(1);
 }
 
-function acceptReject(caseId, acceptReject) {
+function acceptReject(acceptReject) {
     var formData = {
-        'caseId': caseId,
+        'userId': currentUserForApproval,
         'acceptReject': acceptReject
     };
     $.ajax({
         type: 'POST',
         data: formData,
-        url: '/acceptRejectCase'
-        // dataType: 'json'
+        url: '/enableUser'
     })
         .done(function (data) {
-                //console.log("done vvkj : " + data);
+                        console.log("done vvkj : " + data);
             }
         );
-}*/
+}
 
 var slider_member_counter = 0;
 var slider_member_bullet = 0;
@@ -66,6 +64,7 @@ function user_auth(slideIndex, item){
     $(".slider-member-bullet-"+slideIndex).addClass("case-slider-active-div");
     $("#slider-wrapper").fadeOut(200);
     $("#slider-wrapper").fadeIn(200);
+    currentUserForApproval = data[slideIndex].userId;
     setTimeout(function(){
     $(".user-accept-dp img").attr('src', "data:image/png;base64," + data[slideIndex].userImage.image);
     $(".user-role").html(data[slideIndex].role);
@@ -101,8 +100,13 @@ function getUsersListPendingForActivation() {
         //dataType: 'json'
     })
         .done(function (data) {
-
+                console.log(data);
+                console.log(data.length);
                 if (data) {
+                    if(data.length == 0) {
+                        $('#slider-wrapper').hide();
+                        $('#no-users-pending').fadeIn();
+                    }
                     $('.slider-member-count').text(data.length);
                     $.each(data, function (i, item) {
                         //console.info(item);
@@ -131,7 +135,7 @@ $(document).ready(function (){
     getUsersListPendingForActivation();
     setInterval(function () {
         getUsersListPendingForActivation();
-    }, 2000);
+    }, 12000);
     $("#logout").on("click", function (e) {
         e.preventDefault();
         window.location.href= "/logout";
