@@ -93,7 +93,7 @@
 
 /* ------------------------------------------------------------------------------------------------------------------*/
 body {
-    height: 100vh;
+    min-height: 100vh;
 }
 main {
     margin-left: 5vw;
@@ -192,10 +192,9 @@ ul li {
 }
 
 .footer-btns {
-    position: absolute;
-    margin-top: 5vh;
+    position: relative;
+    margin-top: 10vh;
     text-align: left;
-    bottom: 3vh;
     width: 90vw;
 }
 
