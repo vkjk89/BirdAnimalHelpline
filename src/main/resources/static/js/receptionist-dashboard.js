@@ -9,7 +9,7 @@ var dVol = "\" ></li>";
 
 var aCase = '<div class ="row row1" onclick="case_details(this)"> <div class="sr-no"><li></li></div> <div class="case-id">';
 var bCase = '</div> <div class="case-status">';
-var b1Case = '</div> <div class="case-status">';
+var b1Case = '</div> <div class="accepted">';
 var cCase = '</div> <div class="date">';
 var dCase = '</div> <div class="animal-type">';
 var eCase = '</div> <div class="case-name">';
@@ -51,13 +51,14 @@ var responseHandler = function (event) {
 };
 
 function case_details(data) {
+    console.log(data);
     document.getElementById('my-cases-content').style.display = "none";
     document.getElementById('case-details').style.display = "block";
     document.getElementById('heading-my-cases').style.display = "none";
     document.getElementById('heading-case-details').style.display = "block";
     document.getElementById('case-details-form').style.display = "flex";
     document.getElementById('action-center').style.display = "block";
-    document.getElementById('case-details-form').style.opacity = "";
+    //document.getElementById('case-details-form').style.opacity = "";
     page_history.unshift("myc_case_details");
     currentCaseId = $(data).find(".case-id").text();
     var caseInfo = caseIdVsInfoMap[currentCaseId];
@@ -102,14 +103,14 @@ function raise_a_case() {
     document.getElementById('heading-user-data-change-approvals').style.display = "none";
     document.getElementById('top-nav-search-heading').style.display = "none";
     document.getElementById('top-nav-search-results').style.display = "none";
-    document.getElementById('raise-a-case-content').style.opacity = 1;
+    /*document.getElementById('raise-a-case-content').style.opacity = 1;
     document.getElementById('my-cases-content').style.opacity = 1;
     document.getElementById('case-details').style.opacity = 1;
     document.getElementById('user-data-change-approvals-content').style.opacity = 1;
     document.getElementById('heading-raise-a-case').style.opacity = 1;
     document.getElementById('heading-my-cases').style.opacity = 1;
     document.getElementById('heading-case-details').style.opacity = 1;
-    document.getElementById('heading-user-data-change-approvals').style.opacity = 1;
+    document.getElementById('heading-user-data-change-approvals').style.opacity = 1;*/
     document.getElementById("top-nav-search").value = "";
     document.getElementById("user-profile").style.display = "none";
     document.getElementById("case_profile").style.display = "none";
@@ -145,14 +146,14 @@ function my_cases() {
     $('#tab-header').fadeIn(300);
     showresults();
     document.getElementById("table4").style.display = "none";
-    document.getElementById('raise-a-case-content').style.opacity = 1;
+    /*document.getElementById('raise-a-case-content').style.opacity = 1;
     document.getElementById('my-cases-content').style.opacity = 1;
     document.getElementById('case-details').style.opacity = 1;
     document.getElementById('user-data-change-approvals-content').style.opacity = 1;
     document.getElementById('heading-raise-a-case').style.opacity = 1;
     document.getElementById('heading-my-cases').style.opacity = 1;
     document.getElementById('heading-case-details').style.opacity = 1;
-    document.getElementById('heading-user-data-change-approvals').style.opacity = 1;
+    document.getElementById('heading-user-data-change-approvals').style.opacity = 1;*/
     document.getElementById('top-nav-search-heading').style.display = "none";
     document.getElementById('top-nav-search-results').style.display = "none";
     document.getElementById("top-nav-search").value = "";
@@ -190,14 +191,14 @@ function user_data_change_approvals() {
     document.getElementById('heading-user-data-change-approvals').style.display = "block";
     document.getElementById('top-nav-search-heading').style.display = "none";
     document.getElementById('top-nav-search-results').style.display = "none";
-    document.getElementById('raise-a-case-content').style.opacity = 1;
+    /*document.getElementById('raise-a-case-content').style.opacity = 1;
     document.getElementById('my-cases-content').style.opacity = 1;
     document.getElementById('case-details').style.opacity = 1;
     document.getElementById('user-data-change-approvals-content').style.opacity = 1;
     document.getElementById('heading-raise-a-case').style.opacity = 1;
     document.getElementById('heading-my-cases').style.opacity = 1;
     document.getElementById('heading-case-details').style.opacity = 1;
-    document.getElementById('heading-user-data-change-approvals').style.opacity = 1;
+    document.getElementById('heading-user-data-change-approvals').style.opacity = 1;*/
     document.getElementById("top-nav-search").value = "";
     document.getElementById("user-profile").style.display = "none";
     document.getElementById("case_profile").style.display = "none";
@@ -211,7 +212,7 @@ function user_data_change_approvals() {
 }
 
 function search_close_button() {
-    document.getElementById('raise-a-case-content').style.opacity = 1;
+    /*document.getElementById('raise-a-case-content').style.opacity = 1;
     document.getElementById('my-cases-content').style.opacity = 1;
     document.getElementById('case-details').style.opacity = 1;
     document.getElementById('user-data-change-approvals-content').style.opacity = 1;
@@ -220,7 +221,7 @@ function search_close_button() {
     document.getElementById('heading-case-details').style.opacity = 1;
     document.getElementById('heading-user-data-change-approvals').style.opacity = 1;
     document.getElementById('content-assign-case').style.opacity = 1;
-    document.getElementById('content-close-case').style.opacity = 1;
+    document.getElementById('content-close-case').style.opacity = 1;*/
     document.getElementById("top-nav-search").value = "";
     document.getElementById('top-nav-search-heading').style.display = "none";
     document.getElementById('top-nav-search-results').style.display = "none";
@@ -278,6 +279,7 @@ function top_nav_search_case_details(identifier1) {
     document.getElementById("case_profile").style.display = "none";
     if (identifier1 === "vol_cases_details") {
         page_history.unshift("vol_cases_details");
+        document.getElementById('heading-top-nav-case-details').innerHTML = "#Vol_Name";
     } else if (identifier1 === "search_cases_details") {
         page_history.unshift("search_cases_details");
     }
@@ -395,6 +397,76 @@ function navigate_back() {
         search_close_button();
     }
 }
+/*
+function submit_raise_a_case(event){
+    //event.preventDefault();
+    if(document.getElementById("contact-number").checkValidity()){
+        let formData = {
+            'typeAnimal': $('select[name=animal-type]').val(),
+            'animalName': $('input[name=animal-name]').val(),
+            'animalCondition': $('input[name=condition]').val(),
+            'contactName': $('input[name=contact-name]').val(),
+            'contactNumber': $('input[name=contact-number]').val(),
+            'location': $('textarea[name=location]').val(),
+            'locationPincode': $('input[name=location-pincode]').val(),
+            'locationLandMark': $('input[name=location-landmark]').val(),
+            'contactPrefix': $('select[name=nine-one]').val(),
+            'birdOrAnimal': $('input[name=bird-or-animal]').val(),
+            'newBirdAnimal': $('input[name=add-bird-animal]').val()
+        };
+
+        $.ajax({
+            type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
+            url: '/addNewCase', // the url where we want to POST
+            data: formData, // our data object
+            //dataType: 'json' // what type of data do we expect back from the server
+            //encode: true
+        })
+        // using the done promise callback
+            .done(function (data) {
+                console.log(data);
+                if (data && data == 'error') {
+                    $('#error').text(data);
+                    return;
+                } else if($('#case-photos').val()) {
+                    var form = $('#raise-a-case-form')[0];
+                    var formData = new FormData(form);
+                    formData.append("case_id", data);
+                    $.ajax({
+                        url: 'casePicUpload',
+                        type: 'POST',
+                        data: formData,
+                        enctype: 'multipart/form-data',
+                        processData: false,  // tell jQuery not to process the data
+                        contentType: false,  // tell jQuery not to set contentType
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    });
+                }
+
+                if(data) {
+                    $('#raise-a-case-form')[0].reset();
+                    document.getElementById("reset-raise-case").click();
+                    $('#case-id').val(data);
+                    $('#raise-a-case-success').fadeIn();
+                    $('#raise-a-case-content').css("pointerEvents","none");
+                    currentCaseId = data;
+                    setTimeout(function () {
+                        $('#case-id').val('');
+                        $('#raise-a-case-success').fadeOut();
+                        $('#raise-a-case-content').css("pointerEvents","all");
+                    }, 1500);
+                }
+                else {
+                    $('#raise-a-case-error').fadeIn();
+                }
+            });
+    } else document.getElementById("validationMessage").innerHTML += document.getElementById("contact-number").validationMessage;
+}*/
 
 function show_vol_tooltip(event) {
     clearTimeout(hide_tooltip_timeOut);
@@ -721,7 +793,7 @@ $(document).ready(function () {
         }
     };
 
-//------Bird-or-Animal-Affected-Changes-------------------------------------------------------------------------------------------------
+//------Bird-or-Animal-Affected-Changes-----------------------------------------------------------------------------
     document.getElementById('bird-or-animal1').onclick = function () {  //Bird
         document.getElementById("animal-type").selectedIndex = 0;
         document.getElementById('header-form-left-side').innerHTML = "Bird Information";
@@ -768,7 +840,7 @@ $(document).ready(function () {
         $('#add-bird-animal').css("display", "none");
     };
 
-//------Search-Focus-&-Clear-Table-on-Search---------------------------------------------------------------------------------------------
+//------Search-Focus-&-Clear-Table-on-Search------------------------------------------------------------------
     document.getElementById('search-case-input').onkeyup = function () {
         if (document.getElementById('search-case-input').value !== "") {
             $('#tab-header').fadeOut(300);
@@ -780,7 +852,7 @@ $(document).ready(function () {
     };
 
 
-//-----+91-022-Validation----------------------------------------------------------------------------------------------------------------
+//-----+91-022-Validation------------------------------------------------------------------------------------
     document.getElementById("nine-one").onchange = function(){
         if(document.getElementById("nine-one").value === "+91"){
             document.getElementById("contact-number").setAttribute("max", "99999999");
@@ -795,16 +867,14 @@ $(document).ready(function () {
     };
 
 
-//------Case-Details---------------------------------------------------------------------------------------------------------------------
-
-
+//------Case-Details-----------------------------------------------------------------------------------------------------------
     document.getElementById("myc-case-details-heading-close-button").onclick = function () {
         document.getElementById('case-details').style.display = "none";
         document.getElementById('heading-case-details').style.display = "none";
         document.getElementById('case-details-form').style.display = "none";
         document.getElementById('top-nav-search-heading').style.display = "none";
         document.getElementById('top-nav-search-results').style.display = "none";
-        document.getElementById('case-details').style.opacity = 1;
+        //document.getElementById('case-details').style.opacity = 1;
         document.getElementById('content-assign-case').style.display = "none";
         document.getElementById('content-close-case').style.display = "none";
         document.getElementById('case-details-form').style.pointerEvents = "";
@@ -825,7 +895,7 @@ $(document).ready(function () {
 //--Action-Centre--------------------------------------------------------------------------------
     document.getElementById('action-center-assign-case').onclick = function () {
         document.getElementById('case-details-form').style.display = "none";
-        document.getElementById('content-assign-case').style.opacity = "1";
+        //document.getElementById('content-assign-case').style.opacity = "1";
         document.getElementById('content-assign-case').style.display = "block";
         document.getElementById('myc-case-details-heading-animation').innerHTML = "#CaseID - Assign Case";
         document.getElementById("myc-case-details-heading-close-button").style.display = "block";
@@ -925,11 +995,7 @@ $(document).ready(function () {
         document.getElementById('close-case-other-reason').style.border = "1px solid #666";
     });
 
-
-//------Navigation-Back-Button----------------------------------------------------------------------------------------------------------
-
-
-//------Keyboard-Shortcuts---------------------------------------------------------------------------------------------------------------
+//------Keyboard-Shortcuts--------------------------------------------------------------------------------------------------
     document.onkeyup = function (e) {
         if (e.ctrlKey && e.altKey && e.which == 83) {
             if (document.getElementById('heading-raise-a-case').style.display == "" || document.getElementById('heading-raise-a-case').style.display == "block") {
@@ -950,7 +1016,7 @@ $(document).ready(function () {
         }
     };
 
-//------Approve-Reject-Buttons-Effect--------------------------------------------------------------------------------------------------
+//------Approve-Reject-Buttons-Effect-------------------------------------------------------------------------------------
     for (let i = 0; i < document.getElementsByClassName("approve").length; i++) {
         document.getElementsByClassName("approve")[i].onclick = function () {
             if (event.target.tagName == "IMG" && event.target.parentElement.parentElement.classList.contains('approve')) {
@@ -970,7 +1036,7 @@ $(document).ready(function () {
         }
     }
 
-//------Enlarge-Old-or-New-Photo-------------------------------------------------------------------------------------------------------
+//------Enlarge-Old-or-New-Photo---------------------------------------------------------------------------------------
     $('.old-photo').children("figure").children("img").click(function () {
         enlargePhoto(this);
     });
@@ -987,8 +1053,8 @@ $(document).ready(function () {
         $('#dynamic_image_enlarge').css('display', 'block');
         var enlarge_source = this_t.getAttribute('src');
         $('#photo-enlarge').children('img').attr('src', enlarge_source);
-        $('#photo-enlarge').children('img').css("background-color", "#2D3047");
-    }    
+        $('#photo-enlarge').children('img').css("background-color", "#f4f4f4");
+    }
 
     $('#image_enlarge_back_button').click(function () {
         $('#dynamic_image_enlarge').css('display', 'none');
@@ -998,13 +1064,13 @@ $(document).ready(function () {
         return false;
     });
 
-//-----Refresh-Button-Top-Nav----------------------------------------------------------------------------------------------------------
+//-----Refresh-Button-Top-Nav---------------------------------------------------------------------------------
     document.getElementById("home-btn").onclick = function (e) {
         e.preventDefault();
         window.location.reload(true);
     };
 
-//------Tooltip-Vol-Assign-Case--------------------------------------------------------------------------------------------------------
+//------Tooltip-Vol-Assign-Case-------------------------------------------------------------------------------
 
     document.getElementById("vol-description-tooltip").onmouseover = function (e) {
         clearTimeout(hide_tooltip_timeOut);
@@ -1014,10 +1080,10 @@ $(document).ready(function () {
         hide_vol_tooltip();
     };
 
-//------BACKEND-INTEGRATION-------------------------------------------------------------------------------------------------------------
+//------BACKEND-INTEGRATION-----------------------------------------------------------------------------------
     $('#raise-a-case-form').submit(function (event) {
         event.preventDefault();
-        //document.getElementById("dp_loading").style.display = "block";
+        console.log(document.getElementById("contact-number").checkValidity());
         let formData = {
             'typeAnimal': $('select[name=animal-type]').val(),
             'animalName': $('input[name=animal-name]').val(),
@@ -1070,11 +1136,13 @@ $(document).ready(function () {
                     document.getElementById("reset-raise-case").click();
                     $('#case-id').val(data);
                     $('#raise-a-case-success').fadeIn();
+                    $('#raise-a-case-content').css("pointerEvents","none");
                     currentCaseId = data;
                     setTimeout(function () {
                         $('#case-id').val('');
                         $('#raise-a-case-success').fadeOut();
-                    }, 2000);
+                        $('#raise-a-case-content').css("pointerEvents","all");
+                    }, 1500);
                 }
                 else {
                     $('#raise-a-case-error').fadeIn();
@@ -1121,6 +1189,7 @@ $(document).ready(function () {
         source: function (request, response) {
             $("#assign_case_loading").css("display", "block");
             $.getJSON("/getVolListForSearch", request, function (result) {
+                $("#assign_case_loading").css("display", "none");
                 response($.map(result, function (item) {
                     return {
                         // following property gets displayed in drop down
@@ -1136,7 +1205,6 @@ $(document).ready(function () {
         },
 
         select: function (event, ui) {
-            $("#assign_case_loading").css("display", "none");
             if (ui.item) {
                 var html = aVol + ui.item.userDetails.userName + bVol + cVol + ui.item.userDetails.userId + dVol;
                 userIdVsInfoMap[ui.item.userDetails.userId] = ui.item.userDetails;
@@ -1175,14 +1243,14 @@ $(document).ready(function () {
             },
         select: function (event, ui) {
             if (ui.item) {
-                document.getElementById('raise-a-case-content').style.opacity = 0;
+                /*document.getElementById('raise-a-case-content').style.opacity = 0;
                 document.getElementById('my-cases-content').style.opacity = 0;
                 document.getElementById('case-details').style.opacity = 0;
                 document.getElementById('user-data-change-approvals-content').style.opacity = 0;
                 document.getElementById('heading-raise-a-case').style.opacity = 0;
                 document.getElementById('heading-my-cases').style.opacity = 0;
                 document.getElementById('heading-case-details').style.opacity = 0;
-                document.getElementById('heading-user-data-change-approvals').style.opacity = 0;
+                document.getElementById('heading-user-data-change-approvals').style.opacity = 0;*/
                 document.getElementById('top-nav-search-heading').style.display = "block";
                 document.getElementById("user-profile").style.display = "none";
                 document.getElementById("top-nav-search-user-profile-back-button").style.display = "none";

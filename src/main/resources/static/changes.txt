@@ -64,26 +64,28 @@ Some Error page - Access Denied and Internal Server Error
     //Ability to add Bird/Animal - Raise a Case
 
 11/01/2018
-    Mobile No. - Error - Styling
-    All Warnings/Errors
-    Mobile Number Validation - Explicit - or Try to remove msg
+    //All Warnings/Errors    
     //Toggle - Password - Step3 - Any page where required
-    Home/Work Address - Full Name field backend integration
+    //Home/Work Address - Full Name field backend integration
     //Progress Bar - ProfileCompletion
-    Preview for ProfileCompletion
-    Multi-Select for Prefered Timings
+    //Preview for ProfileCompletion
+    //Multi-Select for Prefered Timings
     //Contact Name, Location - Mandate Raise a Case
     //Case Status - VolName and Role
     //Top - Nav - Role of volunteer
+    //My Cases - Search
+    //Success - Assign - msg
+    //Recpt Dashboard - My Cases - Add Column - Case accepted/not
+    Mobile No. - Error - Styling - Mobile Number Validation - Explicit - or Try to remove msg
     Top Case select - Top Vol - Break
     Top - Nav -User - Back Button
     Loading Screen - Assign Case (First Screen)
-    //My Cases - Search
-    //Success - Assign - msg
     Action Center - Top Nav - Recpt dashboard
-    //Recpt Dashboard - My Cases - Add Column - Case accepted/not
     Recpt Dashboard - Once Raise Case Clicked - Focus - Radio Button - Choose Bird/Animal
         If you click My Cases before Case Assign TimeoOut is Over - pointerEvents are a problem
         Active Tab Must be Called at click of My Cases
         Logout - onclick of button not text-link
     Perform Styling Run through
+
+Matters at Hand - Call
+    Search Functionality - Assign Case and My Cases

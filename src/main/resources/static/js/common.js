@@ -12,6 +12,7 @@ var caseImageRetriever = function (caseId, imageDiv) {
                 if(data === null || data === undefined || data.length === 0){
                     $('#' + imageDiv).html("No Photos");
                 } else {
+                    $('#' + imageDiv).empty();
                     $.each(data, function (i, item) {
                         var image = document.createElement("img");
                         image.setAttribute("src", "data:image/png;base64," + item);

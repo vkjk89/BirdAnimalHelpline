@@ -49,8 +49,7 @@
                 <span id="home-btn-txt">Home</span>
             </button>
             <span id="top-nav-search-wrapper">
-                <input class="ui-autocomplete-input"  id="top-nav-search" name="top-nav-search" placeholder="Search Members..."
-                       type="search">
+                <input class="ui-autocomplete-input"  id="top-nav-search" name="top-nav-search" placeholder="Search Members..." type="search">
             </span>
         </span>
     <span class="no-select" id="right-side">
@@ -65,7 +64,7 @@
         <button><a href="#">Change PIN</a></button>
         <button><a href="#">Change Mobile No.</a></button>
         <button><a href="#">Change Address</a></button>
-        <button><a href="#" th:href="@{/logout}">Logout</a></button>
+        <button onclick="window.location.href='/logout'"><a href="#">Logout</a></button>
     </div>
 </nav>
 
@@ -101,13 +100,12 @@
                 <span class="">#Animal/Bird_Type</span>
                 <span class="">#Animal/Bird_Name</span>
             </div>
-            <div class="search-li-cases search-li-cases-onclick" onclick="case_details(this); /*top_nav_search_case_details();
-                document.getElementById('top-nav-search').value = '';
+            <div class="search-li-cases search-li-cases-onclick" onclick="/*case_details(this);*/ top_nav_search_case_details();
                 document.getElementById('top-nav-search-heading-content').innerHTML = '#Search_Input - #Case_ID';
                 document.getElementById('top-nav-search-results').style.display = 'none';
                 document.getElementById('user-profile').style.display = 'none';
                 document.getElementById('top-nav-search-user-profile-back-button').style.display = 'none';
-                page_history.unshift('top_nav_search_cases_details');*/">
+                page_history.unshift('top_nav_search_cases_details');">
                 <span>#Sr._No.</span>
                 <span class="case-id" id="case_profile_id">#Case_ID</span>
                 <span id="case_profile_status">#Case_Status</span>
@@ -187,7 +185,7 @@
                                 <div class="sr-no-div">Sr. No.</div>
                                 <div class="case-id-div">Case ID</div>
                                 <div class="case-status-div">Case Status</div>
-                                <div>Accepted</div>
+                                <div class="accepted-div">Accepted</div>
                                 <div class="date-div">Date</div>
                                 <div class="animal-type-div">Animal/Bird Type</div>
                                 <div class="case-name-div">Animal/Bird Name</div>
@@ -212,7 +210,7 @@
                                 <div class="sr-no-div">Sr. No.</div>
                                 <div class="case-id-div">Case ID</div>
                                 <div class="case-status-div">Case Status</div>
-                                <div >Accepted</div>
+                                <div class="accepted-div">Accepted</div>
                                 <div class="date-div">Date</div>
                                 <div class="animal-type-div">Animal/Bird Type</div>
                                 <div class="case-name-div">Animal/Bird Name</div>
@@ -237,7 +235,7 @@
                                 <div class="sr-no-div">Sr. No.</div>
                                 <div class="case-id-div">Case ID</div>
                                 <div class="case-status-div">Case Status</div>
-                                <div >Accepted</div>
+                                <div class="accepted-div">Accepted</div>
                                 <div class="date-div">Date</div>
                                 <div class="animal-type-div">Animal/Bird Type</div>
                                 <div class="case-name-div">Animal/Bird Name</div>
@@ -359,7 +357,7 @@
                         <option value="+91">+91</option>
                         <option value="022">022</option>
                     </select>
-                    <input autocomplete="off" id="contact-number" max="9999999999" min="5000000000" name="contact-number" placeholder="(Mandatory)" required tabindex="7" title="Ten digit mobile no. without any code" type="number"><br>
+                    <input autocomplete="off" id="contact-number" max="9999999999" min="5000000000" name="contact-number" placeholder="(Mandatory)" required tabindex="7" type="number"><br>
                     <label for="location">Location: </label>
                     <textarea cols="50" id="location" maxlength="250" name="location" rows="2" tabindex="8" placeholder="(Mandatory)" required></textarea>
                     <input autocomplete="off" id="location-landmark" name="location-landmark" placeholder="Landmark - Eg: Near Regal Cinema (Recommended)" tabindex="9" type="text">
@@ -374,8 +372,9 @@
         <div id="cta-btns">
             <div id="raise-a-case-success"><span id="raise-a-case-checkmark"> &check;</span> Success! Case raised</div>
             <div id="raise-a-case-error"><span id="raise-a-case-cross"> &times;</span> Error!</div>
-            <button form="raise-a-case-form" id="submit-raise-case" tabindex="11" type="submit" onclick="$('raise-a-case-checkmark').fadeIn(100);$('raise-a-case-form').css('pointerEvents', 'none');setTimeout(function(){$('raise-a-case-checkmark').fadeOut(100);$('raise-a-case-form').css('pointerEvents', '');},100)">Raise Case</button>
+            <button form="raise-a-case-form" id="submit-raise-case" tabindex="11" type="submit" onclick="/*submit_raise_a_case()*/">Raise Case</button>
             <button form="raise-a-case-form" id="reset-raise-case" tabindex="12" type="reset">Clear All</button>
+            <div id="validationMessage" style="opacity:0;display: none"></div>
         </div>
     </div>
 
@@ -392,7 +391,7 @@
                 <div class="sr-no-div">Sr. No.</div>
                 <div class="case-id-div">Case ID</div>
                 <div class="case-status-div">Case Status</div>
-                <div>Accepted</div>
+                <div class="accepted-div">Accepted</div>
                 <div class="date-div">Date</div>
                 <div class="animal-type-div">Animal/Bird Type</div>
                 <div class="case-name-div">Animal/Bird Name</div>

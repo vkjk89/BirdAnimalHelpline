@@ -4,7 +4,12 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
+    background-color: #666;
+    cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb:focus {
+    background-color: #333;
     cursor: pointer;
 }
 
@@ -28,7 +33,7 @@ button {
 
 .ui-menu, .ui-menu-item-wrapper {
     border: 1px solid rgb(248,248,248);
-    background-color: rgb(248,248,248);
+    background-color: #f4f4f4;
 }
 
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { 
@@ -81,6 +86,10 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 }
 
 /*----------------------------TOP-NAV-------------------------*/
+#top-nav-search-content {
+    background-color: rgb(248,248,248);
+}
+
 #top-nav {
     box-sizing: border-box;
     height: 6vh;
@@ -255,7 +264,7 @@ main {
     top: 0vh;
 }
 
-#rac-heading, #heading-my-cases span:first-child, #heading-user-data-change-approvals span:first-child, #heading-case-details span:first-child, #top-nav-search-heading span:first-child, #heading-top-nav-case-details span:first-child, {
+#rac-heading, #heading-my-cases span:first-child, #heading-user-data-change-approvals span:first-child, #heading-case-details span:first-child, #top-nav-search-heading span:first-child, #heading-top-nav-case-details span:first-child {
     position: relative;
     box-sizing: border-box;
     color: white;
@@ -301,6 +310,7 @@ main {
     margin-top: 3vh;
     margin-bottom: 3vh;
     margin-right: 1.75vw;
+    background-color: rgb(248,248,248);
 }
 
 #heading-case-details {
@@ -394,7 +404,7 @@ main {
 }
 
 #user-profile-basic-details-btn, #user-profile-user-cases-btn {
-    color: #007AEA;
+    color: #333;
     border: 2px solid transparent;
     padding: 1vw;
     font-size: 1.3em;
@@ -1162,8 +1172,21 @@ input[type="search"]:focus::placeholder {
     overflow-x: hidden;
 }
 
-.sr-no-div {width: 8vw;} .case-id-div {width: 10vw;} .case-status-div {width: 20vw;} .date-div {width: 13vw;} .animal-type-div {width: 28vw;} .case-name-div {width: 19vw;}
-.sr-no {width: 8vw;} .case-id {width: 10vw;} .case-status {width: 20vw;} .date {width: 13vw;} .animal-type {width: 28vw;} .case-name {width: 19vw;}
+.sr-no-div {width: 8vw;} 
+.case-id-div {width: 10vw;} 
+.case-status-div {width: 22vw;} 
+.accepted-div{width:13vw} 
+.date-div {width: 13vw;} 
+.animal-type-div {width: 20vw;} 
+.case-name-div {width: 19vw;}
+
+.sr-no {width: 8vw;} 
+.case-id {width: 10vw;} 
+.case-status {width: 22vw;} 
+.accepted{width:13vw} 
+.date {width: 13vw;} 
+.animal-type {width: 20vw;} 
+.case-name {width: 19vw;}
 
 .sr-no li {
     list-style-type: none;
