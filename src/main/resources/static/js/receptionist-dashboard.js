@@ -1,3 +1,15 @@
+/*-----Duplicate-ID's-----
+    var allElements = document.getElementsByTagName("*"), allIds = {}, dupIDs = [];
+    for (var i = 0, n = allElements.length; i < n; ++i) {
+    var el = allElements[i];
+    if (el.id) {
+        if (allIds[el.id] !== undefined) dupIDs.push(el.id);
+        allIds[el.id] = el.name || el.id;
+        }
+    }
+    if (dupIDs.length) { console.error("Duplicate ID's:", dupIDs);} else { console.log("No Duplicates Detected"); }  
+--------------*/
+
 var page_history = ["raise_a_case"];
 var hide_tooltip_timeOut;
 var my_cases_tab_headers;
@@ -51,14 +63,10 @@ var responseHandler = function (event) {
 };
 
 function case_details(data) {
-    console.log(data);
     document.getElementById('my-cases-content').style.display = "none";
     document.getElementById('case-details').style.display = "block";
-    //document.getElementById('heading-my-cases').style.display = "none";
-    //document.getElementById('heading-case-details').style.display = "block";
     document.getElementById('case-details-form').style.display = "flex";
     document.getElementById('action-center').style.display = "block";
-    //document.getElementById('case-details-form').style.opacity = "";
     page_history.unshift("myc_case_details");
     currentCaseId = $(data).find(".case-id").text();
     var caseInfo = caseIdVsInfoMap[currentCaseId];
@@ -72,6 +80,8 @@ function case_details(data) {
     $('#location-case-details').val(caseInfo.location);
     $('#location-landmark-case-details').val(caseInfo.locationLandMark);
     $('#location-pincode-case-details').val(caseInfo.locationPincode);
+    $("#heading-text").html("Case Details / Case No.: " + caseInfo.caseId);
+    $("#back-close-btn-wrapper").css("display","inline");
     caseImageRetriever(caseInfo.caseId,"case-photos-case-details");
     if(!caseInfo.active) {
         $('#action-center-assign-case').hide();
@@ -80,6 +90,15 @@ function case_details(data) {
     else {
         $('#action-center-assign-case').show();
         $('#action-center-close-case').show();
+    }
+    if(caseInfo.birdOrAnimal === "Animal"){
+        $("#header-form-left-side-case-details").html("Animal Information");
+        $("#animal-bird-type-case-details").html("Animal Type: ");
+        $("#animal-bird-name-case-details").html("Animal Name: ");
+    } else {
+        $("#header-form-left-side-case-details").html("Bird Information");
+        $("#animal-bird-type-case-details").html("Bird Type: ");
+        $("#animal-bird-name-case-details").html("Bird Name: ");        
     }
 }
 
@@ -90,37 +109,23 @@ function raise_a_case() {
     document.getElementById('myc-body').style.borderBottom = "none";
     document.getElementById('usdca-body').classList.remove('right-side-card-rotate');
     document.getElementById('usdca-body').style.borderBottom = "none";
+    $('#heading-text').html("Raise a Case");
     setTimeout(function () {
         document.getElementById('rac-body').classList.remove('right-side-card-rotate');
     }, 600);
-
     page_history.unshift("raise_a_case");
     document.getElementById('raise-a-case-content').style.display = "block";
     document.getElementById('my-cases-content').style.display = "none";
     document.getElementById('user-data-change-approvals-content').style.display = "none";
-    //document.getElementById('heading-raise-a-case').style.display = "block";
-    //document.getElementById('heading-my-cases').style.display = "none";
-    //document.getElementById('heading-user-data-change-approvals').style.display = "none";
-    //document.getElementById('top-nav-search-heading').style.display = "none";
     document.getElementById('top-nav-search-results').style.display = "none";
-    /*document.getElementById('raise-a-case-content').style.opacity = 1;
-    document.getElementById('my-cases-content').style.opacity = 1;
-    document.getElementById('case-details').style.opacity = 1;
-    document.getElementById('user-data-change-approvals-content').style.opacity = 1;
-    document.getElementById('heading-raise-a-case').style.opacity = 1;
-    document.getElementById('heading-my-cases').style.opacity = 1;
-    document.getElementById('heading-case-details').style.opacity = 1;
-    document.getElementById('heading-user-data-change-approvals').style.opacity = 1;*/
     document.getElementById("top-nav-search").value = "";
     document.getElementById("user-profile").style.display = "none";
     document.getElementById("case_profile").style.display = "none";
-    //document.getElementById("top-nav-search-heading-content").innerHTML = "";
-    //document.getElementById('heading-case-details').style.display = "none";
     document.getElementById('case-details').style.display = "none";
     document.getElementById("table4").style.display = "none";
     document.getElementById('top-nav-case-details').style.display = "none";
-    //document.getElementById('heading-top-nav-case-details').style.display = "none";
     document.getElementById('top-nav-case-details-form').style.display = "none";
+    $("#back-close-btn-wrapper").css("display","none");
 }
 
 function my_cases() {
@@ -130,45 +135,31 @@ function my_cases() {
     document.getElementById('rac-body').style.borderBottom = "none";
     document.getElementById('usdca-body').classList.remove('right-side-card-rotate');
     document.getElementById('usdca-body').style.borderBottom = "none";
+    $('#heading-text').html("My Cases");
     setTimeout(function () {
         document.getElementById('myc-body').classList.remove('right-side-card-rotate');
     }, 600);
-
-    page_history.unshift("my_cases");
+    $("#active-tab-header").click();
     document.getElementById('active-tab-header').classList.add('active-header');
     document.getElementById('raise-a-case-content').style.display = "none";
     document.getElementById('my-cases-content').style.display = "block";
     document.getElementById('search-case-input').value = "";
     document.getElementById('user-data-change-approvals-content').style.display = "none";
-    //document.getElementById('heading-raise-a-case').style.display = "none";
-    //document.getElementById('heading-my-cases').style.display = "block";
-    //document.getElementById('heading-user-data-change-approvals').style.display = "none";
     $('#tab-header').fadeIn(300);
     showresults();
     document.getElementById("table4").style.display = "none";
-    /*document.getElementById('raise-a-case-content').style.opacity = 1;
-    document.getElementById('my-cases-content').style.opacity = 1;
-    document.getElementById('case-details').style.opacity = 1;
-    document.getElementById('user-data-change-approvals-content').style.opacity = 1;
-    document.getElementById('heading-raise-a-case').style.opacity = 1;
-    document.getElementById('heading-my-cases').style.opacity = 1;
-    document.getElementById('heading-case-details').style.opacity = 1;
-    document.getElementById('heading-user-data-change-approvals').style.opacity = 1;*/
-    //document.getElementById('top-nav-search-heading').style.display = "none";
     document.getElementById('top-nav-search-results').style.display = "none";
-    document.getElementById("top-nav-search").value = "";
     document.getElementById("user-profile").style.display = "none";
     document.getElementById("case_profile").style.display = "none";
-    //document.getElementById("top-nav-search-heading-content").innerHTML = "";
-    //document.getElementById('heading-case-details').style.display = "none";
     document.getElementById('case-details').style.display = "none";
     document.getElementById('content-assign-case').style.display = "none";
+    document.getElementById('case-details-form').style.opacity = "1";
     document.getElementById('content-close-case').style.display = "none";
     document.getElementById('case-details-form').style.pointerEvents = "";
     document.getElementById('top-nav-case-details').style.display = "none";
-    //document.getElementById('heading-top-nav-case-details').style.display = "none";
     document.getElementById('top-nav-case-details-form').style.display = "none";
-    document.getElementById('active-tab-header').click();
+    page_history.unshift("my_cases");
+    $("#back-close-btn-wrapper").css("display","none");
 }
 
 function user_data_change_approvals() {
@@ -181,88 +172,27 @@ function user_data_change_approvals() {
     setTimeout(function () {
         document.getElementById('usdca-body').classList.remove('right-side-card-rotate');
     }, 600);
-
+    $('#heading-text').html("User Data Change Approvals");
     page_history.unshift("user_data_change_approvals");
     document.getElementById('raise-a-case-content').style.display = "none";
     document.getElementById('my-cases-content').style.display = "none";
     document.getElementById('user-data-change-approvals-content').style.display = "block";
-    //document.getElementById('heading-raise-a-case').style.display = "none";
-    //document.getElementById('heading-my-cases').style.display = "none";
-    //document.getElementById('heading-user-data-change-approvals').style.display = "block";
-    //document.getElementById('top-nav-search-heading').style.display = "none";
     document.getElementById('top-nav-search-results').style.display = "none";
-    /*document.getElementById('raise-a-case-content').style.opacity = 1;
-    document.getElementById('my-cases-content').style.opacity = 1;
-    document.getElementById('case-details').style.opacity = 1;
-    document.getElementById('user-data-change-approvals-content').style.opacity = 1;
-    document.getElementById('heading-raise-a-case').style.opacity = 1;
-    document.getElementById('heading-my-cases').style.opacity = 1;
-    document.getElementById('heading-case-details').style.opacity = 1;
-    document.getElementById('heading-user-data-change-approvals').style.opacity = 1;*/
     document.getElementById("top-nav-search").value = "";
     document.getElementById("user-profile").style.display = "none";
     document.getElementById("case_profile").style.display = "none";
-    //document.getElementById("top-nav-search-heading-content").innerHTML = "";
-    //document.getElementById('heading-case-details').style.display = "none";
     document.getElementById('case-details').style.display = "none";
     document.getElementById("table4").style.display = "none";
     document.getElementById('top-nav-case-details').style.display = "none";
-    //document.getElementById('heading-top-nav-case-details').style.display = "none";
     document.getElementById('top-nav-case-details-form').style.display = "none";
-}
-
-function search_close_button() {
-    /*document.getElementById('raise-a-case-content').style.opacity = 1;
-    document.getElementById('my-cases-content').style.opacity = 1;
-    document.getElementById('case-details').style.opacity = 1;
-    document.getElementById('user-data-change-approvals-content').style.opacity = 1;
-    document.getElementById('heading-raise-a-case').style.opacity = 1;
-    document.getElementById('heading-my-cases').style.opacity = 1;
-    document.getElementById('heading-case-details').style.opacity = 1;
-    document.getElementById('heading-user-data-change-approvals').style.opacity = 1;
-    document.getElementById('content-assign-case').style.opacity = 1;
-    document.getElementById('content-close-case').style.opacity = 1;*/
-    document.getElementById("top-nav-search").value = "";
-    //document.getElementById('top-nav-search-heading').style.display = "none";
-    document.getElementById('top-nav-search-results').style.display = "none";
-    document.getElementById("user-profile").style.display = "none";
-    document.getElementById("case_profile").style.display = "none";
-    //document.getElementById("top-nav-search-heading-content").innerHTML = "";
-    document.getElementById('top-nav-case-details').style.display = "none";
-    //document.getElementById('heading-top-nav-case-details').style.display = "none";
-    document.getElementById('top-nav-case-details-form').style.display = "none";
-    for (let i = 0; i < page_history.length; i++) {
-        if (page_history[i] === "raise_a_case") {
-            raise_a_case();
-            page_history.unshift("raise_a_case");
-            break;
-        } else if (page_history[i] === "my_cases") {
-            my_cases();
-            page_history.unshift("my_cases");
-            break;
-        } else if (page_history[i] === "user_data_change_approvals") {
-            user_data_change_approvals();
-            page_history.unshift("user_data_change_approvals");
-            break;
-        } else if (page_history[i] === "action_centre_assign_case") {
-            document.getElementById('content-assign-case').style.display = "block";
-            page_history.unshift("action_centre_assign_case");
-            break;
-        } else if (page_history[i] === "action_close_assign_case") {
-            document.getElementById('content-close-case').style.display = "block";
-            page_history.unshift("action_close_assign_case");
-            break;
-        }
-    }
+    $("#back-close-btn-wrapper").css("display","none");
 }
 
 function top_nav_search_user_profile() {
-    document.getElementById("top-nav-search").value = "";
-    //document.getElementById("top-nav-search-heading-content").innerHTML = "#Search_Input - #User_Name";
-    document.getElementById("top-nav-search-results").style.display = "none";
-    document.getElementById("user-profile").style.display = "block";
-    //document.getElementById("top-nav-search-user-profile-back-button").style.display = "block";
-    document.getElementById("user-profile-cases-content").style.display = "none";
+    //$("#top-nav-search-results").css("display","none");
+    $("#top-nav-case-details").css("display","none");
+    $("#user-profile").css("display","block");
+    $("#user-profile-cases-content").css("display","none");
     page_history.unshift("top_nav_search_user_profile");
     $("#user-profile-about-content").fadeIn();
     user_profile_basic_details();
@@ -270,16 +200,13 @@ function top_nav_search_user_profile() {
 
 function top_nav_search_case_details(identifier1) {
     document.getElementById('top-nav-case-details').style.display = "block";
-    //document.getElementById('heading-top-nav-case-details').style.display = "block";
     document.getElementById('top-nav-case-details-form').style.display = "flex";
-    document.getElementById("top-nav-search").value = "";
-    //document.getElementById('top-nav-search-heading').style.display = "none";
     document.getElementById('top-nav-search-results').style.display = "none";
     document.getElementById("user-profile").style.display = "none";
     document.getElementById("case_profile").style.display = "none";
+    $("#back-close-btn-wrapper").css("display","block");
     if (identifier1 === "vol_cases_details") {
         page_history.unshift("vol_cases_details");
-        //document.getElementById('heading-top-nav-case-details').innerHTML = "#Vol_Name";
     } else if (identifier1 === "search_cases_details") {
         page_history.unshift("search_cases_details");
     }
@@ -294,8 +221,18 @@ function user_profile_basic_details() {
     }, 210);
 }
 
+function user_profile_user_cases(){
+    $("#user-profile-active-tab-header").click();
+    document.getElementById('user-profile-active-tab-header').classList.add('active-header');
+    document.getElementById("user-profile-user-cases-btn").style.border = "2px solid #007AEA";
+    document.getElementById("user-profile-basic-details-btn").style.border = "2px solid transparent";
+    $("#user-profile-about-content").fadeOut(200);
+    var user_profile_user_cases_timeoOut = setTimeout(function () {
+        $("#user-profile-cases-content").fadeIn();
+    }, 210);
+}
+
 function hideresults() {
-    //$('.row').fadeOut(300);
     if(document.getElementById("active-tab-content").style.display === "block"){
         my_cases_tab_headers = "active-tab-content";
     } else if (document.getElementById("recent-tab-content").style.display === "block"){
@@ -309,13 +246,11 @@ function hideresults() {
 function showresults() {
     $('#table4').fadeOut(300);
     $('#' + my_cases_tab_headers).fadeIn(300);
-    
 }
 
 function assignCase(data) {
     var userId = $(data).parent().find("#vol_id").val();
     assignCaseReq(currentCaseId, userId);
-    document.getElementById('myc-body').click();
 }
 
 function other_reason_close_case() {
@@ -335,41 +270,39 @@ function other_reason_close_case() {
 function navigate_back() {
     if (page_history[0] === "myc_case_details") {
         document.getElementById('my-cases-content').style.display = "block";
-        //document.getElementById('heading-my-cases').style.display = "block";
         document.getElementById('case-details').style.display = "none";
-        //document.getElementById('heading-case-details').style.display = "none";
         document.getElementById('case-details-form').style.display = "none";
+        $("#heading-text").html("My Cases");
+        $("#back-close-btn-wrapper").css("display","none");
         page_history.unshift("my_cases");
     } else if (page_history[0] === "action_centre_assign_case" || page_history[0] === "action_centre_close_case") {
         document.getElementById('case-details-form').style.display = "flex";
         document.getElementById('content-assign-case').style.display = "none";
         document.getElementById('content-close-case').style.display = "none";
-        //document.getElementById('myc-case-details-heading-animation').innerHTML = "Case Details";
         document.getElementById('assign-case-success').style.display = "none";
         $("#content-assign-case").css("pointerEvents", "");
         document.getElementById('case-details-form').style.opacity = "1";
-        //document.getElementById('top-nav-search-heading').style.display = "none";
         document.getElementById('top-nav-search-results').style.display = "none";
         document.getElementById('case-details-form').style.pointerEvents = "";
+        var caseId = $("#case-id-case-details").val();
+        $("#heading-text").html("Case Details / Case No.: " + caseId);
         page_history.unshift("myc_case_details");
     }/*
-        else if (page_history[0] === "user_cases_case_details"){
-            document.getElementById('top-nav-case-details').style.display = "none";
-            document.getElementById('heading-top-nav-case-details').style.display = "none";
-            document.getElementById('top-nav-case-details-form').style.display = "none";
-            document.getElementById('top-nav-search-heading').style.display = "block";
-            document.getElementById("top-nav-search-heading-content").innerHTML = "#Search_Input - #User_Name";
-            document.getElementById("top-nav-search-user-profile-back-button").style.display = "block";
-            document.getElementById("user-profile").style.display = "block";
-        }*/
+    else if (page_history[0] === "user_cases_case_details"){
+        document.getElementById('top-nav-case-details').style.display = "none";
+        document.getElementById('heading-top-nav-case-details').style.display = "none";
+        document.getElementById('top-nav-case-details-form').style.display = "none";
+        document.getElementById('top-nav-search-heading').style.display = "block";
+        document.getElementById("top-nav-search-heading-content").innerHTML = "#Search_Input - #User_Name";
+        document.getElementById("top-nav-search-user-profile-back-button").style.display = "block";
+        document.getElementById("user-profile").style.display = "block";
+    }*/
     else if (page_history[0] === "top_nav_search_user_profile") {
-        //document.getElementById('top-nav-search-heading').style.display = "block";
-        document.getElementById('top-nav-search-results').style.display = "block";
-        //document.getElementById("top-nav-search-heading-content").innerHTML = "Searching results for - #Search_Input";
+        close();
+        /*document.getElementById('top-nav-search-results').style.display = "block";
         document.getElementById("user-profile").style.display = "none";
         document.getElementById("case_profile").style.display = "none";
-        //document.getElementById("top-nav-search-user-profile-back-button").style.display = "none";
-        page_history.unshift("top_nav_search_results");
+        page_history.unshift("top_nav_search_results");*/
     }/* else if (page_history[0] === "vol_cases_details") {
         document.getElementById('top-nav-case-details').style.display = "none";
         document.getElementById('heading-top-nav-case-details').style.display = "none";
@@ -388,15 +321,49 @@ function navigate_back() {
     }*/
     else if (page_history[0] === "vol_cases_details") {
         document.getElementById('top-nav-case-details').style.display = "none";
-        //document.getElementById('heading-top-nav-case-details').style.display = "none";
         document.getElementById('top-nav-case-details-form').style.display = "none";
-        //document.getElementById('top-nav-search-heading').style.display = "block";
         document.getElementById("user-profile").style.display = "block";
         page_history.unshift("top_nav_search_user_profile");
     } else if (page_history[0] === "search_cases_details") {
-        search_close_button();
+        close();
     }
 }
+
+function close(){
+    if(page_history[0] === "search_cases_details" || page_history[0] === "top_nav_search_user_profile"){
+        //document.getElementById('top-nav-search-results').style.display = "none";
+        document.getElementById("user-profile").style.display = "none";
+        document.getElementById("case_profile").style.display = "none";
+        document.getElementById('top-nav-case-details').style.display = "none";
+        document.getElementById('top-nav-case-details-form').style.display = "none";
+        for (let i = 0; i < page_history.length; i++) {
+            if (page_history[i] === "raise_a_case") {
+                raise_a_case();
+                page_history.unshift("raise_a_case");
+                break;
+            } else if (page_history[i] === "my_cases") {
+                my_cases();
+                page_history.unshift("my_cases");
+                break;
+            } else if (page_history[i] === "user_data_change_approvals") {
+                user_data_change_approvals();
+                page_history.unshift("user_data_change_approvals");
+                break;
+            } else if (page_history[i] === "action_centre_assign_case") {
+                document.getElementById('content-assign-case').style.display = "block";
+                page_history.unshift("action_centre_assign_case");
+                break;
+            } else if (page_history[i] === "action_centre_close_case") {
+                document.getElementById('content-close-case').style.display = "block";
+                page_history.unshift("action_centre_close_case");
+                break;
+            }
+        }
+    } else if(page_history[0] === "myc_case_details" || page_history[0] === "action_centre_assign_case" || page_history[0] === "action_centre_close_case"){
+        my_cases();
+    }
+}
+
 /*
 function submit_raise_a_case(event){
     //event.preventDefault();
@@ -561,7 +528,6 @@ function assignCaseReq(caseId, userId) {
 }
 
 function closeCaseReq(caseId) {
-
     var formData = {
         'caseId': caseId,
         'closeRemark': $("[name='closeRemark']").val(),
@@ -581,6 +547,7 @@ function closeCaseReq(caseId) {
 
 $(document).ready(function () {
 
+//-----Vol-Tooltip-----------------------------------------------------------------------------------
     $('.top-five-and-nearest-and-search-results-ul').on("mouseover", ".vol_tooltip", show_vol_tooltip);
     $('.top-five-and-nearest-and-search-results-ul').on("mouseout", ".vol_tooltip", hide_vol_tooltip);
     // $('#myc-body').click('/activeCases:table1', responseHandler);
@@ -594,26 +561,18 @@ $(document).ready(function () {
     document.getElementById('rac-body').onclick = function () {
         raise_a_case();
     };
-
     document.getElementById('myc-body').onclick = function () {
         my_cases();
     };
-
-
     document.getElementById('usdca-body').onclick = function () {
         user_data_change_approvals();
     };
 
-
-
 //------Active-Recent-Closed-Tabs-JS--------------------------------------------------------------------------------
     document.getElementById('active-tab-header').onclick = function my_cases_search_results_active() {
-        this.classList.add('active-header');
-        document.getElementById('recent-tab-header').classList.remove('active-header');
-        document.getElementById('closed-tab-header').classList.remove('active-header');
+        this.classList.add('tab-header-animation');
         document.getElementById('recent-tab-header').classList.remove('tab-header-animation');
         document.getElementById('closed-tab-header').classList.remove('tab-header-animation');
-        document.getElementById('active-tab-header').classList.add('tab-header-animation');
         document.getElementById('active-tab-content').classList.add('tab-content-animation');
         document.getElementById('recent-tab-content').classList.remove('tab-content-animation');
         document.getElementById('closed-tab-content').classList.remove('tab-content-animation');
@@ -623,11 +582,8 @@ $(document).ready(function () {
     };
 
     document.getElementById('recent-tab-header').onclick = function my_cases_search_results_recent() {
-        this.classList.add('active-header');
-        document.getElementById('active-tab-header').classList.remove('active-header');
-        document.getElementById('closed-tab-header').classList.remove('active-header');
+        this.classList.add('tab-header-animation');
         document.getElementById('active-tab-header').classList.remove('tab-header-animation');
-        document.getElementById('recent-tab-header').classList.add('tab-header-animation');
         document.getElementById('closed-tab-header').classList.remove('tab-header-animation');
         document.getElementById('active-tab-header').classList.remove('tab-content-animation');
         document.getElementById('active-tab-content').classList.remove('tab-content-animation');
@@ -638,12 +594,9 @@ $(document).ready(function () {
     };
 
     document.getElementById('closed-tab-header').onclick = function my_cases_search_results_closed() {
-        this.classList.add('active-header');
-        document.getElementById('active-tab-header').classList.remove('active-header');
-        document.getElementById('recent-tab-header').classList.remove('active-header');
+        this.classList.add('tab-header-animation');
         document.getElementById('active-tab-header').classList.remove('tab-header-animation');
         document.getElementById('recent-tab-header').classList.remove('tab-header-animation');
-        document.getElementById('closed-tab-header').classList.add('tab-header-animation');
         document.getElementById('active-tab-content').classList.remove('tab-content-animation');
         document.getElementById('recent-tab-content').classList.remove('tab-content-animation');
         document.getElementById('closed-tab-content').classList.add('tab-content-animation');
@@ -691,26 +644,19 @@ $(document).ready(function () {
             else if(document.getElementById('user-data-change-approvals-content').style.display === "block"){page_history.unshift("user_data_change_approvals")}
         }
     };*/
-//---------Close-Button-------------------------------------------------------
+//---------Close-Button---Back-Button---------------------------------------------------
     document.getElementById("close-button").onclick = function () {
-        search_close_button();
+        close();
     };
-
-
     document.getElementById("back-button").onclick = function () {
         navigate_back();
     };
 
-
-
 //------Search-Active-Recent-Closed-Tabs-JS--------------------------------------
     document.getElementById('user-profile-active-tab-header').onclick = function user_profile_search_results_active() {
-        this.classList.add('active-header');
-        document.getElementById('user-profile-recent-tab-header').classList.remove('active-header');
-        document.getElementById('user-profile-closed-tab-header').classList.remove('active-header');
+        this.classList.add('tab-header-animation');
         document.getElementById('user-profile-recent-tab-header').classList.remove('tab-header-animation');
         document.getElementById('user-profile-closed-tab-header').classList.remove('tab-header-animation');
-        document.getElementById('user-profile-active-tab-header').classList.add('tab-header-animation');
         document.getElementById('user-profile-active-tab-content').classList.add('tab-content-animation');
         document.getElementById('user-profile-recent-tab-content').classList.remove('tab-content-animation');
         document.getElementById('user-profile-closed-tab-content').classList.remove('tab-content-animation');
@@ -720,48 +666,35 @@ $(document).ready(function () {
     };
 
     document.getElementById('user-profile-recent-tab-header').onclick = function user_profile_search_results_recent() {
-        this.classList.add('active-header');
-        document.getElementById('user-profile-active-tab-header').classList.remove('active-header');
-        document.getElementById('user-profile-closed-tab-header').classList.remove('active-header');
+        this.classList.add('tab-header-animation');
         document.getElementById('user-profile-active-tab-header').classList.remove('tab-header-animation');
-        document.getElementById('user-profile-recent-tab-header').classList.add('tab-header-animation');
         document.getElementById('user-profile-closed-tab-header').classList.remove('tab-header-animation');
+        document.getElementById('user-profile-recent-tab-content').classList.add('tab-content-animation');
         document.getElementById('user-profile-active-tab-header').classList.remove('tab-content-animation');
         document.getElementById('user-profile-active-tab-content').classList.remove('tab-content-animation');
-        document.getElementById('user-profile-recent-tab-content').classList.add('tab-content-animation');
         document.getElementById('user-profile-recent-tab-content').style.display = "block";
         document.getElementById('user-profile-closed-tab-content').style.display = "none";
         document.getElementById('user-profile-active-tab-content').style.display = "none";
     };
 
     document.getElementById('user-profile-closed-tab-header').onclick = function user_profile_search_results_closed() {
-        this.classList.add('active-header');
-        document.getElementById('user-profile-active-tab-header').classList.remove('active-header');
-        document.getElementById('user-profile-recent-tab-header').classList.remove('active-header');
+        this.classList.add('tab-header-animation');
         document.getElementById('user-profile-active-tab-header').classList.remove('tab-header-animation');
         document.getElementById('user-profile-recent-tab-header').classList.remove('tab-header-animation');
-        document.getElementById('user-profile-closed-tab-header').classList.add('tab-header-animation');
+        document.getElementById('user-profile-closed-tab-content').classList.add('tab-content-animation');
         document.getElementById('user-profile-active-tab-content').classList.remove('tab-content-animation');
         document.getElementById('user-profile-recent-tab-content').classList.remove('tab-content-animation');
-        document.getElementById('user-profile-closed-tab-content').classList.add('tab-content-animation');
         document.getElementById('user-profile-closed-tab-content').style.display = "block";
         document.getElementById('user-profile-active-tab-content').style.display = "none";
         document.getElementById('user-profile-recent-tab-content').style.display = "none";
     };
 //------Basic-Details-and-User-Cases------------------------------------------------------------
-    document.getElementById("user-profile-basic-details-btn").onclick = function () {
+    document.getElementById("user-profile-basic-details-btn").onclick = function() {
         user_profile_basic_details();
     };
 
-
-    document.getElementById("user-profile-user-cases-btn").onclick = function user_profile_user_cases() {
-        document.getElementById('user-profile-active-tab-header').classList.add('active-header');
-        document.getElementById("user-profile-user-cases-btn").style.border = "2px solid #007AEA";
-        document.getElementById("user-profile-basic-details-btn").style.border = "2px solid transparent";
-        $("#user-profile-about-content").fadeOut(200);
-        var user_profile_user_cases = setTimeout(function () {
-            $("#user-profile-cases-content").fadeIn();
-        }, 210);
+    document.getElementById("user-profile-user-cases-btn").onclick = function() {
+        user_profile_user_cases();
     };
 
 //------DropDown-Menu-JS--------------------------------------------------------------------------------
@@ -793,7 +726,7 @@ $(document).ready(function () {
         }
     };
 
-//------Bird-or-Animal-Affected-Changes-----------------------------------------------------------------------------
+//------Bird-or-Animal-Affected-Changes--&--Reset-Affected-Changes----------------------------------------------
     document.getElementById('bird-or-animal1').onclick = function () {  //Bird
         document.getElementById("animal-type").selectedIndex = 0;
         document.getElementById('header-form-left-side').innerHTML = "Bird Information";
@@ -866,33 +799,13 @@ $(document).ready(function () {
         }
     };
 
-
-//------Case-Details-----------------------------------------------------------------------------------------------------------
-    document.getElementById("close-button").onclick = function () {
-        document.getElementById('case-details').style.display = "none";
-        //document.getElementById('heading-case-details').style.display = "none";
-        document.getElementById('case-details-form').style.display = "none";
-        //document.getElementById('top-nav-search-heading').style.display = "none";
-        document.getElementById('top-nav-search-results').style.display = "none";
-        //document.getElementById('case-details').style.opacity = 1;
-        document.getElementById('content-assign-case').style.display = "none";
-        document.getElementById('content-close-case').style.display = "none";
-        document.getElementById('case-details-form').style.pointerEvents = "";
-        my_cases();
-        page_history.unshift("my_cases");
-    };
-
-    document.getElementById("close-button").onclick = function () {
-        search_close_button();
-    };
 //--Action-Centre--------------------------------------------------------------------------------
     document.getElementById('action-center-assign-case').onclick = function () {
         document.getElementById('case-details-form').style.display = "none";
-        //document.getElementById('content-assign-case').style.opacity = "1";
         document.getElementById('content-assign-case').style.display = "block";
-        //document.getElementById('myc-case-details-heading-animation').innerHTML = "#CaseID - Assign Case";
-        //document.getElementById("myc-case-details-heading-close-button").style.display = "block";
         page_history.unshift("action_centre_assign_case");
+        var caseId = $("#case-id-case-details").val();
+        $("#heading-text").html("Case Details / Case No.: " + caseId + " / Assign Case");
         getVolInfo();
     };
 
@@ -902,17 +815,19 @@ $(document).ready(function () {
         document.getElementById('case-details-form').style.pointerEvents = "none";
         document.getElementById('content-close-case').style.opacity = "1";
         document.getElementById('content-close-case').style.display = "block";
-        //document.getElementById('myc-case-details-heading-animation').innerHTML = "#CaseID - Close Case";
-        //document.getElementById("myc-case-details-heading-close-button").style.display = "block";
+        var caseId = $("#case-id-case-details").val();
+        $("#heading-text").html("Case Details / Case No.: " + caseId + " / Close Case");
         other_reason_close_case();
         page_history.unshift("action_centre_close_case");
     };
 
     document.getElementById('action-center-history-case').onclick = function () {
+        var caseId = $("#case-id-case-details").val();
+        $("#heading-text").html("Case Details / Case No.: " + caseId + " / History");
         var formData = {
             'caseId': currentCaseId
         };
-        var a = '<tr>'
+        var a = '<tr>';
         var b = '<td class="tg-0lax">';
         var c = '</td>';
         var d = '</tr>';
@@ -963,11 +878,9 @@ $(document).ready(function () {
         }
     };
 
-
     document.getElementById('close-case-reason').onchange = function () {
         other_reason_close_case();
     };
-
 
 //------Close-Case-Button--aka--Submit-Close-Case----------------------------------------------------------------------
     document.getElementById('close-case-submit-btn').onclick = function () {
@@ -980,8 +893,6 @@ $(document).ready(function () {
         } 
         else {
             closeCaseReq(currentCaseId);
-            // navigate_back();
-            // navigate_back();
         }
     };
     document.getElementById('close-case-other-reason').addEventListener("keyup", function () {  //Removes Red border while typing
@@ -991,14 +902,14 @@ $(document).ready(function () {
 //------Keyboard-Shortcuts--------------------------------------------------------------------------------------------------
     document.onkeyup = function (e) {
         if (e.ctrlKey && e.altKey && e.which == 83) {
-            /*if (document.getElementById('heading-raise-a-case').style.display == "" || document.getElementById('heading-raise-a-case').style.display == "block") {
+            if (document.getElementById('heading-text').innerHTML === "Raise a Case") {
                 document.getElementById('submit-raise-case').click();
-            } else alert("Ctrl + Alt + S is shortcut for Raising a Case");*/
+            } else alert("Ctrl + Alt + S is shortcut for Raising a Case");
         }
         if (e.ctrlKey && e.altKey && e.which == 82) {
-            /*if (document.getElementById('heading-raise-a-case').style.display == "" || document.getElementById('heading-raise-a-case').style.display == "block") {
+            if (document.getElementById('heading-text').innerHTML === "Raise a Case") {
                 document.getElementById('reset-raise-case').click();
-            } else alert("Ctrl + Alt + R is shortcut for Resetting all fields of a Case");*/
+            } else alert("Ctrl + Alt + R is shortcut for Resetting all fields of a Case");
         }
     };
 
@@ -1021,7 +932,7 @@ $(document).ready(function () {
     }
 
     for (let i = 0; i < document.getElementsByClassName("reject").length; i++) {
-        document.getElementsByClassName("reject")[i].onclick = function () {
+        document.getElementsByClassName("reject")[i].onclick = function() {
             if (event.target.tagName == "IMG" && event.target.parentElement.parentElement.classList.contains('reject')) {
                 event.target.setAttribute('th:src', '@{/img/rejected-click.png}');
                 $(event.target.parentElement.parentElement.parentElement.parentElement).fadeOut();
@@ -1052,7 +963,8 @@ $(document).ready(function () {
     $('#image_enlarge_back_button').click(function () {
         $('#dynamic_image_enlarge').css('display', 'none');
     });
-//-----Disable-Right-Click-Menu-On-Image-----------------------------------------------------------------------------------------------
+
+//-----Disable-Right-Click-Menu-On-Image----------------------------------------------------------------------
     $("body").on("contextmenu", "img", function (e) {
         return false;
     });
@@ -1064,7 +976,6 @@ $(document).ready(function () {
     };
 
 //------Tooltip-Vol-Assign-Case-------------------------------------------------------------------------------
-
     document.getElementById("vol-description-tooltip").onmouseover = function (e) {
         clearTimeout(hide_tooltip_timeOut);
         $("#vol-description-tooltip").css("display", "block");
@@ -1236,23 +1147,12 @@ $(document).ready(function () {
             },
         select: function (event, ui) {
             if (ui.item) {
-                /*document.getElementById('raise-a-case-content').style.opacity = 0;
-                document.getElementById('my-cases-content').style.opacity = 0;
-                document.getElementById('case-details').style.opacity = 0;
-                document.getElementById('user-data-change-approvals-content').style.opacity = 0;
-                document.getElementById('heading-raise-a-case').style.opacity = 0;
-                document.getElementById('heading-my-cases').style.opacity = 0;
-                document.getElementById('heading-case-details').style.opacity = 0;
-                document.getElementById('heading-user-data-change-approvals').style.opacity = 0;*/
-                //document.getElementById('top-nav-search-heading').style.display = "block";
                 document.getElementById("user-profile").style.display = "none";
-                //document.getElementById("top-nav-search-user-profile-back-button").style.display = "none";
-                //document.getElementById('heading-top-nav-case-details').style.display = "block";
                 if (ui.item.userDetails) {
                     var ud = ui.item.userDetails;
                     var html = aVol + ud.userName + bVol + cVol + ud.userId + dVol;
                     userIdVsInfoMap[ud.userId] = ud;
-                    $('#raise-a-case-content').hide();
+                    //$('#raise-a-case-content').hide();
                     $('#user-profile-left-side').find('img').attr('src', "data:image/png;base64," + ud.userImage.image);
                     $('#user-profile-middle-side_user_name').text(ud.userName);
                     $('#user-profile-middle-side_user_role').text(ud.role);
@@ -1287,26 +1187,19 @@ $(document).ready(function () {
                     $('#user-profile-recent-tab-header').unbind('click');
                     $('#user-profile-closed-tab-header').unbind('click');
 
-
                     $('#user-profile-user-cases-btn').click('/activeCases:table11:'+ud.userId, responseHandler);
                     $('#user-profile-active-tab-header').click('/activeCases:table11:'+ud.userId, responseHandler);
                     $('#user-profile-recent-tab-header').click('/recentCases:table22:'+ud.userId, responseHandler);
                     $('#user-profile-closed-tab-header').click('/closedCases:table33:'+ud.userId, responseHandler);
 
                     top_nav_search_user_profile();
-                    $('#user-profile').show();
+                    $("#heading-text").html("Search User / " + ud.userName);
+                    $("#back-close-btn-wrapper").css("display","block");
                     //$('#search_vol').html(html);
                 } else if (ui.item.caseDetails) {
                     cd = ui.item.caseDetails;
                     caseIdVsInfoMap[cd.caseId] = cd;
                     $('#raise-a-case-content').hide();
-                    // $('#case_profile_id').text(cd.caseId);
-                    // $('#case_profile_status').text(cd.active);
-                    // $('#case_profile_date').text(cd.creationDateStr);
-                    // $('#case_profile_type').text(cd.typeAnimal);
-                    // $('#case_profile_name').text(cd.animalName);
-                    //$('#case_profile').show();
-
                     $('#top-nav-case-id-case-details').val(cd.caseId);
                     $('#top-nav-animal-type-case-details').val(cd.typeAnimal);
                     $('#top-nav-animal-name-case-details').val(cd.animalName);
@@ -1318,10 +1211,18 @@ $(document).ready(function () {
                     $('#top-nav-contact-number-case-details').val(cd.contactNumber);
                     $('#top-nav-location-landmark-case-details').val(cd.locationLandMark);
                     $('#top-nav-location-pincode-case-details').val(cd.locationPincode);
-
+                    $("#heading-text").html("Case Details / Case No.: " + cd.caseId);
+                    if(cd.birdOrAnimal === "Animal"){
+                        $("#header-top-nav-form-left-side-case-details").html("Animal Information");
+                        $("#top-nav-animal-bird-type-case-details").html("Animal Type: ");
+                        $("#top-nav-animal-bird-name-case-details").html("Animal Name: ");
+                    } else {
+                        $("#header-top-nav-form-left-side-case-details").html("Bird Information");
+                        $("#top-nav-animal-bird-type-case-details").html("Bird Type: ");
+                        $("#top-nav-animal-bird-name-case-details").html("Bird Name: ");       
+                    }
                     top_nav_search_case_details("search_cases_details");
-                    //document.getElementById("top-nav-case-details-heading-back-button").style.display = "none";
-                    if (cd.active) {
+                    /*if (cd.active) {
                         //$('#action-center').show();
                         $('#action-center-assign-case').show();
                         $('#action-center-close-case').show();
@@ -1329,10 +1230,10 @@ $(document).ready(function () {
                         //$('#action-center').hide();
                         $('#action-center-assign-case').hide();
                         $('#action-center-close-case').hide();
-                    }
+                    }*/
                 }
                 $("#top-nav-search").autocomplete("close");
-                $("#top-nav-search").val(''); 
+                $("#top-nav-search").val('');
                 return false;
             }
         }

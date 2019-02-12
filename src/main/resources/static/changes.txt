@@ -11,7 +11,6 @@ Some Error page - Access Denied and Internal Server Error
 13/12/2018 - Update2
     Approval History
     Case Flow History
-    Remove all heading divs - play around with innerHTML
     Assign Case - Tick on assign
 
 30/12/2018
@@ -76,16 +75,16 @@ Some Error page - Access Denied and Internal Server Error
     //My Cases - Search
     //Success - Assign - msg
     //Recpt Dashboard - My Cases - Add Column - Case accepted/not
+    //Top Case select - Top Vol - Break
+    //Top - Nav -User - Back Button
     Mobile No. - Error - Styling - Mobile Number Validation - Explicit - or Try to remove msg
-    Top Case select - Top Vol - Break
-    Top - Nav -User - Back Button
     Loading Screen - Assign Case (First Screen)
     Action Center - Top Nav - Recpt dashboard
     Recpt Dashboard - Once Raise Case Clicked - Focus - Radio Button - Choose Bird/Animal
         If you click My Cases before Case Assign TimeoOut is Over - pointerEvents are a problem
         Active Tab Must be Called at click of My Cases
-        Logout - onclick of button not text-link
-    ShorctCuts - Raise a Case
+        //Logout - onclick of button not text-link
+    //ShorctCuts - Raise a Case
     Perform Styling Run through
 
 Matters at Hand - Call

@@ -78,11 +78,6 @@
     </div>
     <!---------------------------------Top-Nav-Search-Results---------------------------------->
     <div id="top-nav-search-content">
-        <!--<div id="top-nav-search-heading">
-            <span id="top-nav-search-heading-content">Searching results for - #Search_Input</span>
-            <span id="top-nav-search-close-button" class="no-select" style="position: relative; font-size: 2em; top:-1.8vh;">&times;</span>
-            <span id="top-nav-search-user-profile-back-button" class="no-select">&#10140;</span>
-        </div>-->
         <div id="top-nav-search-results">
             <div>
                 <li class="search-li-user-profile-onclick" onclick="top_nav_search_user_profile();"><span class="top-nav-search-vol-name">#Vol_Name1</span> <span class="top-nav-search-vol-role">#Vol_Role</span></li>
@@ -255,11 +250,6 @@
                 </div>
             </div>
         </div>
-        <!--<div id="heading-top-nav-case-details">
-            <span id="top-nav-case-details-heading-animation" class="no-select">Case Details</span>
-            <span id="top-nav-case-details-heading-close-button" class="no-select">&times;</span>
-            <span id="top-nav-case-details-heading-back-button" class="no-select">&#10140;</span>
-        </div>-->
         <div id="top-nav-case-details">
             <div id="top-nav-case-details-form">
                 <div id="top-nav-form-left-side-case-details">
@@ -270,9 +260,9 @@
                             <label for="top-nav-case-id-case-details">Case ID </label>
                             <input autocomplete="off" disabled id="top-nav-case-id-case-details" name="top-nav-case-id-case-details" required type="number">
                         </div>
-                        <label for="top-nav-animal-type">#Animal/Bird type: </label>
+                        <label for="top-nav-animal-type" id="top-nav-animal-bird-type-case-details">#Animal/Bird type: </label>
                         <input disabled id="top-nav-animal-type-case-details" type="text"><br>
-                        <label for="top-nav-animal-name-case-details">#Animal/Bird name: </label>
+                        <label for="top-nav-animal-name-case-details" id="top-nav-animal-bird-name-case-details">#Animal/Bird name: </label>
                         <input disabled id="top-nav-animal-name-case-details" type="text"><br>
                         <label for="top-nav-condition-case-details">Condition: </label>
                         <input disabled id="top-nav-condition-case-details" type="text">
@@ -297,15 +287,15 @@
                         <input disabled id="top-nav-location-pincode-case-details" type="number">
                     </div>
                 </div>
-                <!--<div id="action-center">-->
-                    <!--<div id="action-center-heading" class="no-select">-->
-                        <!--Action Center-->
-                    <!--</div>-->
-                    <!--<div id="action-center-body">-->
-                        <!--<a class="action-center-links no-select" id="action-center-assign-case" >Assign Case</a>-->
-                        <!--<a class="action-center-links no-select" id="action-center-close-case" >Close Case</a>-->
-                    <!--</div>-->
-                <!--</div>-->
+
+                <div id="action-center-top-nav">
+                    <div id="action-center-heading-top-nav" class="no-select">Action Center</div>
+                    <div id="action-center-body-top-nav">
+                        <a class="action-center-links no-select" id="action-center-top-nav-assign-case" >Assign Case</a>
+                        <a class="action-center-links no-select" id="action-center-top-nav-close-case" >Close Case</a>
+                        <a class="action-center-links no-select" id="action-center-top-nav-history-case" >History</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -408,14 +398,6 @@
             </div>
             <div id="active-tab-content">
                 <div class="content-table" id="active-content-table">
-                    <!--<div style="display: flex; position: fixed; width: 68.5vw; font-size: 1.2em; font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC; background-color: rgb(248,248,248)">
-                        <div class="sr-no-div">Sr. No.</div>
-                        <div class="case-id-div">Case ID</div>
-                        <div class="case-status-div">Case Status</div>
-                        <div class="date-div">Date</div>
-                        <div class="animal-type-div">Animal/Bird Type</div>
-                        <div class="case-name-div">Animal/Bird Name</div>
-                    </div>-->
                     <div class="my-cases-result" id="table1" style="width: 68.5vw;">
                         <div class="row row-my-cases-active" onclick="case_details();">
                             <div class="sr-no"><li></li></div>
@@ -430,14 +412,6 @@
             </div>
             <div id="recent-tab-content">
                 <div class="content-table" id="recent-content-table">
-                    <!--<div style="display: flex; position: fixed; width: 68.5vw; font-size: 1.2em; font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC; background-color: rgb(248,248,248)">
-                        <div class="sr-no-div">Sr. No.</div>
-                        <div class="case-id-div">Case ID</div>
-                        <div class="case-status-div">Case Status</div>
-                        <div class="date-div">Date</div>
-                        <div class="animal-type-div">Animal/Bird Type</div>
-                        <div class="case-name-div">Animal/Bird Name</div>
-                    </div>-->
                     <div class="my-cases-result" id="table2" style="width: 68.5vw;">
                         <div class="row row-my-cases-recent" onclick="case_details();">
                             <div class="sr-no"><li></li></div>
@@ -452,14 +426,6 @@
             </div>
             <div id="closed-tab-content">
                 <div class="content-table" id="closed-content-table">
-                    <!--<div style="display: flex; position: fixed; width: 68.5vw; font-size: 1.2em; font-weight: 500; padding-bottom: 1vh;border-bottom: 1px solid #CCC; background-color: rgb(248,248,248)">
-                        <div class="sr-no-div">Sr. No.</div>
-                        <div class="case-id-div">Case ID</div>
-                        <div class="case-status-div">Case Status</div>
-                        <div class="date-div">Date</div>
-                        <div class="animal-type-div">Animal/Bird Type</div>
-                        <div class="case-name-div">Animal/Bird Name</div>
-                    </div>-->
                     <div class="my-cases-result" id="table3" style="width: 68.5vw;">
                         <div class="row row-my-cases-closed" onclick="case_details();">
                             <div class="sr-no"><li></li></div>
@@ -475,11 +441,6 @@
         </div>
     </div>
 
-    <!--<div id="heading-case-details">
-        <span id="myc-case-details-heading-animation" class="no-select">Case Details</span>
-        <span id="myc-case-details-heading-close-button" class="no-select">&times;</span>
-        <span id="myc-case-details-heading-back-button" class="no-select">&#10140;</span>
-    </div>-->
     <div id="case-details">
         <div id="case-details-form">
             <div id="form-left-side-case-details">
@@ -490,16 +451,14 @@
                         <label for="case-id-case-details">Case ID </label>
                         <input autocomplete="off" disabled id="case-id-case-details" name="case-id-case-details" required type="number">
                     </div>
-                    <label for="animal-type-case-details">#Animal/Bird type: </label>
+                    <label for="animal-type-case-details" id="animal-bird-type-case-details">#Animal/Bird type: </label>
                     <input disabled id="animal-type-case-details" type="text"><br>
-                    <label for="animal-name-case-details">#Animal/Bird name: </label>
+                    <label for="animal-name-case-details" id="animal-bird-name-case-details">#Animal/Bird name: </label>
                     <input disabled id="animal-name-case-details" type="text"><br>
                     <label for="condition-case-details">Condition: </label>
                     <input disabled id="condition-case-details" type="text">
                     <label for="case-photos-case-details">Photos Uploaded</label>
-                    <div id="case-photos-case-details">
-                        <!--<img src="/img/Call Attender-11.png" onclick="enlargePhoto(this);">-->
-                    </div>
+                    <div id="case-photos-case-details"></div>
                 </div>
             </div>
             <div id="form-right-side-case-details">
@@ -520,9 +479,7 @@
                 </div>
             </div>
             <div id="action-center">
-                <div id="action-center-heading" class="no-select">
-                    Action Center
-                </div>
+                <div id="action-center-heading" class="no-select">Action Center</div>
                 <div id="action-center-body">
                     <a class="action-center-links no-select" id="action-center-assign-case" >Assign Case</a>
                     <a class="action-center-links no-select" id="action-center-close-case" >Close Case</a>

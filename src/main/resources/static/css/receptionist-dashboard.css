@@ -4,11 +4,6 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #666;
-    cursor: pointer;
-}
-
-::-webkit-scrollbar-thumb:focus {
     background-color: #333;
     cursor: pointer;
 }
@@ -250,7 +245,7 @@ main {
     padding-top: 1vh;
     padding-left: 1vw;
 }
-#heading-status_bar div {display: inline;}
+#heading-text, #back-button, #close-button {display: inline;}
 #heading-text {
     position: relative;
     box-sizing: border-box;
@@ -258,6 +253,7 @@ main {
     font-size: 1.2em;
 }
 #back-close-btn-wrapper {
+    display: none;
     position: relative;
     float: right;
     margin-right: 1vw;
@@ -268,7 +264,7 @@ main {
     margin-left: 0.5vw;
     cursor: pointer;
 }
-
+/*--------------------------------------------*/
 #raise-a-case-content, #my-cases-content, #user-data-change-approvals-content, #case-details, #top-nav-case-details, #top-nav-search-results, #user-profile {
     position: relative;
     box-sizing: border-box;
@@ -527,7 +523,6 @@ label:hover {
     display: flex;
     margin-left: 5vw;
     width: 65vw;
-    font-weight: 500;
     font-size: 1.2em;
     justify-content: space-between;
 }
@@ -582,6 +577,9 @@ hr {
 
 #body-form-left-side, #body-form-right-side, #body-form-left-side-case-details, #body-form-right-side-case-details, #body-top-nav-form-left-side-case-details, #body-top-nav-form-right-side-case-details {
     padding-left: 1vw;
+}
+#body-top-nav-form-right-side-case-details label, #body-top-nav-form-left-side-case-details label {
+    cursor: default;
 }
 
 #animal-name, #condition, #animal-type, #add-bird-animal, #location, #case-photos, #contact-name, #nine-one, #contact-number, #location, #location-landmark, #location-pincode,
@@ -762,7 +760,7 @@ hr {
     border: 1px solid black;
 }
 
-#action-center {
+#action-center, #action-center-top-nav {
     box-sizing: border-box;
     position: absolute;
     display: block;
@@ -776,27 +774,31 @@ hr {
     box-shadow: 0px 0px 20px #999;
     z-index: 4;
 }
+#action-center-top-nav {
+    top: 2vw;
+    right: 2vw;
+}
 
-#action-center-heading {
+#action-center-heading, #action-center-heading-top-nav {
     font-size: 1.2em;
     cursor: default;
     padding: 1vw;
     border-bottom: 3px solid #EEE;
 }
 
-#action-center-heading:hover {
+#action-center-heading:hover, #action-center-heading-top-nav:hover {
     background-color: #CCC;
     color: black;
 }
 
-#action-center-body a:hover {
+#action-center-body a:hover, #action-center-body-top-nav a:hover {
     background-color: #CCC;
     color: black;
     cursor: pointer;
     text-shadow: 0px 0px 20px #666;
 }
 
-#action-center-body a {
+#action-center-body a, #action-center-body-top-nav a {
     display: block;
     padding: 1vw;
 }
@@ -1088,11 +1090,11 @@ input[type="search"]:focus::placeholder {
     font-weight: 400;
     width: 68.5vw;
 }
-
+/*
 .active-header {
     font-size: 200px;
     font-weight: 900;
-}
+}*/
 
 .content-table {
     width: 69.5vw;
@@ -1136,16 +1138,16 @@ input[type="search"]:focus::placeholder {
 
 .sr-no-div {width: 8vw;} 
 .case-id-div {width: 10vw;} 
-.case-status-div {width: 22vw;} 
-.accepted-div{width:13vw} 
+.case-status-div {width: 24vw;} 
+.accepted-div{width:11vw}
 .date-div {width: 13vw;} 
 .animal-type-div {width: 20vw;} 
 .case-name-div {width: 19vw;}
 
 .sr-no {width: 8vw;} 
 .case-id {width: 10vw;} 
-.case-status {width: 22vw;} 
-.accepted{width:13vw} 
+.case-status {width: 24vw;} 
+.accepted{width:11vw} 
 .date {width: 13vw;} 
 .animal-type {width: 20vw;} 
 .case-name {width: 19vw;}
@@ -1185,6 +1187,8 @@ input[type="search"]:focus::placeholder {
 
 
 .tab-header-animation {
+    font-size: 200px;
+    font-weight: 900;
     animation: tab-header 0.5s forwards 0s cubic-bezier(0.175, 0.885, 0.32, 1.20);
 }
 
@@ -1245,8 +1249,9 @@ figure img {
 }
 
 #dynamic_image_enlarge img {
-    margin-top: 10vh;
-    height: 50vh;
+    margin-top: 5vh;
+    max-width: 50vw;
+    max-height: 60vh;
 }
 
 #dynamic_image_enlarge button {
