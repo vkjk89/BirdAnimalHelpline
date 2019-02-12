@@ -1,25 +1,29 @@
 var usersPendingCaseMap = new Map();
 
-function accept() {
-    var caseId = $('.case-id').text();
+function accept_decline(accept_decline) {
+    var caseId = data1[slideIndex].caseId;
+    $(".slider-member-bullet-" + slideIndex).remove();
     data1.splice(slideIndex,1);
-    $('.celebrations').fadeIn(200);
-    acceptReject(caseId, true);
-    slide_accept_case(1);
-    setTimeout(function(){
-        $('.celebrations').fadeOut(200);
-    }, 200);
+    if(data1.length !== 0){
+        slide_accept_case(0);
+        createBullets();
+    } else no_pending_cases();
+    $('.accept-decline-pending-cases').html(data1.length);
+    acceptReject(caseId, accept_decline);
+    if(accept_decline === true){
+        $('.celebrations').fadeIn(200);
+        setTimeout(function(){
+            $('.celebrations-container').fadeOut(200);
+        }, 200);
+    }
 }
 
-function decline() {
-    var caseId = $('.case-id').text();
-    $('.celebrations').css("display", "none");
-    data1.splice(slideIndex,1);
-    acceptReject(caseId, false);
-    slide_accept_case(1);
-    setTimeout(function(){
-        $('.celebrations').fadeOut(200);
-    }, 200);
+function no_pending_cases(){
+    $("#accept-case-empty").show();
+    $(".accept-case-container").hide();
+    $("#case-slider-bullets").hide();
+    $(".accept-case-wrapper").css("marginBottom","3vh");
+    $(".slider-navigation-buttons").hide();    
 }
 
 function acceptReject(caseId, acceptReject) {
@@ -43,7 +47,10 @@ function enlargePhoto(this_t) {
     $('#dynamic_image_enlarge').css('display', 'block');
     var enlarge_source = this_t.getAttribute('src');
     $('#photo-enlarge').children('img').attr('src', enlarge_source);
-    $('#photo-enlarge').children('img').css("background-color", "#2D3047");
+    $('#top-nav').css({"opacity":"0.95", "pointerEvents":"none"});
+    $('#page-heading').css({"opacity":"0.2", "pointerEvents":"none"});
+    $('main').css({"opacity":"0.2", "pointerEvents":"none"});
+    $('#bottom-action-bar').css({"opacity":"0.95", "pointerEvents":"none"});
 }
 
 /*---------------------------Creating-Dynamic-Accept/Decline-Case-Members--------------------------------------*/
@@ -65,15 +72,13 @@ function createBullets(){
     }
     $(".slider-member-bullet-"+slideIndex).addClass("case-slider-active-div");
 }
-
-function section_accept_case(slideIndex, data) {
-    if(data != undefined){
-        data1 = data;
+var data1 = [];
+function section_accept_case(slideIndex, item) {
+    if(item != undefined){
+        data1.push(item);
     }
     $(".slider-member-bullet").removeClass("case-slider-active-div");
     $(".slider-member-bullet-"+slideIndex).addClass("case-slider-active-div");
-    $(".case-details").fadeOut(200);
-    $(".case-details").fadeIn(200);
     setTimeout(function(){
         $(".case-id").html(data1[slideIndex].caseId);
         if(data1[slideIndex].birdOrAnimal === "Animal"){
@@ -106,6 +111,8 @@ var slideIndex = 0;
 
 function slide_accept_case(slide_direction) {
     slideIndex = currentSlide + slide_direction;
+    $(".case-details").fadeOut(200);
+    $(".case-details").fadeIn(200);
     if (slideIndex < 0) {
         slideIndex = data1.length-1;
         section_accept_case(slideIndex);
@@ -115,6 +122,8 @@ function slide_accept_case(slide_direction) {
         slideIndex = 0;
         section_accept_case(slideIndex);
     }
+    $("#case-photos").empty();
+    caseImageRetriever(data1[slideIndex].caseId, "case-photos");
     currentSlide = slideIndex;
 }
 
@@ -126,21 +135,23 @@ function displayPendingCases() {
         url: '/getPendingCases'
     })
         .done(function (data) {
-                if (data) {
-                    $('.accept-decline-pending-cases').text(data.length);
-                    if(data.length == 0){
-                        $("#accept-case-empty").show();
-                        $(".accept-case-container").hide();
-                    }
-                    section_accept_case(0, data);
-                    createBullets();
+                if (data !== undefined) {
+                    $('.accept-decline-pending-cases').html(data.length);
+                    if(data.length == 0) no_pending_cases();
+                    else {
+                        $("#case-slider-bullets").show();
+                        $(".accept-case-wrapper").css("marginBottom","10vh");
+                        $(".slider-navigation-buttons").show();
 
-                    $.each(data, function (i, item) {
-                        if (!usersPendingCaseMap.has(item.caseId)) {
-                            caseImageRetriever(item.caseId, "case-photos-" + item.caseId);
-                            usersPendingCaseMap.set(item.caseId, item);
-                        }
-                    });
+                        $.each(data, function (i, item) {
+                            if (!usersPendingCaseMap.has(item.caseId)) {
+                                section_accept_case(slideIndex, item);
+                                createBullets();
+                                usersPendingCaseMap.set(item.caseId, item);
+                            }
+                        });
+                        slide_accept_case(0);
+                    }
                 }
             }
         );
@@ -160,10 +171,6 @@ $(document).ready(function () {
     setInterval(function () {
         displayPendingCases();
     }, 30000);
-    $("#logout").on("click", function (e) {
-        e.preventDefault();
-        window.location.href="/logout";
-    });
     document.getElementById('results-tab-active').onclick = function active_active() {
         this.classList.add('active-active');
         document.getElementById('results-tab-recent').classList.remove('active-recent');
@@ -236,8 +243,21 @@ $(document).ready(function () {
 
     };
 
+    $("#logout").on("click", function (e) {
+        e.preventDefault();
+        window.location.href="/logout";
+    });
+    $("#home").on("click", function (e) {
+        e.preventDefault();
+        window.location.href="/default";
+    });
+
     $('#image_enlarge_back_button').click(function () {
-        $('#dynamic_image_enlarge').css('display', 'none');
+        $('#dynamic_image_enlarge').css('display', '');
+        $('#top-nav').css({"opacity":"1", "pointerEvents":""});
+        $('main').css({"opacity":"1", "pointerEvents":""});
+        $('#bottom-action-bar').css({"opacity":"1", "pointerEvents":""});
+        $('#page-heading').css({"opacity":"1", "pointerEvents":""});
     });
 
     window.onclick = function (e) {

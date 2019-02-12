@@ -82,4 +82,8 @@ Some Error page - Access Denied and Internal Server Error
     //Success - Assign - msg
     Action Center - Top Nav - Recpt dashboard
     //Recpt Dashboard - My Cases - Add Column - Case accepted/not
+    Recpt Dashboard - Once Raise Case Clicked - Focus - Radio Button - Choose Bird/Animal
+        If you click My Cases before Case Assign TimeoOut is Over - pointerEvents are a problem
+        Active Tab Must be Called at click of My Cases
+        Logout - onclick of button not text-link
     Perform Styling Run through

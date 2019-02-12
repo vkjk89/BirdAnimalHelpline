@@ -65,6 +65,11 @@
     <h1>Welome, <span id="#user_full_name" th:text="${user.firstName} + ' ' + ${user.lastName}">#First_Last_Name</span></h1>
 </section>
 
+<div id="dynamic_image_enlarge">
+    <div id="photo-enlarge"><img src="/static/img/selected-photo.png" th:src="@{/img/selected-photo.png}"></div>
+    <button id="image_enlarge_back_button" type="button">Back</button>
+</div>
+
 <main>
     <section id="my-cases">
         <div class="search-case" id="search-case">
@@ -123,7 +128,7 @@
                     <span>Condition: </span>
                     <span class="case-condition">#Case_Condtion</span>
                     <div>Photos Uploaded: </div>
-                    <div class="case-photos"></div>
+                    <div id="case-photos" class="case-photos"></div>
                 </div>
                 <div class="box3">
                     <div class="contact-info-header">Contact Information</div>
@@ -136,8 +141,8 @@
                         <div class="contact-location">#Location</div>
                     </div>
                     <div class="accept-decline">
-                        <button type="submit" class = "decline" onclick="decline()">I'm helpless</button>
-                        <button type="submit" class="accept" onclick="accept()">Accept</button>
+                        <button type="submit" class = "decline" onclick="accept_decline(false)">I'm helpless</button>
+                        <button type="submit" class="accept" onclick="accept_decline(true)">Accept</button>
                         <div class="celebrations-container">
                             <span class="celebrations">
                                 <img alt="Case Animal/Bird" th:src="@{/img/pigeon.png}" width="10vw">Thank You for saving my life

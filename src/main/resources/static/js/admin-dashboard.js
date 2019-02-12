@@ -1,41 +1,30 @@
 var usersPendingMap = new Map();
-/*
-$(function(){
-    var includes = $('[data-include]');
-    jQuery.each(includes, function(){
-      var file = '/templates/Vol_Dashboard/' + $(this).data('include') + '.html';
-      $(this).load(file);
-    });
-});*/
-/*
-function accept() {
+
+function accept_reject(accept_reject) {
     data.splice(slideIndex,1);
-    acceptReject(caseId, true);
-    createBullets(1);
+    var userId = data[slideIndex].userId;
+    console.log(userId);
+    acceptReject(userId, accept_reject);
+    createBullets();
+    slide_member(0);
 }
 
-function decline() {
-    data.splice(slideIndex,1);
-    acceptReject(caseId, false);
-    createBullets(1);
-}
-
-function acceptReject(caseId, acceptReject) {
+function acceptReject(userId, acceptReject) {
     var formData = {
-        'caseId': caseId,
+        'userId': userId,
         'acceptReject': acceptReject
     };
     $.ajax({
         type: 'POST',
         data: formData,
-        url: '/acceptRejectCase'
+        url: '/'
         // dataType: 'json'
     })
         .done(function (data) {
-                //console.log("done vvkj : " + data);
+                console.log("done vvkj : " + data);
             }
         );
-}*/
+}
 
 var slider_member_counter = 0;
 var slider_member_bullet = 0;

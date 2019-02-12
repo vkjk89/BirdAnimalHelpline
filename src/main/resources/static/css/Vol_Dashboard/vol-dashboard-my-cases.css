@@ -94,7 +94,7 @@ main {
 }
 
 .side-nav-anim {
-    animation: side-nav-anim 0.5s forwards 0s ease-in-out;
+    animation: side-nav-anim 0.5s forwards 0s ease-out;
 }
 
 @keyframes side-nav-anim {
@@ -114,7 +114,7 @@ main {
     font-size: 4em;
     font-weight: 100;
     top: -6vw;
-    left: 2vw;
+    right: 2vw;
     color: black;
     z-index: 11;
 }
@@ -142,22 +142,17 @@ main {
     border-radius: 50%;
 }
 
-#user_name {
+#user_name, #user_role {
     position: relative;
     display: block;
-    top: -20vw;
-    float: right;
     margin-right: 3vw;
     font-size: 1.2em;
+    left: 30vw;
+    top: -10vh;
+    margin-bottom: -7vh;
 }
-
 #user_role {
-    position: relative;
-    display: block;
-    top: -13vw;
-    right: -25vw;
-    float: right;
-    font-size: 1.2em;
+    margin-top: 8vh;
 }
 
 #top-part {
@@ -165,18 +160,17 @@ main {
 }
 
 #profile-links {
-    padding: 7vw;
     position: relative;
-    text-align: center;
+    text-align: left;
     border-bottom: 1px solid white;
-    top: -2vh;
-    padding-bottom: 1vw;
 }
+#profile-links button {padding: 0;display: block;margin: 3vh 5vw;}
 
 #profile-changes {
     position: relative;
     border-bottom: 1px solid white;
 }
+#profile-changes button {padding: 0;display: block;margin: 3vh 5vw;}
 
 #social-links {
     box-sizing: border-box;
@@ -256,6 +250,7 @@ main hr {
 }
 #case-photos-case-details img {
     max-width: 16vw;
+    margin: 0 2vw;
 }
 
 /*-----------Action-Center----------------*/
@@ -330,7 +325,7 @@ main hr {
 /*--------OTHER-ELEMENTS------------------------------------------------------*/
 #dynamic_image_enlarge {
     display: none;
-    position: absolute;
+    position: fixed;
     top: 15vh;
     left: 0vw;
     width: 100vw;
@@ -344,6 +339,7 @@ main hr {
     margin-top: 10vh;
     width: 70vw;
     margin-bottom: 10vh;
+    background-color: rgba(255,255,255,0.6);
 }
 
 #dynamic_image_enlarge button {
@@ -353,11 +349,6 @@ main hr {
     float: right;
     letter-spacing: 1px;
     margin-right: 10vw;
-}
-
-.dynamic_usdca_member {
-    margin-bottom: 2vh;
-    box-shadow: 0px 0px 20px #AAA;
 }
 
 @media only screen and (min-width: 361px) {

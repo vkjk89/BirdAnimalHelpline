@@ -167,7 +167,7 @@ function my_cases() {
     document.getElementById('top-nav-case-details').style.display = "none";
     document.getElementById('heading-top-nav-case-details').style.display = "none";
     document.getElementById('top-nav-case-details-form').style.display = "none";
-    document.getElementById('active-tab-header').click();    
+    document.getElementById('active-tab-header').click();
 }
 
 function user_data_change_approvals() {
@@ -313,6 +313,7 @@ function showresults() {
 function assignCase(data) {
     var userId = $(data).parent().find("#vol_id").val();
     assignCaseReq(currentCaseId, userId);
+    document.getElementById('myc-body').click();
 }
 
 function other_reason_close_case() {
@@ -981,6 +982,13 @@ $(document).ready(function () {
     $('.new-photo').children("figure").children("img").click(function () {
         enlargePhoto(this);
     });
+
+    function enlargePhoto(this_t) {
+        $('#dynamic_image_enlarge').css('display', 'block');
+        var enlarge_source = this_t.getAttribute('src');
+        $('#photo-enlarge').children('img').attr('src', enlarge_source);
+        $('#photo-enlarge').children('img').css("background-color", "#2D3047");
+    }    
 
     $('#image_enlarge_back_button').click(function () {
         $('#dynamic_image_enlarge').css('display', 'none');

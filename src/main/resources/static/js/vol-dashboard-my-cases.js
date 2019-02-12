@@ -2,7 +2,6 @@ function enlargePhoto(this_t) {
     $('#dynamic_image_enlarge').css('display', 'block');
     var enlarge_source = this_t.getAttribute('src');
     $('#photo-enlarge').children('img').attr('src', enlarge_source);
-    $('#photo-enlarge').children('img').css("background-color", "rgba(255,255,255,0.6)");
     $('#top-nav').css("opacity", "0.5");
     $("#my-cases-case-details").css("opacity", "0.1");
     $('#action-center-main-div').css("opacity", "0.1");
@@ -24,7 +23,7 @@ $(document).ready(function () {
         var formData = {
             'caseId': $('#case-id-case-details').val()
         };
-        var a = '<tr>'
+        var a = '<tr>';
         var b = '<td class="tg-0lax">';
         var c = '</td>';
         var d = '</tr>';
@@ -50,6 +49,7 @@ $(document).ready(function () {
                     html += d;
                     cc.push(html);
                 });
+                console.log(cc);
                 $('#history-dialog-table').html(cc.join(""));
             });
         //$('#history-dialog').show();
@@ -64,6 +64,7 @@ $(document).ready(function () {
         $("#my-cases-case-details").css("opacity", "0.1");
         $('#action-center-main-div').css("opacity", "0.1");
         $('#action-center-main-history-div').css("opacity", "0.1");
+        $('.main').css("pointerEvents", "none");
         //$('body').css("border-left","3px solid #37404711");
     };
 
@@ -74,7 +75,7 @@ $(document).ready(function () {
         $("#my-cases-case-details").css("opacity", "1");
         $('#action-center-main-div').css("opacity", "1");
         $('#action-center-main-history-div').css("opacity", "1");
-        //$('body').css("border-left","3px solid #374047");
+        $('.main').css("pointerEvents", "");
     };
 
     $('#image_enlarge_back_button').click(function () {
@@ -87,6 +88,15 @@ $(document).ready(function () {
         $("body").css("pointerEvents", "all");
     });
 
+    $("#logout").on("click", function (e) {
+        e.preventDefault();
+        window.location.href="/logout";
+    });
+    $("#home").on("click", function (e) {
+        e.preventDefault();
+        window.location.href="/default";
+    });
+
     window.onclick = function (e) {
         if (!e.target.matches('#close-btn') && !e.target.matches('#profile-options') && !e.target.matches('#bottom-action-bar')) {
             if (document.getElementById('side-nav').classList.contains('side-nav-anim')) {
@@ -96,7 +106,7 @@ $(document).ready(function () {
                 $("#my-cases-case-details").css("opacity", "1");
                 $('#action-center-main-div').css("opacity", "1");
                 $('#action-center-main-history-div').css("opacity", "1");
-                //$('body').css("border-left","3px solid #374047");
+                $('.main').css("pointerEvents", "");
             }
         }
     };

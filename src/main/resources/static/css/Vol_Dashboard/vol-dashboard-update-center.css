@@ -92,11 +92,10 @@ main {
     background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5ed 75%);
     color: white;
     z-index: 10;
-    font-size: 0.9em;
 }
 
 .side-nav-anim {
-    animation: side-nav-anim 0.5s forwards 0s ease-in-out;
+    animation: side-nav-anim 0.5s forwards 0s ease-out;
 }
 
 @keyframes side-nav-anim {
@@ -116,7 +115,7 @@ main {
     font-size: 4em;
     font-weight: 100;
     top: -6vw;
-    left: 2vw;
+    right: 2vw;
     color: black;
     z-index: 11;
 }
@@ -144,22 +143,17 @@ main {
     border-radius: 50%;
 }
 
-#user_name {
+#user_name, #user_role {
     position: relative;
     display: block;
-    top: -20vw;
-    float: right;
     margin-right: 3vw;
     font-size: 1.2em;
+    left: 30vw;
+    top: -10vh;
+    margin-bottom: -7vh;
 }
-
 #user_role {
-    position: relative;
-    display: block;
-    top: -13vw;
-    right: -24.5vw;
-    float: right;
-    font-size: 1.2em;
+    margin-top: 8vh;
 }
 
 #top-part {
@@ -167,25 +161,17 @@ main {
 }
 
 #profile-links {
-    padding: 7vw;
     position: relative;
-    text-align: center;
+    text-align: left;
     border-bottom: 1px solid white;
 }
-
-#profile-links button {
-    padding-bottom: 1vw;
-}
-
-a {
-    font-size: 0.95em;
-    line-height: 0px;
-}
+#profile-links button {padding: 0;display: block;margin: 3vh 5vw;}
 
 #profile-changes {
     position: relative;
     border-bottom: 1px solid white;
 }
+#profile-changes button {padding: 0;display: block;margin: 3vh 5vw;}
 
 #social-links {
     box-sizing: border-box;
@@ -228,11 +214,12 @@ main {
 .btn-secondary {
     background-color: #333;
     border-radius: 0;
+    font-size: 0.9em;
 }
 
 .active {
     z-index: 1;
-    font-size: 1.5em;
+    font-size: 1.4em;
 }
 
 #update-case-wrapper {
@@ -285,7 +272,6 @@ main {
     display: none;
     width: 76vw;
     padding: 3vw;
-    padding-top: 1vw;
     border: 1px solid #CCC;
     max-height: 25vh;
     overflow-y: auto;
