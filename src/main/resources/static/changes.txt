@@ -85,6 +85,7 @@ Some Error page - Access Denied and Internal Server Error
         If you click My Cases before Case Assign TimeoOut is Over - pointerEvents are a problem
         Active Tab Must be Called at click of My Cases
         Logout - onclick of button not text-link
+    ShorctCuts - Raise a Case
     Perform Styling Run through
 
 Matters at Hand - Call

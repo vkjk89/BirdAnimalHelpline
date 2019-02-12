@@ -242,63 +242,31 @@ main {
     background-color: rgb(248,248,248);
     box-shadow: 00px 00px 40px #999;
 }
-
-#heading-raise-a-case, #heading-my-cases, #heading-user-data-change-approvals, #heading-case-details, #top-nav-search-heading, #heading-top-nav-case-details {
-    position: relative;
-    display: block;
+/*----------------HEADING-STATUS-BAR------------*/
+#heading-status_bar {
     box-sizing: border-box;
-    padding: 1vw;
-    height: 6vh;
     background-color: #333;
-    color: white;
-    width: 75vw;
+    height: 6vh;
+    padding-top: 1vh;
+    padding-left: 1vw;
 }
-
-#heading-my-cases, #heading-user-data-change-approvals, #heading-case-details, #top-nav-search-heading, #heading-top-nav-case-details {
-    display: none;
-}
-
-#top-nav-search-heading, #heading-top-nav-case-details {
-    z-index: 1001;
-    position: absolute;
-    top: 0vh;
-}
-
-#rac-heading, #heading-my-cases span:first-child, #heading-user-data-change-approvals span:first-child, #heading-case-details span:first-child, #top-nav-search-heading span:first-child, #heading-top-nav-case-details span:first-child {
+#heading-status_bar div {display: inline;}
+#heading-text {
     position: relative;
     box-sizing: border-box;
     color: white;
     font-size: 1.2em;
-    letter-spacing: 0.75px;
-    top: -0.75vh;
 }
-#top-nav-search-heading span:first-child {
-    font-size: 1.1em;
-    font-weight: 400;
-}
-
-#heading-case-details span:nth-child(2), #heading-case-details span:nth-child(3), #heading-top-nav-case-details span:nth-child(2), #heading-top-nav-case-details span:nth-child(3), #top-nav-search-close-button, #top-nav-search-user-profile-back-button{
+#back-close-btn-wrapper {
     position: relative;
-    box-sizing: border-box;
-    font-weight: 700;
-    font-size: 1.5em;
     float: right;
-    transform: rotate(180deg);
-    top: -0.75vh;
-    cursor: pointer;
+    margin-right: 1vw;
 }
-#heading-case-details span:nth-child(2), #heading-top-nav-case-details span:nth-child(2) {
-    font-size: 2em;
-    font-weight: 700;
-    top: -1.5vh;
+#close-button, #back-button {
+    color: white;
+    font-size: 1.4em;
     margin-left: 0.5vw;
-}
-#top-nav-search-close-button {
-    height: 6vh;
-}
-#top-nav-search-user-profile-back-button{
-    margin: 0vw 0.75vw;
-    top: -0.55vh;
+    cursor: pointer;
 }
 
 #raise-a-case-content, #my-cases-content, #user-data-change-approvals-content, #case-details, #top-nav-case-details, #top-nav-search-results, #user-profile {
@@ -311,12 +279,6 @@ main {
     margin-bottom: 3vh;
     margin-right: 1.75vw;
     background-color: rgb(248,248,248);
-}
-
-#heading-case-details {
-    position: absolute;
-    top: 0vh;
-    z-index: 101;
 }
 
 #case-details, #top-nav-case-details {

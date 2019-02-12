@@ -54,8 +54,8 @@ function case_details(data) {
     console.log(data);
     document.getElementById('my-cases-content').style.display = "none";
     document.getElementById('case-details').style.display = "block";
-    document.getElementById('heading-my-cases').style.display = "none";
-    document.getElementById('heading-case-details').style.display = "block";
+    //document.getElementById('heading-my-cases').style.display = "none";
+    //document.getElementById('heading-case-details').style.display = "block";
     document.getElementById('case-details-form').style.display = "flex";
     document.getElementById('action-center').style.display = "block";
     //document.getElementById('case-details-form').style.opacity = "";
@@ -98,10 +98,10 @@ function raise_a_case() {
     document.getElementById('raise-a-case-content').style.display = "block";
     document.getElementById('my-cases-content').style.display = "none";
     document.getElementById('user-data-change-approvals-content').style.display = "none";
-    document.getElementById('heading-raise-a-case').style.display = "block";
-    document.getElementById('heading-my-cases').style.display = "none";
-    document.getElementById('heading-user-data-change-approvals').style.display = "none";
-    document.getElementById('top-nav-search-heading').style.display = "none";
+    //document.getElementById('heading-raise-a-case').style.display = "block";
+    //document.getElementById('heading-my-cases').style.display = "none";
+    //document.getElementById('heading-user-data-change-approvals').style.display = "none";
+    //document.getElementById('top-nav-search-heading').style.display = "none";
     document.getElementById('top-nav-search-results').style.display = "none";
     /*document.getElementById('raise-a-case-content').style.opacity = 1;
     document.getElementById('my-cases-content').style.opacity = 1;
@@ -114,12 +114,12 @@ function raise_a_case() {
     document.getElementById("top-nav-search").value = "";
     document.getElementById("user-profile").style.display = "none";
     document.getElementById("case_profile").style.display = "none";
-    document.getElementById("top-nav-search-heading-content").innerHTML = "";
-    document.getElementById('heading-case-details').style.display = "none";
+    //document.getElementById("top-nav-search-heading-content").innerHTML = "";
+    //document.getElementById('heading-case-details').style.display = "none";
     document.getElementById('case-details').style.display = "none";
     document.getElementById("table4").style.display = "none";
     document.getElementById('top-nav-case-details').style.display = "none";
-    document.getElementById('heading-top-nav-case-details').style.display = "none";
+    //document.getElementById('heading-top-nav-case-details').style.display = "none";
     document.getElementById('top-nav-case-details-form').style.display = "none";
 }
 
@@ -140,9 +140,9 @@ function my_cases() {
     document.getElementById('my-cases-content').style.display = "block";
     document.getElementById('search-case-input').value = "";
     document.getElementById('user-data-change-approvals-content').style.display = "none";
-    document.getElementById('heading-raise-a-case').style.display = "none";
-    document.getElementById('heading-my-cases').style.display = "block";
-    document.getElementById('heading-user-data-change-approvals').style.display = "none";
+    //document.getElementById('heading-raise-a-case').style.display = "none";
+    //document.getElementById('heading-my-cases').style.display = "block";
+    //document.getElementById('heading-user-data-change-approvals').style.display = "none";
     $('#tab-header').fadeIn(300);
     showresults();
     document.getElementById("table4").style.display = "none";
@@ -154,19 +154,19 @@ function my_cases() {
     document.getElementById('heading-my-cases').style.opacity = 1;
     document.getElementById('heading-case-details').style.opacity = 1;
     document.getElementById('heading-user-data-change-approvals').style.opacity = 1;*/
-    document.getElementById('top-nav-search-heading').style.display = "none";
+    //document.getElementById('top-nav-search-heading').style.display = "none";
     document.getElementById('top-nav-search-results').style.display = "none";
     document.getElementById("top-nav-search").value = "";
     document.getElementById("user-profile").style.display = "none";
     document.getElementById("case_profile").style.display = "none";
-    document.getElementById("top-nav-search-heading-content").innerHTML = "";
-    document.getElementById('heading-case-details').style.display = "none";
+    //document.getElementById("top-nav-search-heading-content").innerHTML = "";
+    //document.getElementById('heading-case-details').style.display = "none";
     document.getElementById('case-details').style.display = "none";
     document.getElementById('content-assign-case').style.display = "none";
     document.getElementById('content-close-case').style.display = "none";
     document.getElementById('case-details-form').style.pointerEvents = "";
     document.getElementById('top-nav-case-details').style.display = "none";
-    document.getElementById('heading-top-nav-case-details').style.display = "none";
+    //document.getElementById('heading-top-nav-case-details').style.display = "none";
     document.getElementById('top-nav-case-details-form').style.display = "none";
     document.getElementById('active-tab-header').click();
 }
@@ -186,10 +186,10 @@ function user_data_change_approvals() {
     document.getElementById('raise-a-case-content').style.display = "none";
     document.getElementById('my-cases-content').style.display = "none";
     document.getElementById('user-data-change-approvals-content').style.display = "block";
-    document.getElementById('heading-raise-a-case').style.display = "none";
-    document.getElementById('heading-my-cases').style.display = "none";
-    document.getElementById('heading-user-data-change-approvals').style.display = "block";
-    document.getElementById('top-nav-search-heading').style.display = "none";
+    //document.getElementById('heading-raise-a-case').style.display = "none";
+    //document.getElementById('heading-my-cases').style.display = "none";
+    //document.getElementById('heading-user-data-change-approvals').style.display = "block";
+    //document.getElementById('top-nav-search-heading').style.display = "none";
     document.getElementById('top-nav-search-results').style.display = "none";
     /*document.getElementById('raise-a-case-content').style.opacity = 1;
     document.getElementById('my-cases-content').style.opacity = 1;
@@ -202,12 +202,12 @@ function user_data_change_approvals() {
     document.getElementById("top-nav-search").value = "";
     document.getElementById("user-profile").style.display = "none";
     document.getElementById("case_profile").style.display = "none";
-    document.getElementById("top-nav-search-heading-content").innerHTML = "";
-    document.getElementById('heading-case-details').style.display = "none";
+    //document.getElementById("top-nav-search-heading-content").innerHTML = "";
+    //document.getElementById('heading-case-details').style.display = "none";
     document.getElementById('case-details').style.display = "none";
     document.getElementById("table4").style.display = "none";
     document.getElementById('top-nav-case-details').style.display = "none";
-    document.getElementById('heading-top-nav-case-details').style.display = "none";
+    //document.getElementById('heading-top-nav-case-details').style.display = "none";
     document.getElementById('top-nav-case-details-form').style.display = "none";
 }
 
@@ -223,13 +223,13 @@ function search_close_button() {
     document.getElementById('content-assign-case').style.opacity = 1;
     document.getElementById('content-close-case').style.opacity = 1;*/
     document.getElementById("top-nav-search").value = "";
-    document.getElementById('top-nav-search-heading').style.display = "none";
+    //document.getElementById('top-nav-search-heading').style.display = "none";
     document.getElementById('top-nav-search-results').style.display = "none";
     document.getElementById("user-profile").style.display = "none";
     document.getElementById("case_profile").style.display = "none";
-    document.getElementById("top-nav-search-heading-content").innerHTML = "";
+    //document.getElementById("top-nav-search-heading-content").innerHTML = "";
     document.getElementById('top-nav-case-details').style.display = "none";
-    document.getElementById('heading-top-nav-case-details').style.display = "none";
+    //document.getElementById('heading-top-nav-case-details').style.display = "none";
     document.getElementById('top-nav-case-details-form').style.display = "none";
     for (let i = 0; i < page_history.length; i++) {
         if (page_history[i] === "raise_a_case") {
@@ -258,10 +258,10 @@ function search_close_button() {
 
 function top_nav_search_user_profile() {
     document.getElementById("top-nav-search").value = "";
-    document.getElementById("top-nav-search-heading-content").innerHTML = "#Search_Input - #User_Name";
+    //document.getElementById("top-nav-search-heading-content").innerHTML = "#Search_Input - #User_Name";
     document.getElementById("top-nav-search-results").style.display = "none";
     document.getElementById("user-profile").style.display = "block";
-    document.getElementById("top-nav-search-user-profile-back-button").style.display = "block";
+    //document.getElementById("top-nav-search-user-profile-back-button").style.display = "block";
     document.getElementById("user-profile-cases-content").style.display = "none";
     page_history.unshift("top_nav_search_user_profile");
     $("#user-profile-about-content").fadeIn();
@@ -270,16 +270,16 @@ function top_nav_search_user_profile() {
 
 function top_nav_search_case_details(identifier1) {
     document.getElementById('top-nav-case-details').style.display = "block";
-    document.getElementById('heading-top-nav-case-details').style.display = "block";
+    //document.getElementById('heading-top-nav-case-details').style.display = "block";
     document.getElementById('top-nav-case-details-form').style.display = "flex";
     document.getElementById("top-nav-search").value = "";
-    document.getElementById('top-nav-search-heading').style.display = "none";
+    //document.getElementById('top-nav-search-heading').style.display = "none";
     document.getElementById('top-nav-search-results').style.display = "none";
     document.getElementById("user-profile").style.display = "none";
     document.getElementById("case_profile").style.display = "none";
     if (identifier1 === "vol_cases_details") {
         page_history.unshift("vol_cases_details");
-        document.getElementById('heading-top-nav-case-details').innerHTML = "#Vol_Name";
+        //document.getElementById('heading-top-nav-case-details').innerHTML = "#Vol_Name";
     } else if (identifier1 === "search_cases_details") {
         page_history.unshift("search_cases_details");
     }
@@ -335,20 +335,20 @@ function other_reason_close_case() {
 function navigate_back() {
     if (page_history[0] === "myc_case_details") {
         document.getElementById('my-cases-content').style.display = "block";
-        document.getElementById('heading-my-cases').style.display = "block";
+        //document.getElementById('heading-my-cases').style.display = "block";
         document.getElementById('case-details').style.display = "none";
-        document.getElementById('heading-case-details').style.display = "none";
+        //document.getElementById('heading-case-details').style.display = "none";
         document.getElementById('case-details-form').style.display = "none";
         page_history.unshift("my_cases");
     } else if (page_history[0] === "action_centre_assign_case" || page_history[0] === "action_centre_close_case") {
         document.getElementById('case-details-form').style.display = "flex";
         document.getElementById('content-assign-case').style.display = "none";
         document.getElementById('content-close-case').style.display = "none";
-        document.getElementById('myc-case-details-heading-animation').innerHTML = "Case Details";
+        //document.getElementById('myc-case-details-heading-animation').innerHTML = "Case Details";
         document.getElementById('assign-case-success').style.display = "none";
         $("#content-assign-case").css("pointerEvents", "");
         document.getElementById('case-details-form').style.opacity = "1";
-        document.getElementById('top-nav-search-heading').style.display = "none";
+        //document.getElementById('top-nav-search-heading').style.display = "none";
         document.getElementById('top-nav-search-results').style.display = "none";
         document.getElementById('case-details-form').style.pointerEvents = "";
         page_history.unshift("myc_case_details");
@@ -363,12 +363,12 @@ function navigate_back() {
             document.getElementById("user-profile").style.display = "block";
         }*/
     else if (page_history[0] === "top_nav_search_user_profile") {
-        document.getElementById('top-nav-search-heading').style.display = "block";
+        //document.getElementById('top-nav-search-heading').style.display = "block";
         document.getElementById('top-nav-search-results').style.display = "block";
-        document.getElementById("top-nav-search-heading-content").innerHTML = "Searching results for - #Search_Input";
+        //document.getElementById("top-nav-search-heading-content").innerHTML = "Searching results for - #Search_Input";
         document.getElementById("user-profile").style.display = "none";
         document.getElementById("case_profile").style.display = "none";
-        document.getElementById("top-nav-search-user-profile-back-button").style.display = "none";
+        //document.getElementById("top-nav-search-user-profile-back-button").style.display = "none";
         page_history.unshift("top_nav_search_results");
     }/* else if (page_history[0] === "vol_cases_details") {
         document.getElementById('top-nav-case-details').style.display = "none";
@@ -388,9 +388,9 @@ function navigate_back() {
     }*/
     else if (page_history[0] === "vol_cases_details") {
         document.getElementById('top-nav-case-details').style.display = "none";
-        document.getElementById('heading-top-nav-case-details').style.display = "none";
+        //document.getElementById('heading-top-nav-case-details').style.display = "none";
         document.getElementById('top-nav-case-details-form').style.display = "none";
-        document.getElementById('top-nav-search-heading').style.display = "block";
+        //document.getElementById('top-nav-search-heading').style.display = "block";
         document.getElementById("user-profile").style.display = "block";
         page_history.unshift("top_nav_search_user_profile");
     } else if (page_history[0] === "search_cases_details") {
@@ -692,12 +692,12 @@ $(document).ready(function () {
         }
     };*/
 //---------Close-Button-------------------------------------------------------
-    document.getElementById("top-nav-search-close-button").onclick = function () {
+    document.getElementById("close-button").onclick = function () {
         search_close_button();
     };
 
 
-    document.getElementById("top-nav-search-user-profile-back-button").onclick = function () {
+    document.getElementById("back-button").onclick = function () {
         navigate_back();
     };
 
@@ -868,11 +868,11 @@ $(document).ready(function () {
 
 
 //------Case-Details-----------------------------------------------------------------------------------------------------------
-    document.getElementById("myc-case-details-heading-close-button").onclick = function () {
+    document.getElementById("close-button").onclick = function () {
         document.getElementById('case-details').style.display = "none";
-        document.getElementById('heading-case-details').style.display = "none";
+        //document.getElementById('heading-case-details').style.display = "none";
         document.getElementById('case-details-form').style.display = "none";
-        document.getElementById('top-nav-search-heading').style.display = "none";
+        //document.getElementById('top-nav-search-heading').style.display = "none";
         document.getElementById('top-nav-search-results').style.display = "none";
         //document.getElementById('case-details').style.opacity = 1;
         document.getElementById('content-assign-case').style.display = "none";
@@ -882,23 +882,16 @@ $(document).ready(function () {
         page_history.unshift("my_cases");
     };
 
-    document.getElementById("top-nav-case-details-heading-close-button").onclick = function () {
+    document.getElementById("close-button").onclick = function () {
         search_close_button();
-    };
-
-    document.getElementById('top-nav-case-details-heading-back-button').onclick = function () {
-        navigate_back();
-    };
-    document.getElementById('myc-case-details-heading-back-button').onclick = function () {
-        navigate_back();
     };
 //--Action-Centre--------------------------------------------------------------------------------
     document.getElementById('action-center-assign-case').onclick = function () {
         document.getElementById('case-details-form').style.display = "none";
         //document.getElementById('content-assign-case').style.opacity = "1";
         document.getElementById('content-assign-case').style.display = "block";
-        document.getElementById('myc-case-details-heading-animation').innerHTML = "#CaseID - Assign Case";
-        document.getElementById("myc-case-details-heading-close-button").style.display = "block";
+        //document.getElementById('myc-case-details-heading-animation').innerHTML = "#CaseID - Assign Case";
+        //document.getElementById("myc-case-details-heading-close-button").style.display = "block";
         page_history.unshift("action_centre_assign_case");
         getVolInfo();
     };
@@ -909,8 +902,8 @@ $(document).ready(function () {
         document.getElementById('case-details-form').style.pointerEvents = "none";
         document.getElementById('content-close-case').style.opacity = "1";
         document.getElementById('content-close-case').style.display = "block";
-        document.getElementById('myc-case-details-heading-animation').innerHTML = "#CaseID - Close Case";
-        document.getElementById("myc-case-details-heading-close-button").style.display = "block";
+        //document.getElementById('myc-case-details-heading-animation').innerHTML = "#CaseID - Close Case";
+        //document.getElementById("myc-case-details-heading-close-button").style.display = "block";
         other_reason_close_case();
         page_history.unshift("action_centre_close_case");
     };
@@ -998,14 +991,14 @@ $(document).ready(function () {
 //------Keyboard-Shortcuts--------------------------------------------------------------------------------------------------
     document.onkeyup = function (e) {
         if (e.ctrlKey && e.altKey && e.which == 83) {
-            if (document.getElementById('heading-raise-a-case').style.display == "" || document.getElementById('heading-raise-a-case').style.display == "block") {
+            /*if (document.getElementById('heading-raise-a-case').style.display == "" || document.getElementById('heading-raise-a-case').style.display == "block") {
                 document.getElementById('submit-raise-case').click();
-            } else alert("Ctrl + Alt + S is shortcut for Raising a Case");
+            } else alert("Ctrl + Alt + S is shortcut for Raising a Case");*/
         }
         if (e.ctrlKey && e.altKey && e.which == 82) {
-            if (document.getElementById('heading-raise-a-case').style.display == "" || document.getElementById('heading-raise-a-case').style.display == "block") {
+            /*if (document.getElementById('heading-raise-a-case').style.display == "" || document.getElementById('heading-raise-a-case').style.display == "block") {
                 document.getElementById('reset-raise-case').click();
-            } else alert("Ctrl + Alt + R is shortcut for Resetting all fields of a Case");
+            } else alert("Ctrl + Alt + R is shortcut for Resetting all fields of a Case");*/
         }
     };
 
@@ -1251,10 +1244,10 @@ $(document).ready(function () {
                 document.getElementById('heading-my-cases').style.opacity = 0;
                 document.getElementById('heading-case-details').style.opacity = 0;
                 document.getElementById('heading-user-data-change-approvals').style.opacity = 0;*/
-                document.getElementById('top-nav-search-heading').style.display = "block";
+                //document.getElementById('top-nav-search-heading').style.display = "block";
                 document.getElementById("user-profile").style.display = "none";
-                document.getElementById("top-nav-search-user-profile-back-button").style.display = "none";
-                document.getElementById('heading-top-nav-case-details').style.display = "block";
+                //document.getElementById("top-nav-search-user-profile-back-button").style.display = "none";
+                //document.getElementById('heading-top-nav-case-details').style.display = "block";
                 if (ui.item.userDetails) {
                     var ud = ui.item.userDetails;
                     var html = aVol + ud.userName + bVol + cVol + ud.userId + dVol;
@@ -1327,7 +1320,7 @@ $(document).ready(function () {
                     $('#top-nav-location-pincode-case-details').val(cd.locationPincode);
 
                     top_nav_search_case_details("search_cases_details");
-                    document.getElementById("top-nav-case-details-heading-back-button").style.display = "none";
+                    //document.getElementById("top-nav-case-details-heading-back-button").style.display = "none";
                     if (cd.active) {
                         //$('#action-center').show();
                         $('#action-center-assign-case').show();
