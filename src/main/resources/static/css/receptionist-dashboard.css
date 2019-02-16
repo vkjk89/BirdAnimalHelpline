@@ -252,27 +252,27 @@ main {
     box-shadow: 00px 00px 40px #999;
 }
 /*----------------HEADING-STATUS-BAR------------*/
-#heading-status_bar {
+#heading-status_bar, #top-nav-heading-status_bar {
     box-sizing: border-box;
     background-color: #333;
     height: 6vh;
     padding-top: 1vh;
     padding-left: 1vw;
-}
-#heading-text, #back-button, #close-button {display: inline;}
-#heading-text {
+}#top-nav-heading-status_bar {display: none;}
+#heading-text, #top-nav-heading-text,  #back-button, #close-button, #top-nav-back-button, #top-nav-close-button {display: inline;}
+#heading-text, #top-nav-heading-text {
     position: relative;
     box-sizing: border-box;
     color: white;
     font-size: 1.2em;
 }
-#back-close-btn-wrapper {
+#back-close-btn-wrapper, #top-nav-back-close-btn-wrapper {
     display: none;
     position: relative;
     float: right;
     margin-right: 1vw;
 }
-#close-button, #back-button {
+#close-button, #back-button, #top-nav-close-button, #top-nav-back-button {
     color: white;
     font-size: 1.4em;
     margin-left: 0.5vw;

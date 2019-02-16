@@ -11,6 +11,7 @@
 --------------*/
 
 var page_history = ["raise_a_case"];
+var search_list_user = [];
 var hide_tooltip_timeOut;
 var my_cases_tab_headers;
 
@@ -74,7 +75,7 @@ var responseHandler = function (event) {
                 else {
                     $("#" + tableId + "_tab_content_loading").css("display","none");
                     $('#' + tableId).empty();
-                    if(tableId !== "table11" || tableId !== "table22" || tableId !== "table33"){
+                    if(tableId === "table1" || tableId === "table2" || tableId === "table3"){
                         console.log(tableId);
                         $.each(data, function (i, item) {
                             caseIdVsInfoMap[item.caseId] = item;
@@ -97,33 +98,47 @@ var responseHandler = function (event) {
         );
 };
 
+function layer_change(layer){
+    console.log(layer);
+    if (layer === "layer1"){
+        $('#heading-status_bar').css("display","block");
+        $('#top-nav-heading-status_bar').css("display","none");
+    }
+    else if(layer === "layer2"){
+        $('#heading-status_bar').css("display","none");
+        $('#top-nav-heading-status_bar').css("display","block");
+    }
+}
+
 function top_nav_user_cases(data) {
-    document.getElementById('action-center').style.display = "none";
+    $("#user-profile").hide();
+    $("#top-nav-case-details").show();
+    $("#top-nav-case-details-form").css("display","flex");
     page_history.unshift("vol_cases_details");
     currentCaseId = $(data).find(".case-id").text();
     var caseInfo = caseIdVsInfoMap[currentCaseId];
-    $('#case-id-case-details').val(caseInfo.caseId);
-    $('#animal-type-case-details').val(caseInfo.typeAnimal);
-    $('#animal-name-case-details').val(caseInfo.animalName);
-    $('#condition-case-details').val(caseInfo.animalCondition);
-    $('#contact-name-case-details').val(caseInfo.contactName);
-    $('#nine-one-case-details').val(caseInfo.contactPrefix);
-    $('#contact-number-case-details').val(caseInfo.contactNumber);
-    $('#location-case-details').val(caseInfo.location);
-    $('#location-landmark-case-details').val(caseInfo.locationLandMark);
-    $('#location-pincode-case-details').val(caseInfo.locationPincode);
-    $("#heading-text").html("Case Details / Case No.: " + caseInfo.caseId);
-    $("#back-close-btn-wrapper").css("display","inline");
-    $("#myc_case_details_loading_screen").css("display","block");
-    caseImageRetriever(caseInfo.caseId,"case-photos-case-details");
-    if(!caseInfo.active) {
+    $('#top-nav-case-id-case-details').val(caseInfo.caseId);
+    $('#top-nav-animal-type-case-details').val(caseInfo.typeAnimal);
+    $('#top-nav-animal-name-case-details').val(caseInfo.animalName);
+    $('#top-nav-condition-case-details').val(caseInfo.animalCondition);
+    $('#top-nav-contact-name-case-details').val(caseInfo.contactName);
+    $('#top-nav-nine-one-case-details').val(caseInfo.contactPrefix);
+    $('#top-nav-contact-number-case-details').val(caseInfo.contactNumber);
+    $('#top-nav-location-case-details').val(caseInfo.location);
+    $('#top-nav-location-landmark-case-details').val(caseInfo.locationLandMark);
+    $('#top-nav-location-pincode-case-details').val(caseInfo.locationPincode);
+    layer_change('layer2');
+    $("#top-nav-heading-text").html("Case Details | Case No.: " + caseInfo.caseId);
+    $("#top-nav-back-close-btn-wrapper").css("display","inline");
+    caseImageRetriever(caseInfo.caseId,"top-nav-case-photos-case-details");
+    /*if(!caseInfo.active) {
         $('#action-center-assign-case').hide();
         $('#action-center-close-case').hide();
     }
     else {
         $('#action-center-assign-case').show();
         $('#action-center-close-case').show();
-    }
+    }*/
     if(caseInfo.birdOrAnimal === "Animal"){
         $("#header-form-left-side-case-details").html("Animal Information");
         $("#animal-bird-type-case-details").html("Animal Type: ");
@@ -153,7 +168,8 @@ function case_details(data) {
     $('#location-case-details').val(caseInfo.location);
     $('#location-landmark-case-details').val(caseInfo.locationLandMark);
     $('#location-pincode-case-details').val(caseInfo.locationPincode);
-    $("#heading-text").html("Case Details / Case No.: " + caseInfo.caseId);
+    layer_change('layer1');
+    $("#heading-text").html("Case Details | Case No.: " + caseInfo.caseId);
     $("#back-close-btn-wrapper").css("display","inline");
     $("#myc_case_details_loading_screen").css("display","block");
     caseImageRetriever(caseInfo.caseId,"case-photos-case-details");
@@ -177,7 +193,9 @@ function case_details(data) {
 }
 
 function raise_a_case() {
+    layer_change('layer1');
     $('#heading-text').html("Raise a Case");
+    $("#back-close-btn-wrapper").css("display","none");
     document.getElementById('rac-body').classList.add('right-side-card-rotate');
     document.getElementById('rac-body').style.borderBottom = "5px solid #007AEA";
     document.getElementById('myc-body').style.borderBottom = "none";
@@ -197,11 +215,12 @@ function raise_a_case() {
     document.getElementById("table4").style.display = "none";
     document.getElementById('top-nav-case-details').style.display = "none";
     document.getElementById('top-nav-case-details-form').style.display = "none";
-    $("#back-close-btn-wrapper").css("display","none");
 }
 
 function my_cases() {
+    layer_change('layer1');
     $('#heading-text').html("My Cases");
+    $("#back-close-btn-wrapper").css("display","none");
     document.getElementById('myc-body').classList.add('right-side-card-rotate');
     document.getElementById('myc-body').style.borderBottom = "5px solid #007AEA";
     document.getElementById('rac-body').style.borderBottom = "none";
@@ -229,11 +248,12 @@ function my_cases() {
     document.getElementById('case-details-form').style.pointerEvents = "";
     document.getElementById('top-nav-case-details').style.display = "none";
     document.getElementById('top-nav-case-details-form').style.display = "none";
-    $("#back-close-btn-wrapper").css("display","none");
 }
 
 function user_data_change_approvals() {
+    layer_change('layer1');
     $('#heading-text').html("User Data Change Approvals");
+    $("#back-close-btn-wrapper").css("display","none");
     document.getElementById('usdca-body').classList.add('right-side-card-rotate');
     document.getElementById('usdca-body').style.borderBottom = "5px solid #007AEA";
     document.getElementById('rac-body').style.borderBottom = "none";
@@ -253,7 +273,6 @@ function user_data_change_approvals() {
     document.getElementById("table4").style.display = "none";
     document.getElementById('top-nav-case-details').style.display = "none";
     document.getElementById('top-nav-case-details-form').style.display = "none";
-    $("#back-close-btn-wrapper").css("display","none");
 }
 
 function top_nav_search_user_profile() {
@@ -272,7 +291,9 @@ function top_nav_search_case_details(identifier1) {
     document.getElementById('top-nav-search-results').style.display = "none";
     document.getElementById("user-profile").style.display = "none";
     document.getElementById("case_profile").style.display = "none";
-    $("#back-close-btn-wrapper").css("display","block");
+    layer_change("layer2");
+    $("#top-nav-heading-text").html("Case Details | Case No.: " + " ");
+    $("#top-nav-back-close-btn-wrapper").css("display","block");
     if (identifier1 === "vol_cases_details") {
         page_history.unshift("vol_cases_details");
     } else if (identifier1 === "search_cases_details") {
@@ -340,6 +361,7 @@ function navigate_back() {
         document.getElementById('my-cases-content').style.display = "block";
         document.getElementById('case-details').style.display = "none";
         document.getElementById('case-details-form').style.display = "none";
+        layer_change('layer1');
         $("#heading-text").html("My Cases");
         $("#back-close-btn-wrapper").css("display","none");
         var loading = "<img src='/img/loading-simple.gif' id='myc_case_details_loading_screen' alt='Loading'>";
@@ -360,7 +382,8 @@ function navigate_back() {
         document.getElementById('top-nav-search-results').style.display = "none";
         document.getElementById('case-details-form').style.pointerEvents = "";
         var caseId = $("#case-id-case-details").val();
-        $("#heading-text").html("Case Details / Case No.: " + caseId);
+        layer_change('layer1');
+        $("#heading-text").html("Case Details | Case No.: " + caseId);
         page_history.unshift("myc_case_details");
     }/*
     else if (page_history[0] === "user_cases_case_details"){
@@ -398,6 +421,8 @@ function navigate_back() {
         document.getElementById('top-nav-case-details').style.display = "none";
         document.getElementById('top-nav-case-details-form').style.display = "none";
         document.getElementById("user-profile").style.display = "block";
+        layer_change('layer2');
+        $("#top-nav-heading-text").html("Search User | " + search_list_user[0]);
         page_history.unshift("top_nav_search_user_profile");
     } else if (page_history[0] === "search_cases_details") {
         close();
@@ -405,8 +430,8 @@ function navigate_back() {
 }
 
 function close(){
-    if(page_history[0] === "search_cases_details" || page_history[0] === "top_nav_search_user_profile"){
-        //document.getElementById('top-nav-search-results').style.display = "none";
+    if(page_history[0] === "search_cases_details" || page_history[0] === "top_nav_search_user_profile" || page_history[0] === "vol_cases_details"){
+        document.getElementById('top-nav-search-results').style.display = "none";
         document.getElementById("user-profile").style.display = "none";
         document.getElementById("case_profile").style.display = "none";
         document.getElementById('top-nav-case-details').style.display = "none";
@@ -419,6 +444,11 @@ function close(){
             } else if (page_history[i] === "my_cases") {
                 my_cases();
                 page_history.unshift("my_cases");
+                break;
+            } else if (page_history[i] === "myc_case_details"){
+                $("#case-details").css("display","block");
+                $("#case-details-form").css("display","flex");
+                page_history.unshift("myc_case_details");
                 break;
             } else if (page_history[i] === "user_data_change_approvals") {
                 user_data_change_approvals();
@@ -434,81 +464,11 @@ function close(){
                 break;
             }
         }
+    layer_change("layer1");
     } else if(page_history[0] === "myc_case_details" || page_history[0] === "action_centre_assign_case" || page_history[0] === "action_centre_close_case"){
         my_cases();
     }
 }
-
-/*
-function submit_raise_a_case(event){
-    //event.preventDefault();
-    if(document.getElementById("contact-number").checkValidity()){
-        let formData = {
-            'typeAnimal': $('select[name=animal-type]').val(),
-            'animalName': $('input[name=animal-name]').val(),
-            'animalCondition': $('input[name=condition]').val(),
-            'contactName': $('input[name=contact-name]').val(),
-            'contactNumber': $('input[name=contact-number]').val(),
-            'location': $('textarea[name=location]').val(),
-            'locationPincode': $('input[name=location-pincode]').val(),
-            'locationLandMark': $('input[name=location-landmark]').val(),
-            'contactPrefix': $('select[name=nine-one]').val(),
-            'birdOrAnimal': $('input[name=bird-or-animal]').val(),
-            'newBirdAnimal': $('input[name=add-bird-animal]').val()
-        };
-
-        $.ajax({
-            type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
-            url: '/addNewCase', // the url where we want to POST
-            data: formData, // our data object
-            //dataType: 'json' // what type of data do we expect back from the server
-            //encode: true
-        })
-        // using the done promise callback
-            .done(function (data) {
-                console.log(data);
-                if (data && data == 'error') {
-                    $('#error').text(data);
-                    return;
-                } else if($('#case-photos').val()) {
-                    var form = $('#raise-a-case-form')[0];
-                    var formData = new FormData(form);
-                    formData.append("case_id", data);
-                    $.ajax({
-                        url: 'casePicUpload',
-                        type: 'POST',
-                        data: formData,
-                        enctype: 'multipart/form-data',
-                        processData: false,  // tell jQuery not to process the data
-                        contentType: false,  // tell jQuery not to set contentType
-                        success: function (data) {
-                            console.log(data);
-                        },
-                        error: function (e) {
-                            console.log(e);
-                        }
-                    });
-                }
-
-                if(data) {
-                    $('#raise-a-case-form')[0].reset();
-                    document.getElementById("reset-raise-case").click();
-                    $('#case-id').val(data);
-                    $('#raise-a-case-success').fadeIn();
-                    $('#raise-a-case-content').css("pointerEvents","none");
-                    currentCaseId = data;
-                    setTimeout(function () {
-                        $('#case-id').val('');
-                        $('#raise-a-case-success').fadeOut();
-                        $('#raise-a-case-content').css("pointerEvents","all");
-                    }, 1500);
-                }
-                else {
-                    $('#raise-a-case-error').fadeIn();
-                }
-            });
-    } else document.getElementById("validationMessage").innerHTML += document.getElementById("contact-number").validationMessage;
-}*/
 
 function show_vol_tooltip(event) {
     clearTimeout(hide_tooltip_timeOut);
@@ -720,12 +680,12 @@ $(document).ready(function () {
         }
     };*/
 //---------Close-Button---Back-Button---------------------------------------------------
-    document.getElementById("close-button").onclick = function () {
+    $('#close-button, #top-nav-close-button').click(function(){
         close();
-    };
-    document.getElementById("back-button").onclick = function () {
+    });
+    $('#back-button, #top-nav-back-button').click(function(){
         navigate_back();
-    };
+    });
 
 //------Search-Active-Recent-Closed-Tabs-JS--------------------------------------
     document.getElementById('user-profile-active-tab-header').onclick = function user_profile_search_results_active() {
@@ -880,7 +840,8 @@ $(document).ready(function () {
         document.getElementById('content-assign-case').style.display = "block";
         page_history.unshift("action_centre_assign_case");
         var caseId = $("#case-id-case-details").val();
-        $("#heading-text").html("Case Details / Case No.: " + caseId + " / Assign Case");
+        layer_change('layer1');
+        $("#heading-text").html("Case Details | Case No.: " + caseId + " | Assign Case");
         getVolInfo();
     };
 
@@ -891,14 +852,16 @@ $(document).ready(function () {
         document.getElementById('content-close-case').style.opacity = "1";
         document.getElementById('content-close-case').style.display = "block";
         var caseId = $("#case-id-case-details").val();
-        $("#heading-text").html("Case Details / Case No.: " + caseId + " / Close Case");
+        layer_change('layer1');
+        $("#heading-text").html("Case Details | Case No.: " + caseId + " | Close Case");
         other_reason_close_case();
         page_history.unshift("action_centre_close_case");
     };
 
     document.getElementById('action-center-history-case').onclick = function () {
         var caseId = $("#case-id-case-details").val();
-        $("#heading-text").html("Case Details / Case No.: " + caseId + " / History");
+        //layer_change('layer1');
+        //$("#heading-text").html("Case Details | Case No.: " + caseId + " | History");
         var formData = {
             'caseId': currentCaseId
         };
@@ -1227,7 +1190,6 @@ $(document).ready(function () {
                     var ud = ui.item.userDetails;
                     var html = aVol + ud.userName + bVol + cVol + ud.userId + dVol;
                     userIdVsInfoMap[ud.userId] = ud;
-                    //$('#raise-a-case-content').hide();
                     $('#user-profile-left-side').find('img').attr('src', "data:image/png;base64," + ud.userImage.image);
                     $('#user-profile-middle-side_user_name').text(ud.userName);
                     $('#user-profile-middle-side_user_role').text(ud.role);
@@ -1267,10 +1229,11 @@ $(document).ready(function () {
                     $('#user-profile-recent-tab-header').click('/recentCases:table22:'+ud.userId, responseHandler);
                     $('#user-profile-closed-tab-header').click('/closedCases:table33:'+ud.userId, responseHandler);
 
+                    search_list_user.unshift(ud.userName);
                     top_nav_search_user_profile();
-                    $("#heading-text").html("Search User / " + ud.userName);
-                    $("#back-close-btn-wrapper").css("display","block");
-                    //$('#search_vol').html(html);
+                    layer_change('layer2');
+                    $("#top-nav-heading-text").html("Search User | " + ud.userName);
+                    $("#top-nav-back-close-btn-wrapper").css("display","inline");
                 } else if (ui.item.caseDetails) {
                     cd = ui.item.caseDetails;
                     caseIdVsInfoMap[cd.caseId] = cd;
@@ -1286,7 +1249,9 @@ $(document).ready(function () {
                     $('#top-nav-contact-number-case-details').val(cd.contactNumber);
                     $('#top-nav-location-landmark-case-details').val(cd.locationLandMark);
                     $('#top-nav-location-pincode-case-details').val(cd.locationPincode);
-                    $("#heading-text").html("Case Details / Case No.: " + cd.caseId);
+                    layer_change('layer2');
+                    $("#top-nav-heading-text").html("Case Details | Case No.: " + cd.caseId);
+                    $("#top-nav-back-close-btn-wrapper").css("display","inline");
                     if(cd.birdOrAnimal === "Animal"){
                         $("#header-top-nav-form-left-side-case-details").html("Animal Information");
                         $("#top-nav-animal-bird-type-case-details").html("Animal Type: ");
@@ -1297,6 +1262,8 @@ $(document).ready(function () {
                         $("#top-nav-animal-bird-name-case-details").html("Bird Name: ");       
                     }
                     top_nav_search_case_details("search_cases_details");
+                    layer_change('layer2');
+                    $('#top-nav-heading-text').html('Case Details | Case No.: ' + cd.caseId);
                     /*if (cd.active) {
                         //$('#action-center').show();
                         $('#action-center-assign-case').show();
