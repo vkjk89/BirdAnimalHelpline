@@ -86,15 +86,15 @@ function section_accept_case(slideIndex, item) {
             $(".animal-type").html("Animal Type: " + data1[slideIndex].typeAnimal);
             if(data1[slideIndex].animalName) $(".animal-name").html("Animal Name: " + data1[slideIndex].animalName);
             else $(".animal-name").html("Animal Name: ");
-            if(data1[slideIndex].animalCondition) $(".animalCondition").html(data1[slideIndex].animalCondition);
-            else $(".animalCondition").html("");
+            if(data1[slideIndex].animalCondition) $(".case-condition").html(data1[slideIndex].animalCondition);
+            else $(".animalCondition").html("Unspecified");
         }else {
             $(".bird-animal-info-header").html("Bird Information");
             $(".animal-type").html("Bird Type: " + data1[slideIndex].typeAnimal);
             if(data1[slideIndex].animalName) $(".animal-name").html("Bird Name: " + data1[slideIndex].animalName);
             else $(".animal-name").html("Bird Name: ");
-            if(data1[slideIndex].animalCondition) $(".animalCondition").html(data1[slideIndex].animalCondition);
-            else $(".animalCondition").html("");
+            if(data1[slideIndex].animalCondition) $(".case-condition").html(data1[slideIndex].animalCondition);
+            else $(".animalCondition").html("Unspecified");
         }
         $(".contact-name").html(data1[slideIndex].contactName);
         $(".contact-number").html("<a href='tel:" +  data1[slideIndex].contactPrefix  + data1[slideIndex].contactNumber + "'>" + data1[slideIndex].contactPrefix + "-" + data1[slideIndex].contactNumber + "</a>");
@@ -110,6 +110,8 @@ var currentSlide = 0;
 var slideIndex = 0;
 
 function slide_accept_case(slide_direction) {
+    $("#case-photos").empty();
+    if($("#vol_dashboard_accept_case_photos").length === 0) $("#case-photos").append('<img src="/img/loading-simple.gif" id="vol_dashboard_accept_case_photos" alt="Loading">');
     slideIndex = currentSlide + slide_direction;
     $(".case-details").fadeOut(200);
     $(".case-details").fadeIn(200);
@@ -122,7 +124,6 @@ function slide_accept_case(slide_direction) {
         slideIndex = 0;
         section_accept_case(slideIndex);
     }
-    $("#case-photos").empty();
     caseImageRetriever(data1[slideIndex].caseId, "case-photos");
     currentSlide = slideIndex;
 }
@@ -289,6 +290,11 @@ $(document).ready(function () {
         if (data.length == 3) {
             userId = data[2];
         }
+        $('#' + tableId).empty();
+        if($("#results-content-active_loading").length === 0) $("#results-content-active").append('<img src="/img/loading-simple.gif" id="results-content-active_loading" alt="Loading">');
+        if($("#results-content-recent_loading").length === 0) $("#results-content-recent").append('<img src="/img/loading-simple.gif" id="results-content-recent_loading" alt="Loading">');
+        if($("#results-content-closed_loading").length === 0) $("#results-content-closed").append('<img src="/img/loading-simple.gif" id="results-content-closed_loading" alt="Loading">');
+        $("#case-headers").css("display","none");
         var formData = {
             'userId': userId,
         };
@@ -300,20 +306,23 @@ $(document).ready(function () {
             dataType: 'json' // what type of data do we expect back from the server
             //encode: true
         }).done(function (data) {
-                // log data to the console so we can see
-                //console.log(data);
                 var cc = [];
-                $.each(data, function (i, item) {
-                    var htm = aCase + item.caseId + bCase + cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + fCase;
-                    //var htm = aCase + item.caseId + b + item.userNameCurrent + "(" + item.userRoleCurrent + ")" + c + item.creationDateStr + d + item.typeAnimal + e + item.animalName + f;
-                    //var htm = aCase + item.caseId + bCase + cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + fCase;
-                    cc.push(htm);
-                });
-                $('#' + tableId).html(cc.join(""));
-                if (cc.length === 0) {
-                    //DISPLAY-No-Cases-on-Tab-that-has-none
-                    $('#' + tableId).html("<li style='z-index: 1000000001;background-color: rgb(250,250,250)'>No Cases</li>");
+                if(data.length === 0 || data === undefined || data === null){
+                    $('#' + tableId).empty();
+                    $('#' + tableId).html("<li style='z-index: 10001;background-color: rgb(250,250,250)'>No Cases</li>");
                 }
+                else {
+                    $("#case-headers").css("display","flex");
+                    $("#" + tableId + "_loading").css("display","none");
+                    $('#' + tableId).empty();
+                    $.each(data, function (i, item) {
+                        var htm = aCase + item.caseId + bCase + cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + fCase;
+                        cc.push(htm);
+                    });
+                    $('#' + tableId).html(cc.join(""));
+                }
+                $("#loading-screen").css("display","none");
+                $("#top-nav, #page-heading, #dynamic-image-enlarge, #my-cases, #accept-case-wrapper, #bottom-action-bar").css("display","block");
             }
         );
     };

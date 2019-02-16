@@ -16,6 +16,9 @@
 <body>
 
 <!--<body th:object="${user}">-->
+<div id="loading-screen">
+    <img src="/static/img/loading-3.gif" th:src="@{/img/loading-3-mobile.gif}" alt="Loading..." id="loading-main">
+</div>
 <nav id="top-nav">
     <span id="profile-options">&#9776;</span>
     <button id="user-dp" type="button">
@@ -119,26 +122,28 @@
             <div class="case-details">
                 <div class="box1">
                     <span>Case ID: </span>
-                    <span class="case-id">#Case_ID</span>
+                    <span class="case-id"></span>
                 </div>
                 <div class="box2">
-                    <div class="bird-animal-info-header">#Bird/Animal_Information</div>
-                    <div class="animal-type">#Bird/Animal_Type: #Pigeon</div>
-                    <div class="animal-name">#Bird/Animal_Name: #Rufus</div>
+                    <div class="bird-animal-info-header"></div>
+                    <div class="animal-type"></div>
+                    <div class="animal-name"></div>
                     <span>Condition: </span>
-                    <span class="case-condition">#Case_Condtion</span>
+                    <span class="case-condition"></span>
                     <div>Photos Uploaded: </div>
-                    <div id="case-photos" class="case-photos"></div>
+                    <div id="case-photos" class="case-photos">
+                        <img src="/img/loading-simple.gif" id="vol_dashboard_accept_case_photos" alt="Loading_case_photos">
+                    </div>
                 </div>
                 <div class="box3">
                     <div class="contact-info-header">Contact Information</div>
                     <div class="contact-info">
                         <span>Name: </span>
-                        <span class="contact-name">#Contact_Name</span><br>
+                        <span class="contact-name"></span><br>
                         <span>Contact Number: </span>
-                        <span class="contact-number">#Contact_Number</span>
+                        <span class="contact-number"></span>
                         <div>Location: </div>
-                        <div class="contact-location">#Location</div>
+                        <div class="contact-location"></div>
                     </div>
                     <div class="accept-decline">
                         <button type="submit" class = "decline" onclick="accept_decline(false)">I'm helpless</button>

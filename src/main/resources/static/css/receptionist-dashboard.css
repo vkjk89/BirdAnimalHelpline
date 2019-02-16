@@ -31,7 +31,7 @@ button {
     background-color: #f4f4f4;
 }
 
-input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { 
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -56,28 +56,43 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 
 /*-----------Custom-Alert-Box-----------*/
 #custom-alert-box {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    padding: 50% auto;
-    z-index: 100001;
+    box-sizing: border-box;
     display: none;
+    position: absolute;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100001;
+    max-width: 50vw;
 }
 
 #alert-box-heading {
-    background-color: #333;
+    box-sizing: border-box;
+    background-color: rgb(255, 193, 7);
     color: white;
-    width: 20vw;
-    margin: 20vw 0vw 0vw 40vw;
-    padding: 3vw;
+    padding: 1vw 0;
+}
+
+#alert-box-span-heading {padding-left: 2vw;}
+
+#alert-box-close-btn {
+    float: right;
+    font-size: 3em;
+    margin-top: -3vh;
+    margin-right: 1vw;
+    margin-left: 2vw;
+    cursor: pointer;
 }
 
 #alert-box-content {
+    box-sizing: border-box;
     background-color: rgb(248,248,248);
+    border: 1px solid #CCC;
     color: #333;
-    width: 20vw;
-    margin: 0vw 0vw 0vw 40vw;
-    padding: 3vw;
+    border-top: none;
+    padding: 2vw;
 }
 
 /*----------------------------TOP-NAV-------------------------*/
@@ -210,7 +225,6 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     color: white;
     letter-spacing: 2px;
 }
-
 #dropdown-menu button a:hover {
     color: #007AEA;
     font-weight: 500;
@@ -655,7 +669,7 @@ hr {
     overflow: auto;
 }
 
-#case-photos-case-details img {
+#case-photos-case-details img, #top-nav-case-photos-case-details img {
     max-width: 6vw;
     cursor: crosshair;
     height: auto;
@@ -1090,11 +1104,6 @@ input[type="search"]:focus::placeholder {
     font-weight: 400;
     width: 68.5vw;
 }
-/*
-.active-header {
-    font-size: 200px;
-    font-weight: 900;
-}*/
 
 .content-table {
     width: 69.5vw;
@@ -1163,6 +1172,7 @@ input[type="search"]:focus::placeholder {
 
 .row {
     display: flex;
+    text-align: start;
     font-size: 1.05em;
     letter-spacing: 0.5px;
     padding-top: 1.5vh;
@@ -1178,6 +1188,10 @@ input[type="search"]:focus::placeholder {
 
 .row:first-child {
     border-top: none;
+}
+
+#table11_tab_content_loading, #table22_tab_content_loading, #table33_tab_content_loading, #table1_tab_content_loading, #table2_tab_content_loading, #table3_tab_content_loading {
+    max-width: 10vw;
 }
 
 .search-li-case-details-onclick div {

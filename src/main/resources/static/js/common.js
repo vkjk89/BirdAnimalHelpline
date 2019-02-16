@@ -1,5 +1,4 @@
 var caseImageRetriever = function (caseId, imageDiv) {
-    $('.' + imageDiv).html("");
     var formData = {
         'caseId': caseId
     };
@@ -10,8 +9,12 @@ var caseImageRetriever = function (caseId, imageDiv) {
     })
         .done(function (data) {
                 if(data === null || data === undefined || data.length === 0){
+                    $('#' + imageDiv).empty();
                     $('#' + imageDiv).html("No Photos");
                 } else {
+                    if(imageDiv === "case-photos-case-details") $("#myc_case_details_loading_screen").css("display","none");
+                    else if(imageDiv === "case-photos") $("#vol_dashboard_accept_case_photos").css("display","none");
+                    else if (imageDiv === "top-nav-contact-name-case-details") $("#top-nav-case-details-loading-screen").css("display","none");
                     $('#' + imageDiv).empty();
                     $.each(data, function (i, item) {
                         var image = document.createElement("img");

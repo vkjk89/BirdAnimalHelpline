@@ -27,10 +27,17 @@ var dCase = '</div> <div class="animal-type">';
 var eCase = '</div> <div class="case-name">';
 var fCase = '</div> </div>';
 
+var a_1Case = '<div class ="row row1" onclick="top_nav_user_cases(this)"> <div class="sr-no"><li></li></div> <div class="case-id">';
+var b_1Case = '</div> <div class="case-status">';
+var b1_1Case = '</div> <div class="accepted">';
+var c_1Case = '</div> <div class="date">';
+var d_1Case = '</div> <div class="animal-type">';
+var e_1Case = '</div> <div class="case-name">';
+var f_1Case = '</div> </div>';
+
 var caseIdVsInfoMap = {};
 var userIdVsInfoMap = {};
 var currentCaseId = -1;
-
 var responseHandler = function (event) {
     var data = event.data.split(":");
     var url = data[0];
@@ -39,6 +46,14 @@ var responseHandler = function (event) {
     if (data.length == 3) {
         userId = data[2];
     }
+    //-----Loading-Screens---------------------------------------------
+    if($("#table11_tab_content_loading").length === 0) $("#table11").append("<img src='/img/loading-simple.gif' id='table11_tab_content_loading' alt='Loading'>");
+    if($("#table22_tab_content_loading").length === 0) $("#table22").append("<img src='/img/loading-simple.gif' id='table22_tab_content_loading' alt='Loading'>");
+    if($("#table33_tab_content_loading").length === 0) $("#table33").append("<img src='/img/loading-simple.gif' id='table33_tab_content_loading' alt='Loading'>");
+    if($("#table1_tab_content_loading").length === 0) $("#table1").append("<img src='/img/loading-simple.gif' id='table1_tab_content_loading' alt='Loading'>");
+    if($("#table2_tab_content_loading").length === 0) $("#table2").append("<img src='/img/loading-simple.gif' id='table2_tab_content_loading' alt='Loading'>");
+    if($("#table3_tab_content_loading").length === 0) $("#table3").append("<img src='/img/loading-simple.gif' id='table3_tab_content_loading' alt='Loading'>");
+    //----------------------------------------------------------------
     var formData = {
         'userId': userId,
     };
@@ -50,17 +65,75 @@ var responseHandler = function (event) {
         dataType: 'json'
     })
         .done(function (data) {
+            console.log(data);
                 var cc = [];
-                $.each(data, function (i, item) {
-                    caseIdVsInfoMap[item.caseId] = item;
-                    var htm = aCase + item.caseId + bCase + (item.userNameCurrent ? item.userNameCurrent+"("+item.userRoleCurrent+")" : "Closed" )  + b1Case+(item.isAck == 1 ? "Yes" : item.isAck == -1 ? "No" : "Pending" ) +cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + item.animalName + fCase;
-                    cc.push(htm);
-                });
-
-                $('#' + tableId).html(cc.join(""));
+                if(data === null || data === undefined || data.length === 0){
+                    $('#' + tableId).empty();
+                    $('#' + tableId).html("<div style='margin-top:5vh;color:#007AEA;font-size:1.5em;'>No Cases</div>");
+                }
+                else {
+                    $("#" + tableId + "_tab_content_loading").css("display","none");
+                    $('#' + tableId).empty();
+                    if(tableId !== "table11" || tableId !== "table22" || tableId !== "table33"){
+                        console.log(tableId);
+                        $.each(data, function (i, item) {
+                            caseIdVsInfoMap[item.caseId] = item;
+                            var htm = aCase + item.caseId + bCase + (item.userNameCurrent ? item.userNameCurrent+"("+item.userRoleCurrent+")" : "Closed" )  + b1Case+(item.isAck == 1 ? "Yes" : item.isAck == -1 ? "No" : "Pending" ) +cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + item.animalName + fCase;
+                            cc.push(htm);
+                            $('#' + tableId).html(cc.join(""));
+                        });
+                    }
+                    else {
+                        console.log(tableId);
+                        $.each(data, function (i, item) {
+                            caseIdVsInfoMap[item.caseId] = item;
+                            var htm = a_1Case + item.caseId + b_1Case + (item.userNameCurrent ? item.userNameCurrent+"("+item.userRoleCurrent+")" : "Closed" )  + b1_1Case+(item.isAck == 1 ? "Yes" : item.isAck == -1 ? "No" : "Pending" ) +c_1Case + item.creationDateStr + d_1Case + item.typeAnimal + e_1Case + item.animalName + f_1Case;
+                            cc.push(htm);
+                            $('#' + tableId).html(cc.join(""));
+                        });
+                    }
+                }
             }
         );
 };
+
+function top_nav_user_cases(data) {
+    document.getElementById('action-center').style.display = "none";
+    page_history.unshift("vol_cases_details");
+    currentCaseId = $(data).find(".case-id").text();
+    var caseInfo = caseIdVsInfoMap[currentCaseId];
+    $('#case-id-case-details').val(caseInfo.caseId);
+    $('#animal-type-case-details').val(caseInfo.typeAnimal);
+    $('#animal-name-case-details').val(caseInfo.animalName);
+    $('#condition-case-details').val(caseInfo.animalCondition);
+    $('#contact-name-case-details').val(caseInfo.contactName);
+    $('#nine-one-case-details').val(caseInfo.contactPrefix);
+    $('#contact-number-case-details').val(caseInfo.contactNumber);
+    $('#location-case-details').val(caseInfo.location);
+    $('#location-landmark-case-details').val(caseInfo.locationLandMark);
+    $('#location-pincode-case-details').val(caseInfo.locationPincode);
+    $("#heading-text").html("Case Details / Case No.: " + caseInfo.caseId);
+    $("#back-close-btn-wrapper").css("display","inline");
+    $("#myc_case_details_loading_screen").css("display","block");
+    caseImageRetriever(caseInfo.caseId,"case-photos-case-details");
+    if(!caseInfo.active) {
+        $('#action-center-assign-case').hide();
+        $('#action-center-close-case').hide();
+    }
+    else {
+        $('#action-center-assign-case').show();
+        $('#action-center-close-case').show();
+    }
+    if(caseInfo.birdOrAnimal === "Animal"){
+        $("#header-form-left-side-case-details").html("Animal Information");
+        $("#animal-bird-type-case-details").html("Animal Type: ");
+        $("#animal-bird-name-case-details").html("Animal Name: ");
+    } else {
+        $("#header-form-left-side-case-details").html("Bird Information");
+        $("#animal-bird-type-case-details").html("Bird Type: ");
+        $("#animal-bird-name-case-details").html("Bird Name: ");
+    }
+}
 
 function case_details(data) {
     document.getElementById('my-cases-content').style.display = "none";
@@ -82,6 +155,7 @@ function case_details(data) {
     $('#location-pincode-case-details').val(caseInfo.locationPincode);
     $("#heading-text").html("Case Details / Case No.: " + caseInfo.caseId);
     $("#back-close-btn-wrapper").css("display","inline");
+    $("#myc_case_details_loading_screen").css("display","block");
     caseImageRetriever(caseInfo.caseId,"case-photos-case-details");
     if(!caseInfo.active) {
         $('#action-center-assign-case').hide();
@@ -103,13 +177,11 @@ function case_details(data) {
 }
 
 function raise_a_case() {
+    $('#heading-text').html("Raise a Case");
     document.getElementById('rac-body').classList.add('right-side-card-rotate');
     document.getElementById('rac-body').style.borderBottom = "5px solid #007AEA";
-    document.getElementById('myc-body').classList.remove('right-side-card-rotate');
     document.getElementById('myc-body').style.borderBottom = "none";
-    document.getElementById('usdca-body').classList.remove('right-side-card-rotate');
     document.getElementById('usdca-body').style.borderBottom = "none";
-    $('#heading-text').html("Raise a Case");
     setTimeout(function () {
         document.getElementById('rac-body').classList.remove('right-side-card-rotate');
     }, 600);
@@ -129,16 +201,15 @@ function raise_a_case() {
 }
 
 function my_cases() {
+    $('#heading-text').html("My Cases");
     document.getElementById('myc-body').classList.add('right-side-card-rotate');
     document.getElementById('myc-body').style.borderBottom = "5px solid #007AEA";
-    document.getElementById('rac-body').classList.remove('right-side-card-rotate');
     document.getElementById('rac-body').style.borderBottom = "none";
-    document.getElementById('usdca-body').classList.remove('right-side-card-rotate');
     document.getElementById('usdca-body').style.borderBottom = "none";
-    $('#heading-text').html("My Cases");
     setTimeout(function () {
         document.getElementById('myc-body').classList.remove('right-side-card-rotate');
     }, 600);
+    page_history.unshift("my_cases");
     $("#active-tab-header").click();
     document.getElementById('active-tab-header').classList.add('active-header');
     document.getElementById('raise-a-case-content').style.display = "none";
@@ -158,21 +229,18 @@ function my_cases() {
     document.getElementById('case-details-form').style.pointerEvents = "";
     document.getElementById('top-nav-case-details').style.display = "none";
     document.getElementById('top-nav-case-details-form').style.display = "none";
-    page_history.unshift("my_cases");
     $("#back-close-btn-wrapper").css("display","none");
 }
 
 function user_data_change_approvals() {
+    $('#heading-text').html("User Data Change Approvals");
     document.getElementById('usdca-body').classList.add('right-side-card-rotate');
     document.getElementById('usdca-body').style.borderBottom = "5px solid #007AEA";
-    document.getElementById('rac-body').classList.remove('right-side-card-rotate');
     document.getElementById('rac-body').style.borderBottom = "none";
-    document.getElementById('myc-body').classList.remove('right-side-card-rotate');
     document.getElementById('myc-body').style.borderBottom = "none";
     setTimeout(function () {
         document.getElementById('usdca-body').classList.remove('right-side-card-rotate');
     }, 600);
-    $('#heading-text').html("User Data Change Approvals");
     page_history.unshift("user_data_change_approvals");
     document.getElementById('raise-a-case-content').style.display = "none";
     document.getElementById('my-cases-content').style.display = "none";
@@ -274,6 +342,13 @@ function navigate_back() {
         document.getElementById('case-details-form').style.display = "none";
         $("#heading-text").html("My Cases");
         $("#back-close-btn-wrapper").css("display","none");
+        var loading = "<img src='/img/loading-simple.gif' id='myc_case_details_loading_screen' alt='Loading'>";
+        $("#case-photos-case-details").empty();
+        $("#case-photos-case-details").append(loading);
+        $("#myc_case_details_loading_screen").css("display","block");
+        if($("#active-tab-header").hasClass("tab-header-animation")) $("#active-tab-header").click();
+        if($("#recent-tab-header").hasClass("tab-header-animation")) $("#recent-tab-header").click();
+        if($("#closed-tab-header").hasClass("tab-header-animation")) $("#closed-tab-header").click();
         page_history.unshift("my_cases");
     } else if (page_history[0] === "action_centre_assign_case" || page_history[0] === "action_centre_close_case") {
         document.getElementById('case-details-form').style.display = "flex";
@@ -516,13 +591,13 @@ function assignCaseReq(caseId, userId) {
 
         .done(function (data) {
             $('#assign-case-success').text("Success! Case " + caseId + " assigned successfully to " + userId);
-            setTimeout(function(){
-                $('#assign-case-success').fadeIn(200);
-                $("#content-assign-case").css("pointerEvents", "none");}
-            ,300)            
+            $('#assign-case-success').fadeIn(200);
+            $("#content-assign-case").css("pointerEvents", "none");
+            document.getElementById("card-right-side").style.pointerEvents = "none";
             setTimeout(function () {
                 navigate_back();
                 navigate_back();
+                document.getElementById("card-right-side").style.pointerEvents = "";
             }, 1200);
         });
 }
@@ -1076,8 +1151,8 @@ $(document).ready(function () {
             if (ui.item) {
                 caseDetails = ui.item.caseDetails;
                 caseIdVsInfoMap[caseDetails.caseId] = caseDetails;
-                var htm = aCase + caseDetails.caseId + bCase + (caseDetails.userNameCurrent ? caseDetails.userNameCurrent+"("+caseDetails.userRoleCurrent+")" : "Closed" )  + b1Case+(item.isAck == 1 ? "Yes" : item.isAck == -1 ? "No" : "Pending" ) + cCase + caseDetails.creationDateStr + dCase + caseDetails.typeAnimal + eCase + caseDetails.animalName + fCase;
-                $(container).append(htm);
+                var htm = aCase + caseDetails.caseId + bCase + (caseDetails.userNameCurrent ? caseDetails.userNameCurrent+"("+caseDetails.userRoleCurrent+")" : "Closed" )  + b1Case+(ui.item.isAck == 1 ? "Yes" : ui.item.isAck == -1 ? "No" : "Pending" ) + cCase + caseDetails.creationDateStr + dCase + caseDetails.typeAnimal + eCase + caseDetails.animalName + fCase;
+                $(container).prepend(htm);
                 $('#table4').html(container);
                 $("#search-case-input").autocomplete("close");
                 $("#search-case-input").val('');
@@ -1204,8 +1279,8 @@ $(document).ready(function () {
                     $('#top-nav-animal-type-case-details').val(cd.typeAnimal);
                     $('#top-nav-animal-name-case-details').val(cd.animalName);
                     $('#top-nav-condition-case-details').val(cd.animalCondition);
-                    //for photos
-                    //$('#top-nav-case-photos-case-details').val(cd.animalCondition);
+                    $('#top-nav-case-photos-case-details').append('<img src="/img/loading-simple.gif" class="top_nav_case_details_loading_screen" alt="Loading">');
+                    caseImageRetriever(cd.caseId,"top-nav-case-photos-case-details");
                     $('#top-nav-contact-name-case-details').val(cd.contactName);
                     $('#top-nav-nine-one-case-details').val(cd.contactPrefix);
                     $('#top-nav-contact-number-case-details').val(cd.contactNumber);

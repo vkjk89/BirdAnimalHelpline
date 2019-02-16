@@ -12,55 +12,7 @@ Some Error page - Access Denied and Internal Server Error
     Approval History
     Case Flow History
     Assign Case - Tick on assign
-
-30/12/2018
-    //Reg-Step2 - Input Formatting
-    //Step3 - Loading Bar - ProfilePic
-    //Preview Page Formatting
-    //Preview - remove ProfilePic
-    //Preview - Hide/Show Pass
-    //Preview - 3rd Edit Button Missing
-    //Preview - Seq Question ID (Vimal)
-    //Profile Completion Page - Admin, Recpt Cancel (Vimal)
-    //ProfileCompletion - Input Formatting
-    //Recpt. dashboard  - bird Type - Dropdown - Filter List (V)
-    //My Cases - DateFOrmat(V)
-    //Raise a case - Bird/Animal Type - Seperation (V)
-    //My Cases - Search Case (V)
-    //Case Details - +91 Missing (V)
-    //Top Nav - DP - Img not Icon
-    //Success - Assign Case Timing Increase
-    //ProfileCompletion - Pincode Page Formatting
-    //Top 5 and nearest - Styling
-    //Success - Assign Case Navigation to Search Case
-    //Assign and Close Case dont go on clicking my cases
-    //Vol - Tooltip Fix
-    //Preview Page Password (V)
-    //Pincode Page Backend (V)
-
-01/01/2018
-    //Table4 - My Cases
-    //Assign_case Issue
-    //Top_nav_major Nav Issue
-    //CheckBox Issue - Doesn't Retain State
-    //Close-Case Other Issue
-    //Remove button - Pincode
-
-06/01/2018
-    //Assign-Page : Loading
-    //Step3 - Server Error
-    //+91 - 022 - Change Validation
-    //Assign Case - Search and Alignment
-    //Tarun - Date - My Cases -> Creation Date
-    //Raise-Caise Dropdown - Bird/Animal Type
-    //Close Case
-    //Refresh on Home instead Refresh
-
-07/01/2018
-    //Assign Case - pointerEvents
-    //CloseCase - Default on Select
-    //My Cases - Default Active Tab
-    //Ability to add Bird/Animal - Raise a Case
+    HTML Component Usability
 
 11/01/2018
     //All Warnings/Errors    
@@ -75,17 +27,30 @@ Some Error page - Access Denied and Internal Server Error
     //My Cases - Search
     //Success - Assign - msg
     //Recpt Dashboard - My Cases - Add Column - Case accepted/not
-    //Top Case select - Top Vol - Break
+    //ShorctCuts - Raise a Case
     //Top - Nav -User - Back Button
+    //Top Case select - Top Vol - Break
+    Recpt Dashboard - //If you click My Cases before Case Assign TimeoOut is Over - pointerEvents are a problem
+        //Logout - onclick of button not text-link
+    //Loading Screen - Case Photos - Case Details - Vol and Recpt. Dashboard
+    //Loading Screen - All Tabs - Vol Dashboard
+    //Loading Screen - All Tabs
+    Action Center - Top Nav - Recpt dashboard
     Mobile No. - Error - Styling - Mobile Number Validation - Explicit - or Try to remove msg
     Loading Screen - Assign Case (First Screen)
-    Action Center - Top Nav - Recpt dashboard
-    Recpt Dashboard - Once Raise Case Clicked - Focus - Radio Button - Choose Bird/Animal
-        If you click My Cases before Case Assign TimeoOut is Over - pointerEvents are a problem
-        Active Tab Must be Called at click of My Cases
-        //Logout - onclick of button not text-link
-    //ShorctCuts - Raise a Case
+    //Update Cases - onclick - Active
+    Loading Screen - MyCases - Vol-MyCases
+    Case Details - Vol Dashboard - Header - #Bird/Animal etc.
+    onclick - accept case - refresh - active/recent/closed
+    Update Case - Assigning Part - Vol Name
+        Description field not working
+    Case Details - Vol Dashboard - Location - Not working
+    Reverse Date
+    !important Case Assigned to another vol - rejected by the peroson assigned to !important
     Perform Styling Run through
 
-Matters at Hand - Call
-    Search Functionality - Assign Case and My Cases
+Call - Saturday - Before Assummed production Sunday
+    Back Button - ProfileCompletion
+    Accept/Reject - Case-Vol-Dashboard - Admin
+    Close Case Validation - Vol-Dashboard
+    Action Center - Recpt. Dashboard

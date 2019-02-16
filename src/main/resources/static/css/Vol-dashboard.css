@@ -31,6 +31,24 @@ main {
     border-radius: 10px;
     background-color: #CCC;
 }
+#loading-screen{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    z-index: 100000001;
+    text-align: center;
+}
+#loading-main {
+    margin-top: 20vh;
+    width: 50vw;
+}
+#results-content-active_loading, #results-content-recent_loading, #results-content-closed_loading{
+    position: absolute;
+    top: 0;
+    left: 35%;
+    width: 20vw;
+}
 
 /*----------------------------TOP-NAV-BAR---------------------------*/
 #top-nav {
@@ -311,17 +329,33 @@ h1 {
     position: absolute;
     width: 80vw;
 }
-
 .case-headers span {
     font-weight: 700;
     font-size: 1em;
 }
+.case-headers span:first-child, .case-id-my-cases {
+    box-sizing: border-box;
+    width: 20vw;
+}
+.case-id-my-cases {padding-left: 5vw;}
+.case-headers span:nth-child(2), .date-my-cases {
+    box-sizing: border-box;
+    padding-left: 2vw;
+    width: 25vw;
+}
+.case-headers span:nth-child(3), .animal-type-my-cases {
+    box-sizing: border-box;
+    width: 30vw;
+}.animal-type-my-cases {padding-left: 3vw;}
 
 #results-content-recent, #results-content-closed {
     display: none;
 }
-
+#results-content-active div, #results-content-recent div, #results-content-closed div {
+    text-align: start;
+}
 .results-content-animation {
+    text-align: center;
     animation: results-content-animation 0.3s forwards 0s ease-in-out;
 }
 
@@ -579,10 +613,10 @@ h1 {
 #dynamic_image_enlarge {
     display: none;
     position: fixed;
-    top: 15vh;
+    top: 10vh;
     left: 0vw;
     width: 100vw;
-    height: 70vh;
+    max-height: 90vh;
     background-color: #B9CCC4;
     z-index: 1001;
     text-align: center;
@@ -590,8 +624,8 @@ h1 {
 
 #dynamic_image_enlarge img {
     margin-top: 10vh;
-    width: 70vw;
-    margin-bottom: 10vh;
+    max-width: 70vw;
+    margin-bottom: 3vh;
     background-color: rgba(255,255,255,0.6);
 }
 
@@ -601,6 +635,7 @@ h1 {
     padding: 2vh 3vh;
     float: right;
     letter-spacing: 1px;
+    margin-bottom: 3vh;
     margin-right: 10vw;
 }
 
@@ -661,3 +696,4 @@ h1 {
         margin-top: 29vh;
     }
 }
+#top-nav, #side-nav, #page-heading, #dynamic-image-enlarge, #my-cases, #accept-case-wrapper, #bottom-action-bar {display:none;}

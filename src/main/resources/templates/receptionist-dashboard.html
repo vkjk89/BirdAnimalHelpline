@@ -15,8 +15,8 @@
     <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css}">
     <link href="/static/css/receptionist-dashboard.css" rel="stylesheet" th:href="@{/css/receptionist-dashboard.css}">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
-    <!--<script src="/static/js/jquery-3.3.1.min.js"></script>-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>-->
+    <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <script src="/static/js/jquery.ui.widget.js" th:src="@{/js/jquery.ui.widget.js}"></script>
     <script src="/static/js/jquery-ui.min.js" th:src="@{/js/jquery-ui.min.js}"></script>
     <script src="/static/js/common.js" th:src="@{/js/common.js}"></script>
@@ -34,12 +34,10 @@
 <div id="loading-gif"></div>
 <div id="custom-alert-box">
     <div id="alert-box-heading">
-        Heading
+        <span id="alert-box-span-heading">!Error</span>
+        <span id="alert-box-close-btn">&times;</span>
     </div>
-    <div id="alert-box-content">
-        Content
-        <!---Implement-Margin-Based-On-ClientHeight-JS--->
-    </div>
+    <div id="alert-box-content">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente adipisci mollitia unde neque veniam totam sunt aliquid a, blanditiis repellat nulla architecto est. Quos veniam saepe atque, quidem ipsum voluptatibus. Perspiciatis amet sit unde. At odit perspiciatis adipisci autem esse, nobis magnam ab, maxime voluptatem cum itaque nam ad tempora vitae dolorem praesentium consequatur neque quasi veritatis repudiandae voluptatum? Voluptates incidunt nisi ratione error, commodi voluptatem alias minima officia nulla eligendi quia, cum ea quasi. Maiores laborum, impedit cupiditate a totam iste corrupti numquam fugiat beatae quaerat temporibus ex praesentium labore minus nulla cum veritatis reprehenderit eligendi eius ratione? Corporis?</div>
 </div>
 
 <nav class="no-select" id="top-nav">
@@ -184,16 +182,7 @@
                                 <div class="case-name-div">Animal/Bird Name</div>
                             </div>
                             <div id="table11" class="my-cases-result" style="width: 68.5vw;">
-                                <div  class="row row11" onclick="top_nav_search_case_details('vol_cases_details');">
-                                    <div class="sr-no">
-                                        <li></li>
-                                    </div>
-                                    <div class="case-id">#Case_ID</div>
-                                    <div class="case-status">#Case_Status</div>
-                                    <div class="date">#Date</div>
-                                    <div class="animal-type">#Animal/Bird_Type</div>
-                                    <div class="case-name">#Animal/Bird_Name</div>
-                                </div>
+                                <img src="/img/loading-simple.gif" id="table11_tab_content_loading" alt="Loading">
                             </div>
                         </div>
                     </div>
@@ -209,16 +198,7 @@
                                 <div class="case-name-div">Animal/Bird Name</div>
                             </div>
                             <div id="table22" class="my-cases-result" style="width: 68.5vw;">
-                                <div class="row row11" onclick="top_nav_search_case_details('vol_cases_details');">
-                                    <div class="sr-no">
-                                        <li></li>
-                                    </div>
-                                    <div class="case-id">#Case_ID</div>
-                                    <div class="case-status">#Case_Status</div>
-                                    <div class="date">#Date</div>
-                                    <div class="animal-type">#Animal/Bird_Type</div>
-                                    <div class="case-name">#Animal/Bird_Name</div>
-                                </div>
+                                <img src="/img/loading-simple.gif" id="table22_tab_content_loading" alt="Loading">
                             </div>
                         </div>
                     </div>
@@ -234,16 +214,7 @@
                                 <div class="case-name-div">Animal/Bird Name</div>
                             </div>
                             <div id="table33" class="my-cases-result" style="width: 68.5vw;">
-                                <div class="row row11" onclick="top_nav_search_case_details('vol_cases_details');">
-                                    <div class="sr-no">
-                                        <li></li>
-                                    </div>
-                                    <div class="case-id">#Case_ID</div>
-                                    <div class="case-status">#Case_Status</div>
-                                    <div class="date">#Date</div>
-                                    <div class="animal-type">#Animal/Bird_Type</div>
-                                    <div class="case-name">#Animal/Bird_Name</div>
-                                </div>
+                                <img src="/img/loading-simple.gif" id="table33_tab_content_loading" alt="Loading">
                             </div>
                         </div>
                     </div>
@@ -267,7 +238,9 @@
                         <label for="top-nav-condition-case-details">Condition: </label>
                         <input disabled id="top-nav-condition-case-details" type="text">
                         <label for="top-nav-case-photos-case-details">Photos Uploaded</label>
-                        <div id="top-nav-case-photos-case-details"></div>
+                        <div id="top-nav-case-photos-case-details">
+                            <img src="/img/loading-simple.gif" class="top_nav_case_details_loading_screen" alt="Loading">
+                        </div>
                     </div>
                 </div>
                 <div id="top-nav-form-right-side-case-details">
@@ -300,7 +273,7 @@
         </div>
     </div>
 
-    <!-------------------------------- RAISE-A-CASE-------------------------------------------->
+    <!--------------------------------RAISE-A-CASE-------------------------------------------->
     <div id="raise-a-case-content">
         <form action="" id="raise-a-case-form" autocomplete="off">
             <div id="form-left-side">
@@ -349,7 +322,7 @@
                     <label for="location">Location: </label>
                     <textarea cols="50" id="location" maxlength="250" name="location" rows="2" tabindex="8" placeholder="(Mandatory)" required></textarea>
                     <input autocomplete="off" id="location-landmark" name="location-landmark" placeholder="Landmark - Eg: Near Regal Cinema (Recommended)" tabindex="9" type="text">
-                    <input autocomplete="off" id="location-pincode" max="500000" min="400000" name="location-pincode" placeholder="Pincode - Eg: 400002 (Mandatory)" required tabindex="10" title="Please enter valid pincode" type="number">
+                    <input autocomplete="off" id="location-pincode" max="500000" min="400000" name="location-pincode" placeholder="Pincode (Mandatory)" required tabindex="10" title="Please enter valid pincode" type="number">
                 </div>
             </div>
             <div style = "background: forestgreen">
@@ -366,7 +339,7 @@
         </div>
     </div>
 
-    <!-------------------------------- MY-CASES-------------------------------------------->
+    <!------------------------------------MY-CASES-------------------------------------------->
     <div id="my-cases-content">
         <input id="search-case-input" name="search-case-input" placeholder="Search my Cases..." type="search">
         <div id="tab-header">
@@ -384,57 +357,25 @@
                 <div class="animal-type-div">Animal/Bird Type</div>
                 <div class="case-name-div">Animal/Bird Name</div>
             </div>
-            <div class="my-cases-result1" id="table4" style="width: 68.5vw;display: none; margin-top: 6vh;">
-                <div class="row4" onclick="case_details()">
-                    <div class="sr-no">
-                        <li></li>
-                    </div>
-                    <div class="case-id">#Case_ID</div>
-                    <div class="case-status">#Case_Status</div>
-                    <div class="date">#Date</div>
-                    <div class="animal-type">#Animal/Bird_Type</div>
-                    <div class="case-name">#Animal/Bird_Name</div>
-                </div>
-            </div>
+            <div class="my-cases-result1" id="table4" style="width: 68.5vw;display: none; margin-top: 6vh;"></div>
             <div id="active-tab-content">
                 <div class="content-table" id="active-content-table">
-                    <div class="my-cases-result" id="table1" style="width: 68.5vw;">
-                        <div class="row row-my-cases-active" onclick="case_details();">
-                            <div class="sr-no"><li></li></div>
-                            <div class="case-id">#Case_ID</div>
-                            <div class="case-status">#Case_Status</div>
-                            <div class="date">#Date</div>
-                            <div class="animal-type">#Animal/Bird_Type</div>
-                            <div class="case-name">#Animal/Bird_Name</div>
-                        </div>
+                    <div class="my-cases-result" id="table1" style="width: 68.5vw;text-align: center;">
+                        <img src="/img/loading-simple.gif" id="table1_tab_content_loading" alt="Loading">
                     </div>
                 </div>
             </div>
             <div id="recent-tab-content">
                 <div class="content-table" id="recent-content-table">
-                    <div class="my-cases-result" id="table2" style="width: 68.5vw;">
-                        <div class="row row-my-cases-recent" onclick="case_details();">
-                            <div class="sr-no"><li></li></div>
-                            <div class="case-id">#Case_ID</div>
-                            <div class="case-status">#Case_Status</div>
-                            <div class="date">#Date</div>
-                            <div class="animal-type">#Animal/Bird_Type</div>
-                            <div class="case-name">#Animal/Bird_Name</div>
-                        </div>
+                    <div class="my-cases-result" id="table2" style="width: 68.5vw;text-align: center;">
+                        <img src="/img/loading-simple.gif" id="table2_tab_content_loading" alt="Loading">
                     </div>
                 </div>
             </div>
             <div id="closed-tab-content">
                 <div class="content-table" id="closed-content-table">
-                    <div class="my-cases-result" id="table3" style="width: 68.5vw;">
-                        <div class="row row-my-cases-closed" onclick="case_details();">
-                            <div class="sr-no"><li></li></div>
-                            <div class="case-id">#Case_ID</div>
-                            <div class="case-status">#Case_Status</div>
-                            <div class="date">#Date</div>
-                            <div class="animal-type">#Animal/Bird_Type</div>
-                            <div class="case-name">#Animal/Bird_Name</div>
-                        </div>
+                    <div class="my-cases-result" id="table3" style="width: 68.5vw;text-align: center;">
+                        <img src="/img/loading-simple.gif" id="table3_tab_content_loading" alt="Loading">
                     </div>
                 </div>
             </div>
@@ -458,7 +399,9 @@
                     <label for="condition-case-details">Condition: </label>
                     <input disabled id="condition-case-details" type="text">
                     <label for="case-photos-case-details">Photos Uploaded</label>
-                    <div id="case-photos-case-details"></div>
+                    <div id="case-photos-case-details">
+                        <img src="/img/loading-simple.gif" id="myc_case_details_loading_screen" alt="Loading">
+                    </div>
                 </div>
             </div>
             <div id="form-right-side-case-details">
@@ -549,7 +492,7 @@
         </div>
     </div>
 
-    <!-------------------------------- USER-DATA-CHANGE-APPROVALS--------------------------------------->
+    <!--------------------------------USER-DATA-CHANGE-APPROVALS------------------------------>
 
     <div id="dynamic_image_enlarge">
         <div id="photo-enlarge"><img src="/static/img/selected-photo.png" th:src="@{/img/selected-photo.png}"></div>

@@ -54,7 +54,7 @@ $(document).ready(function () {
             });
         //$('#history-dialog').show();
         $("#history-dialog").dialog({
-            width: 100,  height: 300
+            width: 20,  height: 400
         });
     });
     document.getElementById('profile-options').onclick = function openSideNav() {
@@ -65,7 +65,6 @@ $(document).ready(function () {
         $('#action-center-main-div').css("opacity", "0.1");
         $('#action-center-main-history-div').css("opacity", "0.1");
         $('.main').css("pointerEvents", "none");
-        //$('body').css("border-left","3px solid #37404711");
     };
 
     document.getElementById('close-btn').onclick = function closeSideNav() {
