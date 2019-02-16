@@ -225,9 +225,9 @@ public class UserDao {
     public void enableUser(User user) {
         this.jdbcTemplate.update(connection -> {
                     PreparedStatement ps = connection.prepareStatement(
-                            "update user u set enabled =  1 where u.user_name=?");
+                            "update user u set enabled =  1 where u.user_id=?");
 
-                    ps.setString(1, user.getUserName());
+                    ps.setLong(1, user.getUserId());
                     return ps;
                 }
         );
@@ -306,13 +306,14 @@ public class UserDao {
         );
     }
 
-    public List<User> getUserByTerm(String term) {
+    public List<User> getUserByTerm(Long userId, String term) {
         try {
             UserRowMapper rowMapper = new UserRowMapper("BIA");
             Map<String, Object> params = new HashMap<String, Object>();
             params.put("userName", "%" + term + "%");
+            params.put("userId", userId);
             namedParameterJdbcTemplate.query(
-                    userAllWithAddressQ + " where u.user_name like :userName ",
+                    userAllWithAddressQ + " where u.user_name like :userName and u.user_id != :userId ",
                     params, rowMapper
             );
             return new ArrayList<>(rowMapper.map.values());
@@ -405,6 +406,17 @@ public class UserDao {
 
     public boolean isAnimal(String birdAnimal) {
         return listAnimals.contains(birdAnimal);
+    }
+
+    public void disableUser(User user) {
+        this.jdbcTemplate.update(connection -> {
+                    PreparedStatement ps = connection.prepareStatement(
+                            "update user u set enabled =  -1 where u.user_id=?");
+
+                    ps.setLong(1, user.getUserId());
+                    return ps;
+                }
+        );
     }
 
     static class UserRowMapper implements RowMapper<User> {

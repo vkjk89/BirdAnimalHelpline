@@ -6,6 +6,7 @@ import org.birdhelpline.app.model.User;
 import org.birdhelpline.app.service.CaseService;
 import org.birdhelpline.app.service.UserService;
 import org.birdhelpline.app.utils.ResponseStatus;
+import org.birdhelpline.app.utils.Role;
 import org.birdhelpline.app.utils.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,9 +36,20 @@ public class UserController {
 
     @RequestMapping(path = "/enableUser", method = RequestMethod.POST)
     public @ResponseBody
-    String enableUser(@RequestParam("userName") String name) {
-        userService.enableUser(name);
-        return ResponseStatus.SUCCESS.name();
+    String enableUser(@RequestParam("userId") Long userId, @RequestParam("acceptReject") boolean enable, HttpSession session ) {
+        User user = WebUtils.getUser(session);
+        if (user == null) {
+            return ResponseStatus.ERROR.toString();
+        }
+        if(Role.ADMIN.name().equals(user.getRole())) {
+            if(enable) {
+                return userService.enableUser(userId);
+            }
+            else {
+                return userService.disableUser(userId);
+            }
+        }
+        return ResponseStatus.ERROR.name();
     }
 
 
@@ -52,17 +64,25 @@ public class UserController {
 
     @RequestMapping("/getVolListForSearch")
     public @ResponseBody
-    List<User> getUserList(@RequestParam("term") String term) {
+    List<User> getUserList(@RequestParam("term") String term, HttpSession session) {
         logger.info("vkj term : " + term);
-        return userService.getUserList(term.toLowerCase());
+        User user = WebUtils.getUser(session);
+        if (user == null) {
+            return Collections.EMPTY_LIST;
+        }
+        return userService.getUserList(user.getUserId(),term.toLowerCase());
     }
 
     @RequestMapping("/getCaseVolListForSearch")
     public @ResponseBody
-    List<Object> getCaseUserList(@RequestParam("term") String term) {
+    List<Object> getCaseUserList(@RequestParam("term") String term, HttpSession session) {
+        User user = WebUtils.getUser(session);
+        if (user == null) {
+            return Collections.EMPTY_LIST;
+        }
         List<Object> list = new ArrayList<>();
         logger.info("vkj term : " + term);
-        List<User> users = userService.getUserList(term.toLowerCase());
+        List<User> users = userService.getUserList(user.getUserId(), term.toLowerCase());
         List<CaseInfo> caseInfos = caseService.getAllCaseInfo(term);
         if (!CollectionUtils.isEmpty(users)) {
             list.addAll(users);

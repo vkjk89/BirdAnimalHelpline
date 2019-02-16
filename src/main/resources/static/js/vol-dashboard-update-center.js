@@ -33,7 +33,11 @@ var search_results_counter = 1;
 $(document).ready(function () {
     $("#logout").on("click", function (e) {
         e.preventDefault();
-        window.location.assign("/logout");
+        window.location.href="/logout";
+    });
+    $("#home").on("click", function (e) {
+        e.preventDefault();
+        window.location.href="/";
     });
 
     $("#search-input-assign-case").autocomplete({

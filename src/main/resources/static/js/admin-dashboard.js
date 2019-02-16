@@ -9,19 +9,18 @@ function accept_reject(accept_reject) {
     slide_member(0);
 }
 
-function acceptReject(userId, acceptReject) {
+function acceptReject(acceptReject) {
     var formData = {
-        'userId': userId,
+        'userId': currentUserForApproval,
         'acceptReject': acceptReject
     };
     $.ajax({
         type: 'POST',
         data: formData,
-        url: '/'
-        // dataType: 'json'
+        url: '/enableUser'
     })
         .done(function (data) {
-                console.log("done vvkj : " + data);
+                        console.log("done vvkj : " + data);
             }
         );
 }
@@ -55,6 +54,7 @@ function user_auth(slideIndex, item){
     $(".slider-member-bullet-"+slideIndex).addClass("case-slider-active-div");
     $("#slider-wrapper").fadeOut(200);
     $("#slider-wrapper").fadeIn(200);
+    currentUserForApproval = data[slideIndex].userId;
     setTimeout(function(){
     $(".user-accept-dp img").attr('src', "data:image/png;base64," + data[slideIndex].userImage.image);
     $(".user-role").html(data[slideIndex].role);
@@ -90,8 +90,13 @@ function getUsersListPendingForActivation() {
         //dataType: 'json'
     })
         .done(function (data) {
-
+                console.log(data);
+                console.log(data.length);
                 if (data) {
+                    if(data.length == 0) {
+                        $('#slider-wrapper').hide();
+                        $('#no-users-pending').fadeIn();
+                    }
                     $('.slider-member-count').text(data.length);
                     $.each(data, function (i, item) {
                         //console.info(item);
@@ -120,7 +125,7 @@ $(document).ready(function (){
     getUsersListPendingForActivation();
     setInterval(function () {
         getUsersListPendingForActivation();
-    }, 2000);
+    }, 12000);
     $("#logout").on("click", function (e) {
         e.preventDefault();
         window.location.href= "/logout";
