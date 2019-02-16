@@ -19,7 +19,19 @@
 <body>
 
 <!--<body th:object="${user}">-->
-<div data-include="top-nav"></div>
+<div id="dynamic_image_enlarge">
+    <div id="photo-enlarge"><img src="/static/img/selected-photo.png" th:src="@{/img/selected-photo.png}"></div>
+    <button id="image_enlarge_back_button" type="button">Back</button>
+</div>
+<!--<div data-include="top-nav"></div>-->
+<nav id="top-nav">
+    <span id="profile-options">&#9776;</span>
+    <button id="user-dp" type="button">
+        <img alt="User-Display-Picture" height="" src="/static/img/display-picture11.png" th:if="${user.getUserImage().getImage() == null}" th:src="@{/img/display-picture11.png}" width="">
+        <img alt="User-Display-Picture" height="" src="/static/img/display-picture11.png" th:if="${user.getUserImage().getImage() != null}" th:src="${'data:image/png;base64,'+user.getEncodedImage()}" width="auto">
+    </button>
+    <span id="navbar-username" th:text="${user.userName}">#Username</span>
+</nav>
 
 <nav id="side-nav">
     <section id="top-part">
@@ -64,7 +76,7 @@
             <span class="slider-member-count">#10</span>
         </div>
         <div id="case-slider-bullets"></div>
-        <div class="user-accept-dp"><img src="/static/img/display-picture11.png" th:src="@{/img/display-picture11.png}" alt="DP"></div>
+        <div class="user-accept-dp"><img src="/static/img/display-picture11.png" th:src="@{/img/display-picture11.png}" alt="DP" onclick="enlargePhoto(this)"></div>
         <div class="user-role">#User_Role</div>
         <div class="slider-navigation-buttons"><div class="slider-nav-right" onclick="slide_member(+1);">&#x27e8;</div><div class="slider-nav-left" onclick="slide_member(-1);">&#x27e8;</div></div>
         <div class="slider-info-wrapper">

@@ -31,6 +31,9 @@
     <div class="progress-bar-status" id="progress-bar-5">3</div>
 </div>
 <main>
+    <div id="empty-form" style="color:red;margin-bottom: 3vh;font-weight: 700;text-align: center;display: none;">
+        You must specify at least one pincode
+    </div>
     <form action="" id="pincode" method="POST" name="pincode" th:action="@{/profileCompletion}" th:object="${user}">
         <div class="ui-widget" id="1pincode">
             <label for="search-pincode" id="title">Your preffered pick-up locations:</label>
@@ -42,59 +45,18 @@
                 <ul id="selected-pincode-ul"></ul>
             </div>
         </div>
-        <button form="pincode" id="next" type="submit">Preview</button>
         <input name="page" type="hidden" value="3">
+        <div class="nav-button">
+            <button onclick="window.location.href = '/profileCompletion?page=1'" id="previous" type="button"><img alt="next" src="/static/img/next-button21.png" th:src="@{/img/next-button21.png}"></button>
+            <button form="pincode" id="next" type="button" onclick="validate_form()"><img alt="next" src="/static/img/next-button21.png" th:src="@{/img/next-button21.png}"></button>
+        </div>
     </form>
 </main>
+
 
 <script>
     let counter = 1;
     let timing_counter = 111;
-    $(document).ready(function () {
-        $("#search-pincode").autocomplete({
-            //appendTo  : "#search-pincode-results",
-            minLength: 2,
-            delay: 500,
-            //define callback to format results
-            source: function (request, response) {
-                var pinCodeIds = $('input[name="pincodeId"]').map(function() { return $(this).val();}).get();
-                var pins ="";
-                for(i in pinCodeIds) {
-                    pins = pins+pinCodeIds[i]+",";
-                }
-                if(pins) {
-                    pins = pins.substr(0,pins.length-1);
-                }
-                request.selectedPinCodes = pins;
-                $.getJSON("/getPinCodeLandMark", request, function (result) {
-                    response($.map(result, function (item) {
-                        return {
-                            // following property gets displayed in drop down
-                            label: item.landmark + " - " + item.pincode,
-                            // following property gets entered in the textbox
-                            value: item.pincodeId,
-                            // following property is added for our own use
-                            landmarks: item.landmark,
-                            pincode: item.pincode
-                        }
-
-                    }));
-                });
-            },
-
-            //define select handler
-            select: function (event, ui) {
-                var iCnt = 0;
-                document.getElementById("selected-pincodes").style.display = "block";
-                if (ui.item) {
-                    timings(ui.item); 
-                    $("#search-pincode").autocomplete("close");
-                    $("#search-pincode").val('');
-                    return false;
-                }
-            }
-        });
-    });
 
     function timings(ui_item){
         //----CREATING-ELEMENTS-AND-ADD-ATTRIBUTES----------------------------------------------------
@@ -206,6 +168,58 @@
             document.getElementById("selected-pincodes").style.display = "none";
         }
     }
+
+    function validate_form(){
+        if(document.getElementById("selected-pincode-ul").childNodes.length === 0)$('#empty-form').show();
+        else $("#pincode").submit();
+    }
+    
+    $(document).ready(function () {
+        $("#search-pincode").autocomplete({
+            //appendTo  : "#search-pincode-results",
+            minLength: 2,
+            delay: 500,
+            //define callback to format results
+            source: function (request, response) {
+                $("#empty-form").hide();
+                var pinCodeIds = $('input[name="pincodeId"]').map(function() { return $(this).val();}).get();
+                var pins ="";
+                for(i in pinCodeIds) {
+                    pins = pins+pinCodeIds[i]+",";
+                }
+                if(pins) {
+                    pins = pins.substr(0,pins.length-1);
+                }
+                request.selectedPinCodes = pins;
+                $.getJSON("/getPinCodeLandMark", request, function (result) {
+                    response($.map(result, function (item) {
+                        return {
+                            // following property gets displayed in drop down
+                            label: item.landmark + " - " + item.pincode,
+                            // following property gets entered in the textbox
+                            value: item.pincodeId,
+                            // following property is added for our own use
+                            landmarks: item.landmark,
+                            pincode: item.pincode
+                        }
+
+                    }));
+                });
+            },
+
+            //define select handler
+            select: function (event, ui) {
+                var iCnt = 0;
+                document.getElementById("selected-pincodes").style.display = "block";
+                if (ui.item) {
+                    timings(ui.item); 
+                    $("#search-pincode").autocomplete("close");
+                    $("#search-pincode").val('');
+                    return false;
+                }
+            }
+        });
+    });
 </script>
     
 </body>

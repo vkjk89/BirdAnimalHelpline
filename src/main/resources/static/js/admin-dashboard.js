@@ -3,24 +3,22 @@ var usersPendingMap = new Map();
 function accept_reject(accept_reject) {
     data.splice(slideIndex,1);
     var userId = data[slideIndex].userId;
-    console.log(userId);
     acceptReject(userId, accept_reject);
     createBullets();
     slide_member(0);
 }
 
-function acceptReject(acceptReject) {
+function acceptReject(accept_Reject) {
     var formData = {
         'userId': currentUserForApproval,
-        'acceptReject': acceptReject
+        'acceptReject': accept_Reject
     };
     $.ajax({
         type: 'POST',
         data: formData,
         url: '/enableUser'
-    })
-        .done(function (data) {
-                        console.log("done vvkj : " + data);
+    }).done(function (data) {
+                console.log("done vvkj : " + data);
             }
         );
 }
@@ -49,7 +47,6 @@ function user_auth(slideIndex, item){
     if(item !== undefined){
         data.push(item);
     }
-    console.log(data);
     $(".slider-member-bullet").removeClass("case-slider-active-div");
     $(".slider-member-bullet-"+slideIndex).addClass("case-slider-active-div");
     $("#slider-wrapper").fadeOut(200);
@@ -90,8 +87,6 @@ function getUsersListPendingForActivation() {
         //dataType: 'json'
     })
         .done(function (data) {
-                console.log(data);
-                console.log(data.length);
                 if (data) {
                     if(data.length == 0) {
                         $('#slider-wrapper').hide();
@@ -99,14 +94,8 @@ function getUsersListPendingForActivation() {
                     }
                     $('.slider-member-count').text(data.length);
                     $.each(data, function (i, item) {
-                        //console.info(item);
                         if (!usersPendingMap.has(item.userId)) {
                             user_auth(0, item);
-                            //console.log(item);
-                            // Make your changes here
-                            // section_accept_case(item);
-                            // slider_member_count = data.length;
-                            // updateSliderMemeberCount = data.length;
                             usersPendingMap.set(item.userId, item);
                         }
                         createBullets();
@@ -117,18 +106,64 @@ function getUsersListPendingForActivation() {
         );
 }
 
+function enlargePhoto(this_t) {
+    $('#dynamic_image_enlarge').css('display', 'block');
+    var enlarge_source = this_t.getAttribute('src');
+    $('#photo-enlarge').children('img').attr('src', enlarge_source);
+    $('#photo-enlarge').children('img').css("background-color", "#f4f4f4");
+    $('#top-nav, #side-nav, main, #bottom-action-bar').css({'pointerEvents':'none', 'opacity':'0.5'});
+}
+
 $(document).ready(function (){
     $('#image_enlarge_back_button').click(function () {
         $('#dynamic_image_enlarge').css('display', 'none');
+        $('#top-nav, #side-nav, main, #bottom-action-bar').css({'pointerEvents':'', 'opacity':'1'});
     });
-    
+
     getUsersListPendingForActivation();
     setInterval(function () {
         getUsersListPendingForActivation();
     }, 12000);
     $("#logout").on("click", function (e) {
         e.preventDefault();
-        window.location.href= "/logout";
+        window.location.href="/logout";
+    });
+    $("#home").on("click", function (e) {
+        e.preventDefault();
+        window.location.href="/default";
     });
 
+    document.getElementById('profile-options').onclick = function openSideNav() {
+        document.getElementById('side-nav').style.display = "block";
+        document.getElementById('side-nav').classList.add('side-nav-anim');
+        document.getElementById('top-nav').style.opacity = "0.1";
+        document.getElementById('bottom-action-bar').style.opacity = "0.1";
+        document.getElementsByTagName("main")[0].style.pointerEvents = "none";
+        document.getElementsByTagName("main")[0].style.opacity = "0.1";
+        document.getElementById("bottom-action-bar").style.pointerEvents = "none";
+    };
+
+    document.getElementById('close-btn').onclick = function closeSideNav() {
+        document.getElementById('side-nav').classList.remove('side-nav-anim');
+        document.getElementById('side-nav').style.display = "none";
+        document.getElementById('top-nav').style.opacity = "1";
+        document.getElementById('bottom-action-bar').style.opacity = "1";
+        document.getElementsByTagName("main")[0].style.pointerEvents = "";
+        document.getElementsByTagName("main")[0].style.opacity = "1";
+        document.getElementById("bottom-action-bar").style.pointerEvents = "";
+    };
+
+    window.onclick = function (e) {
+        if (!e.target.matches('#close-btn') && !e.target.matches('#profile-options') && !e.target.matches('#bottom-action-bar')) {
+            if (document.getElementById('side-nav').classList.contains('side-nav-anim')) {
+                document.getElementById('side-nav').classList.remove('side-nav-anim');
+                document.getElementById('side-nav').style.display = "none";
+                document.getElementById('top-nav').style.opacity = "1";
+                document.getElementById('bottom-action-bar').style.opacity = "1";
+                document.getElementsByTagName("main")[0].style.pointerEvents = "";
+                document.getElementsByTagName("main")[0].style.opacity = "1";
+                document.getElementById("bottom-action-bar").style.pointerEvents = "";
+            }
+        }
+    };
 });

@@ -34,11 +34,15 @@
             <input id="pincode" max="450000" min="400000" name="pincode" placeholder="Pincode" required th:field="*{officeAddr.pincode}" type="number">
             <label for="nature-of-business">Nature of Business</label>
             <input id="nature-of-business" name="nature-of-business" placeholder="Eg. - Textiles" required th:field="*{officeAddr.natureBusiness}" type="text">
-            <button form="home-address-form" id="next" type="submit"><img alt="next" src="/static/img/next-button21.png" th:src="@{/img/next-button21.png}"></button>
             <input name="page" type="hidden" value="2">
+        <div class="nav-button">
+            <button onclick="window.location.href = '/profileCompletion'" id="previous" type="button"><img alt="next" src="/static/img/next-button21.png" th:src="@{/img/next-button21.png}"></button>
+            <button form="home-address-form" id="next" type="submit"><img alt="next" src="/static/img/next-button21.png" th:src="@{/img/next-button21.png}"></button>
+        </div>
         </form>
     </div>
 </main>
+
 
 </body>
 </html>

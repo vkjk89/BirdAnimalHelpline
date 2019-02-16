@@ -147,15 +147,13 @@ select * {
     background-color: transparent;
 }
 
-#next img {
+.nav-button {margin-top: 3vh;}
+#next, #previous {padding: 0;}
+#next {float:right; margin-right: 5vw;}
+#next img {width: 10vw;}
+#previous img {
     width: 10vw;
-}
-
-#next {
-    float: right;
-    padding: 0;
-    margin: 0;
-    margin-top: 2vh;
+    transform: rotate(180deg);
 }
 
 /*------------------------------------------------------------------------------------------------*/

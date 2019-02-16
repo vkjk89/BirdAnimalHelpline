@@ -179,16 +179,11 @@ main {
     font-weight: 900;
 }
 
-#next {
-    box-sizing: border-box;
-    position: relative;
-    float: right;
-    bottom: 0;
-    margin-top: 5vh;
-    margin-right: 5vw;
-    background-color: #374047;
-    color: white;
-    border-radius: 5px;
-    letter-spacing: 2px;
-    font-size: 1em;
+.nav-button {margin-top: 3vh;}
+#next, #previous {padding: 0;}
+#next {float:right; margin-right: 5vw;}
+#next img {width: 10vw;}
+#previous img {
+    width: 10vw;
+    transform: rotate(180deg);
 }
