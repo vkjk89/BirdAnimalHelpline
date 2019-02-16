@@ -66,6 +66,7 @@ function createBullets(){
         slide_div.classList.add("slider-member-bullet");
         slide_div.classList.add("slider-member-bullet-" + slider_member_bullet);
         slide_div.innerHTML = slider_member_bullet+1;
+        slide_div.setAttribute("onclick","slide_accept_case(this.innerHTML-currentSlide-1)");
         //APPENDING-ELEMENTS-------------------
         document.getElementById("case-slider-bullets").appendChild(slide_div);
         slider_member_bullet++;
@@ -79,6 +80,8 @@ function section_accept_case(slideIndex, item) {
     }
     $(".slider-member-bullet").removeClass("case-slider-active-div");
     $(".slider-member-bullet-"+slideIndex).addClass("case-slider-active-div");
+    $(".case-details").fadeOut(200);
+    $(".case-details").fadeIn(200);
     setTimeout(function(){
         $(".case-id").html(data1[slideIndex].caseId);
         if(data1[slideIndex].birdOrAnimal === "Animal"){
@@ -113,8 +116,6 @@ function slide_accept_case(slide_direction) {
     $("#case-photos").empty();
     if($("#vol_dashboard_accept_case_photos").length === 0) $("#case-photos").append('<img src="/img/loading-simple.gif" id="vol_dashboard_accept_case_photos" alt="Loading">');
     slideIndex = currentSlide + slide_direction;
-    $(".case-details").fadeOut(200);
-    $(".case-details").fadeIn(200);
     if (slideIndex < 0) {
         slideIndex = data1.length-1;
         section_accept_case(slideIndex);

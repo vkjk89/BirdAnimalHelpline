@@ -35,6 +35,7 @@ function createBullets(){
         slide_div.classList.add("slider-member-bullet");
         slide_div.classList.add("slider-member-bullet-" + slider_member_bullet);
         slide_div.innerHTML = slider_member_bullet+1;
+        slide_div.setAttribute("onclick","slide_member(this.innerHTML-currentSlide-1)");
         //APPENDING-ELEMENTS-------------------
         document.getElementById("case-slider-bullets").appendChild(slide_div);
         slider_member_bullet++;
