@@ -166,7 +166,9 @@
                         </goals>
                         <configuration>
                             <executable>bash</executable>
-                            <commandlineArgs>${project.basedir}/src/main/resources/scripts/versioning.sh ${project.basedir} src/main/resources/</commandlineArgs>
+                            <commandlineArgs>${project.basedir}/src/main/resources/scripts/versioning.sh
+                                ${project.basedir} src/main/resources/
+                            </commandlineArgs>
                         </configuration>
                     </execution>
                 </executions>
