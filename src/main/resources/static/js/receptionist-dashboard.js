@@ -132,14 +132,11 @@ function top_nav_user_cases(data) {
     $("#top-nav-heading-text").html("Case Details | Case No.: " + caseInfo.caseId);
     $("#top-nav-back-close-btn-wrapper").css("display","inline");
     caseImageRetriever(caseInfo.caseId,"top-nav-case-photos-case-details");
-    /*if(!caseInfo.active) {
-        $('#action-center-assign-case').hide();
-        $('#action-center-close-case').hide();
+    if (caseInfo.active) {
+        $('#top-nav-action-center-assign-case, #top-nav-action-center-close-case').show();
+    } else {
+        $('#top-nav-action-center-assign-case, #top-nav-action-center-close-case').hide();
     }
-    else {
-        $('#action-center-assign-case').show();
-        $('#action-center-close-case').show();
-    }*/
     if(caseInfo.birdOrAnimal === "Animal"){
         $("#header-form-left-side-case-details").html("Animal Information");
         $("#animal-bird-type-case-details").html("Animal Type: ");
@@ -174,13 +171,10 @@ function case_details(data) {
     $("#back-close-btn-wrapper").css("display","inline");
     $("#myc_case_details_loading_screen").css("display","block");
     caseImageRetriever(caseInfo.caseId,"case-photos-case-details");
-    if(!caseInfo.active) {
-        $('#action-center-assign-case').hide();
-        $('#action-center-close-case').hide();
-    }
-    else {
-        $('#action-center-assign-case').show();
-        $('#action-center-close-case').show();
+    if (caseInfo.active) {
+        $('#action-center-assign-case, #action-center-close-case').show();
+    } else {
+        $('#action-center-assign-case, #action-center-close-case').hide();
     }
     if(caseInfo.birdOrAnimal === "Animal"){
         $("#header-form-left-side-case-details").html("Animal Information");
@@ -218,7 +212,7 @@ function raise_a_case() {
     document.getElementById('top-nav-case-details-form').style.display = "none";
 }
 
-function my_cases() {
+function my_cases(param) {
     layer_change('layer1');
     $('#heading-text').html("My Cases");
     $("#back-close-btn-wrapper").css("display","none");
@@ -230,7 +224,12 @@ function my_cases() {
         document.getElementById('myc-body').classList.remove('right-side-card-rotate');
     }, 600);
     page_history.unshift("my_cases");
-    $("#active-tab-header").click();
+    if(!param) $("#active-tab-header").click();
+    else {
+        if($("#active-tab-header").hasClass("tab-header-animation")) $("#active-tab-header").click();
+        if($("#recent-tab-header").hasClass("tab-header-animation")) $("#recent-tab-header").click();
+        if($("#closed-tab-header").hasClass("tab-header-animation")) $("#closed-tab-header").click();
+    }
     document.getElementById('active-tab-header').classList.add('active-header');
     document.getElementById('raise-a-case-content').style.display = "none";
     document.getElementById('my-cases-content').style.display = "block";
@@ -469,7 +468,7 @@ function close(){
                 page_history.unshift("raise_a_case");
                 break;
             } else if (page_history[i] === "my_cases") {
-                my_cases();
+                my_cases(1);
                 page_history.unshift("my_cases");
                 break;
             } else if (page_history[i] === "myc_case_details"){
@@ -493,7 +492,7 @@ function close(){
         }
     layer_change("layer1");
     } else if(page_history[0] === "myc_case_details" || page_history[0] === "action_centre_assign_case" || page_history[0] === "action_centre_close_case"){
-        my_cases();
+        my_cases(1);
     }
 }
 
@@ -717,7 +716,7 @@ $(document).ready(function () {
         raise_a_case();
     };
     document.getElementById('myc-body').onclick = function () {
-        my_cases();
+        my_cases(0);
     };
     document.getElementById('usdca-body').onclick = function () {
         user_data_change_approvals();
@@ -1301,7 +1300,6 @@ $(document).ready(function () {
                 } else if (ui.item.caseDetails) {
                     cd = ui.item.caseDetails;
                     caseIdVsInfoMap[cd.caseId] = cd;
-                    $('#raise-a-case-content').hide();
                     $('#top-nav-case-id-case-details').val(cd.caseId);
                     $('#top-nav-animal-type-case-details').val(cd.typeAnimal);
                     $('#top-nav-animal-name-case-details').val(cd.animalName);
@@ -1328,15 +1326,11 @@ $(document).ready(function () {
                     top_nav_search_case_details("search_cases_details");
                     layer_change('layer2');
                     $('#top-nav-heading-text').html('Case Details | Case No.: ' + cd.caseId);
-                    /*if (cd.active) {
-                        //$('#action-center').show();
-                        $('#action-center-assign-case').show();
-                        $('#action-center-close-case').show();
+                    if (cd.active) {
+                        $('#top-nav-action-center-assign-case, #top-nav-action-center-close-case').show();
                     } else {
-                        //$('#action-center').hide();
-                        $('#action-center-assign-case').hide();
-                        $('#action-center-close-case').hide();
-                    }*/
+                        $('#top-nav-action-center-assign-case, #top-nav-action-center-close-case').hide();
+                    }
                 }
                 $("#top-nav-search").autocomplete("close");
                 $("#top-nav-search").val('');
