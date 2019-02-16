@@ -818,14 +818,14 @@ hr {
 }
 /*-------------------Assign-Case-------------------*/
 
-#content-assign-case {
+#content-assign-case, #top-nav-content-assign-case {
     display: none;
     position: absolute;
     top: 0;
     pointer-events: all;
 }
 
-#assign_case_loading {
+#assign_case_loading, #top-nav-assign_case_loading {
     position: absolute;
     display: none;
     top: 15vw;
@@ -834,12 +834,12 @@ hr {
     height: auto;
 }
 
-#assign-case-search {
+#assign-case-search, #top-nav-assign-case-search {
     height: 65vh;
     margin-top: 2vh;
 }
 
-#assign-case-search-input {
+#assign-case-search-input, #top-nav-assign-case-search-input {
     background-image: url('/img/search-1.png');
     background-size: 3vw;
     background-repeat: no-repeat;
@@ -851,22 +851,22 @@ hr {
     padding-bottom: 1.5vw;
     width: 68.5vw;
 }
-#assign-case-search-input:focus {
+#assign-case-search-input:focus, #top-nav-assign-case-search-input:focus {
     border: 1px solid black;
     transition: all 0.3s ease-in-out;
 }
 
-#assign-case-search-body {
+#assign-case-search-body, #top-nav-assign-case-search-body {
     display: flex;
     justify-content: space-between;
 }
 
-#top-five {
+#top-five, #top-nav-top-five {
     border: 1px solid #CCC;
     width: 32.25vw;
 }
 
-#nearest-assigned-volunteers {
+#nearest-assigned-volunteers, #top-nav-nearest-assigned-volunteers {
     border: 1px solid #CCC;
     border-left: none;
     width: 32vw;
@@ -900,7 +900,7 @@ hr {
 }
 
 
-#top-five, #nearest-assigned-volunteers {
+#top-five, #top-nav-top-five, #nearest-assigned-volunteers, #top-nav-nearest-assigned-volunteers {
     margin-top: 3vh;
     padding-top: 2vh;
     padding-left: 2vw;
@@ -909,11 +909,11 @@ hr {
     overflow-x: hidden;
 }
 
-#top-five h2, #nearest-assigned-volunteers h2 {
+#top-five h2, #top-nav-top-five h2, #nearest-assigned-volunteers h2, #top-nav-nearest-assigned-volunteers h2 {
     margin-top: 0;
 }
 
-#assign-case-search-results {
+#assign-case-search-results, #top-nav-assign-case-search-results {
     display: none;
     position: absolute;
     top: 7vw;
@@ -922,12 +922,12 @@ hr {
     border: 1px solid #CCC;
 }
 
-#assign-case-status-bar {
+#assign-case-status-bar, #top-nav-assign-case-status-bar {
     position: absolute;
     bottom: 0;
 }
 
-#assign-case-success, #assign-case-error {
+#assign-case-success, #assign-case-error, #top-nav-assign-case-success, #top-nav-assign-case-error {
     display: none;
     position: absolute;
     background-color: rgba(0, 160, 0, 0.2);
@@ -940,7 +940,7 @@ hr {
     width: 30vw;
 }
 
-#assign-case-error {
+#assign-case-error, #top-nav-assign-case-error {
     display: none;
     background: rgba(1600, 0, 0, 0.4);
     color: rgb(160, 0, 0);
@@ -949,7 +949,7 @@ hr {
 }
 
 /*-----------------Tooltip-Vol-Assign-------------*/
-#vol-description-tooltip {
+#vol-description-tooltip, #top-nav-vol-description-tooltip {
     box-sizing: border-box;
     position: fixed;
     display: none;
@@ -962,7 +962,7 @@ hr {
     clip-path: polygon(10% 40%, 10% 0, 100% 0, 100% 100%, 10% 100%, 10% 60%, 0 50%);
 }
 
-#tooltip-dp img {
+#tooltip-dp img, #top-nav-tooltip-dp img {
     position: absolute;
     top: 2.5vh;
     border-radius: 50%;
@@ -972,7 +972,7 @@ hr {
     left: 4vw;
 }
 
-#decoy-for-img {
+#decoy-for-img, #top-nav-decoy-for-img {
     position: relative;
     min-height: 9vh;
     background-color: #333;
@@ -980,28 +980,28 @@ hr {
     width: 200%;
 }
 
-#tooltip-info {
+#tooltip-info, #top-nav-tooltip-info {
     padding-top: 5vh;
     padding-left: 1vw;
     padding-bottom: 1vh;
     margin-left: 3vw;
 }
 
-#tooltip-info div:hover {
+#tooltip-info div:hover, #top-nav-tooltip-info div:hover {
     cursor: text;
 }
 
-#tooltip-info-name, #tooltip-info-role, #tooltip-info-address, #tooltip-info-tel-number  {
+#tooltip-info-name, #tooltip-info-role, #tooltip-info-address, #tooltip-info-tel-number, #top-nav-tooltip-info-name, #top-nav-tooltip-info-role, #top-nav-tooltip-info-address, #top-nav-tooltip-info-tel-number  {
     padding-bottom: 1vh;
 }
 
-#tooltip-info-name:hover, #tooltip-info-role:hover, #address-line1:hover, #address-line2:hover, #tooltip-pincode:hover, #tooltip-info-tel-number:hover {
+#tooltip-info-name:hover, #tooltip-info-role:hover, #address-line1:hover, #address-line2:hover, #tooltip-pincode:hover, #tooltip-info-tel-number:hover, #top-nav-tooltip-info-name:hover, #top-nav-tooltip-info-role:hover, #top-nav-address-line1:hover, #top-nav-address-line2:hover, #top-nav-tooltip-pincode:hover, #top-nav-tooltip-info-tel-number:hover {
     color: #007AEA;
     cursor: default;
 }
 
 /*-----------------Close-Case---------------------*/
-#content-close-case {
+#content-close-case, #top-nav-content-close-case {
     display: none;
     position: absolute;
     top: 0;
@@ -1011,14 +1011,14 @@ hr {
     padding-top: 10vh;
 }
 
-#close-case-reason-span {
+#close-case-reason-span, #top-nav-close-case-reason-span {
     position: relative;
     vertical-align: middle;
     top: 0.5vh;
     font-size: 1em;
 }
 
-#close-case-reason {
+#close-case-reason, #top-nav-close-case-reason {
     padding: 0.5vw 2vw;
     border-radius: 0;
     letter-spacing: 1px;
@@ -1030,7 +1030,7 @@ hr {
     border: 1px solid #666;
 }
 
-#close-case-other-reason {
+#close-case-other-reason, #top-nav-close-case-other-reason {
     box-sizing: border-box;
     display: none;
     margin-left: 38%;
@@ -1043,12 +1043,12 @@ hr {
     background-color: rgb(248,248,248);
 }
 
-#close-case-other-reason::placeholder {
+#close-case-other-reason::placeholder, #top-nav-close-case-other-reason::placeholder {
     color: black;
     font-weight: 500;
 }
 
-#close-case-cancel-btn, #close-case-submit-btn {
+#close-case-cancel-btn, #close-case-submit-btn, #top-nav-close-case-cancel-btn, #top-nav-close-case-submit-btn {
     box-sizing: border-box;
     padding: 1vw 2vw;
     color: white;
@@ -1057,15 +1057,15 @@ hr {
     font-size: 1em;
 }
 
-#close-case-cancel-btn {
+#close-case-cancel-btn, #top-nav-close-case-cancel-btn {
     background-color: #333;
 }
 
-#close-case-submit-btn {
+#close-case-submit-btn, #top-nav-close-case-submit-btn {
     background-color: rgb(0, 160, 0);
 }
 
-#close-case-cancel-btn:hover, #close-case-submit-btn:hover {
+#close-case-cancel-btn:hover, #close-case-submit-btn:hover, #top-nav-close-case-cancel-btn:hover, #top-nav-close-case-submit-btn:hover {
     box-shadow: 0px 0px 20px #BBB;
 }
 

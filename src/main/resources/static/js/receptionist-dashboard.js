@@ -1,4 +1,4 @@
-/*-----Duplicate-ID's-----
+/*-----Duplicate-ID's-----*/
     var allElements = document.getElementsByTagName("*"), allIds = {}, dupIDs = [];
     for (var i = 0, n = allElements.length; i < n; ++i) {
     var el = allElements[i];
@@ -8,7 +8,7 @@
         }
     }
     if (dupIDs.length) { console.error("Duplicate ID's:", dupIDs);} else { console.log("No Duplicates Detected"); }  
---------------*/
+/*--------------*/
 
 var page_history = ["raise_a_case"];
 var search_list_user = [];
@@ -16,9 +16,14 @@ var hide_tooltip_timeOut;
 var my_cases_tab_headers;
 
 var aVol = "<li> <span class=\"vol_tooltip\">";
-var bVol = "</span> <button onclick='assignCase(this)' type=\"button\" class=\"assign-case-assign-btn\">Assign</button>";
+var bVol = "</span> <button onclick=\"assignCase(this, '')\" type=\"button\" class=\"assign-case-assign-btn\">Assign</button>";
 var cVol = "<input type=\"hidden\" id=\"vol_id\" value=\"";
 var dVol = "\" ></li>";
+
+var top_nav_a_Vol = "<li> <span class=\"vol_tooltip\">";
+var top_nav_b_Vol = "</span> <button onclick=\"assignCase(this, 'top-nav')\" type=\"button\" class=\"assign-case-assign-btn\">Assign</button>";
+var top_nav_c_Vol = "<input type=\"hidden\" id=\"vol_id\" value=\"";
+var top_nav_d_Vol = "\" ></li>";
 
 var aCase = '<div class ="row row1" onclick="case_details(this)"> <div class="sr-no"><li></li></div> <div class="case-id">';
 var bCase = '</div> <div class="case-status">';
@@ -66,7 +71,6 @@ var responseHandler = function (event) {
         dataType: 'json'
     })
         .done(function (data) {
-            console.log(data);
                 var cc = [];
                 if(data === null || data === undefined || data.length === 0){
                     $('#' + tableId).empty();
@@ -76,7 +80,6 @@ var responseHandler = function (event) {
                     $("#" + tableId + "_tab_content_loading").css("display","none");
                     $('#' + tableId).empty();
                     if(tableId === "table1" || tableId === "table2" || tableId === "table3"){
-                        console.log(tableId);
                         $.each(data, function (i, item) {
                             caseIdVsInfoMap[item.caseId] = item;
                             var htm = aCase + item.caseId + bCase + (item.userNameCurrent ? item.userNameCurrent+"("+item.userRoleCurrent+")" : "Closed" )  + b1Case+(item.isAck == 1 ? "Yes" : item.isAck == -1 ? "No" : "Pending" ) +cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + item.animalName + fCase;
@@ -85,7 +88,6 @@ var responseHandler = function (event) {
                         });
                     }
                     else {
-                        console.log(tableId);
                         $.each(data, function (i, item) {
                             caseIdVsInfoMap[item.caseId] = item;
                             var htm = a_1Case + item.caseId + b_1Case + (item.userNameCurrent ? item.userNameCurrent+"("+item.userRoleCurrent+")" : "Closed" )  + b1_1Case+(item.isAck == 1 ? "Yes" : item.isAck == -1 ? "No" : "Pending" ) +c_1Case + item.creationDateStr + d_1Case + item.typeAnimal + e_1Case + item.animalName + f_1Case;
@@ -99,7 +101,6 @@ var responseHandler = function (event) {
 };
 
 function layer_change(layer){
-    console.log(layer);
     if (layer === "layer1"){
         $('#heading-status_bar').css("display","block");
         $('#top-nav-heading-status_bar').css("display","none");
@@ -337,22 +338,22 @@ function showresults() {
     $('#' + my_cases_tab_headers).fadeIn(300);
 }
 
-function assignCase(data) {
+function assignCase(data, param) {
     var userId = $(data).parent().find("#vol_id").val();
-    assignCaseReq(currentCaseId, userId);
+    assignCaseReq(currentCaseId, userId, param);
 }
 
-function other_reason_close_case() {
-    if (document.getElementById('close-case-reason').value === "Other") {
-        document.getElementById('close-case-other-reason').style.display = "block";
-        document.getElementById('close-case-other-reason').value = "";
-        document.getElementById('close-case-other-reason').innerHTML = "";
-        document.getElementById('close-case-other-reason').style.border = "1px solid #666";
-        document.getElementById('close-case-reason').style.border = "1px solid #666";
-        document.getElementById('close-case-other-reason').placeholder = "Specify Reason";
+function other_reason_close_case(param) {
+    if (document.getElementById(param+'close-case-reason').value === "Other") {
+        document.getElementById(param+'close-case-other-reason').style.display = "block";
+        document.getElementById(param+'close-case-other-reason').value = "";
+        document.getElementById(param+'close-case-other-reason').innerHTML = "";
+        document.getElementById(param+'close-case-other-reason').style.border = "1px solid #666";
+        document.getElementById(param+'close-case-reason').style.border = "1px solid #666";
+        document.getElementById(param+'close-case-other-reason').placeholder = "Specify Reason";
     } else {
-        document.getElementById('close-case-other-reason').style.display = "none";
-        document.getElementById('close-case-reason').style.border = "1px solid #666";
+        document.getElementById(param+'close-case-other-reason').style.display = "none";
+        document.getElementById(param+'close-case-reason').style.border = "1px solid #666";
     }
 }
 
@@ -374,14 +375,15 @@ function navigate_back() {
         page_history.unshift("my_cases");
     } else if (page_history[0] === "action_centre_assign_case" || page_history[0] === "action_centre_close_case") {
         document.getElementById('case-details-form').style.display = "flex";
+        document.getElementById('case-details-form').style.pointerEvents = "";
+        document.getElementById('case-details-form').style.opacity = "1";
         document.getElementById('content-assign-case').style.display = "none";
         document.getElementById('content-close-case').style.display = "none";
         document.getElementById('assign-case-success').style.display = "none";
+        document.getElementById('assign-case-error').style.display = "none";
         $("#content-assign-case").css("pointerEvents", "");
-        document.getElementById('case-details-form').style.opacity = "1";
         document.getElementById('top-nav-search-results').style.display = "none";
-        document.getElementById('case-details-form').style.pointerEvents = "";
-        var caseId = $("#case-id-case-details").val();
+        let caseId = $("#case-id-case-details").val();
         layer_change('layer1');
         $("#heading-text").html("Case Details | Case No.: " + caseId);
         page_history.unshift("myc_case_details");
@@ -416,7 +418,7 @@ function navigate_back() {
         document.getElementById('top-nav-case-details-form').style.display = "none";
         document.getElementById("top-nav-search-user-profile-back-button").style.display = "none";
         page_history.unshift("top_nav_search_results");
-    }*/
+    }*/ 
     else if (page_history[0] === "vol_cases_details") {
         document.getElementById('top-nav-case-details').style.display = "none";
         document.getElementById('top-nav-case-details-form').style.display = "none";
@@ -426,16 +428,41 @@ function navigate_back() {
         page_history.unshift("top_nav_search_user_profile");
     } else if (page_history[0] === "search_cases_details") {
         close();
+    }else if (page_history[0] === "top-nav-action_centre_assign_case" || page_history[0] === "top-nav-action_centre_close_case") {
+        document.getElementById('top-nav-case-details-form').style.display = "flex";
+        document.getElementById('top-nav-case-details-form').style.opacity = "1";
+        document.getElementById('top-nav-case-details-form').style.pointerEvents = "";
+        document.getElementById('top-nav-content-assign-case').style.display = "none";
+        document.getElementById('top-nav-content-close-case').style.display = "none";
+        document.getElementById('top-nav-assign-case-success').style.display = "none";
+        document.getElementById('top-nav-assign-case-error').style.display = "none";
+        $("#top-nav-content-assign-case").css("pointerEvents", "");
+        document.getElementById('top-nav-search-results').style.display = "none";
+        let caseId = $("#top-nav-case-id-case-details").val();
+        $("#top-nav-heading-text").html("Case Details | Case No.: " + caseId);
+        for(let i = 0; i < page_history.length; i++){
+            if(page_history[i] === "search_cases_details"){
+                page_history.unshift("search_cases_details");
+                break;
+            }else if(page_history[i] === "vol_cases_details"){
+                page_history.unshift("vol_cases_details");
+                break;
+            }else continue;
+        }
     }
 }
 
 function close(){
-    if(page_history[0] === "search_cases_details" || page_history[0] === "top_nav_search_user_profile" || page_history[0] === "vol_cases_details"){
+    if(page_history[0] === "search_cases_details" || page_history[0] === "top_nav_search_user_profile" || page_history[0] === "vol_cases_details" || page_history[0] === "top-nav-action_centre_assign_case" || page_history[0] === "top-nav-action_centre_close_case"){
         document.getElementById('top-nav-search-results').style.display = "none";
         document.getElementById("user-profile").style.display = "none";
         document.getElementById("case_profile").style.display = "none";
         document.getElementById('top-nav-case-details').style.display = "none";
         document.getElementById('top-nav-case-details-form').style.display = "none";
+        document.getElementById('top-nav-case-details-form').style.pointerEvents = "";
+        document.getElementById('top-nav-case-details-form').style.opacity = "1";
+        document.getElementById('top-nav-content-assign-case').style.display = "none";
+        document.getElementById('top-nav-content-close-case').style.display = "none";
         for (let i = 0; i < page_history.length; i++) {
             if (page_history[i] === "raise_a_case") {
                 raise_a_case();
@@ -506,7 +533,7 @@ function hide_vol_tooltip() {
     }, 200);
 }
 
-function getVolInfo() {
+function getVolInfo(param) {
     var formData = {
         'caseId': currentCaseId
     };
@@ -523,7 +550,7 @@ function getVolInfo() {
                 userIdVsInfoMap[item.userId] = item;
                 cc.push(html);
             });
-            $('#top_five_vol').html(cc.join(""));
+            $('#'+param+'top_five_vol').html(cc.join(""));
 
             cc = [];
             $.each(JSON.parse(data.nearest), function (i, item) {
@@ -531,11 +558,11 @@ function getVolInfo() {
                 userIdVsInfoMap[item.userId] = item;
                 cc.push(html);
             });
-            $('#nearest_5_vol').html(cc.join(""));
+            $('#'+param+'nearest_5_vol').html(cc.join(""));
         });
 }
 
-function assignCaseReq(caseId, userId) {
+function assignCaseReq(caseId, userId, param) {
     var formData = {
         'caseId': caseId,
         'userId': userId
@@ -550,15 +577,25 @@ function assignCaseReq(caseId, userId) {
     })
 
         .done(function (data) {
-            $('#assign-case-success').text("Success! Case " + caseId + " assigned successfully to " + userId);
-            $('#assign-case-success').fadeIn(200);
-            $("#content-assign-case").css("pointerEvents", "none");
-            document.getElementById("card-right-side").style.pointerEvents = "none";
-            setTimeout(function () {
-                navigate_back();
-                navigate_back();
-                document.getElementById("card-right-side").style.pointerEvents = "";
-            }, 1200);
+            if(param === ''){
+                $('#assign-case-success').text("Success! Case " + caseId + " assigned successfully to " + userId);
+                $('#assign-case-success').fadeIn(200);
+                $("#content-assign-case").css("pointerEvents", "none");
+                document.getElementById("card-right-side").style.pointerEvents = "none";
+                setTimeout(function () {
+                    navigate_back();
+                    navigate_back();
+                    document.getElementById("card-right-side").style.pointerEvents = "";
+                }, 1200);
+            } else {
+                $('#top-nav-assign-case-success').text("Success! Case " + caseId + " assigned successfully to " + userId);
+                $('#top-nav-assign-case-success').fadeIn(200);
+                $("#top-nav-content-assign-case").css("pointerEvents", "none");
+                setTimeout(function () {
+                    navigate_back();
+                    navigate_back();
+                }, 1200);
+            }
         });
 }
 
@@ -578,6 +615,89 @@ function closeCaseReq(caseId) {
             navigate_back();
             navigate_back();
         });
+}
+
+function action_centre_assign_case(param){
+    document.getElementById(param+'case-details-form').style.display = "none";
+    document.getElementById(param+'content-assign-case').style.display = "block";
+    page_history.unshift(param+"action_centre_assign_case");
+    var caseId = $("#"+param+"case-id-case-details").val();
+    if(param === "top-nav-"){
+        layer_change('layer2');
+        $("#top-nav-heading-text").html("Case Details | Case No.: " + caseId + " | Assign Case");
+    } else {
+        layer_change('layer1');
+        $("#heading-text").html("Case Details | Case No.: " + caseId + " | Close Case");
+    }
+    getVolInfo(param);
+}
+
+function action_center_close_case(param){
+    document.getElementById(param+"close-case-reason").selectedIndex = 0;
+    document.getElementById(param+'case-details-form').style.opacity = "0.2";
+    document.getElementById(param+'case-details-form').style.pointerEvents = "none";
+    document.getElementById(param+'content-close-case').style.opacity = "1";
+    document.getElementById(param+'content-close-case').style.display = "block";
+    page_history.unshift(param+"action_centre_close_case");
+    var caseId = $("#"+param+"case-id-case-details").val();
+    if(param === "top-nav-"){
+        layer_change('layer2');
+        $("#top-nav-heading-text").html("Case Details | Case No.: " + caseId + " | Assign Case");
+    } else {
+        layer_change('layer1');
+        $("#heading-text").html("Case Details | Case No.: " + caseId + " | Assign Case");
+    }
+    other_reason_close_case(param);
+}
+
+function action_center_history(){
+    var caseId = $("#case-id-case-details").val();
+    //layer_change('layer1');
+    //$("#heading-text").html("Case Details | Case No.: " + caseId + " | History");
+    var formData = {
+        'caseId': currentCaseId
+    };
+    var a = '<tr>';
+    var b = '<td class="tg-0lax">';
+    var c = '</td>';
+    var d = '</tr>';
+    var tableHeader = '<tr><th class="tg-baqh">Sr</th><th class="tg-0lax">From User</th><th class="tg-0lax">To User</th><th class="tg-0lax">Ack</th><th class="tg-0lax">Amount</th><th class="tg-0lax">Description</th><th class="tg-0lax">Transfer Date</th></tr>';
+    $.ajax({
+        type: 'GET',
+        url: '/getCaseTxn',
+        data: formData,
+        dataType: 'json'
+    })
+        .done(function (data) {
+            $('#history-dialog-table').html('');
+            var cc = [];
+            cc.push(tableHeader);
+            $.each(data, function (i, item) {
+                var html = a+b+(i+1)+c;
+                html += b+item.fromUser+'('+item.fromUserRole+')'+c;
+                html += b+item.toUser+'('+item.toUserRole+')'+c;
+                html += b+(item.isAck == 1? "Yes": item.isAck == -1 ? "No":"Pending")+c;
+                html += b+item.amount+c;
+                html += b+item.desc+c;
+                html += b+item.transferDate+c;
+                html += d;
+                cc.push(html);
+            });
+            $('#history-dialog-table').html(cc.join(""));
+        });
+    //$('#history-dialog').show();
+    $("#history-dialog").dialog({
+        width: 800,  height: 600
+    });
+}
+
+function close_case_validation(param){
+    if (document.getElementById(param+'close-case-reason').value === "Other" && document.getElementById('close-case-other-reason').value === "") {
+        document.getElementById(param+'close-case-other-reason').style.border = "2px solid red";
+        document.getElementById(param+'close-case-other-reason').placeholder = "You must specify a Reason";
+    }
+    else if (document.getElementById(param+'close-case-reason').value === "") document.getElementById(param+'close-case-reason').style.border = "2px solid red";
+    else closeCaseReq(currentCaseId);
 }
 
 $(document).ready(function () {
@@ -687,7 +807,7 @@ $(document).ready(function () {
         navigate_back();
     });
 
-//------Search-Active-Recent-Closed-Tabs-JS--------------------------------------
+//------Search-User-Profile-Active-Recent-Closed-Tabs-JS--------------------------------------
     document.getElementById('user-profile-active-tab-header').onclick = function user_profile_search_results_active() {
         this.classList.add('tab-header-animation');
         document.getElementById('user-profile-recent-tab-header').classList.remove('tab-header-animation');
@@ -724,13 +844,8 @@ $(document).ready(function () {
         document.getElementById('user-profile-recent-tab-content').style.display = "none";
     };
 //------Basic-Details-and-User-Cases------------------------------------------------------------
-    document.getElementById("user-profile-basic-details-btn").onclick = function() {
-        user_profile_basic_details();
-    };
-
-    document.getElementById("user-profile-user-cases-btn").onclick = function() {
-        user_profile_user_cases();
-    };
+    document.getElementById("user-profile-basic-details-btn").onclick = function() {user_profile_basic_details();};
+    document.getElementById("user-profile-user-cases-btn").onclick = function() {user_profile_user_cases();};
 
 //------DropDown-Menu-JS--------------------------------------------------------------------------------
     var dropdown_menu_state = true;
@@ -748,6 +863,7 @@ $(document).ready(function () {
             document.getElementById("card-right-side").style.pointerEvents = "none";
         }
     };
+
     window.onclick = function (e) {
         if (!e.target.matches('#more-btn')) {
             if (dropdown_menu_state === false) {
@@ -789,12 +905,8 @@ $(document).ready(function () {
     };
 
     document.getElementById("animal-type").onchange = function(){
-        if(document.getElementById("animal-type").value === "add-new-bird-animal"){
-            document.getElementById("add-bird-animal").style.display = "block";
-        }
-        else {
-            document.getElementById("add-bird-animal").style.display = "none";
-        }
+        if(document.getElementById("animal-type").value === "add-new-bird-animal") document.getElementById("add-bird-animal").style.display = "block";
+        else document.getElementById("add-bird-animal").style.display = "none";
     };
 
     document.getElementById('reset-raise-case').onclick = function () {
@@ -835,69 +947,14 @@ $(document).ready(function () {
     };
 
 //--Action-Centre--------------------------------------------------------------------------------
-    document.getElementById('action-center-assign-case').onclick = function () {
-        document.getElementById('case-details-form').style.display = "none";
-        document.getElementById('content-assign-case').style.display = "block";
-        page_history.unshift("action_centre_assign_case");
-        var caseId = $("#case-id-case-details").val();
-        layer_change('layer1');
-        $("#heading-text").html("Case Details | Case No.: " + caseId + " | Assign Case");
-        getVolInfo();
-    };
+    document.getElementById('action-center-assign-case').onclick = function(){action_centre_assign_case("");};
+    document.getElementById('top-nav-action-center-assign-case').onclick = function(){action_centre_assign_case("top-nav-");};
 
-    document.getElementById('action-center-close-case').onclick = function () {
-        document.getElementById("close-case-reason").selectedIndex = 0;
-        document.getElementById('case-details-form').style.opacity = "0.2";
-        document.getElementById('case-details-form').style.pointerEvents = "none";
-        document.getElementById('content-close-case').style.opacity = "1";
-        document.getElementById('content-close-case').style.display = "block";
-        var caseId = $("#case-id-case-details").val();
-        layer_change('layer1');
-        $("#heading-text").html("Case Details | Case No.: " + caseId + " | Close Case");
-        other_reason_close_case();
-        page_history.unshift("action_centre_close_case");
-    };
+    document.getElementById('action-center-close-case').onclick = function () {action_center_close_case("");};
+    document.getElementById('top-nav-action-center-close-case').onclick = function () {action_center_close_case("top-nav-");};
 
-    document.getElementById('action-center-history-case').onclick = function () {
-        var caseId = $("#case-id-case-details").val();
-        //layer_change('layer1');
-        //$("#heading-text").html("Case Details | Case No.: " + caseId + " | History");
-        var formData = {
-            'caseId': currentCaseId
-        };
-        var a = '<tr>';
-        var b = '<td class="tg-0lax">';
-        var c = '</td>';
-        var d = '</tr>';
-        var tableHeader = '<tr><th class="tg-baqh">Sr</th><th class="tg-0lax">From User</th><th class="tg-0lax">To User</th><th class="tg-0lax">Ack</th><th class="tg-0lax">Amount</th><th class="tg-0lax">Description</th><th class="tg-0lax">Transfer Date</th></tr>';
-        $.ajax({
-            type: 'GET',
-            url: '/getCaseTxn',
-            data: formData,
-            dataType: 'json'
-        })
-            .done(function (data) {
-                $('#history-dialog-table').html('');
-                var cc = [];
-                cc.push(tableHeader);
-                $.each(data, function (i, item) {
-                    var html = a+b+(i+1)+c;
-                    html += b+item.fromUser+'('+item.fromUserRole+')'+c;
-                    html += b+item.toUser+'('+item.toUserRole+')'+c;
-                    html += b+(item.isAck == 1? "Yes": item.isAck == -1 ? "No":"Pending")+c;
-                    html += b+item.amount+c;
-                    html += b+item.desc+c;
-                    html += b+item.transferDate+c;
-                    html += d;
-                    cc.push(html);
-                });
-                $('#history-dialog-table').html(cc.join(""));
-            });
-        //$('#history-dialog').show();
-        $("#history-dialog").dialog({
-            width: 800,  height: 600
-        });
-    };
+    document.getElementById('action-center-history-case').onclick = function () {action_center_history();};
+    document.getElementById('top-nav-action-center-history-case').onclick = function () {action_center_history();};
 
 //Assign-Case------------------------------------------------------------------------------------
     document.getElementById('assign-case-search-input').onkeyup = function () {
@@ -915,26 +972,34 @@ $(document).ready(function () {
             $('#assign-case-search-results').fadeOut(200);
         }
     };
-
-    document.getElementById('close-case-reason').onchange = function () {
-        other_reason_close_case();
+    document.getElementById('top-nav-assign-case-search-input').onkeyup = function () {
+        if (this.value !== "") {
+            $('#top-nav-top-five').fadeOut(200);
+            $('#top-nav-nearest-assigned-volunteers').fadeOut(200);
+            setTimeout(function () {
+                $('#top-nav-assign-case-search-results').css('display', 'block');
+                $('#top-nav-assign-case-search-results').fadeIn(200);
+            }, 200);
+        } else {
+            $('#top-nav-top-five').fadeIn(200);
+            $('#top-nav-nearest-assigned-volunteers').fadeIn(200);
+            $('#top-nav-assign-case-search-results').css('display', 'none');
+            $('#top-nav-assign-case-search-results').fadeOut(200);
+        }
     };
+
+    document.getElementById('close-case-reason').onchange = function () {other_reason_close_case("");};
+    document.getElementById('top-nav-close-case-reason').onchange = function () {other_reason_close_case("top-nav-");};
 
 //------Close-Case-Button--aka--Submit-Close-Case----------------------------------------------------------------------
-    document.getElementById('close-case-submit-btn').onclick = function () {
-        if (document.getElementById('close-case-reason').value === "Other" && document.getElementById('close-case-other-reason').value === "") {
-            document.getElementById('close-case-other-reason').style.border = "2px solid red";
-            document.getElementById('close-case-other-reason').placeholder = "You must specify a Reason";
-        }
-        else if (document.getElementById('close-case-reason').value === ""){
-            document.getElementById('close-case-reason').style.border = "2px solid red";
-        } 
-        else {
-            closeCaseReq(currentCaseId);
-        }
-    };
+    document.getElementById('close-case-submit-btn').onclick = function () {close_case_validation("");};
+    document.getElementById('top-nav-close-case-submit-btn').onclick = function () {close_case_validation("top-nav-");};
+
     document.getElementById('close-case-other-reason').addEventListener("keyup", function () {  //Removes Red border while typing
         document.getElementById('close-case-other-reason').style.border = "1px solid #666";
+    });
+    document.getElementById('top-nav-close-case-other-reason').addEventListener("keyup", function () {  //Removes Red border        while typing
+        document.getElementById('top-nav-close-case-other-reason').style.border = "1px solid #666";
     });
 
 //------Keyboard-Shortcuts--------------------------------------------------------------------------------------------------
@@ -953,16 +1018,13 @@ $(document).ready(function () {
 
 //-----Disable-Alt+Left+Arrow----and------Disbale-Alt+Right+Arrow--------------------------------------------------------------
     document.onkeydown = function (e) {
-        if (e.altKey && e.which == 37 || e.altKey && e.which == 39) {
-            e.preventDefault();
-        }
+        if (e.altKey && e.which == 37 || e.altKey && e.which == 39) e.preventDefault();
     };
 
 //------Approve-Reject-Buttons-Effect-------------------------------------------------------------------------------------
     for (let i = 0; i < document.getElementsByClassName("approve").length; i++) {
         document.getElementsByClassName("approve")[i].onclick = function () {
             if (event.target.tagName == "IMG" && event.target.parentElement.parentElement.classList.contains('approve')) {
-                console.log(event.target);
                 event.target.setAttribute('src', '/img/approved-click.png');
                 $(event.target.parentElement.parentElement.parentElement.parentElement).fadeOut();
             } else return false;
@@ -975,7 +1037,7 @@ $(document).ready(function () {
                 event.target.setAttribute('th:src', '@{/img/rejected-click.png}');
                 $(event.target.parentElement.parentElement.parentElement.parentElement).fadeOut();
             } else alert("Error");
-        }
+        };
     }
 
 //------Enlarge-Old-or-New-Photo---------------------------------------------------------------------------------------
@@ -983,11 +1045,7 @@ $(document).ready(function () {
         enlargePhoto(this);
     });
 //----User-Profile-DP-Enlarge-------------------------------------------------
-    $('#user-profile-left-side').children('img').click(function () {
-        enlargePhoto(this);
-    });
-
-    $('.new-photo').children("figure").children("img").click(function () {
+    $('#user-profile-left-side, .new-photo').children('img').click(function () {
         enlargePhoto(this);
     });
 
@@ -997,7 +1055,6 @@ $(document).ready(function () {
         $('#photo-enlarge').children('img').attr('src', enlarge_source);
         $('#photo-enlarge').children('img').css("background-color", "#f4f4f4");
     }
-
     $('#image_enlarge_back_button').click(function () {
         $('#dynamic_image_enlarge').css('display', 'none');
     });
@@ -1018,9 +1075,7 @@ $(document).ready(function () {
         clearTimeout(hide_tooltip_timeOut);
         $("#vol-description-tooltip").css("display", "block");
     };
-    document.getElementById("vol-description-tooltip").onmouseout = function (e) {
-        hide_vol_tooltip();
-    };
+    document.getElementById("vol-description-tooltip").onmouseout = function (e) {hide_vol_tooltip();};
 
 //------BACKEND-INTEGRATION-----------------------------------------------------------------------------------
     $('#raise-a-case-form').submit(function (event) {
@@ -1049,7 +1104,6 @@ $(document).ready(function () {
         })
         // using the done promise callback
             .done(function (data) {
-                console.log(data);
                 if (data && data == 'error') {
                     $('#error').text(data);
                     return;
@@ -1125,13 +1179,14 @@ $(document).ready(function () {
 
     });
 
-    $("#assign-case-search-input").autocomplete({
+    $("#assign-case-search-input, #top-nav-assign-case-search-input").autocomplete({
         minLength: 2,
         delay: 500,
         source: function (request, response) {
             $("#assign_case_loading").css("display", "block");
             $.getJSON("/getVolListForSearch", request, function (result) {
-                $("#assign_case_loading").css("display", "none");
+                if(page_history === "top-nav-action_centre_assign_case") $("#top-nav-assign_case_loading").css("display", "none");
+                else $("#assign_case_loading").css("display", "none");
                 response($.map(result, function (item) {
                     return {
                         // following property gets displayed in drop down
@@ -1148,11 +1203,20 @@ $(document).ready(function () {
 
         select: function (event, ui) {
             if (ui.item) {
-                var html = aVol + ui.item.userDetails.userName + bVol + cVol + ui.item.userDetails.userId + dVol;
+                var html;
                 userIdVsInfoMap[ui.item.userDetails.userId] = ui.item.userDetails;
-                $('#search_vol').html(html);
-                $("#assign-case-search-input").autocomplete("close");
-                $("#assign-case-search-input").val('');
+                if(page_history[0] === "top-nav-action_centre_assign_case"){
+                    html = top_nav_a_Vol + ui.item.userDetails.userName + top_nav_b_Vol + top_nav_c_Vol + ui.item.userDetails.userId + top_nav_d_Vol;
+                    $('#top-nav-search_vol').html(html);
+                    $("#top-nav-assign-case-search-input").autocomplete("close");
+                    $("#top-nav-assign-case-search-input").val('');
+                }
+                else {
+                    html = aVol + ui.item.userDetails.userName + bVol + cVol + ui.item.userDetails.userId + dVol;
+                    $('#search_vol').html(html);
+                    $("#assign-case-search-input").autocomplete("close");
+                    $("#assign-case-search-input").val('');
+                }
                 return false;
             }
         }

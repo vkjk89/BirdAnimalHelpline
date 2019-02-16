@@ -1,9 +1,9 @@
 var usersPendingMap = new Map();
 
 function accept_reject(accept_reject) {
+    currentUserForApproval = data[slideIndex].userId;
     data.splice(slideIndex,1);
-    var userId = data[slideIndex].userId;
-    acceptReject(userId, accept_reject);
+    acceptReject(accept_reject);
     createBullets();
     slide_member(0);
 }
@@ -51,7 +51,6 @@ function user_auth(slideIndex, item){
     $(".slider-member-bullet-"+slideIndex).addClass("case-slider-active-div");
     $("#slider-wrapper").fadeOut(200);
     $("#slider-wrapper").fadeIn(200);
-    currentUserForApproval = data[slideIndex].userId;
     setTimeout(function(){
     $(".user-accept-dp img").attr('src', "data:image/png;base64," + data[slideIndex].userImage.image);
     $(".user-role").html(data[slideIndex].role);
