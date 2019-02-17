@@ -108,6 +108,9 @@ public class CaseDao {
                 caseTxn.setToUserId(rs.getLong("to_user_id"));
                 caseTxn.setStatus(rs.getString("status"));
                 caseTxn.setTransferDate(rs.getTimestamp("transfer_date"));
+                if(caseTxn.getTransferDate() != null) {
+                    caseTxn.setTransferDateStr(formatter.format(caseTxn.getTransferDate().toLocalDateTime()));
+                }
                 return caseTxn;
             });
 

@@ -318,7 +318,7 @@ public class UserDao {
             params.put("userName", "%" + term + "%");
             params.put("userId", userId);
             namedParameterJdbcTemplate.query(
-                    userAllWithAddressQ + " where u.user_name like :userName and u.user_id != :userId ",
+                    userAllWithAddressQ + " where u.user_name like :userName or ui.first_name like :userName or ui.last_name like :userName and u.user_id != :userId ",
                     params, rowMapper
             );
             return new ArrayList<>(rowMapper.map.values());

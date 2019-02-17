@@ -674,11 +674,11 @@ function action_center_history(){
             $.each(data, function (i, item) {
                 var html = a+b+(i+1)+c;
                 html += b+item.fromUser+'('+item.fromUserRole+')'+c;
-                html += b+item.toUser+'('+item.toUserRole+')'+c;
-                html += b+(item.isAck == 1? "Yes": item.isAck == -1 ? "No":"Pending")+c;
+                html += b+(item.toUser == null ? "N/A" : item.toUser) +'('+(item.toUserRole == null ? "N/A" :item.toUserRole )+')'+c;
+                html += b+(item.isAck == 1? "Yes": item.isAck == -1 ? "No": item.toUser == null ? "":"Pending")+c;
                 html += b+item.amount+c;
-                html += b+item.desc+c;
-                html += b+item.transferDate+c;
+                html += b+(item.desc == null ? item.status == null ? "" : item.status :item.desc )+c;
+                html += b+item.transferDateStr+c;
                 html += d;
                 cc.push(html);
             });
