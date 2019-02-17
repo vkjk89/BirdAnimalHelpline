@@ -114,7 +114,9 @@ function layer_change(layer){
 function top_nav_user_cases(data) {
     $("#user-profile").hide();
     $("#top-nav-case-details").show();
-    $("#top-nav-case-details-form").css("display","flex");
+    $("#top-nav-case-details-form").css({"display":"flex", "opacity":"1", "pointerEvents":""});
+    $('#top-nav-content-assign-case').hide();
+    $('#top-nav-content-close-case').hide();
     page_history.unshift("vol_cases_details");
     currentCaseId = $(data).find(".case-id").text();
     var caseInfo = caseIdVsInfoMap[currentCaseId];
@@ -202,8 +204,7 @@ function raise_a_case() {
     document.getElementById('raise-a-case-content').style.display = "block";
     document.getElementById('my-cases-content').style.display = "none";
     document.getElementById('user-data-change-approvals-content').style.display = "none";
-    document.getElementById('top-nav-search-results').style.display = "none";
-    document.getElementById("top-nav-search").value = "";
+    document.getElementById('top-nav-content-close-case').style.display = "none";
     document.getElementById("user-profile").style.display = "none";
     document.getElementById("case_profile").style.display = "none";
     document.getElementById('case-details').style.display = "none";
@@ -276,21 +277,25 @@ function user_data_change_approvals() {
 }
 
 function top_nav_search_user_profile() {
-    //$("#top-nav-search-results").css("display","none");
-    $("#top-nav-case-details").css("display","none");
-    $("#user-profile").css("display","block");
-    $("#user-profile-cases-content").css("display","none");
+    $("#top-nav-case-details").hide();
+    $("#user-profile").show();
+    $("#user-profile-cases-content").hide();
     page_history.unshift("top_nav_search_user_profile");
     $("#user-profile-about-content").fadeIn();
     user_profile_basic_details();
 }
 
 function top_nav_search_case_details(identifier1) {
-    document.getElementById('top-nav-case-details').style.display = "block";
-    document.getElementById('top-nav-case-details-form').style.display = "flex";
-    document.getElementById('top-nav-search-results').style.display = "none";
-    document.getElementById("user-profile").style.display = "none";
-    document.getElementById("case_profile").style.display = "none";
+    $('#top-nav-case-details').show();
+    $('#top-nav-assign-case-search-results').hide();
+    $('#top-nav-top-five').fadeIn(200);
+    $('#top-nav-nearest-assigned-volunteers').fadeIn(200);
+    $("#top-nav-case-details-form").css({"display":"flex", "opacity":"1", "pointerEvents":""});
+    $('#top-nav-content-assign-case').hide();
+    $('#top-nav-content-close-case').hide();
+    $('#top-nav-search-results').hide();
+    $("#user-profile").hide();
+    $("#case_profile").hide();
     layer_change("layer2");
     $("#top-nav-heading-text").html("Case Details | Case No.: " + " ");
     $("#top-nav-back-close-btn-wrapper").css("display","block");
