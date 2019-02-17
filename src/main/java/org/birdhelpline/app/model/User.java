@@ -1,12 +1,17 @@
 package org.birdhelpline.app.model;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
+import org.birdhelpline.app.dataaccess.UserDao;
 
 import javax.security.auth.Subject;
 import java.io.Serializable;
 import java.security.Principal;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class User implements Principal, Serializable {
     private Long userId;
@@ -32,9 +37,28 @@ public class User implements Principal, Serializable {
     private Integer loginCount;
     private UserAddressInfo homeAddr = new UserAddressInfo();
     private UserAddressInfo officeAddr = new UserAddressInfo();
-    private List<UserServiceTimeInfo> userServiceTimeInfos;
+    private Map<Long,List<UserServiceTimeInfo>> serviceTimeInfoMap = new HashMap<>();
     private UserImage userImage = new UserImage();
 
+    /*public String getFormattedUserServiceTimeStr() {
+        JsonObject jsonObject = new JsonObject();
+        if(userServiceTimeInfos != null) {
+            Map<Long,UserServiceTimeInfo> map = new HashMap<>();
+            userServiceTimeInfos.stream().forEach(usti -> {
+                UserServiceTimeInfo userServiceTimeInfo = map.get(usti.getPincodeId());
+                if(userServiceTimeInfo == )
+            });
+            JsonArray pinCodeArray = new JsonArray();
+            for(UserServiceTimeInfo userServiceTimeInfo : userServiceTimeInfos) {
+                PinCodeLandmarkInfo pinCodeLandmarkInfo = UserDao.getPinCodeLandmarkInfo(userServiceTimeInfo.getPincodeId());
+                JsonObject pinCodeJson = new JsonObject();
+                pinCodeJson.addProperty("fromTime" , userServiceTimeInfo.getFromTime());
+                pinCodeJson.addProperty("toTime", userServiceTimeInfo.getToTime());
+                pinCodeArray.add(pinCodeJson);
+            }
+        }
+        return jsonObject.toString();
+    }*/
     public String getEncodedImage() {
         if (userImage != null && userImage.getImage() != null)
             return Base64.encode(userImage.getImage());
@@ -234,14 +258,6 @@ public class User implements Principal, Serializable {
         this.officeAddr = officeAddr;
     }
 
-    public List<UserServiceTimeInfo> getUserServiceTimeInfos() {
-        return userServiceTimeInfos;
-    }
-
-    public void setUserServiceTimeInfos(List<UserServiceTimeInfo> userServiceTimeInfos) {
-        this.userServiceTimeInfos = userServiceTimeInfos;
-    }
-
     public UserImage getUserImage() {
         return userImage;
     }
@@ -257,6 +273,7 @@ public class User implements Principal, Serializable {
     public void setSecurityQIdStr(String securityQIdStr) {
         this.securityQIdStr = securityQIdStr;
     }
+
 
     @Override
     public String toString() {
@@ -284,8 +301,16 @@ public class User implements Principal, Serializable {
                 ", loginCount=" + loginCount +
                 ", homeAddr=" + homeAddr +
                 ", officeAddr=" + officeAddr +
-                ", userServiceTimeInfos=" + userServiceTimeInfos +
+                ", serviceTimeInfoMap=" + serviceTimeInfoMap +
                 ", userImage=" + userImage +
                 '}';
+    }
+
+    public Map<Long, List<UserServiceTimeInfo>> getServiceTimeInfoMap() {
+        return serviceTimeInfoMap;
+    }
+
+    public void setServiceTimeInfoMap(Map<Long, List<UserServiceTimeInfo>> serviceTimeInfoMap) {
+        this.serviceTimeInfoMap = serviceTimeInfoMap;
     }
 }

@@ -28,11 +28,12 @@ import java.util.*;
 public class UserDao {
     private static final Logger logger = LoggerFactory.getLogger(UserDao.class);
 
-    private Map<String, Integer> userRoleVsRoleId = new HashMap<>();
-    private Map<Integer, String> securityQIdVSSecurityQ = new LinkedHashMap<>();
-    private List<PinCodeLandmarkInfo> listPincodeLandMarks = new ArrayList<>();
-    private Set<String> listBirds = new HashSet<>();
-    private Set<String> listAnimals = new HashSet<>();
+    private static final Map<String, Integer> userRoleVsRoleId = new HashMap<>();
+    private static final Map<Integer, String> securityQIdVSSecurityQ = new LinkedHashMap<>();
+    private static final List<PinCodeLandmarkInfo> listPincodeLandMarks = new ArrayList<>();
+    private static final Map<Long,PinCodeLandmarkInfo> mapPincodeIdVsPinCodeLandmarkInfo = new HashMap<>();
+    private static final Set<String> listBirds = new HashSet<>();
+    private static final Set<String> listAnimals = new HashSet<>();
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -69,7 +70,9 @@ public class UserDao {
                     long pinCode = resultSet.getLong("pincode");
                     long pinCodeId = resultSet.getLong("pin_land_id");
                     String landMark = resultSet.getString("landmark");
-                    listPincodeLandMarks.add(new PinCodeLandmarkInfo(pinCodeId, pinCode, landMark));
+                    PinCodeLandmarkInfo pinCodeLandmarkInfo = new PinCodeLandmarkInfo(pinCodeId, pinCode, landMark);
+                    listPincodeLandMarks.add(pinCodeLandmarkInfo);
+                    mapPincodeIdVsPinCodeLandmarkInfo.put(pinCodeId,pinCodeLandmarkInfo);
                 }
         );
 
@@ -269,17 +272,19 @@ public class UserDao {
             return ps;
         });
 
-        for (UserServiceTimeInfo serviceTimeInfo : user.getUserServiceTimeInfos()) {
-            jdbcTemplate.update((Connection con) -> {
-                PreparedStatement ps = con.prepareStatement(
-                        "insert into user_service_time_info (user_id,pin_land_id,from_time,to_time) values (?,?,?,?)"
-                );
-                ps.setLong(1, user.getUserId());
-                ps.setLong(2, serviceTimeInfo.getPincodeId());
-                ps.setInt(3, serviceTimeInfo.getFromTime());
-                ps.setInt(4, serviceTimeInfo.getToTime());
-                return ps;
-            });
+        for (Map.Entry<Long,List<UserServiceTimeInfo>> entry : user.getServiceTimeInfoMap().entrySet()) {
+            for(UserServiceTimeInfo usti : entry.getValue()) {
+                jdbcTemplate.update((Connection con) -> {
+                    PreparedStatement ps = con.prepareStatement(
+                            "insert into user_service_time_info (user_id,pin_land_id,from_time,to_time) values (?,?,?,?)"
+                    );
+                    ps.setLong(1, user.getUserId());
+                    ps.setLong(2, usti.getPincodeId());
+                    ps.setInt(3, usti.getFromTime());
+                    ps.setInt(4, usti.getToTime());
+                    return ps;
+                });
+            }
         }
         //updateUserLoginDetails(user);
     }
@@ -364,6 +369,14 @@ public class UserDao {
         }
     }
 
+    public static PinCodeLandmarkInfo getPinCodeLandmarkInfo(Long pincodeId) {
+        return mapPincodeIdVsPinCodeLandmarkInfo.get(pincodeId);
+    }
+
+    public static Map<Long,PinCodeLandmarkInfo> getPinCodeLandmarkInfoMap() {
+        return mapPincodeIdVsPinCodeLandmarkInfo;
+    }
+
     public List<PinCodeLandmarkInfo> getPinCodeLandMarks() {
         return listPincodeLandMarks;
     }
@@ -411,7 +424,7 @@ public class UserDao {
     public void disableUser(User user) {
         this.jdbcTemplate.update(connection -> {
                     PreparedStatement ps = connection.prepareStatement(
-                            "update user u set enabled =  -1 where u.user_id=?");
+                            "update user u set enabled = 0 where u.user_id=?");
 
                     ps.setLong(1, user.getUserId());
                     return ps;

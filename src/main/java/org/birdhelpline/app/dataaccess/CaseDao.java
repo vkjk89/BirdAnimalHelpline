@@ -21,17 +21,18 @@ import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.DoubleBinaryOperator;
 import java.util.function.Supplier;
 
 @Repository
 public class CaseDao {
     private static final Logger logger = LoggerFactory.getLogger(CaseDao.class);
-    private static final SimpleDateFormat FORMATTED_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss");
     private static final String caseInfoByCaseIdQWithoutTxn = "select * from case_info where case_id = ?";
     private static final String caseInfoBySearchTermQWithoutTxn = "select * from case_info where case_id like :searchTerm";
     private static final String caseTxnsQ = "select * from case_txn where case_id = ?";
@@ -55,7 +56,8 @@ public class CaseDao {
         caseInfo.setCurrentUserId(rs.getLong("current_user_id"));
         Timestamp creationDate = rs.getTimestamp("creation_date");
         caseInfo.setCreationDate(creationDate);
-        caseInfo.setCreationDateStr(FORMATTED_DATE_FORMAT.format(new Date(creationDate.getTime())));
+        LocalDateTime localDateTime = creationDate.toLocalDateTime();
+        caseInfo.setCreationDateStr(formatter.format(localDateTime));
         caseInfo.setLastModificationDate(rs.getTimestamp("last_modification_date"));
         caseInfo.setCloseDate(rs.getTimestamp("close_date"));
         caseInfo.setDesc(rs.getString("description"));
@@ -230,12 +232,9 @@ public class CaseDao {
 
     private Timestamp getTransferCloseDate(String closeDate) {
         Timestamp closeDateToUse = new Timestamp(new Date().getTime());
-        try {
-            if (closeDate != null) {
-                closeDateToUse = new Timestamp(FORMATTED_DATE_FORMAT.parse(closeDate).getTime());
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if (closeDate != null) {
+//                closeDateToUse = new Timestamp(FORMATTED_DATE_FORMAT.parse(closeDate).getTime());
+            closeDateToUse =  Timestamp.valueOf(LocalDateTime.parse(closeDate,formatter));
         }
         return closeDateToUse;
     }
