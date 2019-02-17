@@ -81,6 +81,97 @@ main {
     margin: -0.25vh 0vw 0vw 2vw;
 }
 
+#notification-bell-wrapper {
+    background-color: white;
+    float: right;
+    border-radius: 5px;
+    top: -1vh;
+}
+
+#notification_bell {
+    width: 9vw;
+}
+
+.notification-clicked{
+    animation: bell-animate 2s ease-in-out 0s infinite;
+}
+@keyframes bell-animate {
+    0% {
+        transform: rotate(0deg);
+    }
+    33% {
+        transform: rotate(35deg);
+    }
+    66% {
+        transform: rotate(-70deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+#notification-center {
+    display: none;
+    box-sizing: border-box;
+    position: fixed;
+    z-index: 51;
+    top: 10vh;
+    left: 0;
+    width: 80vw;
+    max-height: 70vh;
+    margin-left: 10vw;
+    padding: 5vw;
+    overflow: auto;
+    border: 1px solid #374047;
+    background-color: #f1f0ee;
+    letter-spacing: 1px;
+}
+
+#notification-center::before {
+    content: '';
+    position: fixed;
+    width: 7vw;
+    height: 7vw;
+    left: 76vw;
+    top: 8vh;
+    border: 1px solid #374047;
+    border-left: transparent;
+    border-top: transparent;
+    transform: rotate(225deg);
+    background: #f1f0ee;
+    z-index: 52;
+}
+
+#notification-heading {
+    box-sizing: border-box;
+    max-width: 70vw;
+    max-height: 70vh;
+    font-size: 1.2em;
+    border-bottom: 1px solid #3d4042;
+}
+
+ul {
+    margin-left: -2vw;
+    margin-right: 2vw;
+} ul li {list-style-type: decimal;}
+
+.reassign-case {
+    display: block;
+    position: relative;
+    float: right;
+    margin-top: 2vh;
+    background-color: #374047;
+    padding: 2vw 3vw;
+    color: white;
+    letter-spacing: 1px;
+    font-size: 1em;
+}
+
+@media only screen and (min-height: 775px) and (max-height: 900px) {
+    #notification-center::before {
+        top: 8.5vh;
+    }
+}
 /*------------------------------SIDE-NAV-----------------------------*/
 #side-nav {
     display: none;
@@ -243,7 +334,7 @@ main {
 #case-id {
     padding: 2vw;
     max-width: 15vw;
-}
+} #case-id:focus {border: 1px solid #CCC;}
 
 #update-case-date {
     box-sizing: border-box;

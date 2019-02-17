@@ -1190,7 +1190,7 @@ input[type="search"]:focus::placeholder {
     border-top: none;
 }
 
-#table11_tab_content_loading, #table22_tab_content_loading, #table33_tab_content_loading, #table1_tab_content_loading, #table2_tab_content_loading, #table3_tab_content_loading {
+#table11_tab_content_loading, #table22_tab_content_loading, #table33_tab_content_loading, #table1_tab_content_loading, #table2_tab_content_loading, #table3_tab_content_loading, #top_five_loading, #nearest_vol_loading, #top-nav-top_five_loading, #top-nav-nearest_vol_loading {
     max-width: 10vw;
 }
 

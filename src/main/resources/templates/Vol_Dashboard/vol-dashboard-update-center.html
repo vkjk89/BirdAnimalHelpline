@@ -21,7 +21,10 @@
     <script src="/static/js/jquery-ui.min.js" th:src="@{/js/jquery-ui.min.js(v=1550307657)}"></script>
 </head>
 <body>
-
+    <div id="loading-screen">
+        <img src="/static/img/loading-3.gif" th:src="@{/img/loading-3-mobile.gif}" alt="Loading..." id="loading-main">
+    </div>
+    <script>document.getElementById("loading-screen").style.display = "block";</script>
     <nav id="top-nav">
         <span id="profile-options">&#9776;</span>
         <button id="user-dp" type="button">
@@ -29,6 +32,9 @@
             <img alt="User-Display-Picture" height="" src="/static/img/display-picture11.png" th:if="${user.getUserImage().getImage() != null}" th:src="${'data:image/png;base64,'+user.getEncodedImage()}" width="auto">
         </button>
         <span id="navbar-username" th:text="${user.userName}">#Username</span>
+        <span id="notification-bell-wrapper">
+            <img src="/static/img/notification.png" th:src="@{/img/notification.png}" id="notification_bell">
+        </span>
     </nav>
 
     <nav id="side-nav">
@@ -67,6 +73,19 @@
         </section>
     </nav>
 
+    <section id="notification-center">
+        <div id="notification-heading">Notification Center</div>
+        <div id="notification-body">
+            <p id="empty-notifications">No new notifications</p>
+            <p id="notification-ul-wrapper">
+                <ul id="notification-ul">
+                    <li id="notification-1" class="notification">Case #3345 has been assigned back to you as #Assigned_to has rejected it<br><button class="reassign-case" onclick="window.location.href = 'updateCase?caseId='">Reassign Case</button>
+                    </li>
+                </ul>
+            </p>
+        </div>
+    </section>
+    
     <main id="update-case-type">
         <div class="btn-group" role="group">
             <button type="button" class="btn btn-secondary active" id="assign-case-toggle-btn">Assign Case</button>
@@ -80,7 +99,7 @@
             <div id="update-case-wrapper">
                 <div id="update-case-basic-details">
                     <div id="caseID-wrapper">
-                        <div id="caseID-label" class="update-case-label">Case ID: </div>
+                        <div id="caseID-label" class="update-case-label">Case No: </div>
                         <input type="text" th:value="${caseInfo.caseId}" name="caseId" id="case-id" value="#Case_ID" readonly>
                     </div>
                     <div for="update-case-date" class="update-case-label">Date of Update: </div>
@@ -93,6 +112,7 @@
                 <div id="close-case-reason-wrapper">
                     <label for="close-case-reason-select">Select Reason: </label>
                     <select name="caseCloseReason" id="close-case-reason-select" required>
+                        <option value="">Choose an Option</option>
                         <option value="healthy">Healthy</option>
                         <option value="dead">Dead</option>
                         <option value="other">Other</option>

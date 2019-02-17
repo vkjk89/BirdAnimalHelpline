@@ -21,11 +21,17 @@ $(document).ready(function () {
         window.location.href="/";
     });
     caseImageRetriever($('#case-id-case-details').val(), "case-photos-case-details");
+    $("#loading-screen").hide();
     $('#action-center-main-div').click(
         function () {
             window.location.href = "updateCase?caseId=" + $('#case-id-case-details').val();
         }
     );
+
+    $('#notification_bell').click(function(){
+        $('#notification-center').css({"opacity":"1", "pointerEvents":""});
+        $('#notification-center').fadeToggle(300);
+    });
 
     $('#action-center-main-history-div').click( function () {
         var formData = {
@@ -43,6 +49,7 @@ $(document).ready(function () {
             dataType: 'json'
         })
             .done(function (data) {
+                console.log(data);
                 $('#history-dialog-table').html('');
                 var cc = [];
                 cc.push(tableHeader);
@@ -57,12 +64,11 @@ $(document).ready(function () {
                     html += d;
                     cc.push(html);
                 });
-                console.log(cc);
                 $('#history-dialog-table').html(cc.join(""));
             });
         //$('#history-dialog').show();
         $("#history-dialog").dialog({
-            width: 20,  height: 400
+            width: 100,  height: 100, resizable: false, draggable: false
         });
     });
     document.getElementById('profile-options').onclick = function openSideNav() {
@@ -73,6 +79,8 @@ $(document).ready(function () {
         $('#action-center-main-div').css("opacity", "0.1");
         $('#action-center-main-history-div').css("opacity", "0.1");
         $('.main').css("pointerEvents", "none");
+        document.getElementById("notification-center").style.opacity = "0.1";
+        document.getElementById("notification-center").style.pointerEvents = "none";
     };
 
     document.getElementById('close-btn').onclick = function closeSideNav() {
@@ -83,6 +91,9 @@ $(document).ready(function () {
         $('#action-center-main-div').css("opacity", "1");
         $('#action-center-main-history-div').css("opacity", "1");
         $('.main').css("pointerEvents", "");
+        document.getElementsByTagName("main")[0].style.pointerEvents = "";
+        document.getElementById("notification-center").style.opacity = "1";
+        document.getElementById("notification-center").style.pointerEvents = "";
     };
 
     $('#image_enlarge_back_button').click(function () {
@@ -115,6 +126,10 @@ $(document).ready(function () {
                 $('#action-center-main-history-div').css("opacity", "1");
                 $('.main').css("pointerEvents", "");
             }
+        }
+        if(!e.target.matches('#notification_bell') && document.getElementById('notification-center').style.display === "block"){
+            $('#notification-center').css({"opacity":"1", "pointerEvents":""});
+            $('#notification-center').fadeToggle(300);
         }
     };
 });

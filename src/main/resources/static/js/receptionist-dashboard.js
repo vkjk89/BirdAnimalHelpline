@@ -563,6 +563,8 @@ function getVolInfo(param) {
                 cc.push(html);
             });
             $('#'+param+'nearest_5_vol').html(cc.join(""));
+            $("#"+param+"top_five_loading").hide();
+            $("#"+param+"nearest_vol_loading").hide();
         });
 }
 
@@ -622,6 +624,10 @@ function closeCaseReq(caseId) {
 }
 
 function action_centre_assign_case(param){
+    var top_five_loading = '<img src="/img/loading-simple.gif" id="'+param+'top_five_loading" alt="Loading">';
+    var nearest_vol_loading = '<img src="/img/loading-simple.gif" id="'+param+'nearest_vol_loading" alt="Loading">';
+    $('#'+param+'top-five').append(top_five_loading);
+    $('#'+param+'nearest-assigned-volunteers').append(nearest_vol_loading);
     document.getElementById(param+'case-details-form').style.display = "none";
     document.getElementById(param+'content-assign-case').style.display = "block";
     page_history.unshift(param+"action_centre_assign_case");
@@ -656,8 +662,6 @@ function action_center_close_case(param){
 
 function action_center_history(){
     var caseId = $("#case-id-case-details").val();
-    //layer_change('layer1');
-    //$("#heading-text").html("Case Details | Case No.: " + caseId + " | History");
     var formData = {
         'caseId': currentCaseId
     };
@@ -691,7 +695,7 @@ function action_center_history(){
         });
     //$('#history-dialog').show();
     $("#history-dialog").dialog({
-        width: 800,  height: 600
+        width: 800,  height: 600, resizable: false, draggable: false
     });
 }
 

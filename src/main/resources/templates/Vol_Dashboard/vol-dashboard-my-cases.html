@@ -24,10 +24,10 @@
     </style>
 </head>
 <body>
-    
-<!--<div id="loading-screen">
-    <img src="/static/img/loading-3.gif" th:src="@{/img/loading-3-mobile.gif}" alt="Loading..." id="loading-main">
-</div>-->
+    <div id="loading-screen">
+        <img src="/static/img/loading-3.gif" th:src="@{/img/loading-3-mobile.gif}" alt="Loading..." id="loading-main">
+    </div>
+    <script>document.getElementById("loading-screen").style.display = "block";</script>
 <div id="dynamic_image_enlarge">
     <div id="photo-enlarge"><img src="/static/img/selected-photo.png" th:src="@{/img/selected-photo.png}"></div>
     <button id="image_enlarge_back_button" type="button">Back</button>
@@ -39,6 +39,9 @@
         <img alt="User-Display-Picture" height="" src="/static/img/display-picture11.png" th:if="${user.getUserImage().getImage() != null}" th:src="${'data:image/png;base64,'+user.getEncodedImage()}" width="auto">
     </button>
     <span id="navbar-username" th:text="${user.userName}">#Username</span>
+    <span id="notification-bell-wrapper">
+        <img src="/static/img/notification.png" th:src="@{/img/notification.png}" id="notification_bell">
+    </span>
 </nav>
 
 <nav id="side-nav">
@@ -78,6 +81,19 @@
 </nav>
 
 <main>
+    <section id="notification-center">
+        <div id="notification-heading">Notification Center</div>
+        <div id="notification-body">
+            <p id="empty-notifications">No new notifications</p>
+            <p id="notification-ul-wrapper">
+                <ul id="notification-ul">
+                    <li id="notification-1" class="notification">Case #3345 has been assigned back to you as #Assigned_to has rejected it<br><button class="reassign-case" onclick="window.location.href = 'updateCase?caseId='">Reassign Case</button>
+                    </li>
+                </ul>
+            </p>
+        </div>
+    </section>
+    
     <button th:if="${caseInfo.active and caseInfo.currentUserId == user.userId}" id="action-center-main-div">Update Case</button>
     <button id="action-center-main-history-div">Case History</button>
     <section class="my-cases-case-details" id="my-cases-case-details">
@@ -86,7 +102,7 @@
             <hr>
             <div id="body-form-top-side-case-details">
                 <div id="id-case-details">
-                    <label for="case-id-case-details">Case ID </label>
+                    <label for="case-id-case-details">Case No.</label>
                     <input th:value="${caseInfo.caseId}" autocomplete="off" disabled id="case-id-case-details" name="case-id-case-details" required type="number">
                 </div>
                 <label for="animal-type-case-details">#Animal/Bird type: </label>

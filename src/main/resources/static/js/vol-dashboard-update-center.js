@@ -1,34 +1,4 @@
 var search_results_counter = 1;
-/*function dynamic_search_results(){
-    //CREATING-ELEMENTS
-    var vol_details = document.createElement("div");
-        vol_details.classList.add("vol-details");
-
-    var vol_details_radio = document.createElement("input");
-        vol_details_radio.classList.add("vol-details-radio");
-        vol_details_radio.setAttribute("type","radio");
-        vol_details_radio.setAttribute("name","vol-details-radio");
-        vol_details_radio.setAttribute("id","vol-details-radio-member-"+search_results_counter);
-        if(search_results_counter === 1) vol_details_radio.setAttribute("required","");
-
-    var vol_name = document.createElement("label");
-        vol_name.classList.add("vol-name");
-        vol_name.setAttribute("for","vol-details-radio-member-"+search_results_counter);
-        vol_name.innerHTML = "#Vol_Name";
-
-    var vol_role = document.createElement("label");
-        vol_role.classList.add("vol-role");
-        vol_role.setAttribute("for","vol-details-radio-member-"+search_results_counter);
-        vol_role.innerHTML = "#Vol_Role";
-
-    //APPENDING-ELEMENTS
-    vol_details.appendChild(vol_details_radio);
-    vol_details.appendChild(vol_name);
-    vol_details.appendChild(vol_role);
-
-    document.getElementById("assign-case-search-results").appendChild(vol_details);
-    search_results_counter++;
-}*/
 
 $(document).ready(function () {
     $("#logout").on("click", function (e) {
@@ -38,6 +8,11 @@ $(document).ready(function () {
     $("#home").on("click", function (e) {
         e.preventDefault();
         window.location.href="/";
+    });
+
+    $('#notification_bell').click(function(){
+        $('#notification-center').css({"opacity":"1", "pointerEvents":""});
+        $('#notification-center').fadeToggle(300);
     });
 
     $("#search-input-assign-case").autocomplete({
@@ -73,6 +48,8 @@ $(document).ready(function () {
         document.getElementById('side-nav').classList.add('side-nav-anim');
         document.getElementById('top-nav').style.opacity = "0.1";
         $("main").css({"opacity": "0.1", "pointerEvents": "none"});
+        document.getElementById("notification-center").style.opacity = "0.1";
+        document.getElementById("notification-center").style.pointerEvents = "none";
     };
 
     document.getElementById('close-btn').onclick = function closeSideNav() {
@@ -80,6 +57,8 @@ $(document).ready(function () {
         document.getElementById('side-nav').style.display = "none";
         document.getElementById('top-nav').style.opacity = "1";
         $("main").css({"opacity": "1", "pointerEvents": ""});
+        document.getElementById("notification-center").style.opacity = "1";
+        document.getElementById("notification-center").style.pointerEvents = "";
     };
 
     window.onclick = function (e) {
@@ -91,14 +70,20 @@ $(document).ready(function () {
                 $("main").css({"opacity": "1", "pointerEvents": ""});
             }
         }
+        if(!e.target.matches('#notification_bell') && document.getElementById('notification-center').style.display === "block"){
+            $('#notification-center').css({"opacity":"1", "pointerEvents":""});
+            $('#notification-center').fadeToggle(300);
+        }
     };
 
     var now = new Date();
     var day = ("0" + now.getDate()).slice(-2);
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
     var today = now.getFullYear() + "-" + (month) + "-" + (day);
+    var min = now.getFullYear()-1 + "-" + (month) + "-" + (day);
     $('#update-case-date').val(today);
     $('#update-case-date').attr("max", today);
+    $('#update-case-date').attr("min", min);
 
     $("#assign-case-toggle-btn").click(function () {
         $("#close-case-reason-wrapper").css("display", "none");
@@ -110,6 +95,7 @@ $(document).ready(function () {
     });
 
     $("#close-case-toggle-btn").click(function () {
+        $('#assign-case-error').hide();
         $("#assign-case-wrapper").css("display", "none");
         $("#assign-case-cta-btns").css("display", "none");
         $("#close-case-reason-wrapper").css("display", "block");
@@ -129,6 +115,7 @@ $(document).ready(function () {
     });
 
     $("#search-input-assign-case").on("keyup keypress keydown", function () {
+        $('#assign-case-error').hide();
         if ($("#search-input-assign-case").val().length > 2) {
             $("#assign-case-search-results").css("display", "block");
         } else if ($("#search-input-assign-case").val().length === 0) $("#assign-case-search-results").css("display", "none");
@@ -161,4 +148,5 @@ $(document).ready(function () {
         event.preventDefault();
         window.location.href="/default";
     });
+    $("#loading-screen").hide();
 });

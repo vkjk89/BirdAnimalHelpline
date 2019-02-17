@@ -221,6 +221,8 @@ $(document).ready(function () {
         document.getElementById('my-cases').style.opacity = "0.1";
         document.getElementById('accept-case-wrapper').style.opacity = "0.1";
         document.getElementsByTagName("main")[0].style.pointerEvents = "none";
+        document.getElementById("notification-center").style.opacity = "0.1";
+        document.getElementById("notification-center").style.pointerEvents = "none";
     };
 
     document.getElementById('close-btn').onclick = function closeSideNav() {
@@ -231,6 +233,8 @@ $(document).ready(function () {
         document.getElementById('my-cases').style.opacity = "1";
         document.getElementById('accept-case-wrapper').style.opacity = "1";
         document.getElementsByTagName("main")[0].style.pointerEvents = "";
+        document.getElementById("notification-center").style.opacity = "1";
+        document.getElementById("notification-center").style.pointerEvents = "";
     };
 
     document.getElementById('search-case-input').onkeyup = function () {
@@ -244,6 +248,11 @@ $(document).ready(function () {
         }
 
     };
+
+    $('#notification_bell').click(function(){
+        $('#notification-center').css({"opacity":"1", "pointerEvents":""});
+        $('#notification-center').fadeToggle(300);
+    });
 
     $("#logout").on("click", function (e) {
         e.preventDefault();
@@ -272,7 +281,12 @@ $(document).ready(function () {
                 document.getElementById('my-cases').style.opacity = "1";
                 document.getElementById('accept-case-wrapper').style.opacity = "1";
                 document.getElementsByTagName("main")[0].style.pointerEvents = "";
+                document.getElementById("notification-center").style.opacity = "1";
             }
+        } 
+        if(!e.target.matches('#notification_bell') && document.getElementById('notification-center').style.display === "block"){
+            $('#notification-center').css({"opacity":"1", "pointerEvents":""});
+            $('#notification-center').fadeToggle(300);
         }
     };
 
