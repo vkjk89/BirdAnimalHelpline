@@ -14,6 +14,7 @@ public class CaseTxn {
     private String status;
     private Double amount;
     private Timestamp transferDate;
+    private String transferDateStr;
     private int isAck;
     private Timestamp updateTimeStamp;
     private String desc;
@@ -130,6 +131,14 @@ public class CaseTxn {
         this.isAck = isAck;
     }
 
+    public String getTransferDateStr() {
+        return transferDateStr;
+    }
+
+    public void setTransferDateStr(String transferDateStr) {
+        this.transferDateStr = transferDateStr;
+    }
+
     @Override
     public String toString() {
         return "CaseTxn{" +
@@ -137,9 +146,14 @@ public class CaseTxn {
                 ", caseId=" + caseId +
                 ", fromUserId=" + fromUserId +
                 ", toUserId=" + toUserId +
+                ", fromUser='" + fromUser + '\'' +
+                ", fromUserRole='" + fromUserRole + '\'' +
+                ", toUser='" + toUser + '\'' +
+                ", toUserRole='" + toUserRole + '\'' +
                 ", status='" + status + '\'' +
                 ", amount=" + amount +
                 ", transferDate=" + transferDate +
+                ", transferDateStr='" + transferDateStr + '\'' +
                 ", isAck=" + isAck +
                 ", updateTimeStamp=" + updateTimeStamp +
                 ", desc='" + desc + '\'' +

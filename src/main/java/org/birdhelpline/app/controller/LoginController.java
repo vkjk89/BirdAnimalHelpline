@@ -1,5 +1,6 @@
 package org.birdhelpline.app.controller;
 
+import org.birdhelpline.app.model.PinCodeLandmarkInfo;
 import org.birdhelpline.app.model.User;
 import org.birdhelpline.app.model.UserServiceTimeInfo;
 import org.birdhelpline.app.service.UserService;
@@ -166,7 +167,7 @@ public class LoginController {
                 handleProfileStep2(modelAndView, user, result);
                 break;
             case 3:
-                handleProfileStep3(modelAndView, user, request, redirectAttrs);
+                handleProfileStep3(modelAndView, user, request);
                 break;
             case 4:
                 handleSubmission(modelAndView, user, request, redirectAttrs);
@@ -193,22 +194,26 @@ public class LoginController {
     }
 
     private void
-    handleProfileStep3(ModelAndView modelAndView, User user, HttpServletRequest request, RedirectAttributes redirectAttrs) {
+    handleProfileStep3(ModelAndView modelAndView, User user, HttpServletRequest request) {
         logger.info("vkj request 1: " + request.getParameterMap().keySet());
         logger.info("vkj request 2: " + request.getParameterMap().values());
         for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
             logger.info(entry.getKey() + " : " + Arrays.toString(entry.getValue()));
         }
-        populateUserServiceTimeInfo(user, request);
+        populateUserServiceTimeInfo(user, request,modelAndView);
         modelAndView.setViewName("Profile-Completion/Preview");
     }
 
-    private void populateUserServiceTimeInfo(User user, HttpServletRequest request) {
-        List<UserServiceTimeInfo> list = new ArrayList<>();
-        UserServiceTimeInfo serviceTimeInfo = null;
+    private void populateUserServiceTimeInfo(User user, HttpServletRequest request,ModelAndView modelAndView) {
+        UserServiceTimeInfo serviceTimeInfo;
+            Map<Long,List<UserServiceTimeInfo>> map = user.getServiceTimeInfoMap();
+        map.clear();
+        List<UserServiceTimeInfo> list;
         int j = 1;
         String[] selectedPinCodeIds;
         String[] selectedTimings;
+        Map<Long, PinCodeLandmarkInfo> pinCodeLandmarkInfoMap = userService.getPinCodeLandmarkInfoMap();
+        modelAndView.addObject("pinLandMap",pinCodeLandmarkInfoMap);
         while (true) {
             selectedPinCodeIds = request.getParameterMap().get("pincodeId" + j);
             selectedTimings = request.getParameterMap().get("selectedTiming" + j);
@@ -216,21 +221,30 @@ public class LoginController {
                 break;
             }
             j++;
-            String pinCodeId = selectedPinCodeIds[0];
             if(selectedTimings == null) {
-                selectedTimings = new String [] { "00-23" };
+                selectedTimings = new String [] { "00-24" };
             }
+            Long pinCodeId = Long.parseLong(selectedPinCodeIds[0]);
+            list = map.get(pinCodeId);
+            if(list == null) {
+                list = new ArrayList<>();
+                map.put(pinCodeId,list);
+            };
             for (String t : selectedTimings) {
                 serviceTimeInfo = new UserServiceTimeInfo();
-                serviceTimeInfo.setPincodeId(Long.parseLong(pinCodeId));
+                serviceTimeInfo.setPincodeId(pinCodeId);
                 String[] time = t.trim().split("-");
                 serviceTimeInfo.setFromTime(Integer.parseInt(time[0].trim()));
                 serviceTimeInfo.setToTime(Integer.parseInt(time[1].trim()));
+                PinCodeLandmarkInfo pinCodeLandmarkInfo = pinCodeLandmarkInfoMap.get(pinCodeId);
+                if(pinCodeLandmarkInfo != null) {
+                    serviceTimeInfo.setArea(pinCodeLandmarkInfo.getLandmark());
+                    serviceTimeInfo.setPincode(pinCodeLandmarkInfo.getPincode());
+                }
                 list.add(serviceTimeInfo);
             }
         }
-        user.setUserServiceTimeInfos(list);
-        logger.info("vkj user service time : " + list);
+        logger.info("vkj user service time : " + map);
     }
 
 

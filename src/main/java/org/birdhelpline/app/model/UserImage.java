@@ -5,6 +5,7 @@ public class UserImage {
     private byte[] image;
     private byte[] oldImage;
 
+
     public Long getUserId() {
         return userId;
     }

@@ -5,6 +5,10 @@ phases:
     commands:
       - echo Build started on `date`
       - mvn clean package -DskipTests
+  pre_build:
+    commands:
+      -  echo Entered the pre_build phase...
+      -  bash ${CODEBUILD_SRC_DIR}/src/main/resources/scripts/versioning.sh ${CODEBUILD_SRC_DIR}
   post_build:
     commands:
       - echo Build completed on `date`

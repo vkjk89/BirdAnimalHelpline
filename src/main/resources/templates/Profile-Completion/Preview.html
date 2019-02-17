@@ -57,19 +57,25 @@
 
         <div id="selected-pincodes-preview">
             <span id="heading-selected-pincodes">Pincodes:</span>
-            <img id="edit-selected-pincodes" onclick="window.location = '/profileCompletion?page=2' " src="/static/img/edit.png" th:src="@{/img/edit.png}">
+            <img id="edit-selected-pincodes" onclick="window.location = '/profileCompletion?page=2' "
+                 src="/static/img/edit.png" th:src="@{/img/edit.png}">
             <div id="pincode-results">
-                <ul  id="pincode-results-ul">
-                    <li th:each="r : ${user.getUserServiceTimeInfos()}">
-                        <div th:text="${r.pincodeId}"></div>
-                        <div th:text="${r.fromTime}+'-'+ ${r.toTime}"></div>
+                <ul id="pincode-results-ul">
+                    <li th:each="i : ${user.getServiceTimeInfoMap()}">
+                        <span th:text="${pinLandMap.get(i.key).getLandmark()}+'('+${pinLandMap.get(i.key).getPincode()}+')'"></span>
+                        <ul >
+                            <li th:each="j : ${i.value}">
+                                <span th:text="${j.getTimeStr()}"></span>
+                            </li>
+                        </ul>
                     </li>
-                    <!--<li>
-                        <div>C.P. Tank</div>
-                        <div>09:00 - 12:00</div>
-                        <div>12:00 - 16:00</div>
-                    </li>-->
                 </ul>
+
+                <!--<li>
+                    <div>C.P. Tank</div>
+                    <div>09:00 - 12:00</div>
+                    <div>12:00 - 16:00</div>
+                </li>-->
             </div>
         </div>
         <div id="cta-btns">
