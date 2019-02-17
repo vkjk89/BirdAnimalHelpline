@@ -8,4 +8,4 @@ ls -lrt $1
 echo $1
 echo "Vimal versioning done"
 find $1 -name "*.html"
-for i in `find $1 -name "*.html"`; do echo $i; sed  -i '' -e    "s;v=.*);v=$version);" ${i}; done
+for i in `find $1 -name "*.html"`; do echo $i; sed -i "s;v=.*);v=$version);" ${i}; done
