@@ -503,7 +503,9 @@ function close(){
 
 function show_vol_tooltip(event) {
     clearTimeout(hide_tooltip_timeOut);
-    var userId = $(event.srcElement).parent().find("#vol_id").val();
+    var userId = $(event.originalEvent.srcElement).parent().find("#vol_id").val();
+    console.info(userId);
+    console.info(userIdVsInfoMap);
     var userInfo = userIdVsInfoMap[userId];
     $('#tooltip-info-name').text(userInfo.userName);
     $('#tooltip-info-role').text(userInfo.role);
