@@ -23,7 +23,7 @@ import java.util.List;
 
 @Controller
 public class DefaultController {
-    private static final List<String> ROLE_NOT_REQ_PROFILE_COMP = Arrays.asList(Role.ADMIN.name(),Role.Receptionist.name());
+    private static final List<String> ROLE_NOT_REQ_PROFILE_COMP = Arrays.asList(Role.ADMIN.name(), Role.Receptionist.name());
     private static final Logger logger = LoggerFactory.getLogger(DefaultController.class);
 
     @Autowired

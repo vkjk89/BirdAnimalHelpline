@@ -1,9 +1,5 @@
 package org.birdhelpline.app.model;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-
 public class UserServiceTimeInfo {
 
     private long pincodeId;
@@ -14,32 +10,28 @@ public class UserServiceTimeInfo {
 
     public String getTimeStr() {
         StringBuilder sb = new StringBuilder();
-        if(fromTime == 0 && toTime == 24) {
+        if (fromTime == 0 && toTime == 24) {
             return "12 AM - 12 AM";
         }
-        if(fromTime < 12 ) {
-            sb.append(fromTime+" AM - ");
-        }
-        else if(fromTime == 12) {
+        if (fromTime < 12) {
+            sb.append(fromTime + " AM - ");
+        } else if (fromTime == 12) {
             sb.append("12 PM - ");
+        } else {
+            sb.append(fromTime % 12 + " PM - ");
         }
-        else {
-            sb.append(fromTime%12+" PM - ");
-        }
-        if(toTime < 12 ) {
-            sb.append(toTime+" AM");
-        }
-        else if(toTime == 12 ) {
+        if (toTime < 12) {
+            sb.append(toTime + " AM");
+        } else if (toTime == 12) {
             sb.append("12 PM");
-        }
-        else if(toTime == 24 ) {
+        } else if (toTime == 24) {
             sb.append("12 AM");
-        }
-        else {
-            sb.append(toTime%12+" PM");
+        } else {
+            sb.append(toTime % 12 + " PM");
         }
         return sb.toString();
     }
+
     public long getPincode() {
         return pincode;
     }

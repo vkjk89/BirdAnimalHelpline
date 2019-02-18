@@ -1,9 +1,6 @@
 package org.birdhelpline.app.model;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
-import org.birdhelpline.app.dataaccess.UserDao;
 
 import javax.security.auth.Subject;
 import java.io.Serializable;
@@ -37,7 +34,7 @@ public class User implements Principal, Serializable {
     private Integer loginCount;
     private UserAddressInfo homeAddr = new UserAddressInfo();
     private UserAddressInfo officeAddr = new UserAddressInfo();
-    private Map<Long,List<UserServiceTimeInfo>> serviceTimeInfoMap = new HashMap<>();
+    private Map<Long, List<UserServiceTimeInfo>> serviceTimeInfoMap = new HashMap<>();
     private UserImage userImage = new UserImage();
 
     /*public String getFormattedUserServiceTimeStr() {

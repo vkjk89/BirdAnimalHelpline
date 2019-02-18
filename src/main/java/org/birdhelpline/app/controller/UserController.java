@@ -36,16 +36,15 @@ public class UserController {
 
     @RequestMapping(path = "/enableUser", method = RequestMethod.POST)
     public @ResponseBody
-    String enableUser(@RequestParam("userId") Long userId, @RequestParam("acceptReject") boolean enable, HttpSession session ) {
+    String enableUser(@RequestParam("userId") Long userId, @RequestParam("acceptReject") boolean enable, HttpSession session) {
         User user = WebUtils.getUser(session);
         if (user == null) {
             return ResponseStatus.ERROR.toString();
         }
-        if(Role.ADMIN.name().equals(user.getRole())) {
-            if(enable) {
+        if (Role.ADMIN.name().equals(user.getRole())) {
+            if (enable) {
                 return userService.enableUser(userId);
-            }
-            else {
+            } else {
                 return userService.disableUser(userId);
             }
         }
@@ -70,7 +69,7 @@ public class UserController {
         if (user == null) {
             return Collections.EMPTY_LIST;
         }
-        return userService.getUserList(user.getUserId(),term.toLowerCase());
+        return userService.getUserList(user.getUserId(), term.toLowerCase());
     }
 
     @RequestMapping("/getCaseVolListForSearch")

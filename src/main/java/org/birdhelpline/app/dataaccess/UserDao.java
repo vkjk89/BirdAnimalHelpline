@@ -31,7 +31,7 @@ public class UserDao {
     private static final Map<String, Integer> userRoleVsRoleId = new HashMap<>();
     private static final Map<Integer, String> securityQIdVSSecurityQ = new LinkedHashMap<>();
     private static final List<PinCodeLandmarkInfo> listPincodeLandMarks = new ArrayList<>();
-    private static final Map<Long,PinCodeLandmarkInfo> mapPincodeIdVsPinCodeLandmarkInfo = new HashMap<>();
+    private static final Map<Long, PinCodeLandmarkInfo> mapPincodeIdVsPinCodeLandmarkInfo = new HashMap<>();
     private static final Set<String> listBirds = new HashSet<>();
     private static final Set<String> listAnimals = new HashSet<>();
 
@@ -51,6 +51,14 @@ public class UserDao {
 
     @Value("${user.nearest.pincode.query}")
     private String nearestUserQ;
+
+    public static PinCodeLandmarkInfo getPinCodeLandmarkInfo(Long pincodeId) {
+        return mapPincodeIdVsPinCodeLandmarkInfo.get(pincodeId);
+    }
+
+    public static Map<Long, PinCodeLandmarkInfo> getPinCodeLandmarkInfoMap() {
+        return mapPincodeIdVsPinCodeLandmarkInfo;
+    }
 
     @PostConstruct
     private void init() {
@@ -72,7 +80,7 @@ public class UserDao {
                     String landMark = resultSet.getString("landmark");
                     PinCodeLandmarkInfo pinCodeLandmarkInfo = new PinCodeLandmarkInfo(pinCodeId, pinCode, landMark);
                     listPincodeLandMarks.add(pinCodeLandmarkInfo);
-                    mapPincodeIdVsPinCodeLandmarkInfo.put(pinCodeId,pinCodeLandmarkInfo);
+                    mapPincodeIdVsPinCodeLandmarkInfo.put(pinCodeId, pinCodeLandmarkInfo);
                 }
         );
 
@@ -224,7 +232,6 @@ public class UserDao {
         return user;
     }
 
-
     public void enableUser(User user) {
         this.jdbcTemplate.update(connection -> {
                     PreparedStatement ps = connection.prepareStatement(
@@ -272,8 +279,8 @@ public class UserDao {
             return ps;
         });
 
-        for (Map.Entry<Long,List<UserServiceTimeInfo>> entry : user.getServiceTimeInfoMap().entrySet()) {
-            for(UserServiceTimeInfo usti : entry.getValue()) {
+        for (Map.Entry<Long, List<UserServiceTimeInfo>> entry : user.getServiceTimeInfoMap().entrySet()) {
+            for (UserServiceTimeInfo usti : entry.getValue()) {
                 jdbcTemplate.update((Connection con) -> {
                     PreparedStatement ps = con.prepareStatement(
                             "insert into user_service_time_info (user_id,pin_land_id,from_time,to_time) values (?,?,?,?)"
@@ -318,7 +325,7 @@ public class UserDao {
             params.put("userName", "%" + term + "%");
             params.put("userId", userId);
             namedParameterJdbcTemplate.query(
-                    userAllWithAddressQ + " where u.user_name like :userName or ui.first_name like :userName or ui.last_name like :userName and u.user_id != :userId ",
+                    userAllWithAddressQ + " where (u.user_name like :userName or ui.first_name like :userName or ui.last_name like :userName) and u.user_id != :userId ",
                     params, rowMapper
             );
             return new ArrayList<>(rowMapper.map.values());
@@ -333,7 +340,7 @@ public class UserDao {
             UserRowMapper rowMapper = new UserRowMapper("BI");
             namedParameterJdbcTemplate.query(
                     userAllQ + " and u.enabled = 0 ",
-                     rowMapper
+                    rowMapper
             );
             return new ArrayList<>(rowMapper.map.values());
         } catch (EmptyResultDataAccessException ex) {
@@ -367,14 +374,6 @@ public class UserDao {
             //throw new ObjectRetrievalFailureException(User.class, userName);
             return null;
         }
-    }
-
-    public static PinCodeLandmarkInfo getPinCodeLandmarkInfo(Long pincodeId) {
-        return mapPincodeIdVsPinCodeLandmarkInfo.get(pincodeId);
-    }
-
-    public static Map<Long,PinCodeLandmarkInfo> getPinCodeLandmarkInfoMap() {
-        return mapPincodeIdVsPinCodeLandmarkInfo;
     }
 
     public List<PinCodeLandmarkInfo> getPinCodeLandMarks() {

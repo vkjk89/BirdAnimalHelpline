@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
 import org.birdhelpline.app.dataaccess.CaseDao;
-import org.birdhelpline.app.dataaccess.UserDao;
 import org.birdhelpline.app.model.CaseImage;
 import org.birdhelpline.app.model.CaseInfo;
 import org.birdhelpline.app.model.CaseTxn;
@@ -115,13 +114,13 @@ public class CaseService {
         return new JsonObject().toString();
     }
 
-    public String assignCase(Long userId, Long toUserId, Long caseId, String description,Double amount,String transferDate) {
-        caseDao.assignCase(userId, toUserId, caseId,description,amount,transferDate);
+    public String assignCase(Long userId, Long toUserId, Long caseId, String description, Double amount, String transferDate) {
+        caseDao.assignCase(userId, toUserId, caseId, description, amount, transferDate);
         return ResponseStatus.SUCCESS.name();
     }
 
-    public String closeCase(Long userId, Long caseId, String closeRemark,String closeReason,  Double chargesIncurred, String transferDate) {
-        caseDao.closeCase(userId, caseId, closeRemark, closeReason,chargesIncurred,transferDate);
+    public String closeCase(Long userId, Long caseId, String closeRemark, String closeReason, Double chargesIncurred, String transferDate) {
+        caseDao.closeCase(userId, caseId, closeRemark, closeReason, chargesIncurred, transferDate);
         return ResponseStatus.SUCCESS.name();
     }
 
@@ -179,7 +178,6 @@ public class CaseService {
             }
         });
     }
-
 
 
     public void saveCaseImages(CaseImage caseImage) {

@@ -200,20 +200,20 @@ public class LoginController {
         for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
             logger.info(entry.getKey() + " : " + Arrays.toString(entry.getValue()));
         }
-        populateUserServiceTimeInfo(user, request,modelAndView);
+        populateUserServiceTimeInfo(user, request, modelAndView);
         modelAndView.setViewName("Profile-Completion/Preview");
     }
 
-    private void populateUserServiceTimeInfo(User user, HttpServletRequest request,ModelAndView modelAndView) {
+    private void populateUserServiceTimeInfo(User user, HttpServletRequest request, ModelAndView modelAndView) {
         UserServiceTimeInfo serviceTimeInfo;
-            Map<Long,List<UserServiceTimeInfo>> map = user.getServiceTimeInfoMap();
+        Map<Long, List<UserServiceTimeInfo>> map = user.getServiceTimeInfoMap();
         map.clear();
         List<UserServiceTimeInfo> list;
         int j = 1;
         String[] selectedPinCodeIds;
         String[] selectedTimings;
         Map<Long, PinCodeLandmarkInfo> pinCodeLandmarkInfoMap = userService.getPinCodeLandmarkInfoMap();
-        modelAndView.addObject("pinLandMap",pinCodeLandmarkInfoMap);
+        modelAndView.addObject("pinLandMap", pinCodeLandmarkInfoMap);
         while (true) {
             selectedPinCodeIds = request.getParameterMap().get("pincodeId" + j);
             selectedTimings = request.getParameterMap().get("selectedTiming" + j);
@@ -221,15 +221,15 @@ public class LoginController {
                 break;
             }
             j++;
-            if(selectedTimings == null) {
-                selectedTimings = new String [] { "00-24" };
+            if (selectedTimings == null) {
+                selectedTimings = new String[]{"00-24"};
             }
             Long pinCodeId = Long.parseLong(selectedPinCodeIds[0]);
             list = map.get(pinCodeId);
-            if(list == null) {
+            if (list == null) {
                 list = new ArrayList<>();
-                map.put(pinCodeId,list);
-            };
+                map.put(pinCodeId, list);
+            }
             for (String t : selectedTimings) {
                 serviceTimeInfo = new UserServiceTimeInfo();
                 serviceTimeInfo.setPincodeId(pinCodeId);
@@ -237,7 +237,7 @@ public class LoginController {
                 serviceTimeInfo.setFromTime(Integer.parseInt(time[0].trim()));
                 serviceTimeInfo.setToTime(Integer.parseInt(time[1].trim()));
                 PinCodeLandmarkInfo pinCodeLandmarkInfo = pinCodeLandmarkInfoMap.get(pinCodeId);
-                if(pinCodeLandmarkInfo != null) {
+                if (pinCodeLandmarkInfo != null) {
                     serviceTimeInfo.setArea(pinCodeLandmarkInfo.getLandmark());
                     serviceTimeInfo.setPincode(pinCodeLandmarkInfo.getPincode());
                 }
@@ -298,7 +298,10 @@ public class LoginController {
     String profilePicUpload(@RequestParam(name = "dp-image", required = false) MultipartFile file,
                             final @ModelAttribute("user") User user
     ) throws IOException {
-        logger.info("Received data 1 : " + file);
+        logger.info("Received data : " + file);
+        if (file != null) {
+            logger.info("Size is : " + file.getBytes().length / 1024);
+        }
         user.getUserImage().setImage(file.getBytes());
         return Base64.getEncoder().encodeToString(user.getUserImage().getImage());
     }

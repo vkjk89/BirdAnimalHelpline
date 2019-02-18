@@ -9,7 +9,6 @@ import org.birdhelpline.app.utils.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -83,12 +82,12 @@ public class CaseController {
         if (user == null) {
             return "Error";
         }
-        return caseService.closeCase(user.getUserId(), caseId, remark, closeReason, null,null);
+        return caseService.closeCase(user.getUserId(), caseId, remark, closeReason, null, null);
     }
 
     @RequestMapping(value = "/getCaseTxn", method = RequestMethod.GET)
     public @ResponseBody
-    List<CaseTxn> getCaseTxn(@RequestParam("caseId") Long caseId,HttpSession session) {
+    List<CaseTxn> getCaseTxn(@RequestParam("caseId") Long caseId, HttpSession session) {
         User user = WebUtils.getUser(session);
         if (user == null) {
             return null;
@@ -121,7 +120,7 @@ public class CaseController {
         }
         if (forUserId != null && forUserId != -1) {
             User forUser = userService.findUserByUserId(forUserId);
-            if(forUser == null) {
+            if (forUser == null) {
                 return null;
             }
             if (user.getRole().equals(Role.ADMIN.name()) || user.getRole().equals(Role.Receptionist.name())) {
@@ -144,7 +143,7 @@ public class CaseController {
         }
         if (forUserId != null && forUserId != -1) {
             User forUser = userService.findUserByUserId(forUserId);
-            if(forUser == null) {
+            if (forUser == null) {
                 return null;
             }
             if (user.getRole().equals(Role.ADMIN.name()) || user.getRole().equals(Role.Receptionist.name())) {
@@ -167,7 +166,7 @@ public class CaseController {
         }
         if (forUserId != null && forUserId != -1) {
             User forUser = userService.findUserByUserId(forUserId);
-            if(forUser == null) {
+            if (forUser == null) {
                 return null;
             }
             if (user.getRole().equals(Role.ADMIN.name()) || user.getRole().equals(Role.Receptionist.name())) {
@@ -254,7 +253,7 @@ public class CaseController {
             if (closeReason.equalsIgnoreCase("other")) {
                 closeReason = caseUpdateVO.getCaseCloseReasonOther();
             }
-            caseService.closeCase(fromUser.getUserId(), caseUpdateVO.getCaseId(), caseUpdateVO.getCaseSummary(), closeReason,caseUpdateVO.getChargesIncurred(), caseUpdateVO.getCaseUpdateDate());
+            caseService.closeCase(fromUser.getUserId(), caseUpdateVO.getCaseId(), caseUpdateVO.getCaseSummary(), closeReason, caseUpdateVO.getChargesIncurred(), caseUpdateVO.getCaseUpdateDate());
         } else {
             return new ModelAndView("Error");
         }
