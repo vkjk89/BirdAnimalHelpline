@@ -324,6 +324,10 @@ main div {
     margin-right: 5vw;
 }
 
+#no-users-pending {
+    margin-top: 10vh;
+}
+
 /*--------OTHER-ELEMENTS------------------------------------------------------*/
 /*-------------------ENLARGE-PHOTO---------------------*/
 #dynamic_image_enlarge {

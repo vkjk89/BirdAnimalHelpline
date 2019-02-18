@@ -251,6 +251,7 @@ $(document).ready(function () {
 
     $('#notification_bell').click(function(){
         $('#notification-center').css({"opacity":"1", "pointerEvents":""});
+        //$('#notification_bell').attr("src", "/img/notification-clicked.png");
         $('#notification-center').fadeToggle(300);
     });
 

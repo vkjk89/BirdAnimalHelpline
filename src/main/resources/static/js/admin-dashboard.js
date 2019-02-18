@@ -61,6 +61,7 @@ function user_auth(slideIndex, item){
     $(".gender").html(data[slideIndex].gender);
     $(".email").html(data[slideIndex].email);
     },200);
+    createBullets();
 }
 
 var currentSlide = 0;
@@ -80,6 +81,14 @@ function slide_member(slide_direction) {
     currentSlide = slideIndex;
 }
 
+function no_user(){
+    if(data.length === 0) {
+        $('#slider-wrapper').hide();
+        $('#no-users-pending').fadeIn();
+        $('.slider-member-count').text(data.length);
+    }
+}
+
 function getUsersListPendingForActivation() {
     $.ajax({
         type: 'GET',
@@ -87,12 +96,10 @@ function getUsersListPendingForActivation() {
         //dataType: 'json'
     })
         .done(function (data) {
-                if (data) {
-                    if(data.length == 0) {
-                        $('#slider-wrapper').hide();
-                        $('#no-users-pending').fadeIn();
-                    }
-                    $('.slider-member-count').text(data.length);
+            if (data !== undefined) {
+                $('.slider-member-count').html(data.length);
+                if(data.length == 0) no_user();
+                else {
                     $.each(data, function (i, item) {
                         if (!usersPendingMap.has(item.userId)) {
                             user_auth(0, item);
@@ -100,10 +107,9 @@ function getUsersListPendingForActivation() {
                         }
                         createBullets();
                     });
-
                 }
             }
-        );
+        });
 }
 
 function enlargePhoto(this_t) {
