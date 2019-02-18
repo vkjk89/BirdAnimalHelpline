@@ -19,8 +19,6 @@ import org.springframework.stereotype.Repository;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -108,7 +106,7 @@ public class CaseDao {
                 caseTxn.setToUserId(rs.getLong("to_user_id"));
                 caseTxn.setStatus(rs.getString("status"));
                 caseTxn.setTransferDate(rs.getTimestamp("transfer_date"));
-                if(caseTxn.getTransferDate() != null) {
+                if (caseTxn.getTransferDate() != null) {
                     caseTxn.setTransferDateStr(formatter.format(caseTxn.getTransferDate().toLocalDateTime()));
                 }
                 return caseTxn;
@@ -178,7 +176,7 @@ public class CaseDao {
 
     public void assignCase(Long userId, Long toUserId, Long caseId, String description, Double amount, String transferDate) {
         Timestamp transferCloseDate = getTransferCloseDate(transferDate);
-        Double amountIncurred = amount == null ? 0.0:amount;
+        Double amountIncurred = amount == null ? 0.0 : amount;
         this.jdbcTemplate.update((connection -> {
             String q = "update case_info set current_user_id = ? where case_id = ?";
             PreparedStatement ps = connection.prepareStatement(
@@ -206,7 +204,7 @@ public class CaseDao {
 
     public void closeCase(Long userId, Long caseId, String closeRemark, String closeReason, Double chargesIncurred, String closeDate) {
         Timestamp closeDateToUse = getTransferCloseDate(closeDate);
-        Double amountIncurred = chargesIncurred == null ? 0.0:chargesIncurred;
+        Double amountIncurred = chargesIncurred == null ? 0.0 : chargesIncurred;
         this.jdbcTemplate.update((connection -> {
             String q = "update case_info set current_user_id = NULL, is_active = 0, user_id_closed = ? , close_remark = ? , animal_condition = ?, close_date = ? where case_id = ?";
             PreparedStatement ps = connection.prepareStatement(
@@ -228,7 +226,7 @@ public class CaseDao {
             ps.setLong(1, caseId);
             ps.setLong(2, userId);
             ps.setString(3, CaseStatus.CLOSED.toString());
-            ps.setDouble(4,amountIncurred);
+            ps.setDouble(4, amountIncurred);
             return ps;
         }));
     }
@@ -237,7 +235,7 @@ public class CaseDao {
         Timestamp closeDateToUse = new Timestamp(new Date().getTime());
         if (closeDate != null) {
 //                closeDateToUse = new Timestamp(FORMATTED_DATE_FORMAT.parse(closeDate).getTime());
-            closeDateToUse =  Timestamp.valueOf(LocalDateTime.parse(closeDate,formatter));
+            closeDateToUse = Timestamp.valueOf(LocalDateTime.parse(closeDate, formatter));
         }
         return closeDateToUse;
     }

@@ -65,7 +65,7 @@ public class UserService {
                     }
                 });
 
-        scheduledExecutorService.scheduleAtFixedRate(cacheStatsPrinter,0,15,TimeUnit.MINUTES);
+        scheduledExecutorService.scheduleAtFixedRate(cacheStatsPrinter, 0, 15, TimeUnit.MINUTES);
     }
 
     public long saveUser(User user) {
@@ -82,9 +82,10 @@ public class UserService {
         return userDao.getSecurityQs();
     }
 
-    public Map<Long,PinCodeLandmarkInfo> getPinCodeLandmarkInfoMap() {
-        return userDao.getPinCodeLandmarkInfoMap();
+    public Map<Long, PinCodeLandmarkInfo> getPinCodeLandmarkInfoMap() {
+        return UserDao.getPinCodeLandmarkInfoMap();
     }
+
     public List<PinCodeLandmarkInfo> getPinCodeLandMarks(String term, String selectedPinCodes) {
         Set<Long> setSelected = new HashSet<>();
         if (StringUtils.isNotBlank(selectedPinCodes)) {
@@ -105,12 +106,12 @@ public class UserService {
 
     public User findUserByUserId(Long userId) {
         try {
-            Optional<User> value =  userCache.get(userId);
-            if(value.isPresent()){
+            Optional<User> value = userCache.get(userId);
+            if (value.isPresent()) {
                 return value.get();
             }
         } catch (ExecutionException e) {
-            logger.error(e.getMessage(),e);
+            logger.error(e.getMessage(), e);
         }
         return null;
     }
@@ -148,7 +149,7 @@ public class UserService {
     }
 
     public List<User> getUserList(Long userId, String term) {
-        return userDao.getUserByTerm(userId,term);
+        return userDao.getUserByTerm(userId, term);
     }
 
     public void updateUserLoginDetails(User user) {

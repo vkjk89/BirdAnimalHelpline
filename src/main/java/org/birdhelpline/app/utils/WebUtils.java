@@ -15,12 +15,12 @@ public class WebUtils {
     @Autowired
     private UserService userService;
 
+    public static User getUser(HttpSession session) {
+        return (User) session.getAttribute("user");
+    }
+
     private User getUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return userService.findUserByUserName(auth.getName());
-    }
-
-    public static User getUser(HttpSession session) {
-        return (User) session.getAttribute("user");
     }
 }
