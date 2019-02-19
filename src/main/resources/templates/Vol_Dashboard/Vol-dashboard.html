@@ -76,19 +76,20 @@
     <button id="image_enlarge_back_button" type="button">Back</button>
 </div>
 
+<section id="notification-center">
+    <div id="notification-heading">Notification Center</div>
+    <div id="notification-body">
+        <p id="empty-notifications">No new notifications</p>
+        <p id="notification-ul-wrapper">
+            <ul id="notification-ul">
+                <li id="notification-1" class="notification">Case #3345 has been assigned back to you as #Assigned_to has rejected it<br><button class="reassign-case" onclick="window.location.href = 'updateCase?caseId='">Reassign Case</button>
+                </li>
+            </ul>
+        </p>
+    </div>
+</section>
+
 <main>
-    <section id="notification-center">
-        <div id="notification-heading">Notification Center</div>
-        <div id="notification-body">
-            <p id="empty-notifications">No new notifications</p>
-            <p id="notification-ul-wrapper">
-                <ul id="notification-ul">
-                    <li id="notification-1" class="notification">Case #3345 has been assigned back to you as #Assigned_to has rejected it<br><button class="reassign-case" onclick="window.location.href = 'updateCase?caseId='">Reassign Case</button>
-                    </li>
-                </ul>
-            </p>
-        </div>
-    </section>
     <section id="my-cases">
         <div class="search-case" id="search-case">
             <input id="search-case-input" name="search-case-input" placeholder="Search Case" type="search">

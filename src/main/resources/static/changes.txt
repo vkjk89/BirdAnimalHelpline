@@ -59,24 +59,24 @@ Call - Saturday - Before Assummed production Sunday
     //Change Case ID to Case No.
     //Top-Five & Nearest Loader
     //CaseDetails - VolDashboard Loader
-    Notification Center - Vol Dashboard
-    Check for no Users - Admin DB
+    //Check for no Users - Admin DB
+    Notification Center
     Convert Case History Vol - CaseDetails
     Active - Accept - Update
 
 17/02/2019 - Assumed Production Sunday
     Change nature of business
-    Alternate Number even though empty displays
-    Section Multiple Pincodes   
+    Alternate Number - preview page - even though empty
+    Section Multiple Pincodes - Formatting and Error checking
     +91 / 022 Validation - Second Time
     Success - Case Raised Change text - 10s - close btn
     Remove Case ID
-    Date - Vol CaseDetails and Recpt. DB
+    Date - Vol CaseDetails and Recpt. DB - CaseDetails
     Status Bar Error - Close case
-    Current Case Status - TOp Nav
+    Current Case Status - Top Nav
     Case History - Top Nav
     Reassign Case instead of Assign Case
-    Assign Case Break - TOp Nav somewhere
+    Assign Case Break - Top Nav somewhere
     Case History Fix
 
     Upload Photos - Raise Case

@@ -250,7 +250,7 @@ $(document).ready(function () {
     };
 
     $('#notification_bell').click(function(){
-        $('#notification-center').css({"opacity":"1", "pointerEvents":""});
+        $('#top-nav, main, #bottom-action-bar, #page-heading').toggleClass("notification-center-open");
         //$('#notification_bell').attr("src", "/img/notification-clicked.png");
         $('#notification-center').fadeToggle(300);
     });
@@ -272,7 +272,7 @@ $(document).ready(function () {
         $('#page-heading').css({"opacity":"1", "pointerEvents":""});
     });
 
-    window.onclick = function (e) {
+    document.addEventListener("click", function(e){
         if (!e.target.matches('#close-btn') && !e.target.matches('#profile-options') && !e.target.matches('#bottom-action-bar')) {
             if (document.getElementById('side-nav').classList.contains('side-nav-anim')) {
                 document.getElementById('side-nav').classList.remove('side-nav-anim');
@@ -288,8 +288,29 @@ $(document).ready(function () {
         if(!e.target.matches('#notification_bell') && document.getElementById('notification-center').style.display === "block"){
             $('#notification-center').css({"opacity":"1", "pointerEvents":""});
             $('#notification-center').fadeToggle(300);
+            $('#top-nav, main, #bottom-action-bar, #page-heading').toggleClass("notification-center-open");
         }
-    };
+    });
+    
+    /*window.onclick = function (e) {
+        if (!e.target.matches('#close-btn') && !e.target.matches('#profile-options') && !e.target.matches('#bottom-action-bar')) {
+            if (document.getElementById('side-nav').classList.contains('side-nav-anim')) {
+                document.getElementById('side-nav').classList.remove('side-nav-anim');
+                document.getElementById('side-nav').style.display = "none";
+                document.getElementById('page-heading').style.opacity = "1";
+                document.getElementById('top-nav').style.opacity = "1";
+                document.getElementById('my-cases').style.opacity = "1";
+                document.getElementById('accept-case-wrapper').style.opacity = "1";
+                document.getElementsByTagName("main")[0].style.pointerEvents = "";
+                document.getElementById("notification-center").style.opacity = "1";
+            }
+        } 
+        if(!e.target.matches('#notification_bell') && document.getElementById('notification-center').style.display === "block"){
+            $('#notification-center').css({"opacity":"1", "pointerEvents":""});
+            $('#notification-center').fadeToggle(300);
+            $('#top-nav, main, #bottom-action-bar, #page-heading').toggleClass("notification-center-open");
+        }
+    };*/
 
     var aCase = '<div onclick="goToCaseDetails(this)"><span class="case-id-my-cases">';
     var bCase = '</span>';

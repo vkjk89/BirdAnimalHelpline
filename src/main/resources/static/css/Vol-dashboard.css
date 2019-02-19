@@ -98,7 +98,12 @@ main {
     width: 9vw;
 }
 
-.notification-clicked{
+.notification-center-open {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.notification-update{
     animation: bell-animate 2s ease-in-out 0s infinite;
 }
 @keyframes bell-animate {

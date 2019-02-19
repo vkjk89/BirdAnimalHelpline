@@ -4,8 +4,11 @@ function accept_reject(accept_reject) {
     currentUserForApproval = data[slideIndex].userId;
     data.splice(slideIndex,1);
     acceptReject(accept_reject);
-    createBullets();
-    slide_member(0);
+    if(data.length !== 0){
+        slide_member(0);
+        createBullets();
+        $('.slider-member-count').html(data.length);
+    } else no_user();
 }
 
 function acceptReject(accept_Reject) {
@@ -82,11 +85,9 @@ function slide_member(slide_direction) {
 }
 
 function no_user(){
-    if(data.length === 0) {
-        $('#slider-wrapper').hide();
-        $('#no-users-pending').fadeIn();
-        $('.slider-member-count').text(data.length);
-    }
+    $('#slider-wrapper').fadeOut();
+    $('#no-users-pending').fadeIn();
+    $('.slider-member-count').text(data.length);
 }
 
 function getUsersListPendingForActivation() {
@@ -100,15 +101,17 @@ function getUsersListPendingForActivation() {
                 $('.slider-member-count').html(data.length);
                 if(data.length == 0) no_user();
                 else {
+                    $("#slider-wrapper").show();
                     $.each(data, function (i, item) {
                         if (!usersPendingMap.has(item.userId)) {
                             user_auth(0, item);
                             usersPendingMap.set(item.userId, item);
                         }
-                        createBullets();
+                        //createBullets();
                     });
                 }
             }
+            $("#loading-screen").css("display","none");
         });
 }
 
