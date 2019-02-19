@@ -186,10 +186,6 @@ select {
     margin-left: 58vw;
 }
 
-/*body * {
-    border: 1px solid burlywood;
-}*/
-
 @media only screen and (max-width: 360px) {
     .heading {
         padding: 3vw;

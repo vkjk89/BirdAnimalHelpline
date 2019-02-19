@@ -596,8 +596,8 @@ hr {
     cursor: default;
 }
 
-#animal-name, #condition, #animal-type, #add-bird-animal, #location, #case-photos, #contact-name, #nine-one, #contact-number, #location, #location-landmark, #location-pincode,
-#animal-name-case-details, #top-nav-animal-name-case-details, #condition-case-details, #top-nav-condition-case-details, #animal-type-case-details, #top-nav-animal-type-case-details, #case-photos-case-details, #top-nav-case-photos-case-details, #contact-name-case-details, #top-nav-contact-name-case-details, #nine-one-case-details, #top-nav-nine-one-case-details, #contact-number-case-details, #top-nav-contact-number-case-details, #location-case-details, #top-nav-location-case-details, #location-landmark-case-details, #top-nav-location-landmark-case-details, #location-pincode-case-details, #top-nav-location-pincode-case-details {
+#date-info, #animal-name, #condition, #animal-type, #add-bird-animal, #location, #case-photos, #contact-name, #nine-one, #contact-number, #location, #location-landmark, #location-pincode,
+#animal-name-case-details, #top-nav-date-info,#top-nav-animal-name-case-details, #condition-case-details, #top-nav-condition-case-details, #animal-type-case-details, #top-nav-animal-type-case-details, #case-photos-case-details, #top-nav-case-photos-case-details, #contact-name-case-details, #top-nav-contact-name-case-details, #nine-one-case-details, #top-nav-nine-one-case-details, #contact-number-case-details, #top-nav-contact-number-case-details, #location-case-details, #top-nav-location-case-details, #location-landmark-case-details, #top-nav-location-landmark-case-details, #location-pincode-case-details, #top-nav-location-pincode-case-details {
     margin: 0vh 0vh;
     border-radius: 0px;
     font-size: 0.9em;
@@ -649,7 +649,7 @@ hr {
 
 #id-and-bird-type, #id-and-bird-type-case-details, #top-nav-id-and-bird-type-case-details {
     display: flex;
-}
+} #id-and-bird-type {margin-bottom: 2vh;}
 
 #id-and-bird-type label, #id-and-bird-type-case-details label, #top-nav-id-and-bird-type-case-details label {
     display: inline;
@@ -671,6 +671,7 @@ hr {
 
 #case-photos-case-details img, #top-nav-case-photos-case-details img {
     max-width: 6vw;
+    max-height: 8vh;
     cursor: crosshair;
     height: auto;
 }
@@ -696,17 +697,15 @@ hr {
 
 #cta-btns {
     display: block;
-    position: absolute;
     right: 0;
-    bottom: -10vh;
+    margin-top: 2vh;
     width: 65vw;
-    margin-right: 5vw;
 }
 
 #raise-a-case-success {
     display: none;
     position: absolute;
-    background: rgba(0, 160, 0, 0.4);
+    background: rgb(223, 240, 216);
     color: green;
     letter-spacing: 0.5px;
     font-size: 1.2em;
@@ -718,7 +717,7 @@ hr {
 #raise-a-case-error {
     display: none;
     position: absolute;
-    background: rgba(158, 0, 0, 0.4);
+    background: rgb(242, 222, 222);
     color: rgb(160, 0, 0);
     letter-spacing: 0.5px;
     font-size: 1.2em;
@@ -734,6 +733,12 @@ hr {
     border: 2px solid rgb(0, 160, 0);
     text-align: center;
     padding: 0vw 6px;
+}
+
+#close-success-message{
+    margin-left: 2vw;
+    cursor: pointer;
+    font-size: 1.3em;
 }
 
 #raise-a-case-cross {
@@ -958,6 +963,7 @@ hr {
     font-size: 1.1em;
     letter-spacing: 1px;
     padding-right: 2vw;
+    z-index: 150001;
     -webkit-clip-path: polygon(10% 30%, 10% 0, 100% 0, 100% 100%, 10% 100%, 10% 70%, 0 50%);
     clip-path: polygon(10% 40%, 10% 0, 100% 0, 100% 100%, 10% 100%, 10% 60%, 0 50%);
 }

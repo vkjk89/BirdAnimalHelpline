@@ -8,7 +8,6 @@
     <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css(v=1550307657)}">
     <link href="/static/css/Profile-Completion/profile-completion.css" rel="stylesheet" th:href="@{/css/Profile-Completion/profile-completion.css(v=1550307657)}">
     <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/icons/manifest.json(v=1550307657)}">
-    <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js(v=1550307657)}"></script>
 </head>
 <body>
 
@@ -33,7 +32,15 @@
             <input id="address-line2" name="address-line2" placeholder="Adderss Line 2" th:field="*{officeAddr.addrLine2}" type="text">
             <input id="pincode" max="450000" min="400000" name="pincode" placeholder="Pincode" required th:field="*{officeAddr.pincode}" type="number">
             <label for="nature-of-business">Nature of Business</label>
-            <input id="nature-of-business" name="nature-of-business" placeholder="Eg. - Textiles" required th:field="*{officeAddr.natureBusiness}" type="text">
+            <select name="nature-of-business" id="nature-of-business" required>
+                <option value="">Choose an option</option>
+                <option value="businessman">Businessman / Professional</option>
+                <option value="employee">Employee</option>
+                <option value="housewife">Housewife</option>
+                <option value="other">Other</option>
+            </select>
+            <input id="nature-of-business-additional" name="nature-of-business-additional" placeholder="" type="text">
+
             <input name="page" type="hidden" value="2">
         <div class="nav-button">
             <button onclick="window.location.href = '/profileCompletion'" id="previous" type="button"><img alt="next" src="/static/img/next-button21.png" th:src="@{/img/next-button21.png}"></button>
@@ -43,6 +50,21 @@
     </div>
 </main>
 
+
+<script>
+    document.getElementById('nature-of-business').onchange = function(){
+        if(this.value === "businessman"){
+            document.getElementById('nature-of-business-additional').placeholder  = "Eg: Metal Market";
+            document.getElementById('nature-of-business-additional').setAttribute("required","");
+        } else if(this.value === "other"){
+            document.getElementById('nature-of-business-additional').placeholder  = "Please Specify";
+            document.getElementById('nature-of-business-additional').setAttribute("required","");
+        } else if(this.value === "housewife" || this.value === "employee"){
+            document.getElementById('nature-of-business-additional').placeholder  = "Additional Info";
+            document.getElementById('nature-of-business-additional').removeAttribute("required");
+        }
+    };
+</script>
 
 </body>
 </html>

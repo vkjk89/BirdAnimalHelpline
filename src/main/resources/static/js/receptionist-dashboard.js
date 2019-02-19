@@ -21,7 +21,7 @@ var cVol = "<input type=\"hidden\" id=\"vol_id\" value=\"";
 var dVol = "\" ></li>";
 
 var top_nav_a_Vol = "<li> <span class=\"vol_tooltip\">";
-var top_nav_b_Vol = "</span> <button onclick=\"assignCase(this, 'top-nav')\" type=\"button\" class=\"assign-case-assign-btn\">Assign</button>";
+var top_nav_b_Vol = "</span> <button onclick=\"assignCase(this, 'top-nav-')\" type=\"button\" class=\"assign-case-assign-btn\">Assign</button>";
 var top_nav_c_Vol = "<input type=\"hidden\" id=\"vol_id\" value=\"";
 var top_nav_d_Vol = "\" ></li>";
 
@@ -121,6 +121,7 @@ function top_nav_user_cases(data) {
     currentCaseId = $(data).find(".case-id").text();
     var caseInfo = caseIdVsInfoMap[currentCaseId];
     $('#top-nav-case-id-case-details').val(caseInfo.caseId);
+    $('#top-nav-date-info').val(caseInfo.creationDateStr);
     $('#top-nav-animal-type-case-details').val(caseInfo.typeAnimal);
     $('#top-nav-animal-name-case-details').val(caseInfo.animalName);
     $('#top-nav-condition-case-details').val(caseInfo.animalCondition);
@@ -158,7 +159,9 @@ function case_details(data) {
     page_history.unshift("myc_case_details");
     currentCaseId = $(data).find(".case-id").text();
     var caseInfo = caseIdVsInfoMap[currentCaseId];
+    console.log(caseInfo);
     $('#case-id-case-details').val(caseInfo.caseId);
+    $('#date-info').val(caseInfo.creationDateStr);
     $('#animal-type-case-details').val(caseInfo.typeAnimal);
     $('#animal-name-case-details').val(caseInfo.animalName);
     $('#condition-case-details').val(caseInfo.animalCondition);
@@ -502,6 +505,7 @@ function close(){
 }
 
 function show_vol_tooltip(event) {
+    console.log(event);
     clearTimeout(hide_tooltip_timeOut);
     var userId = $(event.originalEvent.srcElement).parent().find("#vol_id").val();
     console.info(userId);
@@ -515,7 +519,7 @@ function show_vol_tooltip(event) {
     if (userInfo.image) {
         $('#tooltip-dp').html('<img src="data:image/png;base64,"' + userInfo.image + '><div id="decoy-for-img"></div>');
     } else {
-        $('#tooltip-dp').html('<img id="dp_image" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/User_font_awesome.svg" width="auto" height="70vh"><div id="decoy-for-img"></div>');
+        $('#tooltip-dp').html('<img id="dp_image" src="https://upload.wikimedia.org/wikipedia/commons/7/7c/User_font_awesome.svg" width="auto" height="70vh" style="display:block"><div id="decoy-for-img"></div>');
     }
     $("#vol-description-tooltip").fadeIn();
     var tooltip = document.getElementById("vol-description-tooltip").getBoundingClientRect();
@@ -535,7 +539,7 @@ function hide_vol_tooltip() {
         $('#address-line2').text("");
         $('#tooltip-pincode').text("");
         $('#tooltip-info-tel-number').text("");
-        $('#tooltip-dp').html('<img id="dp_image" src="" width="0" height="0"><div id="decoy-for-img"></div>');
+        $('#tooltip-dp').html('<img id="dp_image" src="" style="dispaly:none"><div id="decoy-for-img"></div>');
     }, 200);
 }
 
@@ -552,15 +556,20 @@ function getVolInfo(param) {
         .done(function (data) {
             var cc = [];
             $.each(JSON.parse(data.top5), function (i, item) {
-                var html = aVol + item.userName + bVol + cVol + item.userId + dVol;
+                var html;
+                if(param === "top-nav-") html = top_nav_a_Vol + item.userName + top_nav_b_Vol + top_nav_c_Vol + item.userId + top_nav_d_Vol;
+                else html = aVol + item.userName + bVol + cVol + item.userId + dVol;
                 userIdVsInfoMap[item.userId] = item;
                 cc.push(html);
+
             });
             $('#'+param+'top_five_vol').html(cc.join(""));
 
             cc = [];
             $.each(JSON.parse(data.nearest), function (i, item) {
-                var html = aVol + item.userName + bVol + cVol + item.userId + dVol;
+                var html;
+                if(param === "top-nav-") html = top_nav_a_Vol + item.userName + top_nav_b_Vol + top_nav_c_Vol + item.userId + top_nav_d_Vol;
+                else html = aVol + item.userName + bVol + cVol + item.userId + dVol;
                 userIdVsInfoMap[item.userId] = item;
                 cc.push(html);
             });
@@ -626,20 +635,23 @@ function closeCaseReq(caseId) {
 }
 
 function action_centre_assign_case(param){
-    var top_five_loading = '<img src="/img/loading-simple.gif" id="'+param+'top_five_loading" alt="Loading">';
-    var nearest_vol_loading = '<img src="/img/loading-simple.gif" id="'+param+'nearest_vol_loading" alt="Loading">';
-    $('#'+param+'top-five').append(top_five_loading);
-    $('#'+param+'nearest-assigned-volunteers').append(nearest_vol_loading);
+    //var top_five_loading = '<img src="/img/loading-simple.gif" id="'+param+'top_five_loading" alt="Loading">';
+    //var nearest_vol_loading = '<img src="/img/loading-simple.gif" id="'+param+'nearest_vol_loading" alt="Loading">';
+    //$('#'+param+'top-five').append(top_five_loading);
+    //$('#'+param+'nearest-assigned-volunteers').append(nearest_vol_loading);
+    $("#"+param+"top_five_loading").show();
+    $("#"+param+"nearest_vol_loading").show();
     document.getElementById(param+'case-details-form').style.display = "none";
     document.getElementById(param+'content-assign-case').style.display = "block";
     page_history.unshift(param+"action_centre_assign_case");
-    var caseId = $("#"+param+"case-id-case-details").val();
+    var caseID = $("#"+param+"case-id-case-details").val();
+    //var case_status = item.isAck == 1? "(Assigned)": item.isAck == -1 ? "(Pending)": item.toUser == null ? "":"(Unassigned)";
     if(param === "top-nav-"){
         layer_change('layer2');
-        $("#top-nav-heading-text").html("Case Details | Case No.: " + caseId + " | Assign Case");
+        $("#top-nav-heading-text").html("Case Details | Case No.: " + caseID + /*" -> " + case_status +*/ " | Assign Case ");
     } else {
         layer_change('layer1');
-        $("#heading-text").html("Case Details | Case No.: " + caseId + " | Close Case");
+        $("#heading-text").html("Case Details | Case No.: " + caseID + /*" -> " + case_status +*/ " | Assign Case ");
     }
     getVolInfo(param);
 }
@@ -654,10 +666,10 @@ function action_center_close_case(param){
     var caseId = $("#"+param+"case-id-case-details").val();
     if(param === "top-nav-"){
         layer_change('layer2');
-        $("#top-nav-heading-text").html("Case Details | Case No.: " + caseId + " | Assign Case");
+        $("#top-nav-heading-text").html("Case Details | Case No.: " + caseId + " | Close Case");
     } else {
         layer_change('layer1');
-        $("#heading-text").html("Case Details | Case No.: " + caseId + " | Assign Case");
+        $("#heading-text").html("Case Details | Case No.: " + caseId + " | Close Case");
     }
     other_reason_close_case(param);
 }
@@ -708,6 +720,19 @@ function close_case_validation(param){
     }
     else if (document.getElementById(param+'close-case-reason').value === "") document.getElementById(param+'close-case-reason').style.border = "2px solid red";
     else closeCaseReq(currentCaseId);
+}
+
+function nine_one_dropdown_change(){
+    if(document.getElementById("nine-one").value === "+91"){
+        document.getElementById("contact-number").setAttribute("max", "9999999999");
+        document.getElementById("contact-number").setAttribute("min", "50000000");
+        document.getElementById("contact-number").setAttribute("title", "Valid 10 digit mobile number without prefix");
+    }
+    else {
+        document.getElementById("contact-number").setAttribute("max", "99999999");
+        document.getElementById("contact-number").setAttribute("min", "10000000");
+        document.getElementById("contact-number").setAttribute("title", "Valid 8 digit landline number without prefix");
+    }
 }
 
 $(document).ready(function () {
@@ -928,7 +953,14 @@ $(document).ready(function () {
         $('.select-animal-class').css("display", "none");
         $('#add-new-bird-animal').css("display", "none");
         $('#add-bird-animal').css("display", "none");
+        nine_one_dropdown_change();
     };
+
+    $('#close-success-message').click(function(){
+        $('#raise-a-case-success').fadeOut();
+        $('#raise-a-case-content').css("pointerEvents","all");
+        $("#raise-a-case-cta-messages").css("pointerEvents","none");
+    });
 
 //------Search-Focus-&-Clear-Table-on-Search------------------------------------------------------------------
     document.getElementById('search-case-input').onkeyup = function () {
@@ -944,16 +976,7 @@ $(document).ready(function () {
 
 //-----+91-022-Validation------------------------------------------------------------------------------------
     document.getElementById("nine-one").onchange = function(){
-        if(document.getElementById("nine-one").value === "+91"){
-            document.getElementById("contact-number").setAttribute("max", "99999999");
-            document.getElementById("contact-number").setAttribute("min", "50000000");
-            document.getElementById("contact-number").setAttribute("title", "Valid 10 digit mobile number without prefix");
-        }
-        else {
-            document.getElementById("contact-number").setAttribute("max", "99999999");
-            document.getElementById("contact-number").setAttribute("min", "10000000");
-            document.getElementById("contact-number").setAttribute("title", "Valid 8 digit landline number without prefix");
-        }
+        nine_one_dropdown_change();
     };
 
 //--Action-Centre--------------------------------------------------------------------------------
@@ -1063,7 +1086,6 @@ $(document).ready(function () {
         $('#dynamic_image_enlarge').css('display', 'block');
         var enlarge_source = this_t.getAttribute('src');
         $('#photo-enlarge').children('img').attr('src', enlarge_source);
-        $('#photo-enlarge').children('img').css("background-color", "#f4f4f4");
     }
     $('#image_enlarge_back_button').click(function () {
         $('#dynamic_image_enlarge').css('display', 'none');
@@ -1140,15 +1162,17 @@ $(document).ready(function () {
                 if(data) {
                     $('#raise-a-case-form')[0].reset();
                     document.getElementById("reset-raise-case").click();
-                    $('#case-id').val(data);
+                    //$('#case-id').val(data);
                     $('#raise-a-case-success').fadeIn();
                     $('#raise-a-case-content').css("pointerEvents","none");
+                    $("#raise-a-case-cta-messages").css("pointerEvents","all");
                     currentCaseId = data;
                     setTimeout(function () {
-                        $('#case-id').val('');
+                        //$('#case-id').val('');
                         $('#raise-a-case-success').fadeOut();
                         $('#raise-a-case-content').css("pointerEvents","all");
-                    }, 1500);
+                        $("#raise-a-case-cta-messages").css("pointerEvents","none");
+                    }, 10000);
                 }
                 else {
                     $('#raise-a-case-error').fadeIn();
@@ -1205,32 +1229,22 @@ $(document).ready(function () {
                         value: item.userName,
                         // following property is added for our own use
                         userDetails: item
-                    }
-
+                    };
                 }));
             });
         },
 
         select: function (event, ui) {
+            //$("#assign_case_loading").css("display", "none");
             if (ui.item) {
-                var html;
+                var html = aVol + ui.item.userDetails.userName + bVol + cVol + ui.item.userDetails.userId + dVol;
                 userIdVsInfoMap[ui.item.userDetails.userId] = ui.item.userDetails;
-                if(page_history[0] === "top-nav-action_centre_assign_case"){
-                    html = top_nav_a_Vol + ui.item.userDetails.userName + top_nav_b_Vol + top_nav_c_Vol + ui.item.userDetails.userId + top_nav_d_Vol;
-                    $('#top-nav-search_vol').html(html);
-                    $("#top-nav-assign-case-search-input").autocomplete("close");
-                    $("#top-nav-assign-case-search-input").val('');
-                }
-                else {
-                    html = aVol + ui.item.userDetails.userName + bVol + cVol + ui.item.userDetails.userId + dVol;
-                    $('#search_vol').html(html);
-                    $("#assign-case-search-input").autocomplete("close");
-                    $("#assign-case-search-input").val('');
-                }
+                $('#search_vol').html(html);
+                $("#assign-case-search-input").autocomplete("close");
+                $("#assign-case-search-input").val('');
                 return false;
             }
         }
-
     });
 
     $("#top-nav-search").autocomplete({
@@ -1311,6 +1325,7 @@ $(document).ready(function () {
                 } else if (ui.item.caseDetails) {
                     cd = ui.item.caseDetails;
                     caseIdVsInfoMap[cd.caseId] = cd;
+                    $('#top-nav-date-info').val(cd.creationDateStr);
                     $('#top-nav-case-id-case-details').val(cd.caseId);
                     $('#top-nav-animal-type-case-details').val(cd.typeAnimal);
                     $('#top-nav-animal-name-case-details').val(cd.animalName);

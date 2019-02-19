@@ -92,6 +92,7 @@ $(document).ready(function () {
         $("#assign-case-cta-btns").css("display", "block");
         $("#assign-case-toggle-btn").addClass("active");
         $("#close-case-toggle-btn").removeClass("active");
+        $("#close-case-reason-select").removeAttr("required");
     });
 
     $("#close-case-toggle-btn").click(function () {
@@ -102,6 +103,7 @@ $(document).ready(function () {
         $("#close-case-cta-btns").css("display", "block");
         $("#assign-case-toggle-btn").removeClass("active");
         $("#close-case-toggle-btn").addClass("active");
+        $("#close-case-reason-select").attr("required","");
     });
 
     $("#close-case-reason-select").on("change", function () {

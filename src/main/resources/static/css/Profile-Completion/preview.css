@@ -60,6 +60,10 @@ ul li {
     list-style-type: decimal;
 }
 
+ul li ul li {
+    list-style-type: disc;
+}
+
 #cta-btns {
     box-sizing: border-box;
     width: 100vw;

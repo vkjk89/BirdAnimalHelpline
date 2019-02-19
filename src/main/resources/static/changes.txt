@@ -8,11 +8,13 @@ letter-spacing in px
 
 Some Error page - Access Denied and Internal Server Error
 
-13/12/2018 - Update2
+13/12/2018 - Phase2
     Approval History
     Case Flow History
     Assign Case - Tick on assign
     HTML Component Usability
+    Upload Photos - Raise Case
+    Only show contact number and name - First User who accepts Case
 
 11/01/2018
     //All Warnings/Errors    
@@ -60,33 +62,29 @@ Call - Saturday - Before Assummed production Sunday
     //Top-Five & Nearest Loader
     //CaseDetails - VolDashboard Loader
     //Check for no Users - Admin DB
-    Notification Center
-    Convert Case History Vol - CaseDetails
-    Active - Accept - Update
 
 17/02/2019 - Assumed Production Sunday
-    Change nature of business
-    Alternate Number - preview page - even though empty
-    Section Multiple Pincodes - Formatting and Error checking
-    +91 / 022 Validation - Second Time
-    Success - Case Raised Change text - 10s - close btn
-    Remove Case ID
-    Date - Vol CaseDetails and Recpt. DB - CaseDetails
-    Status Bar Error - Close case
-    Current Case Status - Top Nav
-    Case History - Top Nav
-    Reassign Case instead of Assign Case
-    Assign Case Break - Top Nav somewhere
+    //Loader Error - Top Five & Nearest
+    //+91 / 022 Validation - Second Time
+    //Status Bar Error - Close case
+    //Assign Case Break - Top Nav somewhere
+    //Top-Nav - Assign Case - Assign Case Error
+    //Success - Case Raised Change text - 10s - close btn
+    //Remove Case ID
+    //Date - Vol CaseDetails and Recpt. DB - CaseDetails
+    //Close Case Reason - Recpt. Dashboard
+    //Section Multiple Pincodes - Formatting and Error checking
+    //Change nature of business
+    Vol. Dashboard - Active - Accept - Update
+    Notification Center
     Case History Fix
-
-    Upload Photos - Raise Case
-    Only show contact number and name - First User who accepts Case
-
-//------Tooltipish-----
-default:1 Uncaught SyntaxError: Unexpected token u in JSON at position 0
-    at JSON.parse (<anonymous>)
-    at Object.<anonymous> (receptionist-dashboard.js?v=1550307657:552)
-    at u (jquery-3.3.1.min.js?v=1550307657:2)
-    at Object.fireWith [as resolveWith] (jquery-3.3.1.min.js?v=1550307657:2)
-    at k (jquery-3.3.1.min.js?v=1550307657:2)
-    at XMLHttpRequest.<anonymous> (jquery-3.3.1.min.js?v=1550307657:2)
+    
+    Vimal ---------------
+    Time in creationDateStr is in 12HR format - change to 24HR
+    Top-Nav-Tooltip - and if first (top-nav -> assign-case) - top-five and nearest error
+    Current Case Status - Top Nav
+    Reassign Case instead of Assign Case
+    Assign Case - Vol Dashboard - Some Error - Date Can not be parsed
+    Another NULL user - registration - happens when server is restarted while fill 2nd or 3rd step of registration
+    All fields are coming in Preview page make if statements
+    I can select same pincode again and again - Step3 ProfileCompletion. But when form is submitted data is clubed together

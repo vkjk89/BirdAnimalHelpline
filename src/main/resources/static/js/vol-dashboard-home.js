@@ -11,11 +11,12 @@ function accept_decline(accept_decline) {
     $('.accept-decline-pending-cases').html(data1.length);
     acceptReject(caseId, accept_decline);
     if(accept_decline === true){
-        $('.celebrations').fadeIn(200);
+        $('.celebrations-container').fadeIn(200);
         setTimeout(function(){
             $('.celebrations-container').fadeOut(200);
         }, 200);
     }
+    $('#results-tab-active').click();
 }
 
 function no_pending_cases(){
@@ -84,6 +85,7 @@ function section_accept_case(slideIndex, item) {
     $(".case-details").fadeIn(200);
     setTimeout(function(){
         $(".case-id").html(data1[slideIndex].caseId);
+        $(".date-info").html(data1[slideIndex].creationDateStr);
         if(data1[slideIndex].birdOrAnimal === "Animal"){
             $(".bird-animal-info-header").html("Animal Information");
             $(".animal-type").html("Animal Type: " + data1[slideIndex].typeAnimal);
@@ -246,11 +248,10 @@ $(document).ready(function () {
             $("#search-results-div").css("display", "block");
             $("#search-input-results").css("display", "none");
         }
-
     };
 
     $('#notification_bell').click(function(){
-        $('#top-nav, main, #bottom-action-bar, #page-heading').toggleClass("notification-center-open");
+        $('main, #page-heading').toggleClass("notification-center-open");
         //$('#notification_bell').attr("src", "/img/notification-clicked.png");
         $('#notification-center').fadeToggle(300);
     });
@@ -288,29 +289,9 @@ $(document).ready(function () {
         if(!e.target.matches('#notification_bell') && document.getElementById('notification-center').style.display === "block"){
             $('#notification-center').css({"opacity":"1", "pointerEvents":""});
             $('#notification-center').fadeToggle(300);
-            $('#top-nav, main, #bottom-action-bar, #page-heading').toggleClass("notification-center-open");
+            $('main, #page-heading').toggleClass("notification-center-open");
         }
     });
-    
-    /*window.onclick = function (e) {
-        if (!e.target.matches('#close-btn') && !e.target.matches('#profile-options') && !e.target.matches('#bottom-action-bar')) {
-            if (document.getElementById('side-nav').classList.contains('side-nav-anim')) {
-                document.getElementById('side-nav').classList.remove('side-nav-anim');
-                document.getElementById('side-nav').style.display = "none";
-                document.getElementById('page-heading').style.opacity = "1";
-                document.getElementById('top-nav').style.opacity = "1";
-                document.getElementById('my-cases').style.opacity = "1";
-                document.getElementById('accept-case-wrapper').style.opacity = "1";
-                document.getElementsByTagName("main")[0].style.pointerEvents = "";
-                document.getElementById("notification-center").style.opacity = "1";
-            }
-        } 
-        if(!e.target.matches('#notification_bell') && document.getElementById('notification-center').style.display === "block"){
-            $('#notification-center').css({"opacity":"1", "pointerEvents":""});
-            $('#notification-center').fadeToggle(300);
-            $('#top-nav, main, #bottom-action-bar, #page-heading').toggleClass("notification-center-open");
-        }
-    };*/
 
     var aCase = '<div onclick="goToCaseDetails(this)"><span class="case-id-my-cases">';
     var bCase = '</span>';

@@ -136,10 +136,11 @@ main {
     margin-left: -5vw;
     line-height: 3.5vh;
     max-width: 60vw;
+    margin: 2vh 0vw;
+    list-style-type: decimal;
 }
 
 #selected-pincode-ul {
-    list-style-type: decimal;
     max-width: 50vw;
 }
 
@@ -162,17 +163,8 @@ main {
     margin-top: 0;
 }
 
-.add-timing-icon, .remove-timing-icon{
-    display: none;
-    float: right;
-    font-size: 2em;
-    font-weight: 900;
-    margin-right: 5vw;
-}
-
 .remove-pincode {
     float: right;
-    margin-right: 5vw;
     color: #374047;
     font-size: 2em;
     cursor: pointer;

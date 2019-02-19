@@ -102,8 +102,14 @@
             <hr>
             <div id="body-form-top-side-case-details">
                 <div id="id-case-details">
-                    <label for="case-id-case-details">Case No.</label>
-                    <input th:value="${caseInfo.caseId}" autocomplete="off" disabled id="case-id-case-details" name="case-id-case-details" required type="number">
+                    <div>
+                        <label for="case-id-case-details">Case No.</label>
+                        <input th:value="${caseInfo.caseId}" autocomplete="off" disabled id="case-id-case-details" name="case-id-case-details" required type="number"><br>
+                    </div>
+                    <div>
+                        <label for="date-info">Date Created: </label>
+                        <input th:value="${caseInfo.creationDateStr}" disabled id="date-info" type="text" placeholder=""><br>
+                    </div>
                 </div>
                 <label for="animal-type-case-details">#Animal/Bird type: </label>
                 <input th:value="${caseInfo.typeAnimal}" disabled id="animal-type-case-details" type="text" placeholder=""><br>

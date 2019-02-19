@@ -97,7 +97,7 @@
     margin-top: 0;
 }
 
-#full-name, #address-line1, #address-line2, #pincode, #contact-number, #nine-one, #nature-of-business {
+#full-name, #address-line1, #address-line2, #pincode, #contact-number, #nine-one, #nature-of-business-additional, #nature-of-business {
     box-sizing: border-box;
     display: block;
     margin-top: 2vh;
@@ -108,7 +108,7 @@
     width: 70vw;
 }
 
-#full-name:focus, #address-line1:focus, #address-line2:focus, #pincode:focus, #contact-number:focus, #nine-one:focus, #nature-of-business:focus {
+#full-name:focus, #address-line1:focus, #address-line2:focus, #pincode:focus, #contact-number:focus, #nine-one:focus, #nature-of-business-additional:focus {
     border: 1px solid black;
 }
 
@@ -146,6 +146,8 @@
 select * {
     background-color: transparent;
 }
+
+#nature-of-business-additional {margin-top: 1vh;}
 
 .nav-button {margin-top: 3vh;}
 #next, #previous {padding: 0;}

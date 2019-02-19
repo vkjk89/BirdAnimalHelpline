@@ -238,6 +238,8 @@
                             <label for="top-nav-case-id-case-details">Case No. </label>
                             <input autocomplete="off" disabled id="top-nav-case-id-case-details" name="top-nav-case-id-case-details" required type="number">
                         </div>
+                        <label for="date">Date Created: </label>
+                        <input disabled id="top-nav-date-info" type="text"><br>
                         <label for="top-nav-animal-type" id="top-nav-animal-bird-type-case-details">#Animal/Bird type: </label>
                         <input disabled id="top-nav-animal-type-case-details" type="text"><br>
                         <label for="top-nav-animal-name-case-details" id="top-nav-animal-bird-name-case-details">#Animal/Bird name: </label>
@@ -285,10 +287,12 @@
                         <div id="top-nav-assign-case-search-body">
                             <div id="top-nav-top-five">
                                 <h2>Top Five Volunteers: </h2>
+                                <img src="/img/loading-simple.gif" id="top-nav-top_five_loading" alt="Loading">
                                 <ul class="top-five-and-nearest-and-search-results-ul" id="top-nav-top_five_vol"></ul>
                             </div>
                             <div id="top-nav-nearest-assigned-volunteers">
                                 <h2>Nearest: </h2>
+                                <img src="/img/loading-simple.gif" id="top-nav-nearest_vol_loading" alt="Loading">
                                 <ul class="top-five-and-nearest-and-search-results-ul" id="top-nav-nearest_5_vol"></ul>
                             </div>
                         </div>
@@ -348,8 +352,6 @@
                 <hr>
                 <div id="body-form-left-side">
                     <div id="id-and-bird-type">
-                        <label for="case-id" style="width: auto;">Case No. </label>
-                        <input autocomplete="off" disabled id="case-id" name="case-id" placeholder="" required type="number">
                         <div class="no-select">
                             <input id="bird-or-animal1" name="bird-or-animal" required tabindex="1" type="radio" value="Bird">
                             <label for="bird-or-animal1" id="bird-option"><img alt="Bird" height="auto" src="/static/img/bird1.png" th:src="@{/img/bird1.png}" width="50vw"></label>
@@ -392,17 +394,21 @@
                     <input autocomplete="off" id="location-pincode" max="500000" min="400000" name="location-pincode" placeholder="Pincode (Mandatory)" required tabindex="10" title="Please enter valid pincode" type="number">
                 </div>
             </div>
-            <div style = "background: forestgreen">
+            <div style = "background: red">
                 <span id="error"></span>
             </div>
 
         </form>
         <div id="cta-btns">
-            <div id="raise-a-case-success"><span id="raise-a-case-checkmark"> &check;</span> Success! Case raised</div>
-            <div id="raise-a-case-error"><span id="raise-a-case-cross"> &times;</span> Error!</div>
-            <button form="raise-a-case-form" id="submit-raise-case" tabindex="11" type="submit" onclick="/*submit_raise_a_case()*/">Raise Case</button>
-            <button form="raise-a-case-form" id="reset-raise-case" tabindex="12" type="reset">Clear All</button>
-            <div id="validationMessage" style="opacity:0;display: none"></div>
+            <div id="raise-a-case-cta-messages">
+                <div id="raise-a-case-success"><span id="raise-a-case-checkmark"> &check;</span> Success! Case raised <span id="close-success-message">&times;</span></div>
+                <div id="raise-a-case-error"><span id="raise-a-case-cross"> &times;</span> Error!</div>
+            </div>
+            <div id="cta-btns-div">
+                <button form="raise-a-case-form" id="submit-raise-case" tabindex="11" type="submit" onclick="/*submit_raise_a_case()*/">Raise Case</button>
+                <button form="raise-a-case-form" id="reset-raise-case" tabindex="12" type="reset">Clear All</button>
+                <div id="validationMessage" style="opacity:0;display: none"></div>
+            </div>
         </div>
     </div>
 
@@ -459,6 +465,8 @@
                         <label for="case-id-case-details">Case No. </label>
                         <input autocomplete="off" disabled id="case-id-case-details" name="case-id-case-details" required type="number">
                     </div>
+                    <label for="date">Date Created: </label>
+                    <input disabled id="date-info" type="text"><br>
                     <label for="animal-type-case-details" id="animal-bird-type-case-details">#Animal/Bird type: </label>
                     <input disabled id="animal-type-case-details" type="text"><br>
                     <label for="animal-name-case-details" id="animal-bird-name-case-details">#Animal/Bird name: </label>
@@ -505,10 +513,12 @@
                     <div id="assign-case-search-body">
                         <div id="top-five">
                             <h2>Top Five Volunteers: </h2>
+                            <img src="/img/loading-simple.gif" id="top_five_loading" alt="Loading">
                             <ul class="top-five-and-nearest-and-search-results-ul" id="top_five_vol"></ul>
                         </div>
                         <div id="nearest-assigned-volunteers">
                             <h2>Nearest: </h2>
+                            <img src="/img/loading-simple.gif" id="nearest_vol_loading" alt="Loading">
                             <ul class="top-five-and-nearest-and-search-results-ul" id="nearest_5_vol"></ul>
                         </div>
                     </div>

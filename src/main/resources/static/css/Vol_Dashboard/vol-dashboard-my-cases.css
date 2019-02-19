@@ -328,12 +328,14 @@ main hr {
     color: black;
 }
 
-#id-case-details {
+#id-case-details div {
     display: flex;
+    margin-bottom: 2vh;
 }
 #id-case-details input {
     width: 20%;
 }
+#id-case-details div:nth-child(2) input {width: 45%;}
 #id-case-details label {
     box-sizing: border-box;
     margin-right: 3vw;
