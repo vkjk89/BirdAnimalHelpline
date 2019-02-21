@@ -258,13 +258,14 @@ main {
     height: 6vh;
     padding-top: 1vh;
     padding-left: 1vw;
+    padding-top: 10px;
 }#top-nav-heading-status_bar {display: none;}
 #heading-text, #top-nav-heading-text,  #back-button, #close-button, #top-nav-back-button, #top-nav-close-button {display: inline;}
 #heading-text, #top-nav-heading-text {
     position: relative;
     box-sizing: border-box;
     color: white;
-    font-size: 1.2em;
+    font-size: 1.1em;
 }
 #back-close-btn-wrapper, #top-nav-back-close-btn-wrapper {
     display: none;

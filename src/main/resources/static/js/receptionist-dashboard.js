@@ -159,6 +159,17 @@ function case_details(data) {
     page_history.unshift("myc_case_details");
     currentCaseId = $(data).find(".case-id").text();
     var caseInfo = caseIdVsInfoMap[currentCaseId];
+    
+    if(caseIdVsInfoMap[currentCaseId].active === true){
+        if(caseIdVsInfoMap[currentCaseId].isAck === 1){
+            myc_case_status = "(Accepted by User)";
+        }
+        else if(caseIdVsInfoMap[currentCaseId].isAck === 0) myc_case_status = "(Not yet accepted by User)";
+        else if(caseIdVsInfoMap[currentCaseId].isAck === -1) myc_case_status = "(Rejected by user)";
+    } else {
+        myc_case_status = "(Case Closed)";
+    }
+
     console.log(caseInfo);
     $('#case-id-case-details').val(caseInfo.caseId);
     $('#date-info').val(caseInfo.creationDateStr);
@@ -172,7 +183,7 @@ function case_details(data) {
     $('#location-landmark-case-details').val(caseInfo.locationLandMark);
     $('#location-pincode-case-details').val(caseInfo.locationPincode);
     layer_change('layer1');
-    $("#heading-text").html("Case Details | Case No.: " + caseInfo.caseId);
+    $("#heading-text").html("Case Details | Case No.: " + caseInfo.caseId + " | " + myc_case_status);
     $("#back-close-btn-wrapper").css("display","inline");
     $("#myc_case_details_loading_screen").css("display","block");
     caseImageRetriever(caseInfo.caseId,"case-photos-case-details");
@@ -595,7 +606,7 @@ function assignCaseReq(caseId, userId, param) {
 
         .done(function (data) {
             if(param === ''){
-                $('#assign-case-success').text("Success! Case " + caseId + " assigned successfully to " + userId);
+                $('#assign-case-success').text("Success! Case " + caseId + " assigned successfully to " + userIdVsInfoMap[userId].userName);
                 $('#assign-case-success').fadeIn(200);
                 $("#content-assign-case").css("pointerEvents", "none");
                 document.getElementById("card-right-side").style.pointerEvents = "none";
@@ -635,23 +646,23 @@ function closeCaseReq(caseId) {
 }
 
 function action_centre_assign_case(param){
-    //var top_five_loading = '<img src="/img/loading-simple.gif" id="'+param+'top_five_loading" alt="Loading">';
-    //var nearest_vol_loading = '<img src="/img/loading-simple.gif" id="'+param+'nearest_vol_loading" alt="Loading">';
-    //$('#'+param+'top-five').append(top_five_loading);
-    //$('#'+param+'nearest-assigned-volunteers').append(nearest_vol_loading);
     $("#"+param+"top_five_loading").show();
     $("#"+param+"nearest_vol_loading").show();
     document.getElementById(param+'case-details-form').style.display = "none";
     document.getElementById(param+'content-assign-case').style.display = "block";
     page_history.unshift(param+"action_centre_assign_case");
     var caseID = $("#"+param+"case-id-case-details").val();
-    //var case_status = item.isAck == 1? "(Assigned)": item.isAck == -1 ? "(Pending)": item.toUser == null ? "":"(Unassigned)";
+    var isAck = caseIdVsInfoMap[caseID].isAck;
+    var action_center_case_status;
+    if(isAck === 1) action_center_case_status = "(Accepted by User)";
+    else if(isAck === 0) action_center_case_status = "(Not yet accepted by User)";
+    else if(isAck === -1) action_center_case_status = "(Rejected by User)";
     if(param === "top-nav-"){
         layer_change('layer2');
-        $("#top-nav-heading-text").html("Case Details | Case No.: " + caseID + /*" -> " + case_status +*/ " | Assign Case ");
+        $("#top-nav-heading-text").html("Case Details | Case No.: " + caseID +  " | Assign Case ");
     } else {
         layer_change('layer1');
-        $("#heading-text").html("Case Details | Case No.: " + caseID + /*" -> " + case_status +*/ " | Assign Case ");
+        $("#heading-text").html("Case Details | Case No.: " + caseID +  " | Assign Case ");
     }
     getVolInfo(param);
 }
@@ -664,12 +675,18 @@ function action_center_close_case(param){
     document.getElementById(param+'content-close-case').style.display = "block";
     page_history.unshift(param+"action_centre_close_case");
     var caseId = $("#"+param+"case-id-case-details").val();
+    var isAck = caseIdVsInfoMap[caseId].isAck;
+    var action_center_case_status;
+    if(isAck === 1) action_center_case_status = "(Accepted by User)";
+    else if(isAck === 0) action_center_case_status = "(Not yet accepted by User)";
+    else if(isAck === -1) action_center_case_status = "(Rejected by User)";
+    //if (toUser === null) action_center_case_status = "(Case not assigned)";
     if(param === "top-nav-"){
         layer_change('layer2');
-        $("#top-nav-heading-text").html("Case Details | Case No.: " + caseId + " | Close Case");
+        $("#top-nav-heading-text").html("Case Details | Case No.: " + caseID +  " | Assign Case ");
     } else {
         layer_change('layer1');
-        $("#heading-text").html("Case Details | Case No.: " + caseId + " | Close Case");
+        $("#heading-text").html("Case Details | Case No.: " + caseID +  " | Close Case ");
     }
     other_reason_close_case(param);
 }
@@ -733,6 +750,12 @@ function nine_one_dropdown_change(){
         document.getElementById("contact-number").setAttribute("min", "10000000");
         document.getElementById("contact-number").setAttribute("title", "Valid 8 digit landline number without prefix");
     }
+}
+
+function raise_a_case_success_msg_close_btn(){
+    $('#raise-a-case-success').fadeOut();
+    $('#raise-a-case-content').css("pointerEvents","all");
+    $("#raise-a-case-cta-messages").css("pointerEvents","none");
 }
 
 $(document).ready(function () {
@@ -956,12 +979,6 @@ $(document).ready(function () {
         nine_one_dropdown_change();
     };
 
-    $('#close-success-message').click(function(){
-        $('#raise-a-case-success').fadeOut();
-        $('#raise-a-case-content').css("pointerEvents","all");
-        $("#raise-a-case-cta-messages").css("pointerEvents","none");
-    });
-
 //------Search-Focus-&-Clear-Table-on-Search------------------------------------------------------------------
     document.getElementById('search-case-input').onkeyup = function () {
         if (document.getElementById('search-case-input').value !== "") {
@@ -1160,9 +1177,11 @@ $(document).ready(function () {
                 }
 
                 if(data) {
+                    //console.log(data);
                     $('#raise-a-case-form')[0].reset();
                     document.getElementById("reset-raise-case").click();
                     //$('#case-id').val(data);
+                    $('#raise-a-case-success').html('<span id="raise-a-case-checkmark"> &check;</span> Success! Case No.: '+data+' raised <span id="close-success-message" onclick="raise_a_case_success_msg_close_btn();">&times;</span>');
                     $('#raise-a-case-success').fadeIn();
                     $('#raise-a-case-content').css("pointerEvents","none");
                     $("#raise-a-case-cta-messages").css("pointerEvents","all");
@@ -1325,6 +1344,13 @@ $(document).ready(function () {
                 } else if (ui.item.caseDetails) {
                     cd = ui.item.caseDetails;
                     caseIdVsInfoMap[cd.caseId] = cd;
+
+                    if(cd.active === true){
+                        if(cd.isAck === 1) top_nav_case_status = "(Accepted by User)";
+                        else if(cd.isAck === 0) top_nav_case_status = "(Not yet accepted by User)";
+                        else if(cd.isAck === -1) top_nav_case_status = "(Rejected by user)";
+                    } else top_nav_case_status = "(Case Closed)";
+
                     $('#top-nav-date-info').val(cd.creationDateStr);
                     $('#top-nav-case-id-case-details').val(cd.caseId);
                     $('#top-nav-animal-type-case-details').val(cd.typeAnimal);
@@ -1351,7 +1377,7 @@ $(document).ready(function () {
                     }
                     top_nav_search_case_details("search_cases_details");
                     layer_change('layer2');
-                    $('#top-nav-heading-text').html('Case Details | Case No.: ' + cd.caseId);
+                    $('#top-nav-heading-text').html('Case Details | Case No.: ' + cd.caseId + ' | ' + top_nav_case_status);
                     if (cd.active) {
                         $('#top-nav-action-center-assign-case, #top-nav-action-center-close-case').show();
                     } else {

@@ -85,7 +85,8 @@ function section_accept_case(slideIndex, item) {
     $(".case-details").fadeIn(200);
     setTimeout(function(){
         $(".case-id").html(data1[slideIndex].caseId);
-        $(".date-info").html(data1[slideIndex].creationDateStr);
+        var tempDateStr = data1[slideIndex].creationDateStr.split(" ");
+        $(".date-info").html(tempDateStr[0] + " | " +tempDateStr[1]);
         if(data1[slideIndex].birdOrAnimal === "Animal"){
             $(".bird-animal-info-header").html("Animal Information");
             $(".animal-type").html("Animal Type: " + data1[slideIndex].typeAnimal);
