@@ -267,11 +267,13 @@ main {
     color: white;
     font-size: 1.1em;
 }
+.status-bar-vol-name {color: skyblue;}
 #back-close-btn-wrapper, #top-nav-back-close-btn-wrapper {
     display: none;
     position: relative;
     float: right;
     margin-right: 1vw;
+    margin-top: -3px;
 }
 #close-button, #back-button, #top-nav-close-button, #top-nav-back-button {
     color: white;

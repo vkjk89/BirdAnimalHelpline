@@ -88,3 +88,4 @@ Call - Saturday - Before Assummed production Sunday
     Another NULL user - registration - happens when server is restarted while filling 2nd or 3rd step of registration
     All fields are coming in Preview page make if statements
     I can select same pincode again and again - Step3 ProfileCompletion. But when form is submitted data is clubed together
+    Make currentUserId - null for => Case Opened But not assigned to anyone

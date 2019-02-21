@@ -160,15 +160,12 @@ function case_details(data) {
     currentCaseId = $(data).find(".case-id").text();
     var caseInfo = caseIdVsInfoMap[currentCaseId];
     
-    if(caseIdVsInfoMap[currentCaseId].active === true){
-        if(caseIdVsInfoMap[currentCaseId].isAck === 1){
-            myc_case_status = "(Accepted by User)";
-        }
-        else if(caseIdVsInfoMap[currentCaseId].isAck === 0) myc_case_status = "(Not yet accepted by User)";
-        else if(caseIdVsInfoMap[currentCaseId].isAck === -1) myc_case_status = "(Rejected by user)";
-    } else {
-        myc_case_status = "(Case Closed)";
-    }
+    if(caseIdVsInfoMap[currentCaseId].active){
+        if(caseIdVsInfoMap[currentCaseId].isAck === 1) myc_case_status = "(Accepted by <span class='status-bar-vol-name'>"+caseIdVsInfoMap[currentCaseId].userNameCurrent+"</span>)";
+        else if(caseIdVsInfoMap[currentCaseId].isAck === 0) myc_case_status = "(Not yet accepted by <span class='status-bar-vol-name'>"+caseIdVsInfoMap[currentCaseId].userNameCurrent+"</span>)";
+        else if(caseIdVsInfoMap[currentCaseId].isAck === -1) myc_case_status = "(Rejected by <span class='status-bar-vol-name'>"+caseIdVsInfoMap[currentCaseId].userNameCurrent+"</span>)";
+        else if(caseIdVsInfoMap[currentCaseId].currentUserId === 0) myc_case_status = "(Not assigned to any user)";
+    } else if(caseIdVsInfoMap[currentCaseId].active === false) myc_case_status = "(Case Closed)";
 
     console.log(caseInfo);
     $('#case-id-case-details').val(caseInfo.caseId);
@@ -1345,11 +1342,12 @@ $(document).ready(function () {
                     cd = ui.item.caseDetails;
                     caseIdVsInfoMap[cd.caseId] = cd;
 
-                    if(cd.active === true){
-                        if(cd.isAck === 1) top_nav_case_status = "(Accepted by User)";
-                        else if(cd.isAck === 0) top_nav_case_status = "(Not yet accepted by User)";
-                        else if(cd.isAck === -1) top_nav_case_status = "(Rejected by user)";
-                    } else top_nav_case_status = "(Case Closed)";
+                    if(cd.active){
+                        if(cd.isAck === 1) top_nav_case_status = "(Accepted by <span class='status-bar-vol-name'>"+cd.userNameCurrent+"</span>)";
+                        else if(cd.isAck === 0) top_nav_case_status = "(Not yet accepted by <span class='status-bar-vol-name'>"+cd.userNameCurrent+"</span>)";
+                        else if(cd.isAck === -1) top_nav_case_status = "(Rejected by <span class='status-bar-vol-name'>"+cd.userNameCurrent+"</span>)";
+                        else if(cd.currentUserId === 0) top_nav_case_status = "(Not assigned to any user)";
+                    } else if(cd.active === false) top_nav_case_status = "(Case Closed)";
 
                     $('#top-nav-date-info').val(cd.creationDateStr);
                     $('#top-nav-case-id-case-details').val(cd.caseId);
