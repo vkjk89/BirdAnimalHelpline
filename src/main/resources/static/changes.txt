@@ -80,12 +80,12 @@ Call - Saturday - Before Assummed production Sunday
     Case History Fix
     
     Vimal ---------------
-    Time in creationDateStr is in 12HR format - change to 24HR
-    Top-Nav-Tooltip - and if first (top-nav -> assign-case) - top-five and nearest error
-    Current Case Status - Top Nav
-    Reassign Case instead of Assign Case
-    Assign Case - Vol Dashboard - Some Error - Date Can not be parsed
-    Another NULL user - registration - happens when server is restarted while filling 2nd or 3rd step of registration
-    All fields are coming in Preview page make if statements
-    I can select same pincode again and again - Step3 ProfileCompletion. But when form is submitted data is clubed together
-    Make currentUserId - null for => Case Opened But not assigned to anyone
+    Time in creationDateStr is in 12HR format - change to 24HR -  Vimal - Fixed Added AM/PM
+    Top-Nav-Tooltip - and if first (top-nav -> assign-case) - top-five and nearest error - Vimal ( unknow json) - Fixed
+    Current Case Status - Top Nav - Karan ( heading fix)
+    Reassign Case instead of Assign Case - Karan
+    Assign Case - Vol Dashboard - Some Error - Date Can not be parsed - Vimal - Fixed
+    Another NULL user - registration - happens when server is restarted while filling 2nd or 3rd step of registration - Not a issue (Vimal)
+    All fields are coming in Profile completion preview page make if statements - ( Vimal - make it consistent , display all or none fields)
+    I can select same pincode again and again - Step3 ProfileCompletion. But when form is submitted data is clubed together - Karan
+    Make currentUserId - null for => Case Opened But not assigned to anyone - Vimal - Fixed

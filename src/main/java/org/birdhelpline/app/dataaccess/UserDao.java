@@ -275,7 +275,11 @@ public class UserDao {
             ps.setString(6, "");
             // ps.setString(6, user.getOfficeAddr().getContactPrefix() + "-" + user.getOfficeAddr().getContact());
             ps.setString(7, "O");
-            ps.setString(8, user.getOfficeAddr().getNatureBusiness());
+            if (StringUtils.isNotBlank(user.getOfficeAddr().getNatureBusinessAdditional())) {
+                ps.setString(8, user.getOfficeAddr().getNatureBusiness() + "-" + user.getOfficeAddr().getNatureBusinessAdditional());
+            } else {
+                ps.setString(8, user.getOfficeAddr().getNatureBusiness());
+            }
             return ps;
         });
 
@@ -365,9 +369,12 @@ public class UserDao {
     public List<User> getNearestVol(String locationPincode) {
         List<User> users = null;
         try {
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("pinCode", locationPincode);
+
             UserRowMapper rowMapper = new UserRowMapper("BI");
             namedParameterJdbcTemplate.query(
-                    nearestUserQ + locationPincode, rowMapper
+                    nearestUserQ, params, rowMapper
             );
             return new ArrayList<>(rowMapper.map.values());
         } catch (EmptyResultDataAccessException ex) {
@@ -503,7 +510,16 @@ public class UserDao {
                             user.getOfficeAddr().setPincode(rs.getLong("pincode"));
                             user.getOfficeAddr().setContactPrefix(rs.getString("alternate_contact_prefix"));
                             user.getOfficeAddr().setContact(rs.getString("alternate_contact"));
-                            user.getOfficeAddr().setNatureBusiness(rs.getString("nature_business"));
+                            String str = rs.getString("nature_business");
+                            if (StringUtils.isNotBlank(str)) {
+                                String[] parts = str.split("-");
+                                if (parts.length == 2) {
+                                    user.getOfficeAddr().setNatureBusiness(parts[0]);
+                                    user.getOfficeAddr().setNatureBusinessAdditional(parts[1]);
+                                } else {
+                                    user.getOfficeAddr().setNatureBusiness(str);
+                                }
+                            }
                             break;
                         default:
                             logger.warn("Unknown type Addr : " + typeAddr);

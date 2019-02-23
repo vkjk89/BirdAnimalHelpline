@@ -19,6 +19,8 @@ import org.springframework.stereotype.Repository;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -30,14 +32,14 @@ import java.util.function.Supplier;
 @Repository
 public class CaseDao {
     private static final Logger logger = LoggerFactory.getLogger(CaseDao.class);
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss a");
     private static final String caseInfoByCaseIdQWithoutTxn = "select * from case_info where case_id = ?";
     private static final String caseInfoBySearchTermQWithoutTxn = "select * from case_info where case_id like :searchTerm";
     private static final String caseTxnsQ = "select * from case_txn where case_id = ?";
     private static final String casePendingForAckQ = "select DISTINCT ci.* from case_info ci, case_txn ct where ci.case_id=ct.case_id and ct.is_ack = 0 and ci.current_user_id = :userId and ct.to_user_id = :userId ";
     private static final String caseAcceptedByUserIdQ = "select DISTINCT ci.* from case_info ci, case_txn ct where ci.case_id=ct.case_id  and ct.is_ack = 1 and ct.to_user_id = :userId";
     private static final String caseInfoByUserIdQWithoutTxn = "select DISTINCT ci.* from case_info ci,case_txn ct where ci.case_id=ct.case_id  and ( ci.user_id_opened = :userId OR ci.user_id_closed = :userId OR ci.current_user_id = :userId )";
-
+    private static final SimpleDateFormat FORMATTED_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -106,6 +108,7 @@ public class CaseDao {
                 caseTxn.setToUserId(rs.getLong("to_user_id"));
                 caseTxn.setStatus(rs.getString("status"));
                 caseTxn.setTransferDate(rs.getTimestamp("transfer_date"));
+                caseTxn.setDesc(rs.getString("description"));
                 if (caseTxn.getTransferDate() != null) {
                     caseTxn.setTransferDateStr(formatter.format(caseTxn.getTransferDate().toLocalDateTime()));
                 }
@@ -146,7 +149,7 @@ public class CaseDao {
 
             ps.setLong(1, caseInfo.getUserIdOpened());
             ps.setString(2, caseInfo.getTypeAnimal());
-            ps.setLong(3, caseInfo.getCurrentUserId());
+            ps.setNull(3, Types.BIGINT);
             ps.setBoolean(4, true);
             ps.setString(5, caseInfo.getAnimalName());
             ps.setString(6, caseInfo.getAnimalCondition());
@@ -178,7 +181,7 @@ public class CaseDao {
         Timestamp transferCloseDate = getTransferCloseDate(transferDate);
         Double amountIncurred = amount == null ? 0.0 : amount;
         this.jdbcTemplate.update((connection -> {
-            String q = "update case_info set current_user_id = ? where case_id = ?";
+            String q = "update case_info set current_user_id = ? ,is_ack=0  where case_id = ?";
             PreparedStatement ps = connection.prepareStatement(
                     q);
 
@@ -234,8 +237,11 @@ public class CaseDao {
     private Timestamp getTransferCloseDate(String closeDate) {
         Timestamp closeDateToUse = new Timestamp(new Date().getTime());
         if (closeDate != null) {
-//                closeDateToUse = new Timestamp(FORMATTED_DATE_FORMAT.parse(closeDate).getTime());
-            closeDateToUse = Timestamp.valueOf(LocalDateTime.parse(closeDate, formatter));
+            try {
+                closeDateToUse = new Timestamp(FORMATTED_DATE_FORMAT.parse(closeDate).getTime());
+            } catch (ParseException e) {
+                logger.error(e.getMessage(), e);
+            }
         }
         return closeDateToUse;
     }
