@@ -82,15 +82,15 @@ var responseHandler = function (event) {
                     if(tableId === "table1" || tableId === "table2" || tableId === "table3"){
                         $.each(data, function (i, item) {
                             caseIdVsInfoMap[item.caseId] = item;
-                            var htm = aCase + item.caseId + bCase + (item.userNameCurrent ? item.userNameCurrent+"("+item.userRoleCurrent+")" : "Closed" )  + b1Case+(item.isAck == 1 ? "Yes" : item.isAck == -1 ? "No" : "Pending" ) +cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + item.animalName + fCase;
+                            var htm = aCase + item.caseId + bCase + (item.active == 1 ? (item.userNameCurrent ? item.userNameCurrent+"("+item.userRoleCurrent+")" : "" ) : "Closed"  )+b1Case+(item.isAck == 1 ? "Yes" : item.isAck == -1 ? "No" : "Pending" ) +cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + item.animalName + fCase;
                             cc.push(htm);
-                            $('#' + tableId).html(cc.join(""));
+                            $('#' + tableId).html(cc.join(""))
                         });
                     }
                     else {
                         $.each(data, function (i, item) {
                             caseIdVsInfoMap[item.caseId] = item;
-                            var htm = a_1Case + item.caseId + b_1Case + (item.userNameCurrent ? item.userNameCurrent+"("+item.userRoleCurrent+")" : "Closed" )  + b1_1Case+(item.isAck == 1 ? "Yes" : item.isAck == -1 ? "No" : "Pending" ) +c_1Case + item.creationDateStr + d_1Case + item.typeAnimal + e_1Case + item.animalName + f_1Case;
+                            var htm = a_1Case + item.caseId + b_1Case + (item.active == 1 ? (item.userNameCurrent ? item.userNameCurrent+"("+item.userRoleCurrent+")" : "" ) : "Closed"   )  + b1_1Case+(item.isAck == 1 ? "Yes" : item.isAck == -1 ? "No" : "Pending" ) +c_1Case + item.creationDateStr + d_1Case + item.typeAnimal + e_1Case + item.animalName + f_1Case;
                             cc.push(htm);
                             $('#' + tableId).html(cc.join(""));
                         });
@@ -1218,7 +1218,7 @@ $(document).ready(function () {
             if (ui.item) {
                 caseDetails = ui.item.caseDetails;
                 caseIdVsInfoMap[caseDetails.caseId] = caseDetails;
-                var htm = aCase + caseDetails.caseId + bCase + (caseDetails.userNameCurrent ? caseDetails.userNameCurrent+"("+caseDetails.userRoleCurrent+")" : "Closed" )  + b1Case+(ui.item.isAck == 1 ? "Yes" : ui.item.isAck == -1 ? "No" : "Pending" ) + cCase + caseDetails.creationDateStr + dCase + caseDetails.typeAnimal + eCase + caseDetails.animalName + fCase;
+                var htm = aCase + caseDetails.caseId + bCase + (caseDetails.active == 1 ? (caseDetails.userNameCurrent ? caseDetails.userNameCurrent+"("+caseDetails.userRoleCurrent+")" : "" ) : "Closed")  + b1Case+(caseDetails.isAck == 1 ? "Yes" : caseDetails.isAck == -1 ? "No" : "Pending" ) + cCase + caseDetails.creationDateStr + dCase + caseDetails.typeAnimal + eCase + caseDetails.animalName + fCase;
                 $(container).prepend(htm);
                 $('#table4').html(container);
                 $("#search-case-input").autocomplete("close");
