@@ -108,9 +108,13 @@ public class CaseDao {
                 caseTxn.setToUserId(rs.getLong("to_user_id"));
                 caseTxn.setStatus(rs.getString("status"));
                 caseTxn.setTransferDate(rs.getTimestamp("transfer_date"));
+                caseTxn.setUpdateTimeStamp(rs.getTimestamp("update_timestamp"));
                 caseTxn.setDesc(rs.getString("description"));
                 if (caseTxn.getTransferDate() != null) {
                     caseTxn.setTransferDateStr(formatter.format(caseTxn.getTransferDate().toLocalDateTime()));
+                }
+                if (caseTxn.getUpdateTimeStamp() != null) {
+                    caseTxn.setUpdateTimeStampStr(formatter.format(caseTxn.getUpdateTimeStamp().toLocalDateTime()));
                 }
                 return caseTxn;
             });
