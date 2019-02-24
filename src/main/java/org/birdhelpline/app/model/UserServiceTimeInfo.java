@@ -8,6 +8,10 @@ public class UserServiceTimeInfo {
     private int fromTime;
     private int toTime;
 
+    public int timeForCompare() {
+        return Integer.valueOf(fromTime + "" + toTime);
+    }
+
     public String getTimeStr() {
         StringBuilder sb = new StringBuilder();
         if (fromTime == 0 && toTime == 24) {

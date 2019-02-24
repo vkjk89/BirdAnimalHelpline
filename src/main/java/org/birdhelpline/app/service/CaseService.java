@@ -12,6 +12,7 @@ import org.birdhelpline.app.utils.AnimalType;
 import org.birdhelpline.app.utils.ResponseStatus;
 import org.birdhelpline.app.utils.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,8 @@ public class CaseService {
     private CaseDao caseDao;
     @Autowired
     private UserService userService;
+    @Value("${maxRecentCases}")
+    private long maxRecentCases;
 
     @Transactional
     public Long save(CaseInfo caseInfo) {
@@ -55,7 +58,11 @@ public class CaseService {
         Boolean pendingForAck = getTypeCaseStatus(role);
         List<CaseInfo> list = getAllCaseInfo(userId, pendingForAck);
         if (list != null && !list.isEmpty()) {
-            list = list.stream().filter(c -> c.isActive() && c.getCurrentUserId().equals(userId)).collect(Collectors.toList());
+            if (pendingForAck != null) { // only filter for nonAdmin and receptionist
+                list = list.stream().filter(c -> c.isActive() && c.getCurrentUserId().equals(userId)).collect(Collectors.toList());
+            } else {
+                list = list.stream().filter(c -> c.isActive() && (c.getCurrentUserId() == 0 || c.getIsAck() < 0)).collect(Collectors.toList());
+            }
             Collections.sort(list,
                     ((c1, c2) -> c2.getLastModificationDate().compareTo(c1.getLastModificationDate())));
             return list;
@@ -78,6 +85,7 @@ public class CaseService {
         List<CaseInfo> list = getAllCaseInfo(userId, pendingForAck);
         if (list != null && !list.isEmpty()) {
             Collections.sort(list, (c1, c2) -> c2.getLastModificationDate().compareTo(c1.getLastModificationDate()));
+            list = list.stream().limit(maxRecentCases).collect(Collectors.toList());
             return list;
         }
         return Collections.EMPTY_LIST;
@@ -92,6 +100,7 @@ public class CaseService {
             Collections.sort(list,
                     Comparator.comparing(caseInfo -> caseInfo.getLastModificationDate())
             );
+            list = list.stream().limit(maxRecentCases).collect(Collectors.toList());
             return list;
         }
         return Collections.EMPTY_LIST;
@@ -116,6 +125,27 @@ public class CaseService {
 
     public String assignCase(Long userId, Long toUserId, Long caseId, String description, Double amount, String transferDate) {
         caseDao.assignCase(userId, toUserId, caseId, description, amount, transferDate);
+        /*NexmoClient client = new NexmoClient.Builder()
+                .apiKey("fcca97fd")
+                .apiSecret("CAIlnXiPCxrE0FhI")
+                .build();
+
+        String messageText = "Hello from Vimal + Case : "+caseId+" Assigned ";
+        TextMessage message = new TextMessage("Nexmo", "918369440643", messageText);
+
+        SmsSubmissionResponse response = null;
+        try {
+            response = client.getSmsClient().submitMessage(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NexmoClientException e) {
+            e.printStackTrace();
+        }
+
+        for (SmsSubmissionResponseMessage responseMessage : response.getMessages()) {
+            System.out.println(responseMessage);
+        }*/
+        //SMSSender.sendSms();
         return ResponseStatus.SUCCESS.name();
     }
 

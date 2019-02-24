@@ -11,7 +11,16 @@ public class UserAddressInfo {
     private String contact;
     private String addressType;
     private String natureBusiness;
+    private String natureBusinessAdditional;
     private Timestamp lastUpdateTimestamp;
+
+    public String getNatureBusinessAdditional() {
+        return natureBusinessAdditional;
+    }
+
+    public void setNatureBusinessAdditional(String natureBusinessAdditional) {
+        this.natureBusinessAdditional = natureBusinessAdditional;
+    }
 
     @Override
     public String toString() {
@@ -24,6 +33,7 @@ public class UserAddressInfo {
                 ", contact='" + contact + '\'' +
                 ", addressType='" + addressType + '\'' +
                 ", natureBusiness='" + natureBusiness + '\'' +
+                ", natureBusinessAdditional='" + natureBusinessAdditional + '\'' +
                 ", lastUpdateTimestamp=" + lastUpdateTimestamp +
                 '}';
     }

@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Controller
 @SessionAttributes({"user"})
@@ -228,7 +229,6 @@ public class LoginController {
             list = map.get(pinCodeId);
             if (list == null) {
                 list = new ArrayList<>();
-                map.put(pinCodeId, list);
             }
             for (String t : selectedTimings) {
                 serviceTimeInfo = new UserServiceTimeInfo();
@@ -243,6 +243,11 @@ public class LoginController {
                 }
                 list.add(serviceTimeInfo);
             }
+            list = list.stream()
+                    .collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparingInt(UserServiceTimeInfo::timeForCompare))),
+                            ArrayList::new));
+            map.put(pinCodeId, list);
+
         }
         logger.info("vkj user service time : " + map);
     }

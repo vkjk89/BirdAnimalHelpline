@@ -82,15 +82,15 @@ var responseHandler = function (event) {
                     if(tableId === "table1" || tableId === "table2" || tableId === "table3"){
                         $.each(data, function (i, item) {
                             caseIdVsInfoMap[item.caseId] = item;
-                            var htm = aCase + item.caseId + bCase + (item.userNameCurrent ? item.userNameCurrent+"("+item.userRoleCurrent+")" : "Closed" )  + b1Case+(item.isAck == 1 ? "Yes" : item.isAck == -1 ? "No" : "Pending" ) +cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + item.animalName + fCase;
+                            var htm = aCase + item.caseId + bCase + (item.active == 1 ? (item.userNameCurrent ? item.userNameCurrent+"("+item.userRoleCurrent+")" : "" ) : "Closed"  )+b1Case+(item.isAck == 1 ? "Yes" : item.isAck == -1 ? "No" : "Pending" ) +cCase + item.creationDateStr + dCase + item.typeAnimal + eCase + item.animalName + fCase;
                             cc.push(htm);
-                            $('#' + tableId).html(cc.join(""));
+                            $('#' + tableId).html(cc.join(""))
                         });
                     }
                     else {
                         $.each(data, function (i, item) {
                             caseIdVsInfoMap[item.caseId] = item;
-                            var htm = a_1Case + item.caseId + b_1Case + (item.userNameCurrent ? item.userNameCurrent+"("+item.userRoleCurrent+")" : "Closed" )  + b1_1Case+(item.isAck == 1 ? "Yes" : item.isAck == -1 ? "No" : "Pending" ) +c_1Case + item.creationDateStr + d_1Case + item.typeAnimal + e_1Case + item.animalName + f_1Case;
+                            var htm = a_1Case + item.caseId + b_1Case + (item.active == 1 ? (item.userNameCurrent ? item.userNameCurrent+"("+item.userRoleCurrent+")" : "" ) : "Closed"   )  + b1_1Case+(item.isAck == 1 ? "Yes" : item.isAck == -1 ? "No" : "Pending" ) +c_1Case + item.creationDateStr + d_1Case + item.typeAnimal + e_1Case + item.animalName + f_1Case;
                             cc.push(htm);
                             $('#' + tableId).html(cc.join(""));
                         });
@@ -159,7 +159,6 @@ function case_details(data) {
     page_history.unshift("myc_case_details");
     currentCaseId = $(data).find(".case-id").text();
     var caseInfo = caseIdVsInfoMap[currentCaseId];
-    
     if(caseIdVsInfoMap[currentCaseId].active){
         if(caseIdVsInfoMap[currentCaseId].isAck === 1) myc_case_status = "(Accepted by <span class='status-bar-vol-name'>"+caseIdVsInfoMap[currentCaseId].userNameCurrent+"</span>)";
         else if(caseIdVsInfoMap[currentCaseId].isAck === 0) myc_case_status = "(Not yet accepted by <span class='status-bar-vol-name'>"+caseIdVsInfoMap[currentCaseId].userNameCurrent+"</span>)";
@@ -1216,9 +1215,10 @@ $(document).ready(function () {
 
         select: function (event, ui) {
             if (ui.item) {
+                currentCaseId= ui.item.caseDetails.caseId;
                 caseDetails = ui.item.caseDetails;
                 caseIdVsInfoMap[caseDetails.caseId] = caseDetails;
-                var htm = aCase + caseDetails.caseId + bCase + (caseDetails.userNameCurrent ? caseDetails.userNameCurrent+"("+caseDetails.userRoleCurrent+")" : "Closed" )  + b1Case+(ui.item.isAck == 1 ? "Yes" : ui.item.isAck == -1 ? "No" : "Pending" ) + cCase + caseDetails.creationDateStr + dCase + caseDetails.typeAnimal + eCase + caseDetails.animalName + fCase;
+                var htm = aCase + caseDetails.caseId + bCase + (caseDetails.active == 1 ? (caseDetails.userNameCurrent ? caseDetails.userNameCurrent+"("+caseDetails.userRoleCurrent+")" : "" ) : "Closed")  + b1Case+(caseDetails.isAck == 1 ? "Yes" : caseDetails.isAck == -1 ? "No" : "Pending" ) + cCase + caseDetails.creationDateStr + dCase + caseDetails.typeAnimal + eCase + caseDetails.animalName + fCase;
                 $(container).prepend(htm);
                 $('#table4').html(container);
                 $("#search-case-input").autocomplete("close");
@@ -1341,7 +1341,7 @@ $(document).ready(function () {
                 } else if (ui.item.caseDetails) {
                     cd = ui.item.caseDetails;
                     caseIdVsInfoMap[cd.caseId] = cd;
-
+                    currentCaseId=cd.caseId;
                     if(cd.active){
                         if(cd.isAck === 1) top_nav_case_status = "(Accepted by <span class='status-bar-vol-name'>"+cd.userNameCurrent+"</span>)";
                         else if(cd.isAck === 0) top_nav_case_status = "(Not yet accepted by <span class='status-bar-vol-name'>"+cd.userNameCurrent+"</span>)";

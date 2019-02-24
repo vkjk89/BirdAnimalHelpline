@@ -41,7 +41,7 @@
             <img id="edit-work-address" onclick="window.location = '/profileCompletion?page=1' " src="/static/img/edit.png" th:src="@{/img/edit.png}">
             <div id="office-name-wrapper">
                 <div id="office-name-label" class="label" >Office Name: </div>
-                <div id="office-name" th:text="${user.officeAddr.addrLine1}">#Office_Name</div>
+                <div id="office-name" th:text="${user.officeAddr.fullName}">#Office_Name</div>
             </div>
             <div id="address-wrapper-work">
                 <div id="address-label-work" class="label">Street Address: </div>
@@ -51,7 +51,7 @@
             </div>
             <div id="nature-of-business-wrapper">
                 <div id="nature-of-business-label" class="label">Nature of Business: </div>
-                <div id="nature-of-business" th:text="${user.officeAddr.natureBusiness}">#Nature_of_Business</div>
+                <div id="nature-of-business" th:text="${user.officeAddr.natureBusiness +' - '+ user.officeAddr.natureBusinessAdditional}">#Nature_of_Business</div>
             </div>
         </div>
 
