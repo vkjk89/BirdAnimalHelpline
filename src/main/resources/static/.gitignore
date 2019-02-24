@@ -334,7 +334,6 @@ ASALocalRun/
 dist
 BirdHelplineUI
 *.css.map
-*.json
 target/
 SVG
 /css/Animations-Temp.txt
