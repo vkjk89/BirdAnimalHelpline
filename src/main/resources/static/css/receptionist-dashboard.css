@@ -968,7 +968,7 @@ hr {
     font-size: 1.1em;
     letter-spacing: 1px;
     padding-right: 2vw;
-    z-index: 150001;
+    z-index: 101;
     -webkit-clip-path: polygon(10% 30%, 10% 0, 100% 0, 100% 100%, 10% 100%, 10% 70%, 0 50%);
     clip-path: polygon(10% 40%, 10% 0, 100% 0, 100% 100%, 10% 100%, 10% 60%, 0 50%);
 }
