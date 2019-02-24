@@ -408,10 +408,10 @@ public class UserDao {
     }
 
     public boolean addAnimal(String animal) {
-        if (listBirds.contains(animal)) {
+        if (listAnimals.contains(animal)) {
             return true;
         }
-        listBirds.add(animal);
+        listAnimals.add(animal);
         return false;
     }
 
