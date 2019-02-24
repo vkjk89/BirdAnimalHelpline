@@ -824,6 +824,8 @@ hr {
     display: block;
     padding: 1vw;
 }
+.reassign-case {color: skyblue; font-weight: 900;}
+
 /*-------------------Assign-Case-------------------*/
 
 #content-assign-case, #top-nav-content-assign-case {
@@ -845,6 +847,7 @@ hr {
 #assign-case-search, #top-nav-assign-case-search {
     height: 65vh;
     margin-top: 2vh;
+    margin-bottom: 6vh;
 }
 
 #assign-case-search-input, #top-nav-assign-case-search-input {
@@ -937,7 +940,6 @@ hr {
 
 #assign-case-success, #assign-case-error, #top-nav-assign-case-success, #top-nav-assign-case-error {
     display: none;
-    position: absolute;
     background-color: rgba(0, 160, 0, 0.2);
     color: green;
     letter-spacing: 0.5px;
@@ -945,7 +947,7 @@ hr {
     float: left;
     padding: 0.5vw 3vh;
     border: 3px solid rgb(0, 160, 0);
-    width: 30vw;
+    max-width: 60vw;
 }
 
 #assign-case-error, #top-nav-assign-case-error {
@@ -958,9 +960,9 @@ hr {
 
 /*-----------------Tooltip-Vol-Assign-------------*/
 #vol-description-tooltip, #top-nav-vol-description-tooltip {
+    display: none;
     box-sizing: border-box;
     position: fixed;
-    display: none;
     background-color: #CCC;
     color: black;
     font-size: 1.1em;

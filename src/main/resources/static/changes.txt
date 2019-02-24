@@ -80,5 +80,4 @@ Call - Saturday - Before Assummed production Sunday
     Case History Fix
     
     Vimal ---------------
-    Top-Nav-Tooltip - and if first (top-nav -> assign-case) - top-five and nearest error - Vimal ( unknow json) - Fixed
     All fields are coming in Profile completion preview page make if statements - ( Vimal - make it consistent , display all or none fields)

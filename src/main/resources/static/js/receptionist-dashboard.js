@@ -160,13 +160,21 @@ function case_details(data) {
     currentCaseId = $(data).find(".case-id").text();
     var caseInfo = caseIdVsInfoMap[currentCaseId];
     if(caseIdVsInfoMap[currentCaseId].active){
-        if(caseIdVsInfoMap[currentCaseId].isAck === 1) myc_case_status = "(Accepted by <span class='status-bar-vol-name'>"+caseIdVsInfoMap[currentCaseId].userNameCurrent+"</span>)";
+        $("#action-center-assign-case").html("Assign Case");
+        $("#action-center-assign-case").removeClass("reassign-case");
+        $('#action-center-assign-case, #action-center-close-case').show();
+        if(caseIdVsInfoMap[currentCaseId].isAck === 1) {
+            myc_case_status = "(Accepted by <span class='status-bar-vol-name'>"+caseIdVsInfoMap[currentCaseId].userNameCurrent+"</span>)";
+            $("#action-center-assign-case").html("Reassign Case");
+            $("#action-center-assign-case").addClass("reassign-case");
+        }
+        else if(caseIdVsInfoMap[currentCaseId].currentUserId === 0) myc_case_status = "(Not assigned to any user)";
         else if(caseIdVsInfoMap[currentCaseId].isAck === 0) myc_case_status = "(Not yet accepted by <span class='status-bar-vol-name'>"+caseIdVsInfoMap[currentCaseId].userNameCurrent+"</span>)";
         else if(caseIdVsInfoMap[currentCaseId].isAck === -1) myc_case_status = "(Rejected by <span class='status-bar-vol-name'>"+caseIdVsInfoMap[currentCaseId].userNameCurrent+"</span>)";
-        else if(caseIdVsInfoMap[currentCaseId].currentUserId === 0) myc_case_status = "(Not assigned to any user)";
-    } else if(caseIdVsInfoMap[currentCaseId].active === false) myc_case_status = "(Case Closed)";
-
-    console.log(caseInfo);
+    } else if(caseIdVsInfoMap[currentCaseId].active === false) {
+        myc_case_status = "(Case Closed)";
+        $('#action-center-assign-case, #action-center-close-case').hide();
+    }
     $('#case-id-case-details').val(caseInfo.caseId);
     $('#date-info').val(caseInfo.creationDateStr);
     $('#animal-type-case-details').val(caseInfo.typeAnimal);
@@ -184,9 +192,7 @@ function case_details(data) {
     $("#myc_case_details_loading_screen").css("display","block");
     caseImageRetriever(caseInfo.caseId,"case-photos-case-details");
     if (caseInfo.active) {
-        $('#action-center-assign-case, #action-center-close-case').show();
     } else {
-        $('#action-center-assign-case, #action-center-close-case').hide();
     }
     if(caseInfo.birdOrAnimal === "Animal"){
         $("#header-form-left-side-case-details").html("Animal Information");
@@ -512,11 +518,8 @@ function close(){
 }
 
 function show_vol_tooltip(event) {
-    console.log(event);
     clearTimeout(hide_tooltip_timeOut);
     var userId = $(event.originalEvent.srcElement).parent().find("#vol_id").val();
-    console.info(userId);
-    console.info(userIdVsInfoMap);
     var userInfo = userIdVsInfoMap[userId];
     $('#tooltip-info-name').text(userInfo.userName);
     $('#tooltip-info-role').text(userInfo.role);
@@ -537,6 +540,7 @@ function show_vol_tooltip(event) {
 
 function hide_vol_tooltip() {
     hide_tooltip_timeOut = setTimeout(function () {
+        $("#vol-description-tooltip").css({"top":"-500vh"});
         $("#vol-description-tooltip").fadeOut();
         $("#vol-description-tooltip").click();
         // $("#vol-description-tooltip").css("display", "none");
@@ -1343,11 +1347,21 @@ $(document).ready(function () {
                     caseIdVsInfoMap[cd.caseId] = cd;
                     currentCaseId=cd.caseId;
                     if(cd.active){
-                        if(cd.isAck === 1) top_nav_case_status = "(Accepted by <span class='status-bar-vol-name'>"+cd.userNameCurrent+"</span>)";
+                        $("#top-nav-action-center-assign-case").html("Assign Case");
+                        $("#top-nav-action-center-assign-case").removeClass("reassign-case");
+                        $('#top-nav-action-center-assign-case, #top-nav-action-center-close-case').show();
+                        if(cd.isAck === 1) {
+                            top_nav_case_status = "(Accepted by <span class='status-bar-vol-name'>"+cd.userNameCurrent+"</span>)";
+                            $("#top-nav-action-center-assign-case").html("Reassign Case");
+                            $("#top-nav-action-center-assign-case").addClass("reassign-case");
+                        }
+                        else if(cd.currentUserId === 0) top_nav_case_status = "(Not assigned to any user)";
                         else if(cd.isAck === 0) top_nav_case_status = "(Not yet accepted by <span class='status-bar-vol-name'>"+cd.userNameCurrent+"</span>)";
                         else if(cd.isAck === -1) top_nav_case_status = "(Rejected by <span class='status-bar-vol-name'>"+cd.userNameCurrent+"</span>)";
-                        else if(cd.currentUserId === 0) top_nav_case_status = "(Not assigned to any user)";
-                    } else if(cd.active === false) top_nav_case_status = "(Case Closed)";
+                    } else if(cd.active === false) {
+                        top_nav_case_status = "(Case Closed)";
+                        $('#top-nav-action-center-assign-case, #top-nav-action-center-close-case').hide();
+                    }
 
                     $('#top-nav-date-info').val(cd.creationDateStr);
                     $('#top-nav-case-id-case-details').val(cd.caseId);
@@ -1376,11 +1390,6 @@ $(document).ready(function () {
                     top_nav_search_case_details("search_cases_details");
                     layer_change('layer2');
                     $('#top-nav-heading-text').html('Case Details | Case No.: ' + cd.caseId + ' | ' + top_nav_case_status);
-                    if (cd.active) {
-                        $('#top-nav-action-center-assign-case, #top-nav-action-center-close-case').show();
-                    } else {
-                        $('#top-nav-action-center-assign-case, #top-nav-action-center-close-case').hide();
-                    }
                 }
                 $("#top-nav-search").autocomplete("close");
                 $("#top-nav-search").val('');
