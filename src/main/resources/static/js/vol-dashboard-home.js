@@ -10,12 +10,12 @@ function accept_decline(accept_decline) {
     } else no_pending_cases();
     $('.accept-decline-pending-cases').html(data1.length);
     acceptReject(caseId, accept_decline);
-    if(accept_decline === true){
+    /*if(accept_decline === true){
         $('.celebrations-container').fadeIn(200);
         setTimeout(function(){
             $('.celebrations-container').fadeOut(200);
         }, 200);
-    }
+    }*/
     $('#results-tab-active').click();
 }
 
@@ -163,9 +163,7 @@ function displayPendingCases() {
 }
 
 function goToCaseDetails(element) {
-    //console.info(element);
     var caseId = $(element).find(".case-id-my-cases").text();
-    //console.info(caseId);
     window.location.href = "/caseDetails?caseId=" + caseId;
 }
 
@@ -240,7 +238,7 @@ $(document).ready(function () {
         document.getElementById("notification-center").style.pointerEvents = "";
     };
 
-    document.getElementById('search-case-input').onkeyup = function () {
+    /*document.getElementById('search-case-input').onkeyup = function () {
         //Actually-put-this-part-in-success-or-done-ajax
         if (this.value.length > 1) {
             $("#search-results-div").css("display", "none");
@@ -249,7 +247,7 @@ $(document).ready(function () {
             $("#search-results-div").css("display", "block");
             $("#search-input-results").css("display", "none");
         }
-    };
+    };*/
 
     $('#notification_bell').click(function(){
         $('main, #page-heading').toggleClass("notification-center-open");

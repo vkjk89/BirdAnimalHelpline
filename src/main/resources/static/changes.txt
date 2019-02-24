@@ -15,6 +15,8 @@ Some Error page - Access Denied and Internal Server Error
     HTML Component Usability
     Upload Photos - Raise Case
     Only show contact number and name - First User who accepts Case
+    Celebrations Container
+    Explicit Navigation Button
 
 11/01/2018
     //All Warnings/Errors
@@ -50,34 +52,6 @@ Some Error page - Access Denied and Internal Server Error
     Reverse Date
     !important Case Assigned to another vol - rejected by the peroson assigned to !important
     Perform Styling Run through
-
-Call - Saturday - Before Assummed production Sunday
-    //Back Button - ProfileCompletion
-    //Accept/Reject - Case-Vol-Dashboard - Admin
-    //Action Center - Recpt. Dashboard
-    //Admin DP Enlarge
-    //Nav-Fix TopNav Case and Vol Case
-    //Close Case Validation - Vol-Dashboard
-    //Change Case ID to Case No.
-    //Top-Five & Nearest Loader
-    //CaseDetails - VolDashboard Loader
-    //Check for no Users - Admin DB
-
-17/02/2019 - Assumed Production Sunday
-    //Loader Error - Top Five & Nearest
-    //+91 / 022 Validation - Second Time
-    //Status Bar Error - Close case
-    //Assign Case Break - Top Nav somewhere
-    //Top-Nav - Assign Case - Assign Case Error
-    //Success - Case Raised Change text - 10s - close btn
-    //Remove Case ID
-    //Date - Vol CaseDetails and Recpt. DB - CaseDetails
-    //Close Case Reason - Recpt. Dashboard
-    //Section Multiple Pincodes - Formatting and Error checking
-    //Change nature of business
-    Vol. Dashboard - Active - Accept - Update
-    Notification Center
-    Case History Fix
     
     Vimal ---------------
     All fields are coming in Profile completion preview page make if statements - ( Vimal - make it consistent , display all or none fields)

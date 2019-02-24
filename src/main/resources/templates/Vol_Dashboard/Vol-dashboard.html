@@ -26,9 +26,9 @@
         <img alt="User-Display-Picture" height="" src="/static/img/display-picture11.png" th:if="${user.getUserImage().getImage() != null}" th:src="${'data:image/png;base64,'+user.getEncodedImage()}" width="auto">
     </button>
     <span id="navbar-username" th:text="${user.userName}">#Username</span>
-    <span id="notification-bell-wrapper">
+    <!--<span id="notification-bell-wrapper">
         <img src="/static/img/notification.png" th:src="@{/img/notification.png}" id="notification_bell">
-    </span>
+    </span>-->
 </nav>
 
 <nav id="side-nav">
@@ -44,19 +44,14 @@
         <span id="user_name" th:text="${user.firstName} +' '+ ${user.lastName}">#First_Last_Name</span>
         <span id="user_role" th:text="${user.role}">#User_Role</span>
     </section>
-    <section id="profile-links">
-        <button><a href="#">Profile</a></button>
-        <!--<button><a href="#" th:href="@{}">Profile</a></button>-->
-        <button><a href="#">Selected Pincodes and Addresses</a></button>
-        <!--<button><a href="#" th:href="@{}">Selected Pincodes and Addresses</a></button>-->
+    <!--<section id="profile-links">
+        <button><a href="#" th:href="@{}">Profile</a></button>
+        <button><a href="#" th:href="@{}">Selected Pincodes and Addresses</a></button>
     </section>
     <section id="profile-changes">
-        <button><a href="#">Change PIN</a></button>
-        <!--<button><a href="#" th:href="@{}">Change PIN</a></button>-->
-        <button><a href="#">Change Mobile No.</a></button>
-        <!--<button><a href="#" th:href="@{}">Change Mobile No.</a></button>-->
-        <button><a href="#">Change Email Address</a></button>
-        <!--<button><a href="#" th:href="@{}">Change Email Address</a></button>-->
+        <button><a href="#" th:href="@{}">Change PIN</a></button>
+        <button><a href="#" th:href="@{}">Change Mobile No.</a></button>
+        <button><a href="#" th:href="@{}">Change Email Address</a></button>
     </section>
     <section id="social-links">
         <div style="font-size:1.3em; letter-spacing:0.75px">Spread the word!</div>
@@ -64,7 +59,7 @@
         <a class="fa fa-lg fa-facebook" href="https://www.facebook.com/birdhelpline/"></a>
         <a class="fa fa-lg fa-whatsapp"></a>
         <a class="fa fa-lg fa-twitter"></a>
-    </section>
+    </section>-->
 </nav>
 
 <section id="page-heading">
@@ -92,7 +87,7 @@
 <main>
     <section id="my-cases">
         <div class="search-case" id="search-case">
-            <input id="search-case-input" name="search-case-input" placeholder="Search Case" type="search">
+            <!--<input id="search-case-input" name="search-case-input" placeholder="Search Case" type="search">-->
             <div id="search-results-div">
                 <div id="results-tab-div">
                     <div class="active-active" id="results-tab-active">Active</div>
@@ -166,11 +161,11 @@
                     <div class="accept-decline">
                         <button type="submit" class = "decline" onclick="accept_decline(false)">I'm helpless</button>
                         <button type="submit" class="accept" onclick="accept_decline(true)">Accept</button>
-                        <div class="celebrations-container">
+                        <!--<div class="celebrations-container">
                             <span class="celebrations">
                                 <img alt="Case Animal/Bird" th:src="@{/img/pigeon.png}" width="10vw">Thank You for saving my life
                             </span>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
@@ -180,7 +175,7 @@
 
 <section id="bottom-action-bar">
     <button class="action-bar-btn" id="home" type="button"><img alt="home" src="/static/img/home-white.png" th:src="@{/img/home-white.png}"></button>
-    <button class="action-bar-btn" id="contact-us" type="button"><img alt="contact-us" src="/static/img/contact-us-white.png" th:src="@{/img/contact-us-white.png}"></button>
+    <!--<button class="action-bar-btn" id="contact-us" type="button"><img alt="contact-us" src="/static/img/contact-us-white.png" th:src="@{/img/contact-us-white.png}"></button>-->
     <button class="action-bar-btn" id="logout" type="button"><img alt="logout" src="/static/img/logout-white.png" th:src="@{/img/logout-white.png}"></button>
 </section>
 

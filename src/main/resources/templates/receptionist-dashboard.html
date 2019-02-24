@@ -58,10 +58,10 @@
             <span id="more-btn">&#x25BC;</span>
         </span>
     <div class="no-select" id="dropdown-menu" style="display: none;">
-        <button><a href="#">Profile</a></button>
+        <!--<button><a href="#">Profile</a></button>
         <button><a href="#">Change PIN</a></button>
         <button><a href="#">Change Mobile No.</a></button>
-        <button><a href="#">Change Address</a></button>
+        <button><a href="#">Change Address</a></button>-->
         <button onclick="window.location.href='/logout'"><a href="#">Logout</a></button>
     </div>
 </nav>
@@ -555,12 +555,8 @@
 
     <!--------------------------------USER-DATA-CHANGE-APPROVALS------------------------------>
 
-    <div id="dynamic_image_enlarge">
-        <div id="photo-enlarge"><img src="/static/img/selected-photo.png" th:src="@{/img/selected-photo.png}"></div>
-        <button id="image_enlarge_back_button" type="button">Back</button>
-    </div>
     <div id="user-data-change-approvals-content">
-        <div class="dynamic_usdca_member" id="member-1">
+        <!--<div class="dynamic_usdca_member" id="member-1">
             <div class="user-info">
                 <span class="usdca-user-name">#user_name</span>
                 <span class="usdca-user-role">#user_role</span>
@@ -615,13 +611,16 @@
                     </figure>
                 </button>
             </div>
-        </div>
+        </div>-->
+    <p>Will be implemented in the near future</p>
+    </div>
+    <!----------------------------------OTHER-ELEMENTS---------------------------------------->
+    <div id="dynamic_image_enlarge">
+        <div id="photo-enlarge"><img src="/static/img/selected-photo.png" th:src="@{/img/selected-photo.png}"></div>
+        <button id="image_enlarge_back_button" type="button">Back</button>
     </div>
     <div hidden id="history-dialog" title="Case History">
-        <!--<p>This is the default dialog which is useful for displaying <i></i>nformation. The dialog window can be moved, resized and closed with the 'x' icon.</p>-->
-        <table id="history-dialog-table"class="tg">
-
-        </table>
+        <table id="history-dialog-table"class="tg"></table>
     </div>
 </main>
 
