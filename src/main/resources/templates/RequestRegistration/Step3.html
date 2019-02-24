@@ -23,7 +23,7 @@
     <div class="progress-bar-status" id="progress-bar-5">3</div>
 </div>
 
-<form action="#" enctype="multipart/form-data" id="step3Form" method="post" name="step3" th:action="@{/registration}"
+<form  id="step3Form" method="post" name="step3" th:action="@{/registration}"
       th:object="${user}">
 
     <main>
@@ -72,6 +72,8 @@
             document.getElementById('dp-error').style.display = "block";
             document.getElementById('dp-img1').style.border = "3px dashed red";
             document.getElementById('dp-label-2').style.display = "none";
+            document.getElementById('dp-error').innerText = "Select valid Profile picture.";
+
         } else if (document.getElementById("dp-img").files.length == 1) {
             document.getElementById('dp-error').style.display = "none";
             document.getElementById('dp-img1').style.border = "0";
@@ -80,6 +82,7 @@
             document.getElementById('dp-error').style.display = "block";
             document.getElementById('dp-img1').style.border = "3px dashed red";
             document.getElementById('dp-label-2').style.display = "none";
+            document.getElementById('dp-error').innerText = "Select valid Profile picture.";
         }
     }
 
@@ -124,7 +127,8 @@
                     $('#dp-error').show();
                     $('#dp-error').css("display","block");
                     $('#dp-error').text("Error uploading image, check if the size of image is within limits (10MB)");
-
+                    $('#dp-img1').attr("src", "/img/display-picture11.png");
+                    $("#dp-img").val(null);
                 }
             });
         });
