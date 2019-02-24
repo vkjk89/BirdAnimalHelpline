@@ -17,7 +17,16 @@ public class CaseTxn {
     private String transferDateStr;
     private int isAck;
     private Timestamp updateTimeStamp;
+    private String updateTimeStampStr;
     private String desc;
+
+    public String getUpdateTimeStampStr() {
+        return updateTimeStampStr;
+    }
+
+    public void setUpdateTimeStampStr(String updateTimeStampStr) {
+        this.updateTimeStampStr = updateTimeStampStr;
+    }
 
     public String getFromUserRole() {
         return fromUserRole;

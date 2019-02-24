@@ -700,7 +700,7 @@ function action_center_history(){
     var b = '<td class="tg-0lax">';
     var c = '</td>';
     var d = '</tr>';
-    var tableHeader = '<tr><th class="tg-baqh">Sr</th><th class="tg-0lax">From User</th><th class="tg-0lax">To User</th><th class="tg-0lax">Ack</th><th class="tg-0lax">Amount</th><th class="tg-0lax">Description</th><th class="tg-0lax">Transfer Date</th></tr>';
+    var tableHeader = '<tr><th class="tg-baqh">Sr</th><th class="tg-0lax">From User</th><th class="tg-0lax">To User</th><th class="tg-0lax">Ack</th><th class="tg-0lax">Amount</th><th class="tg-0lax">Description</th><th class="tg-0lax">Transfer Date</th><th class="tg-0lax">Update Date</th></tr>';
     $.ajax({
         type: 'GET',
         url: '/getCaseTxn',
@@ -719,6 +719,7 @@ function action_center_history(){
                 html += b+item.amount+c;
                 html += b+(item.desc == null ? item.status == null ? "" : item.status :item.desc )+c;
                 html += b+item.transferDateStr+c;
+                html += b+item.updateTimeStampStr+c;
                 html += d;
                 cc.push(html);
             });

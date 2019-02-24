@@ -32,6 +32,8 @@ public class CaseService {
     private UserService userService;
     @Value("${maxRecentCases}")
     private long maxRecentCases;
+    @Value("${maxCloseCases}")
+    private long maxCloseCases;
 
     @Transactional
     public Long save(CaseInfo caseInfo) {
@@ -97,10 +99,8 @@ public class CaseService {
         List<CaseInfo> list = getAllCaseInfo(userId, pendingForAck);
         if (list != null && !list.isEmpty()) {
             list = list.stream().filter(c -> !c.isActive()).collect(Collectors.toList());
-            Collections.sort(list,
-                    Comparator.comparing(caseInfo -> caseInfo.getLastModificationDate())
-            );
-            list = list.stream().limit(maxRecentCases).collect(Collectors.toList());
+            Collections.sort(list, (c1, c2) -> c2.getLastModificationDate().compareTo(c1.getLastModificationDate()));
+            list = list.stream().limit(maxCloseCases).collect(Collectors.toList());
             return list;
         }
         return Collections.EMPTY_LIST;
