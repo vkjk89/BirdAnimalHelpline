@@ -132,7 +132,7 @@ $(document).ready(function (){
     getUsersListPendingForActivation();
     setInterval(function () {
         getUsersListPendingForActivation();
-    }, 12000);
+    }, 60000);
     $("#logout").on("click", function (e) {
         e.preventDefault();
         window.location.href="/logout";

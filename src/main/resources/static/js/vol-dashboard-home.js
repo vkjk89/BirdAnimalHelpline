@@ -173,7 +173,7 @@ $(document).ready(function () {
     displayPendingCases();
     setInterval(function () {
         displayPendingCases();
-    }, 30000);
+    }, 60000);
     document.getElementById('results-tab-active').onclick = function active_active() {
         this.classList.add('active-active');
         document.getElementById('results-tab-recent').classList.remove('active-recent');
