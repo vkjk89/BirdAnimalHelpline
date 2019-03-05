@@ -1156,7 +1156,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
             url: '/addNewCase', // the url where we want to POST
-            data: formData, // our data object
+            data: formData // our data object
         })
         // using the done promise callback
             .done(function (data) {
@@ -1193,6 +1193,7 @@ $(document).ready(function () {
                     $('#raise-a-case-content').css("pointerEvents","none");
                     $("#raise-a-case-cta-messages").css("pointerEvents","all");
                     currentCaseId = data;
+                    $('#raise-a-case-form')[0].reset();
                     setTimeout(function () {
                         //$('#case-id').val('');
                         $('#raise-a-case-success').fadeOut();
@@ -1204,7 +1205,7 @@ $(document).ready(function () {
                     $('#raise-a-case-error').fadeIn();
                 }
             });
-        $('#raise-a-case-form')[0].reset();
+
 
     });
 
