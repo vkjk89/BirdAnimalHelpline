@@ -8,6 +8,8 @@
     <link href="/static/css/basic-template.css" rel="stylesheet" th:href="@{/css/basic-template.css(v=1550307657)}">
     <link href="/static/css/RequestRegistration/Step3.css" rel="stylesheet" th:href="@{/css/RequestRegistration/Step3.css(v=1550307657)}">
     <script src="/static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js(v=1550307657)}"></script>
+    <script src="/static/js/compressor.min.js" th:src="@{/js/compressor.min.js(v=1550307657)}"></script>
+    <script src="/static/js/common.js" th:src="@{/js/common.js(v=1550307657)}"></script>
     <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/icons/manifest.json(v=1550307657)}">
 </head>
 <body>
@@ -86,6 +88,33 @@
         }
     }
 
+    function uploadImage(img) {
+        var formData = new FormData();
+        formData.append('dp-image', img);
+        // formData.append('dp-image', this.files[0]);
+        $.ajax({
+            url: 'profilePicUpload',
+            type: 'POST',
+            data: formData,
+            enctype: 'multipart/form-data',
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            success: function (data) {
+                $('#dp-img1').attr('src', "data:image/png;base64," + data);
+                document.getElementById("dp_loading").style.display = "none";
+                $('#dp-error').text("");
+            },
+            error: function (e) {
+                document.getElementById("dp_loading").style.display = "none";
+                console.log(e);
+                $('#dp-error').show();
+                $('#dp-error').css("display","block");
+                $('#dp-error').text("Error uploading image, check if the size of image is within limits (10MB)");
+                $('#dp-img1').attr("src", "/img/display-picture11.png");
+                $("#dp-img").val(null);
+            }
+        });
+    }
     $(document).ready(function () {
         $('#preview-btn').click(function(){
             dp_error();
@@ -107,30 +136,15 @@
 
         $('#dp-img').change(function () {
             document.getElementById("dp_loading").style.display = "block";
-            var formData = new FormData();
-            formData.append('dp-image', this.files[0]);
-            $.ajax({
-                url: 'profilePicUpload',
-                type: 'POST',
-                data: formData,
-                enctype: 'multipart/form-data',
-                processData: false,  // tell jQuery not to process the data
-                contentType: false,  // tell jQuery not to set contentType
-                success: function (data) {
-                    $('#dp-img1').attr('src', "data:image/png;base64," + data);
-                    document.getElementById("dp_loading").style.display = "none";
-                    $('#dp-error').text("");
-                },
-                error: function (e) {
-                    document.getElementById("dp_loading").style.display = "none";
-                    console.log(e);
-                    $('#dp-error').show();
-                    $('#dp-error').css("display","block");
-                    $('#dp-error').text("Error uploading image, check if the size of image is within limits (10MB)");
-                    $('#dp-img1').attr("src", "/img/display-picture11.png");
-                    $("#dp-img").val(null);
-                }
+            // var cmp = compress(this.files[0]);
+            var img = this.files[0];
+
+            console.info(img.size);
+            compress(img).then(function(cimg) {
+                console.info("Again img "+cimg.size);
+                uploadImage(cimg);
             });
+
         });
 
     });

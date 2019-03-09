@@ -1,3 +1,13 @@
+function compress(file) {
+    return new Promise((resolve, reject) => {
+        new Compressor(file, {
+            quality : 0.3,
+            success: resolve,
+            error: reject,
+        });
+    })
+}
+
 var caseImageRetriever = function (caseId, imageDiv) {
     var formData = {
         'caseId': caseId

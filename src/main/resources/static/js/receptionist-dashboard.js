@@ -1163,52 +1163,59 @@ $(document).ready(function () {
                 if (data && data == 'error') {
                     $('#error').text(data);
                     return;
-                } else if($('#case-photos').val()) {
-                    var form = $('#raise-a-case-form')[0];
-                    var formData = new FormData(form);
-                    formData.append("case_id", data);
-                    $.ajax({
-                        url: 'casePicUpload',
-                        type: 'POST',
-                        data: formData,
-                        enctype: 'multipart/form-data',
-                        processData: false,  // tell jQuery not to process the data
-                        contentType: false,  // tell jQuery not to set contentType
-                        success: function (data) {
-                            console.log(data);
-                        },
-                        error: function (e) {
-                            console.log(e);
+                } else if ($('#case-photos').val()) {
+                    $('#case-photos').each(function (index, field) {
+                        console.info(index);
+                        console.info(field);
+                        for (var i = 0; i < field.files.length; i++) {
+                            const img = field.files[i];
+                            console.info("img : " + img.size);
+                            compress(img).then(function (cimg) {
+                                console.info("Again img : " + cimg.size);
+                                var formData = new FormData();
+                                formData.append("case_id", data);
+                                formData.append("case-photos", cimg);
+                                uploadCaseImage(formData);
+                            });
                         }
                     });
                 }
-
-                if(data) {
-                    //console.log(data);
-
+                if (data) {
                     document.getElementById("reset-raise-case").click();
                     //$('#case-id').val(data);
-                    $('#raise-a-case-success').html('<span id="raise-a-case-checkmark"> &check;</span> Success!! Case No : '+data+' raised <span id="close-success-message" onclick="raise_a_case_success_msg_close_btn();">&times;</span>');
+                    $('#raise-a-case-success').html('<span id="raise-a-case-checkmark"> &check;</span> Success!! Case No : ' + data + ' raised <span id="close-success-message" onclick="raise_a_case_success_msg_close_btn();">&times;</span>');
                     $('#raise-a-case-success').fadeIn();
-                    $('#raise-a-case-content').css("pointerEvents","none");
-                    $("#raise-a-case-cta-messages").css("pointerEvents","all");
+                    $('#raise-a-case-content').css("pointerEvents", "none");
+                    $("#raise-a-case-cta-messages").css("pointerEvents", "all");
                     currentCaseId = data;
-                    $('#raise-a-case-form')[0].reset();
+                    //$('#raise-a-case-form')[0].reset();
                     setTimeout(function () {
                         //$('#case-id').val('');
                         $('#raise-a-case-success').fadeOut();
-                        $('#raise-a-case-content').css("pointerEvents","all");
-                        $("#raise-a-case-cta-messages").css("pointerEvents","none");
+                        $('#raise-a-case-content').css("pointerEvents", "all");
+                        $("#raise-a-case-cta-messages").css("pointerEvents", "none");
                     }, 10000);
-                }
-                else {
+                } else {
                     $('#raise-a-case-error').fadeIn();
                 }
             });
-
-
     });
-
+    function uploadCaseImage(formData) {
+        $.ajax({
+            url: 'casePicUpload',
+            type: 'POST',
+            data: formData,
+            enctype: 'multipart/form-data',
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    }
     var container = $(document.createElement('div')).css({});
     $("#search-case-input").autocomplete({
         minLength: 1,
