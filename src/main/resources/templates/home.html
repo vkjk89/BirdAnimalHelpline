@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bird & Animal Helpline</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="Description" content="Helpling Birds and Animals in distress is our Business. We cover most of Mumbai with the help of various other Ngo's.">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/static/icons/apple-icon-57x57.png" th:href="@{/icons/apple-icon-57x57.png(v=1550307657)}">
+    <link rel="apple-touch-icon" sizes="60x60" href="/static/icons/apple-icon-60x60.png" th:href="@{/icons/apple-icon-60x60.png(v=1550307657)}">
+    <link rel="apple-touch-icon" sizes="72x72" href="/static/icons/apple-icon-72x72.png" th:href="@{/icons/apple-icon-72x72.png(v=1550307657)}">
+    <link rel="apple-touch-icon" sizes="76x76" href="/static/icons/apple-icon-76x76.png" th:href="@{/icons/apple-icon-76x76.png(v=1550307657)}">
+    <link rel="apple-touch-icon" sizes="114x114" href="/static/icons/apple-icon-114x114.png" th:href="@{/icons/apple-icon-114x114.png(v=1550307657)}">
+    <link rel="apple-touch-icon" sizes="120x120" href="/static/icons/apple-icon-120x120.png" th:href="@{/icons/apple-icon-120x120.png(v=1550307657)}">
+    <link rel="apple-touch-icon" sizes="144x144" href="/static/icons/apple-icon-144x144.png" th:href="@{/icons/apple-icon-144x144.png(v=1550307657)}">
+    <link rel="apple-touch-icon" sizes="152x152" href="/static/icons/apple-icon-152x152.png" th:href="@{/icons/apple-icon-152x152.png(v=1550307657)}">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-icon-180x180.png" th:href="@{/icons/apple-icon-180x180.png(v=1550307657)}">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-icon-512x512.png" th:href="@{/icons/apple-icon-512x512.png(v=1550307657)}">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/static/icons/android-icon-192x192.png" th:href="@{/icons/android-icon-192x192.png(v=1550307657)}">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/static/icons/android-icon-512x512.png" th:href="@{/icons/android-icon-512x512.png(v=1550307657)}">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/icons/favicon-32x32.png" th:href="@{/icons/favicon-32x32.png(v=1550307657)}">
+    <link rel="icon" type="image/png" sizes="96x96" href="/static/icons/favicon-96x96.png" th:href="@{/icons/favicon-96x96.png(v=1550307657)}">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-16x16.png" th:href="@{/icons/favicon-16x16.png(v=1550307657)}">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-512x512.png" th:href="@{/icons/favicon-512x512.png(v=1550307657)}">
+    <meta name="msapplication-TileColor" content="#333333">
+    <meta name="msapplication-TileImage" content="/static/icons/ms-icon-144x144.png" th:href="@{/icons/ms-icon-144x144.png(v=1550307657)}">
+    <meta name="msapplication-TileImage" content="/static/icons/ms-icon-512x512.png" th:href="@{/icons/ms-icon-512x512.png(v=1550307657)}">
+    <meta name="theme-color" content="#CCCCCC">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css(v=1550307657)}" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/basic-template.css(v=1550307657)}" href="/static/css/basic-template.css">
+    <link rel="stylesheet" th:href="@{/css/index.css(v=1550307657)}" href="/static/css/index.css">
+    <link rel="manifest" href="/static/icons/manifest.json" th:href="@{/icons/manifest.json(v=1550307657)}">
+    <!--<link rel="ServiceWorker" href="/pwabuilder-sw.js" th:href="@{/pwabuilder-sw.js(v=1550307657)}">-->
+    <script>
+        //This is the "Offline page" service worker
+        //Add this below content to your HTML page, or add the js file to your page at the very top to register service worker
+        if (navigator.serviceWorker.controller) {
+                console.log('[PWA Builder] active service worker found, no need to register');
+        } else {
+            //Register the ServiceWorker
+            navigator.serviceWorker.register("/pwabuilder-sw.js", {
+                scope: "./"
+            }).then(function(reg) {
+                console.log('Service worker has been registered for scope:'+ reg.scope);
+            });
+        }
+    </script>
+    <script>
+    function aboutus(){
+            document.getElementById('main').style.display = "none";
+            document.getElementById('aboutus').style.display = "block";
+        }
+        function gohome(){
+            document.getElementById('aboutus').style.display = "none";
+            document.getElementById('main').style.display = "block";
+        }
+    </script>
+</head>
+
+<body>
+    <main id = "main">
+        <div>
+            <button id="info-btn"><a onclick="aboutus();"><img th:src="@{/img/aboutus.png}" src = "/static/img/aboutus.png" style = "width: 100%; height: auto; padding: 0;" alt = "About Us"></a></button>
+        </div>
+        <div>
+            <div>
+                <img th:src="@{/img/Logo1.png}" src="/static/img/Logo1.png" id = "logoImage" alt = "Logo">
+            </div>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-dark active" onclick="window.location.assign('/registration');" style="font-size: 1.2em;">
+                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Create an Account
+                </label>
+                <label class="btn btn-dark" onclick="window.location.assign('/signIn');" style="font-size: 1.2em;">
+                    <input type="radio" name="options" id="option2" autocomplete="off"> Sign In
+                </label>
+            </div>
+        </div>
+    </main>
+
+    <div id = "aboutus">
+        <p id = "aboutus-info">Helpling Birds and Animals in distress is our Business.<br>We cover most of Mumbai with the help of various other Ngo's.<br><br>Call on - 8655370005 for HELP !!<br>
+        </p>
+        <button type = "button" id = "backbutton" onclick="gohome()">Back</button>
+    </div>
+
+</body>
+</html>
