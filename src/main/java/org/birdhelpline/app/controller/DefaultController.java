@@ -1,24 +1,24 @@
 package org.birdhelpline.app.controller;
 
+import com.paytm.pg.merchant.CheckSumServiceHelper;
 import org.birdhelpline.app.model.User;
 import org.birdhelpline.app.service.UserService;
 import org.birdhelpline.app.utils.Role;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 
 @Controller
@@ -26,8 +26,129 @@ public class DefaultController {
     private static final List<String> ROLE_NOT_REQ_PROFILE_COMP = Arrays.asList(Role.ADMIN.name(), Role.Receptionist.name());
     private static final Logger logger = LoggerFactory.getLogger(DefaultController.class);
 
+    @Value("${paytm.mid}")
+    private String mid;
+
+    @Value("${paytm.mkey}")
+    private String mkey;
+
+    @Value("${paytm.website}")
+    private String website;
+
+    @Value("${paytm.itype}")
+    private String itype;
+
+    @Value("${paytm.channelid}")
+    private String channelid;
+
+    @Value("${paytm.turl}")
+    private String turl;
+
+    @Value("${paytm.tStatus}")
+    private String tStatus;
+
+    @Value("${paytm.callback}")
+    private String callback;
+
+
     @Autowired
     UserService userService;
+
+    @GetMapping(value = "/donate")
+    public ModelAndView handleDonate() {
+        return new ModelAndView("page1");
+    }
+
+    public String processDonate(String amount) throws Exception {
+        /* initialize a TreeMap object */
+        TreeMap<String, String> paytmParams = new TreeMap<>();
+
+        /* Find your MID in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys */
+        paytmParams.put("MID", mid);
+
+        /* Find your WEBSITE in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys */
+        paytmParams.put("WEBSITE", website);
+
+        /* Find your INDUSTRY_TYPE_ID in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys */
+        paytmParams.put("INDUSTRY_TYPE_ID", itype);
+
+        /* WEB for website and WAP for Mobile-websites or App */
+        paytmParams.put("CHANNEL_ID", channelid);
+
+        /* Enter your unique order id */
+        String uuid = UUID.randomUUID().toString();
+        logger.info("order id generated is : "+uuid);
+        paytmParams.put("ORDER_ID", uuid);
+
+        /* unique id that belongs to your customer */
+        paytmParams.put("CUST_ID", "TestCustomer123");
+
+        /* customer's mobile number */
+        paytmParams.put("MOBILE_NO", "9029787026");
+
+        /* customer's email */
+        paytmParams.put("EMAIL", "vkjk89@gmail.com");
+
+        /**
+         * Amount in INR that is payble by customer
+         * this should be numeric with optionally having two decimal points
+         */
+        paytmParams.put("TXN_AMOUNT", amount);
+
+        /* on completion of transaction, we will send you the response on this URL */
+        paytmParams.put("CALLBACK_URL", callback);
+
+        /**
+         * Generate checksum for parameters we have
+         * You can get Checksum JAR from https://developer.paytm.com/docs/checksum/
+         * Find your Merchant Key in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys
+         */
+        String checksum = CheckSumServiceHelper.getCheckSumServiceHelper().genrateCheckSum(mkey, paytmParams);
+
+        /* for Staging */
+        String url = turl;
+
+        /* for Production */
+        // String url = "https://securegw.paytm.in/order/process";
+
+        /* Prepare HTML Form and Submit to Paytm */
+        StringBuilder outputHtml = new StringBuilder();
+        outputHtml.append("<html>");
+        outputHtml.append("<head>");
+        outputHtml.append("<title>Merchant Checkout Page</title>");
+        outputHtml.append("</head>");
+        outputHtml.append("<body>");
+        outputHtml.append("<center><h1>Please do not refresh this page...</h1></center>");
+        outputHtml.append("<form method='post' action='" + url + "' name='paytm_form'>");
+
+        for (Map.Entry<String, String> entry : paytmParams.entrySet()) {
+            outputHtml.append("<input type='hidden' name='" + entry.getKey() + "' value='" + entry.getValue() + "'>");
+        }
+
+        outputHtml.append("<input type='hidden' name='CHECKSUMHASH' value='" + checksum + "'>");
+        outputHtml.append("</form>");
+        outputHtml.append("<script type='text/javascript'>");
+        outputHtml.append("document.paytm_form.submit();");
+        outputHtml.append("</script>");
+        outputHtml.append("</body>");
+        outputHtml.append("</html>");
+        return outputHtml.toString();
+    }
+
+    @PostMapping(value = "/donate")
+    public @ResponseBody
+    String
+    handleDonateCustom(@RequestParam(name="final-amount") String amount) throws Exception {
+        return processDonate(amount);
+    }
+
+    @GetMapping(value = "/donateCallback")
+    public @ResponseBody
+    String
+    handleDonateCallback(@RequestBody String body) throws Exception {
+        logger.info("Body recved : "+body);
+        return body;
+    }
 
     @GetMapping(value = "/default")
     public ModelAndView handleLogin(HttpServletRequest request, Model model) {
@@ -85,4 +206,86 @@ public class DefaultController {
             }
         }
     }
+
+    //paytm link code
+
+    /* String responseData = "";
+     *//* initialize an object *//*
+    JSONObject paytmParams = new JSONObject();
+
+    *//* body parameters *//*
+    JSONObject body = new JSONObject();
+
+    *//* Find your MID in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys *//*
+        body.put("mid", "DoPFwD45117944182519");
+
+    *//* Possible value are "GENERIC", "FIXED", "INVOICE" *//*
+        body.put("linkType", "FIXED");
+
+    *//* Enter your choice of payment link description here, special characters are not allowed *//*
+        body.put("linkDescription", "For donation to Bird Help Line");
+
+    *//* Enter your choice of payment link name here, special characters and spaces are not allowed *//*
+        body.put("linkName", "BIRDANIMALHELPLINE");
+
+        body.put("amount", 1000d);
+
+        body.put("customerName", "testCustomerVKJ");
+
+        body.put("customerEmail", "vkjk89@gmail.com");
+
+        body.put("sendSms",true);
+        body.put("sendEmail",true);
+
+        body.put("customerMobile", "9029787026");
+
+
+    *//**
+     * Generate checksum by parameters we have in body
+     * You can get Checksum JAR from https://developer.paytm.com/docs/v1/payment-gateway/#code
+     * Find your Merchant Key in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys
+     *//*
+    String checksum = CheckSumServiceHelper.getCheckSumServiceHelper().genrateCheckSum("NnL9rpmgPfLRCObu", body.toString());
+
+    *//* head parameters *//*
+    JSONObject head = new JSONObject();
+
+    *//* This will be AES *//*
+        head.put("tokenType", "AES");
+
+    *//* put generated checksum value here *//*
+        head.put("signature", checksum);
+
+    *//* prepare JSON string for request *//*
+        paytmParams.put("body", body);
+        paytmParams.put("head", head);
+    String post_data = paytmParams.toString();
+
+    *//* for Staging *//*
+    URL url = new URL("https://securegw-stage.paytm.in/link/create");
+
+    *//* for Production *//*
+// URL url = new URL("https://securegw.paytm.in/link/create);
+
+        try {
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setDoOutput(true);
+
+        DataOutputStream requestWriter = new DataOutputStream(connection.getOutputStream());
+        requestWriter.writeBytes(post_data);
+        requestWriter.close();
+
+        InputStream is = connection.getInputStream();
+        BufferedReader responseReader = new BufferedReader(new InputStreamReader(is));
+        if ((responseData = responseReader.readLine()) != null) {
+            System.out.append("Response: " + responseData);
+        }
+        // System.out.append("Request: " + post_data);
+        responseReader.close();
+    } catch (Exception exception) {
+        exception.printStackTrace();
+    }
+        return responseData;*/
 }

@@ -26,6 +26,13 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.paytm</groupId>
+            <artifactId>paytm</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/library/PaytmChecksum.jar</systemPath>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.nexmo/client -->
         <dependency>
             <groupId>com.nexmo</groupId>
@@ -137,6 +144,12 @@
             <version>27.0.1-jre</version>
             <!-- or, for Android: -->
             <!--<version>27.0.1-android</version>-->
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin.external.google</groupId>
+            <artifactId>android-json</artifactId>
+            <version>0.0.20131108.vaadin1</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
