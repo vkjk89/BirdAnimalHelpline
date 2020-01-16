@@ -2,6 +2,7 @@ package org.birdhelpline.app.dataaccess;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.birdhelpline.app.model.DonateVO;
 import org.birdhelpline.app.model.PinCodeLandmarkInfo;
 import org.birdhelpline.app.model.User;
 import org.birdhelpline.app.model.UserServiceTimeInfo;
@@ -436,6 +437,63 @@ public class UserDao {
                     return ps;
                 }
         );
+    }
+
+    public void saveDonateInfo(Map<String, String> map, Long id) {
+        jdbcTemplate.update((Connection con) -> {
+            PreparedStatement ps = con.prepareStatement(
+                    "update donate_info set txn_id =? ,bank_txn_id=? ,txn_status=?,resp_code=?,currency=?, " +
+                            "gateway =? ,resp_msg=?,bank_name=?,payment_mode=?,checksumhash=? where id = ?"
+
+            );
+
+            ps.setString(1, map.get("TXNID"));
+            ps.setString(2, map.get("BANKTXNID"));
+            ps.setString(3, map.get("STATUS"));
+            ps.setString(4, map.get("RESPCODE"));
+            ps.setString(5, map.get("CURRENCY"));
+            ps.setString(6, map.get("GATEWAYNAME"));
+            ps.setString(7, map.get("RESPMSG"));
+            ps.setString(8, map.get("BANKNAME"));
+            ps.setString(9, map.get("PAYMENTMODE"));
+            ps.setString(10, map.get("CHECKSUMHASH"));
+            ps.setLong(11, id);
+            return ps;
+        });
+    }
+
+    public Long saveDonateVO(DonateVO donateVO) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update((Connection con) -> {
+            PreparedStatement ps = con.prepareStatement(
+                    "INSERT INTO donate_info(full_name,address1,address2,mobile,pan,amount,order_id) VALUES (?,?,?,?,?,?,?);",
+                    new String[]{"id"}
+            );
+
+            ps.setString(1, donateVO.getName());
+            ps.setString(2, donateVO.getAddress1());
+            ps.setString(3, donateVO.getAddress2());
+            ps.setLong(4, Long.parseLong(donateVO.getMobile()));
+            ps.setString(5, donateVO.getPan());
+            ps.setDouble(6, donateVO.getFinalAmount());
+            ps.setString(7, donateVO.getOrderId());
+            return ps;
+        },keyHolder);
+        return keyHolder.getKey().longValue();
+    }
+
+    public DonateVO findDonateInfoByOrderId(String orderid) {
+        DonateVO vo = jdbcTemplate.queryForObject("select  id,full_name,address1,address2,pan,mobile,from user where order_id = ?", new Object [] {orderid},((rs, rowNum) -> new DonateVO(
+                rs.getLong("id"),
+                rs.getString("full_name"),
+                rs.getString("address1"),
+                rs.getString("address2"),
+                rs.getString("mobile"),
+                rs.getString("pan"),
+                rs.getDouble("amount"),
+                orderid
+        )));
+        return vo;
     }
 
     static class UserRowMapper implements RowMapper<User> {

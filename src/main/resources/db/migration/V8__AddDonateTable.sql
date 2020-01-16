@@ -1,0 +1,21 @@
+﻿create table donate_info (
+    id bigint primary key auto_increment,
+    full_name varchar(35),
+    address1 varchar(200),
+    address2 varchar(200),
+    mobile int,
+    pan varchar(20),
+    amount double,
+    order_id varchar(100),
+    txn_id varchar(100),
+    bank_txn_id varchar(100),
+    txn_status varchar(50),
+    resp_code varchar(10),
+    currency varchar(10),
+    gateway varchar(50),
+    resp_msg varchar(300),
+    bank_name varchar(100),
+    payment_mode varchar(100),
+	checksumhash varchar(200),
+    donate_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);

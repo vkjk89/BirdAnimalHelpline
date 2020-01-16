@@ -6,6 +6,7 @@ import com.google.common.cache.CacheStats;
 import com.google.common.cache.LoadingCache;
 import org.apache.commons.lang3.StringUtils;
 import org.birdhelpline.app.dataaccess.UserDao;
+import org.birdhelpline.app.model.DonateVO;
 import org.birdhelpline.app.model.PinCodeLandmarkInfo;
 import org.birdhelpline.app.model.User;
 import org.birdhelpline.app.utils.ResponseStatus;
@@ -188,5 +189,34 @@ public class UserService {
         logger.info("Disabling user : " + user);
         userDao.disableUser(user.get());
         return ResponseStatus.SUCCESS.name();
+    }
+
+
+    public void saveDonateInfo(Map<String, String> map, Long id) {
+        try {
+             userDao.saveDonateInfo(map,id);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+    }
+
+    public Long saveDonateVO(DonateVO donateVO) {
+        try {
+            return userDao.saveDonateVO(donateVO);
+        }
+        catch(Exception e) {
+            logger.info("Could not save donateVO : "+donateVO);
+            return 0l;
+        }
+    }
+
+    public DonateVO findDonateInfoByOrderId(String orderid) {
+        try {
+            return userDao.findDonateInfoByOrderId(orderid);
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage(),e);
+            return null;
+        }
     }
 }

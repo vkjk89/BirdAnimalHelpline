@@ -1,6 +1,7 @@
 package org.birdhelpline.app.controller;
 
 import com.paytm.pg.merchant.CheckSumServiceHelper;
+import org.birdhelpline.app.model.DonateVO;
 import org.birdhelpline.app.model.User;
 import org.birdhelpline.app.service.UserService;
 import org.birdhelpline.app.utils.Role;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -59,7 +61,11 @@ public class DefaultController {
         return new ModelAndView("page1");
     }
 
-    public String processDonate(String amount) throws Exception {
+    public String processDonate(DonateVO donateVO) throws Exception {
+        String orderId = UUID.randomUUID().toString();
+        donateVO.setOrderId(orderId);
+        Long id = userService.saveDonateVO(donateVO);
+        donateVO.setId(id);
         /* initialize a TreeMap object */
         TreeMap<String, String> paytmParams = new TreeMap<>();
 
@@ -76,24 +82,24 @@ public class DefaultController {
         paytmParams.put("CHANNEL_ID", channelid);
 
         /* Enter your unique order id */
-        String uuid = UUID.randomUUID().toString();
-        logger.info("order id generated is : "+uuid);
-        paytmParams.put("ORDER_ID", uuid);
+
+        logger.info("order id generated is : "+orderId);
+        paytmParams.put("ORDER_ID", orderId);
 
         /* unique id that belongs to your customer */
-        paytmParams.put("CUST_ID", "TestCustomer123");
+        paytmParams.put("CUST_ID", "Donor");
 
         /* customer's mobile number */
-        paytmParams.put("MOBILE_NO", "9029787026");
+        paytmParams.put("MOBILE_NO", String.valueOf(donateVO.getMobile()));
 
         /* customer's email */
-        paytmParams.put("EMAIL", "vkjk89@gmail.com");
+        //paytmParams.put("EMAIL", "vkjk89@gmail.com");
 
         /**
          * Amount in INR that is payble by customer
          * this should be numeric with optionally having two decimal points
          */
-        paytmParams.put("TXN_AMOUNT", amount);
+        paytmParams.put("TXN_AMOUNT", String.valueOf(donateVO.getFinalAmount()));
 
         /* on completion of transaction, we will send you the response on this URL */
         paytmParams.put("CALLBACK_URL", callback);
@@ -138,16 +144,44 @@ public class DefaultController {
     @PostMapping(value = "/donate")
     public @ResponseBody
     String
-    handleDonateCustom(@RequestParam(name="final-amount") String amount) throws Exception {
-        return processDonate(amount);
+    handleDonateCustom(@ModelAttribute DonateVO donateVO,HttpSession session) throws Exception {
+        String response = processDonate(donateVO);
+        session.setAttribute("donateVO", donateVO);
+        return response;
     }
 
-    @GetMapping(value = "/donateCallback")
-    public @ResponseBody
-    String
-    handleDonateCallback(@RequestBody String body) throws Exception {
+    @PostMapping (value = "/donateCallback")
+    public
+    ModelAndView
+    handleDonateCallback(@RequestBody String body, HttpSession session) throws Exception {
         logger.info("Body recved : "+body);
-        return body;
+        ModelAndView modelAndView = new ModelAndView("donateCallback");
+        String [] parts = body.split("&");
+        Map<String,String> map = new HashMap<>();
+        for(String x  : parts) {
+            String [] ps = x.split("=");
+            modelAndView.addObject(ps[0],ps[1]);
+            map.put(ps[0],ps[1]);
+        }
+        DonateVO vo = (DonateVO)session.getAttribute("donateVO");
+        if(vo == null) {
+            vo = userService.findDonateInfoByOrderId(map.get("ORDERID"));
+        }
+
+        if(vo == null) {
+            logger.error("Could not save call back info : "+map);
+            return modelAndView;
+        }
+        userService.saveDonateInfo(map,vo.getId());
+        modelAndView.addObject("donateVO",vo);
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/home")
+    public
+    String
+    handleHome(@ModelAttribute DonateVO donateVO) throws Exception {
+        return "home";
     }
 
     @GetMapping(value = "/default")
@@ -189,6 +223,17 @@ public class DefaultController {
         userService.updateUserLoginDetails(user);
         return modelAndView;
     }
+
+    @RequestMapping(value = {"/refunds_policy"}, method = RequestMethod.GET)
+            public ModelAndView getRefundPolicy() {
+                return new ModelAndView("refunds_policy");
+    }
+
+    @RequestMapping(value = {"/terms_and_conditions"}, method = RequestMethod.GET)
+    public ModelAndView getTAndC() {
+        return new ModelAndView("terms_and_conditions");
+    }
+
 
     private void getViewBasedOnRole(ModelAndView modelAndView) {
         Collection<? extends GrantedAuthority> auth = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
