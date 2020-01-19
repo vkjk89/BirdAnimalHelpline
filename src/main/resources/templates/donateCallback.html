@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Transaction Complete</title>
+    <style>
+        html, body {            
+            margin: 0;
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        }
+        main {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -60%);
+            box-shadow: 10px 10px 10px 5px #CCC;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table td, table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        table tr:nth-child(even){background-color: #f2f2f2;}
+
+        table tr:hover {background-color: #ddd;}
+
+        table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+        .table-btns {
+            background-color: white;
+            text-align: center;
+            cursor: pointer;
+            font-size: 1.2rem
+        }
+        .table-btns:hover {
+            background-color: #4CAF50;
+            color: floralwhite;
+        }
+
+        .banner {
+            padding: 1.2rem;
+            font-size: 1.3rem;
+            background-color: #292929;
+            color: floralwhite;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            padding: 1rem;
+            text-align: center;
+            width: 100vw;
+            background-color: #292929;
+            color: floralwhite;
+        }
+        a {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="banner">Bird Animal Helpline</div>
+    <main>
+        <table>
+            <th colspan="2">Payment Details</th>
+            <tr><td>Transaction ID</td><td>#Transaction_ID</td></tr>
+            <tr><td>Date</td><td>#Date</td></tr>
+            <tr><td>Amount</td><td>#Transaction_Amount</td></tr>
+            <tr><td>Payment Mode</td><td>#Payment_Mode</td></tr>
+            <tr><td>Transaction Status</td><td>#Transaction_Status</td></tr>
+            <tr><td onclick="window.location.href=''" class="table-btns">Done</td><td class="table-btns" onclick="window.print()">Print</td></tr>
+        </table>
+    </main>
+
+    <div class="footer">
+        
+        <div class="">
+            <p class="">© <span>2020</span> <span>Veer Shashan Sevak Trust</span></p>
+            <a href="./terms_and_conditions.html" th:href="{@/terms_and_conditions}" class="nav-link link text-white display-4">Terms and Conditions</a>
+            <a href="./refunds_policy.html" th:href="{@/refunds_policy}" class="nav-link link text-white display-4">Return, Refund, & Cancellation policy</a>
+        </div>
+    </div>
+</body>
+</html>
