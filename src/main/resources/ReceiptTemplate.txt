@@ -1,0 +1,24 @@
+Veer Shasan Sevak
+10/A, 1st Floor, Vitthal Bhuvan, 6th Khetwadi, S.V.P. Road, Mumbai - 400004. Tel: 9821717415
+Trust Reg. E33416(M) - 12AA Reg. A/10046   -  PAN: AACTV3317M
+
+
+
+	Received with thanks from:						Receipt No: ${id}
+	${name} 							            Date:	${date}
+	Address:	${address}
+	Contact:	${contact}		PAN :	${pan}
+
+
+	Amount  :	 ₹${amount} 					                   Mode :   ${mode}
+	In Words :	Rupees  ${amountWords}  Only
+
+	Towards  :						Remarks  :  ${bank}
+	-   General Donation
+	-   Corpus Donation
+	I/We hereby confirm that, I/We donate above amount to your trust with specific direction that said donation shall form part of corpus of the trust within the meaning of the provision of of sec. 12 of the I.T. Act, 1961 and sec. 58 of the Bombay Public Trust Act, 1950.
+
+	The donations are exempted u/s 80G of the I.T. Act 1961 vide No. 2019-20/A/10017
+
+
+	Receiver's Signature								Donor's Signature

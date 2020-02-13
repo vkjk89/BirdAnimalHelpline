@@ -5,6 +5,7 @@ import org.birdhelpline.app.model.DonateVO;
 import org.birdhelpline.app.model.User;
 import org.birdhelpline.app.service.UserService;
 import org.birdhelpline.app.utils.Role;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.Principal;
 import java.util.*;
 
@@ -27,38 +33,86 @@ import java.util.*;
 public class DefaultController {
     private static final List<String> ROLE_NOT_REQ_PROFILE_COMP = Arrays.asList(Role.ADMIN.name(), Role.Receptionist.name());
     private static final Logger logger = LoggerFactory.getLogger(DefaultController.class);
-
+    @Autowired
+    UserService userService;
     @Value("${paytm.mid}")
     private String mid;
-
     @Value("${paytm.mkey}")
     private String mkey;
-
     @Value("${paytm.website}")
     private String website;
-
     @Value("${paytm.itype}")
     private String itype;
-
     @Value("${paytm.channelid}")
     private String channelid;
-
     @Value("${paytm.turl}")
     private String turl;
-
     @Value("${paytm.tStatus}")
     private String tStatus;
-
     @Value("${paytm.callback}")
     private String callback;
 
-
-    @Autowired
-    UserService userService;
+    Timer timer = new Timer();
 
     @GetMapping(value = "/donate")
     public ModelAndView handleDonate() {
-        return new ModelAndView("page1");
+        return new ModelAndView("doanteRequest");
+    }
+
+
+    public String verifyTxn(String orderId) throws Exception {
+        String responseData = "";
+        /* initialize a TreeMap object */
+        TreeMap<String, String> paytmParams = new TreeMap<String, String>();
+
+        /* Find your MID in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys */
+        paytmParams.put("MID", mid);
+
+        /* Enter your order id which needs to be check status for */
+        paytmParams.put("ORDERID", orderId);
+
+        /**
+         * Generate checksum by parameters we have
+         * You can get Checksum JAR from https://developer.paytm.com/docs/checksum/
+         * Find your Merchant Key in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys
+         */
+        String checksum = CheckSumServiceHelper.getCheckSumServiceHelper().genrateCheckSum(mkey, paytmParams);
+
+        /* put generated checksum value here */
+        paytmParams.put("CHECKSUMHASH", checksum);
+
+        /* prepare JSON string for request */
+        JSONObject obj = new JSONObject(paytmParams);
+        String post_data = obj.toString();
+
+        /* for Staging */
+        URL url = new URL(tStatus);
+
+        /* for Production */
+        // URL url = new URL("https://securegw.paytm.in/order/status");
+
+        try {
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setDoOutput(true);
+
+            DataOutputStream requestWriter = new DataOutputStream(connection.getOutputStream());
+            requestWriter.writeBytes(post_data);
+            requestWriter.close();
+            InputStream is = connection.getInputStream();
+            BufferedReader responseReader = new BufferedReader(new InputStreamReader(is));
+            if ((responseData = responseReader.readLine()) != null) {
+                System.out.append("Response: " + responseData);
+                System.out.println("vkj : " + responseData);
+            }
+            System.out.append("Request: " + post_data);
+            responseReader.close();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            logger.error(exception.getMessage(),exception);
+        }
+        return responseData;
     }
 
     public String processDonate(DonateVO donateVO) throws Exception {
@@ -83,7 +137,7 @@ public class DefaultController {
 
         /* Enter your unique order id */
 
-        logger.info("order id generated is : "+orderId);
+        logger.info("order id generated is : " + orderId);
         paytmParams.put("ORDER_ID", orderId);
 
         /* unique id that belongs to your customer */
@@ -144,42 +198,50 @@ public class DefaultController {
     @PostMapping(value = "/donate")
     public @ResponseBody
     String
-    handleDonateCustom(@ModelAttribute DonateVO donateVO,HttpSession session) throws Exception {
+    handleDonateCustom(@ModelAttribute DonateVO donateVO, HttpSession session) throws Exception {
         String response = processDonate(donateVO);
         session.setAttribute("donateVO", donateVO);
         return response;
     }
 
-    @PostMapping (value = "/donateCallback")
-    public
-    ModelAndView
+    @PostMapping(value = "/donateCallback")
+    public ModelAndView
     handleDonateCallback(@RequestBody String body, HttpSession session) throws Exception {
-        logger.info("Body recved : "+body);
+        logger.info("Body recved : " + body);
         ModelAndView modelAndView = new ModelAndView("donateCallback");
-        String [] parts = body.split("&");
-        Map<String,String> map = new HashMap<>();
-        for(String x  : parts) {
-            String [] ps = x.split("=");
-            modelAndView.addObject(ps[0],ps[1]);
-            map.put(ps[0],ps[1]);
+        String[] parts = body.split("&");
+        Map<String, String> map = new HashMap<>();
+        for (String x : parts) {
+            String[] ps = x.split("=");
+            modelAndView.addObject(ps[0], ps[1]);
+            map.put(ps[0], ps[1]);
         }
-        DonateVO vo = (DonateVO)session.getAttribute("donateVO");
-        if(vo == null) {
+        DonateVO vo = (DonateVO) session.getAttribute("donateVO");
+        if (vo == null) {
             vo = userService.findDonateInfoByOrderId(map.get("ORDERID"));
         }
 
-        if(vo == null) {
-            logger.error("Could not save call back info : "+map);
+        if (vo == null) {
+            logger.error("Could not save call back info : " + map);
             return modelAndView;
         }
-        userService.saveDonateInfo(map,vo.getId());
-        modelAndView.addObject("donateVO",vo);
+        userService.saveDonateInfo(map, vo.getId());
+        modelAndView.addObject("donateVO", vo);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    verifyTxn(map.get("ORDERID"));
+                } catch (Exception e) {
+                    logger.error(e.getMessage(), e);
+                }
+            }
+        }, 10 * 1000);
         return modelAndView;
     }
 
     @GetMapping(value = "/home")
-    public
-    String
+    public String
     handleHome(@ModelAttribute DonateVO donateVO) throws Exception {
         return "home";
     }
@@ -225,8 +287,8 @@ public class DefaultController {
     }
 
     @RequestMapping(value = {"/refunds_policy"}, method = RequestMethod.GET)
-            public ModelAndView getRefundPolicy() {
-                return new ModelAndView("refunds_policy");
+    public ModelAndView getRefundPolicy() {
+        return new ModelAndView("refunds_policy");
     }
 
     @RequestMapping(value = {"/terms_and_conditions"}, method = RequestMethod.GET)
