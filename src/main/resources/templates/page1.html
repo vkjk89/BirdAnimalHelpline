@@ -126,7 +126,7 @@ body{font-family: Didact Gothic;font-style: normal;line-height: 1.5;}blockquote{
 								<span class="item-text mbr-fonts-style display-7">Thank you</span>
 							</li></ul>
 					</div>
-					<div class="card-button mbr-section-btn"><button type="button" form="payment-form" class="btn btn-lg btn-primary display-7" onclick="document.getElementById('finalAmount').value =500; document.getElementById('payment-form-div').style.display = 'block'; $('html, body').animate({ scrollTop: $('#payment-form-div').offset().top-100 }, 100);">Pay Now</button></div>
+					<div class="card-button mbr-section-btn"><button type="button" form="payment-form" class="btn btn-lg btn-primary display-7" onclick="document.getElementById('finalAmount').value =500; document.getElementById('payment-form-div').style.display = 'block'; $('html, body').animate({ scrollTop: $('#payment-form-div').offset().top-100 }, 100); $('#form-name').focus()">Pay Now</button></div>
 				</div>
 			</div>
 
@@ -153,7 +153,7 @@ body{font-family: Didact Gothic;font-style: normal;line-height: 1.5;}blockquote{
 								<span class="item-text mbr-fonts-style display-7">Thank you</span>
 							</li></ul>
 					</div>
-					<div class="card-button mbr-section-btn"><button type="button" form="payment-form" class="btn btn-lg btn-primary display-7" onclick="document.getElementById('finalAmount').value =1000; document.getElementById('payment-form-div').style.display = 'block'; $('html, body').animate({ scrollTop: $('#payment-form-div').offset().top-100 }, 100);">Pay Now</button></div>
+					<div class="card-button mbr-section-btn"><button type="button" form="payment-form" class="btn btn-lg btn-primary display-7" onclick="document.getElementById('finalAmount').value =1000; document.getElementById('payment-form-div').style.display = 'block'; $('html, body').animate({ scrollTop: $('#payment-form-div').offset().top-100 }, 100); $('#form-name').focus()">Pay Now</button></div>
 				</div>
 			</div>
 
@@ -180,7 +180,7 @@ body{font-family: Didact Gothic;font-style: normal;line-height: 1.5;}blockquote{
 								<span class="item-text mbr-fonts-style display-7">Thank you</span>
 							</li></ul>
 					</div>
-					<div class="card-button mbr-section-btn"><button type="button" form="payment-form" class="btn btn-lg btn-primary display-7" onclick="document.getElementById('finalAmount').value =2000; document.getElementById('payment-form-div').style.display = 'block'; $('html, body').animate({ scrollTop: $('#payment-form-div').offset().top-100 }, 100);">Pay Now</button></div>
+					<div class="card-button mbr-section-btn"><button type="button" form="payment-form" class="btn btn-lg btn-primary display-7" onclick="document.getElementById('finalAmount').value =2000; document.getElementById('payment-form-div').style.display = 'block'; $('html, body').animate({ scrollTop: $('#payment-form-div').offset().top-100 }, 100); $('#form-name').focus()">Pay Now</button></div>
 				</div>
             </div>
 
@@ -264,7 +264,7 @@ body{font-family: Didact Gothic;font-style: normal;line-height: 1.5;}blockquote{
                 justify-content: space-evenly;">
                     <div>
                         <div>Name: </div>
-                        <input type="text" name="name" placeholder="Enter Full Name" required maxlength="35">
+                        <input type="text" name="name" id="form-name" placeholder="Enter Full Name" required maxlength="35">
                         <div>Address: </div>
                         <input type="text" name="address1" placeholder="Line 1" required><br>
                         <input type="text" name="address2" placeholder="Line 2"><br>
@@ -299,6 +299,7 @@ body{font-family: Didact Gothic;font-style: normal;line-height: 1.5;}blockquote{
                 document.getElementById('finalAmount').value=x;
                 document.getElementById('payment-form-div').style.display = "block";
                 $('html, body').animate({ scrollTop: $('#payment-form-div').offset().top-100 }, 100);
+                $('#form-name').focus()
             }
         }
     </script>
