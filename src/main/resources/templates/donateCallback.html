@@ -93,7 +93,7 @@
     </main>
 
     <div class="footer">
-        
+
         <div class="">
             <p class="">© <span>2020</span> <span>Veer Shashan Sevak Trust</span></p>
             <a href="./terms_and_conditions.html" th:href="@{/terms_and_conditions}" class="nav-link link text-white display-4">Terms and Conditions</a>
@@ -104,7 +104,35 @@
     <script>
         function Rs(amount){
             var words = new Array();
-            words[0] = 'Zero';words[1] = 'One';words[2] = 'Two';words[3] = 'Three';words[4] = 'Four';words[5] = 'Five';words[6] = 'Six';words[7] = 'Seven';words[8] = 'Eight';words[9] = 'Nine';words[10] = 'Ten';words[11] = 'Eleven';words[12] = 'Twelve';words[13] = 'Thirteen';words[14] = 'Fourteen';words[15] = 'Fifteen';words[16] = 'Sixteen';words[17] = 'Seventeen';words[18] = 'Eighteen';words[19] = 'Nineteen';words[20] = 'Twenty';words[30] = 'Thirty';words[40] = 'Forty';words[50] = 'Fifty';words[60] = 'Sixty';words[70] = 'Seventy';words[80] = 'Eighty';words[90] = 'Ninety';var op;
+            words[0] = 'Zero';
+            words[1] = 'One';
+            words[2] = 'Two';
+            words[3] = 'Three';
+            words[4] = 'Four';
+            words[5] = 'Five';
+            words[6] = 'Six';
+            words[7] = 'Seven';
+            words[8] = 'Eight';
+            words[9] = 'Nine';
+            words[10] = 'Ten';
+            words[11] = 'Eleven';
+            words[12] = 'Twelve';
+            words[13] = 'Thirteen';
+            words[14] = 'Fourteen';
+            words[15] = 'Fifteen';
+            words[16] = 'Sixteen';
+            words[17] = 'Seventeen';
+            words[18] = 'Eighteen';
+            words[19] = 'Nineteen';
+            words[20] = 'Twenty';
+            words[30] = 'Thirty';
+            words[40] = 'Forty';
+            words[50] = 'Fifty';
+            words[60] = 'Sixty';
+            words[70] = 'Seventy';
+            words[80] = 'Eighty';
+            words[90] = 'Ninety';
+            var op;
             amount = amount.toString();
             var atemp = amount.split(".");
             var number = atemp[0].split(",").join("");
@@ -144,23 +172,43 @@
         function RsPaise(n){
             nums = n.toString().split('.')
             var whole = Rs(nums[0])
-            if(nums[1]==null)nums[1]=0;
-            if(nums[1].length == 1 )nums[1]=nums[1]+'0';
-            if(nums[1].length> 2){nums[1]=nums[1].substring(2,length - 1)}
-            if(nums.length == 2){
-            if(nums[0]<=9){nums[0]=nums[0]*10} else {nums[0]=nums[0]};
-            var fraction = Rs(nums[1])
-            if(whole=='' && fraction==''){op= 'Zero only';}
-            if(whole=='' && fraction!=''){op= 'paise ' + fraction + ' only';}
-            if(whole!='' && fraction==''){op='Rupees ' + whole + ' only';} 
-            if(whole!='' && fraction!=''){op='Rupees ' + whole + 'and paise ' + fraction + ' only';}
-            amt=document.getElementById('amt').value;
-            if(amt > 999999999.99){op='Oops!!! The amount is too big to convert';}
-            if(isNaN(amt) == true ){op='Error : Amount in number appears to be incorrect. Please Check.';}
-            document.getElementById('op').innerHTML=op;}
+            if (nums[1] == null) nums[1] = 0;
+            if (nums[1].length == 1) nums[1] = nums[1] + '0';
+            if (nums[1].length > 2) {
+                nums[1] = nums[1].substring(2, length - 1)
+            }
+            if (nums.length == 2) {
+                if (nums[0] <= 9) {
+                    nums[0] = nums[0] * 10
+                } else {
+                    nums[0] = nums[0]
+                }
+                ;
+                var fraction = Rs(nums[1])
+                if (whole == '' && fraction == '') {
+                    op = 'Zero only';
+                }
+                if (whole == '' && fraction != '') {
+                    op = 'paise ' + fraction + ' only';
+                }
+                if (whole != '' && fraction == '') {
+                    op = 'Rupees ' + whole + ' only';
+                }
+                if (whole != '' && fraction != '') {
+                    op = 'Rupees ' + whole + 'and paise ' + fraction + ' only';
+                }
+                amt = document.getElementById('amt').value;
+                if (amt > 999999999.99) {
+                    op = 'Oops!!! The amount is too big to convert';
+                }
+                if (isNaN(amt) == true) {
+                    op = 'Error : Amount in number appears to be incorrect. Please Check.';
+                }
+                document.getElementById('op').innerHTML = op;
+            }
         }
     </script>
-    <script>
+    <script th:inline="javascript">
         console.log(/*[[${TXNDATE}]]*/)
         docDefinition = {
             content: [
@@ -177,16 +225,16 @@
                 },
                 {
                     text: [
-                        '\n Date : /*[[${TXNDATE}]]*/ 'default'\n\n\n',
-                        'Receipt No. : /*[[${donateVO.getId()}]]*/ 'default' \n\n\n',
+                        '\n Date : /*[[${TXNDATE}]]*/ \n\n\n',
+                        'Receipt No. : /*[[${donateVO.getId()}]]*/  \n\n\n',
                         'Received with thanks from :\n',
-                        {text: '/*[[${donateVO.getName()}]]*/ 'default'\n\n',fontSize: 14, bold: true},
+                        {text: '/*[[${donateVO.getName()}]]*/ \n\n',fontSize: 14, bold: true},
                         'Address :\n',
                         '@Address :\n\n\n',
-                        'Contact No. : /*[[${donateVO.getMobile()}]]*/ 'default' \n\n\n',
-                        'PAN : /*[[${donateVO.getPan()}]]*/ 'default' \n\n\n',
+                        'Contact No. : /*[[${donateVO.getMobile()}]]*/  \n\n\n',
+                        'PAN : /*[[${donateVO.getPan()}]]*/  \n\n\n',
                         'Amount : ',
-                        {text: '₹ /*[[${TXNAMOUNT}]]*/ 'default'\n\n',fontSize: 14, bold: true},
+                        {text: '₹ /*[[${TXNAMOUNT}]]*/ \n\n',fontSize: 14, bold: true},
                         'Amount in Words : \n',
                         `${RsPaise(/*[[${TXNAMOUNT}]]*/)}\n\n\n`,
                         'being general donation by online transfer.\n\n\n',
@@ -196,7 +244,7 @@
                         {text: 'This is a computer generated receipt', fontSize: 11, alignment: 'center' },
                         ],
                     style: 'h2',
-                }                
+                }
             ],
             styles: {
                 header: {
