@@ -102,59 +102,6 @@
     </div>
 
     <script>
-        console.log(/*[[${TXNDATE}]]*/)
-        docDefinition = {
-            content: [
-                {
-                    text: 'Veer Shashan Sevak',
-                    style: 'header',
-                },
-                {
-                    text: [
-                        '\n10/A, 1st Floor, Vitthal Bhuvan, 6th Khetwadi, S.V.P. Road, Mumbai - 400004\n',
-                        'Trust Reg. E33416(M) - 12AA Reg. A/10046   -  PAN: AACTV3317M\n\n\n\n'
-                        ],
-                    style: 'h1',
-                },
-                {
-                    text: [
-                        '\n Date : /*[[${TXNDATE}]]*/ 'default'\n\n\n',
-                        'Receipt No. : /*[[${donateVO.getId()}]]*/ 'default' \n\n\n',
-                        'Received with thanks from :\n',
-                        {text: '/*[[${donateVO.getName()}]]*/ 'default'\n\n',fontSize: 14, bold: true},
-                        'Address :\n',
-                        '@Address :\n\n\n',
-                        'Contact No. : /*[[${donateVO.getMobile()}]]*/ 'default' \n\n\n',
-                        'PAN : /*[[${donateVO.getPan()}]]*/ 'default' \n\n\n',
-                        'Amount : ',
-                        {text: '₹ /*[[${TXNAMOUNT}]]*/ 'default'\n\n',fontSize: 14, bold: true},
-                        'Amount in Words : \n',
-                        `${RsPaise(/*[[${TXNAMOUNT}]]*/)}\n\n\n`,
-                        'being general donation by online transfer.\n\n\n',
-                        'We thank you for your support!\n\n\n',
-                        'The above donations are exempted u/s 80G of the I.T. Act 1961 vide No. 2019-20/A/10017\n\n\n\n\n\n',
-                        {text: 'For any query you can call us on 86553 70005 or write to us on birdhelpline@gmail.com\n\n\n\n\n\n', fontSize: 11, alignment: 'center'  },
-                        {text: 'This is a computer generated receipt', fontSize: 11, alignment: 'center' },
-                        ],
-                    style: 'h2',
-                }                
-            ],
-            styles: {
-                header: {
-                    fontSize: 22,
-                    bold: true,
-                    alignment: 'center'
-                },
-                h1: {
-                    fontSize: 12,
-                    alignment: 'center'
-                }
-            }
-        }
-        var pdfInstance = pdfMake.createPdf(docDefinition);
-        document.getElementById('pdfDownload_btn').onclick = pdfInstance.download();
-    </script>
-    <script>
         function Rs(amount){
             var words = new Array();
             words[0] = 'Zero';words[1] = 'One';words[2] = 'Two';words[3] = 'Three';words[4] = 'Four';words[5] = 'Five';words[6] = 'Six';words[7] = 'Seven';words[8] = 'Eight';words[9] = 'Nine';words[10] = 'Ten';words[11] = 'Eleven';words[12] = 'Twelve';words[13] = 'Thirteen';words[14] = 'Fourteen';words[15] = 'Fifteen';words[16] = 'Sixteen';words[17] = 'Seventeen';words[18] = 'Eighteen';words[19] = 'Nineteen';words[20] = 'Twenty';words[30] = 'Thirty';words[40] = 'Forty';words[50] = 'Fifty';words[60] = 'Sixty';words[70] = 'Seventy';words[80] = 'Eighty';words[90] = 'Ninety';var op;
@@ -212,6 +159,59 @@
             if(isNaN(amt) == true ){op='Error : Amount in number appears to be incorrect. Please Check.';}
             document.getElementById('op').innerHTML=op;}
         }
+    </script>
+    <script>
+        console.log(/*[[${TXNDATE}]]*/)
+        docDefinition = {
+            content: [
+                {
+                    text: 'Veer Shashan Sevak',
+                    style: 'header',
+                },
+                {
+                    text: [
+                        '\n10/A, 1st Floor, Vitthal Bhuvan, 6th Khetwadi, S.V.P. Road, Mumbai - 400004\n',
+                        'Trust Reg. E33416(M) - 12AA Reg. A/10046   -  PAN: AACTV3317M\n\n\n\n'
+                        ],
+                    style: 'h1',
+                },
+                {
+                    text: [
+                        '\n Date : /*[[${TXNDATE}]]*/ 'default'\n\n\n',
+                        'Receipt No. : /*[[${donateVO.getId()}]]*/ 'default' \n\n\n',
+                        'Received with thanks from :\n',
+                        {text: '/*[[${donateVO.getName()}]]*/ 'default'\n\n',fontSize: 14, bold: true},
+                        'Address :\n',
+                        '@Address :\n\n\n',
+                        'Contact No. : /*[[${donateVO.getMobile()}]]*/ 'default' \n\n\n',
+                        'PAN : /*[[${donateVO.getPan()}]]*/ 'default' \n\n\n',
+                        'Amount : ',
+                        {text: '₹ /*[[${TXNAMOUNT}]]*/ 'default'\n\n',fontSize: 14, bold: true},
+                        'Amount in Words : \n',
+                        `${RsPaise(/*[[${TXNAMOUNT}]]*/)}\n\n\n`,
+                        'being general donation by online transfer.\n\n\n',
+                        'We thank you for your support!\n\n\n',
+                        'The above donations are exempted u/s 80G of the I.T. Act 1961 vide No. 2019-20/A/10017\n\n\n\n\n\n',
+                        {text: 'For any query you can call us on 86553 70005 or write to us on birdhelpline@gmail.com\n\n\n\n\n\n', fontSize: 11, alignment: 'center'  },
+                        {text: 'This is a computer generated receipt', fontSize: 11, alignment: 'center' },
+                        ],
+                    style: 'h2',
+                }                
+            ],
+            styles: {
+                header: {
+                    fontSize: 22,
+                    bold: true,
+                    alignment: 'center'
+                },
+                h1: {
+                    fontSize: 12,
+                    alignment: 'center'
+                }
+            }
+        }
+        var pdfInstance = pdfMake.createPdf(docDefinition);
+        document.getElementById('pdfDownload_btn').onclick = pdfInstance.download();
     </script>
 </body>
 </html>
