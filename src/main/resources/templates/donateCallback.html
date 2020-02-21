@@ -87,7 +87,7 @@
             <tr><td>Address 2</td><td th:text="${donateVO.getAddress2()}">#Address_Line_2</td></tr>
             <tr><td>Mobile Number</td><td th:text="${donateVO.getMobile()}">#Mobile_Number</td></tr>
             <tr><td>PAN</td><td th:text="${donateVO.getPan()}">#PAN</td></tr>
-            <tr><td>Receipt</td><td><a style="color: green" onclick="pdfInstance.download()">Download PDF</a></td></tr>
+            <tr><td>Receipt</td><td><a style="color: green" id="pdfDownload_btn">Download PDF</a></td></tr>
             <tr><td onclick="window.location.href='/'" class="table-btns">Done</td><td class="table-btns" onclick="window.print()">Print</td></tr>
         </table>
     </main>
@@ -137,8 +137,7 @@
                         {text: 'This is a computer generated receipt', fontSize: 11, alignment: 'center' },
                         ],
                     style: 'h2',
-                }
-                
+                }                
             ],
             styles: {
                 header: {
@@ -152,7 +151,8 @@
                 }
             }
         }
-        var pdfInstance = pdfMake.createPdf(docDefinition)
+        var pdfInstance = pdfMake.createPdf(docDefinition);
+        document.getElementById('pdfDownload_btn').onclick = pdfInstance.download();
     </script>
     <script>
         function Rs(amount){
@@ -192,8 +192,9 @@
             words_string += "Hundred and ";} else if(i == 6 && value != 0){
             words_string += "Hundred ";}}
             words_string = words_string.split(" ").join(" ");}
-            return words_string;}
-            function RsPaise(n){
+            return words_string;
+        }
+        function RsPaise(n){
             nums = n.toString().split('.')
             var whole = Rs(nums[0])
             if(nums[1]==null)nums[1]=0;
