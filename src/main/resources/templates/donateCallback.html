@@ -101,38 +101,10 @@
         </div>
     </div>
 
-    <script>
+    <script th:inline="javascript">
         function Rs(amount){
             var words = new Array();
-            words[0] = 'Zero';
-            words[1] = 'One';
-            words[2] = 'Two';
-            words[3] = 'Three';
-            words[4] = 'Four';
-            words[5] = 'Five';
-            words[6] = 'Six';
-            words[7] = 'Seven';
-            words[8] = 'Eight';
-            words[9] = 'Nine';
-            words[10] = 'Ten';
-            words[11] = 'Eleven';
-            words[12] = 'Twelve';
-            words[13] = 'Thirteen';
-            words[14] = 'Fourteen';
-            words[15] = 'Fifteen';
-            words[16] = 'Sixteen';
-            words[17] = 'Seventeen';
-            words[18] = 'Eighteen';
-            words[19] = 'Nineteen';
-            words[20] = 'Twenty';
-            words[30] = 'Thirty';
-            words[40] = 'Forty';
-            words[50] = 'Fifty';
-            words[60] = 'Sixty';
-            words[70] = 'Seventy';
-            words[80] = 'Eighty';
-            words[90] = 'Ninety';
-            var op;
+            words[0] = 'Zero';words[1] = 'One';words[2] = 'Two';words[3] = 'Three';words[4] = 'Four';words[5] = 'Five';words[6] = 'Six';words[7] = 'Seven';words[8] = 'Eight';words[9] = 'Nine';words[10] = 'Ten';words[11] = 'Eleven';words[12] = 'Twelve';words[13] = 'Thirteen';words[14] = 'Fourteen';words[15] = 'Fifteen';words[16] = 'Sixteen';words[17] = 'Seventeen';words[18] = 'Eighteen';words[19] = 'Nineteen';words[20] = 'Twenty';words[30] = 'Thirty';words[40] = 'Forty';words[50] = 'Fifty';words[60] = 'Sixty';words[70] = 'Seventy';words[80] = 'Eighty';words[90] = 'Ninety';var op;
             amount = amount.toString();
             var atemp = amount.split(".");
             var number = atemp[0].split(",").join("");
@@ -172,44 +144,20 @@
         function RsPaise(n){
             nums = n.toString().split('.')
             var whole = Rs(nums[0])
-            if (nums[1] == null) nums[1] = 0;
-            if (nums[1].length == 1) nums[1] = nums[1] + '0';
-            if (nums[1].length > 2) {
-                nums[1] = nums[1].substring(2, length - 1)
-            }
-            if (nums.length == 2) {
-                if (nums[0] <= 9) {
-                    nums[0] = nums[0] * 10
-                } else {
-                    nums[0] = nums[0]
-                }
-                ;
+            if(nums[1]==null)nums[1]=0;
+            if(nums[1].length == 1 )nums[1]=nums[1]+'0';
+            if(nums[1].length> 2){nums[1]=nums[1].substring(2,length - 1)}
+            if(nums.length == 2){
+                if(nums[0]<=9){nums[0]=nums[0]*10} else {nums[0]=nums[0]};
                 var fraction = Rs(nums[1])
-                if (whole == '' && fraction == '') {
-                    op = 'Zero only';
-                }
-                if (whole == '' && fraction != '') {
-                    op = 'paise ' + fraction + ' only';
-                }
-                if (whole != '' && fraction == '') {
-                    op = 'Rupees ' + whole + ' only';
-                }
-                if (whole != '' && fraction != '') {
-                    op = 'Rupees ' + whole + 'and paise ' + fraction + ' only';
-                }
-                amt = document.getElementById('amt').value;
-                if (amt > 999999999.99) {
-                    op = 'Oops!!! The amount is too big to convert';
-                }
-                if (isNaN(amt) == true) {
-                    op = 'Error : Amount in number appears to be incorrect. Please Check.';
-                }
-                document.getElementById('op').innerHTML = op;
+                if(whole=='' && fraction==''){op= 'Zero only';}
+                if(whole=='' && fraction!=''){op= 'paise ' + fraction + ' only';}
+                if(whole!='' && fraction==''){op='Rupees ' + whole + ' only';} 
+                if(whole!='' && fraction!=''){op='Rupees ' + whole + 'and paise ' + fraction + ' only';}
             }
+            return op
         }
-    </script>
-    <script th:inline="javascript">
-        console.log(/*[[${TXNDATE}]]*/)
+
         docDefinition = {
             content: [
                 {
@@ -242,9 +190,9 @@
                         'The above donations are exempted u/s 80G of the I.T. Act 1961 vide No. 2019-20/A/10017\n\n\n\n\n\n',
                         {text: 'For any query you can call us on 86553 70005 or write to us on birdhelpline@gmail.com\n\n\n\n\n\n', fontSize: 11, alignment: 'center'  },
                         {text: 'This is a computer generated receipt', fontSize: 11, alignment: 'center' },
-                        ],
+                    ],
                     style: 'h2',
-                }
+                }                
             ],
             styles: {
                 header: {
@@ -259,7 +207,11 @@
             }
         }
         var pdfInstance = pdfMake.createPdf(docDefinition);
-        document.getElementById('pdfDownload_btn').onclick = pdfInstance.download();
+        document.getElementById('pdfDownload_btn').onclick = downloadPdf;
+
+        function downloadPdf(){
+            pdfInstance.download();
+        }
     </script>
 </body>
 </html>
