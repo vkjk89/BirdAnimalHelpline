@@ -72,24 +72,31 @@
 <body>
     <div class="banner">Bird Animal Helpline</div>
     <main>
-        <table>
-            <th colspan="2">Payment Details</th>
-            <tr><td>Receipt No</td><td th:text="${donateVO.getId()}">#Receipt_No</td></tr>
-            <tr><td>Transaction ID</td><td th:text="${TXNID}">#Transaction_ID</td></tr>
-            <tr><td>Bank Transaction ID</td><td th:text="${BANKTXNID}">#Bank_Transaction_ID</td></tr>
-            <tr><td>Order ID</td><td th:text="${ORDERID}">#Order_ID</td></tr>
-            <tr><td>Date</td><td th:text="${TXNDATE}">#Date</td></tr>
-            <tr><td>Amount</td><td th:text="${TXNAMOUNT}">#Transaction_Amount</td></tr>
-<!--            <tr><td>Payment Mode</td><td>#Payment_Mode</td></tr>-->
-            <tr><td>Transaction Status</td><td th:text="${STATUS}">#Transaction_Status</td></tr>
-            <tr><td>Full Name</td><td th:text="${donateVO.getName()}">#Full_Name</td></tr>
-            <tr><td>Address 1</td><td th:text="${donateVO.getAddress1()}">#Address_Line_1</td></tr>
-            <tr><td>Address 2</td><td th:text="${donateVO.getAddress2()}">#Address_Line_2</td></tr>
-            <tr><td>Mobile Number</td><td th:text="${donateVO.getMobile()}">#Mobile_Number</td></tr>
-            <tr><td>PAN</td><td th:text="${donateVO.getPan()}">#PAN</td></tr>
-            <tr><td>Receipt</td><td><a style="color: green" id="pdfDownload_btn">Download PDF</a></td></tr>
-            <tr><td onclick="window.location.href='/'" class="table-btns">Done</td><td class="table-btns" onclick="window.print()">Print</td></tr>
-        </table>
+
+<!--        <table>-->
+<!--            <th colspan="2">Payment Details</th>-->
+<!--            <tr><td>Receipt No</td><td th:text="${donateVO.getId()}">#Receipt_No</td></tr>-->
+<!--            <tr><td>Transaction ID</td><td th:text="${TXNID}">#Transaction_ID</td></tr>-->
+<!--            <tr><td>Bank Transaction ID</td><td th:text="${BANKTXNID}">#Bank_Transaction_ID</td></tr>-->
+<!--            <tr><td>Order ID</td><td th:text="${ORDERID}">#Order_ID</td></tr>-->
+<!--            <tr><td>Date</td><td th:text="${TXNDATE}">#Date</td></tr>-->
+<!--            <tr><td>Amount</td><td th:text="${TXNAMOUNT}">#Transaction_Amount</td></tr>-->
+<!--&lt;!&ndash;            <tr><td>Payment Mode</td><td>#Payment_Mode</td></tr>&ndash;&gt;-->
+<!--            <tr><td>Transaction Status</td><td th:text="${STATUS}">#Transaction_Status</td></tr>-->
+<!--            <tr><td>Full Name</td><td th:text="${donateVO.getName()}">#Full_Name</td></tr>-->
+<!--            <tr><td>Address 1</td><td th:text="${donateVO.getAddress1()}">#Address_Line_1</td></tr>-->
+<!--            <tr><td>Address 2</td><td th:text="${donateVO.getAddress2()}">#Address_Line_2</td></tr>-->
+<!--            <tr><td>Mobile Number</td><td th:text="${donateVO.getMobile()}">#Mobile_Number</td></tr>-->
+<!--            <tr><td>PAN</td><td th:text="${donateVO.getPan()}">#PAN</td></tr>-->
+<!--            <tr><td>Receipt</td><td><a style="color: green" id="pdfDownload_btn">Download PDF</a></td></tr>-->
+<!--            <tr><td onclick="window.location.href='/'" class="table-btns">Done</td><td class="table-btns" onclick="window.print()">Print</td></tr>-->
+<!--        </table>-->
+        <h2>Thank you for your donation!</h2>
+        <h3>Please click <a style="color: green" id="pdfDownload_btn">here</a> to download your donation receipt.</h3>
+        <p>&nbsp;</p>
+        <p>For any query, you can contact us via email on <a href="mailto:birdhelpline@gmail.com" style="color: green">birdhelpline@gmail.com</a>&nbsp;or call us on 86553700005</p>
+        <p>&nbsp;</p>
+        <p>Click <a href="/" style="color: green" >here</a> to go back to Home page.</p>
     </main>
 
     <div class="footer">
@@ -142,20 +149,38 @@
             return words_string;
         }
         function RsPaise(n){
-            nums = n.toString().split('.')
-            var whole = Rs(nums[0])
-            if(nums[1]==null)nums[1]=0;
-            if(nums[1].length == 1 )nums[1]=nums[1]+'0';
-            if(nums[1].length> 2){nums[1]=nums[1].substring(2,length - 1)}
-            if(nums.length == 2){
-                if(nums[0]<=9){nums[0]=nums[0]*10} else {nums[0]=nums[0]};
-                var fraction = Rs(nums[1])
-                if(whole=='' && fraction==''){op= 'Zero only';}
-                if(whole=='' && fraction!=''){op= 'paise ' + fraction + ' only';}
-                if(whole!='' && fraction==''){op='Rupees ' + whole + ' only';} 
-                if(whole!='' && fraction!=''){op='Rupees ' + whole + 'and paise ' + fraction + ' only';}
+            if(n) {
+                nums = n.toString().split('.')
+                var whole = Rs(nums[0])
+                if (nums[1] == null) nums[1] = 0;
+                if (nums[1].length == 1) nums[1] = nums[1] + '0';
+                if (nums[1].length > 2) {
+                    nums[1] = nums[1].substring(2, length - 1)
+                }
+                if (nums.length == 2) {
+                    if (nums[0] <= 9) {
+                        nums[0] = nums[0] * 10
+                    } else {
+                        nums[0] = nums[0]
+                    }
+                    ;
+                    var fraction = Rs(nums[1])
+                    if (whole == '' && fraction == '') {
+                        op = 'Zero only';
+                    }
+                    if (whole == '' && fraction != '') {
+                        op = 'paise ' + fraction + ' only';
+                    }
+                    if (whole != '' && fraction == '') {
+                        op = 'Rupees ' + whole + ' only';
+                    }
+                    if (whole != '' && fraction != '') {
+                        op = 'Rupees ' + whole + 'and paise ' + fraction + ' only';
+                    }
+                }
+                return op
             }
-            return op
+            return ""
         }
 
         docDefinition = {
@@ -173,18 +198,19 @@
                 },
                 {
                     text: [
-                        '\n Date : /*[[${TXNDATE}]]*/ \n\n\n',
-                        'Receipt No. : /*[[${donateVO.getId()}]]*/  \n\n\n',
-                        'Received with thanks from :\n',
-                        {text: '/*[[${donateVO.getName()}]]*/ \n\n',fontSize: 14, bold: true},
+                        '\n Date : '+[[${TXNDATE}]] +'\n\n\n',
+                        'Receipt No : '+[[${donateVO.getIdStr()}]] +' \n\n\n',
+                        'Received with thanks from : ',
+                        {text: [[${donateVO.getName()}]]+'\n\n',fontSize: 14, bold: true},
                         'Address :\n',
-                        '@Address :\n\n\n',
-                        'Contact No. : /*[[${donateVO.getMobile()}]]*/  \n\n\n',
-                        'PAN : /*[[${donateVO.getPan()}]]*/  \n\n\n',
+                        [[${donateVO.getAddress1()}]] +'\n',
+                        [[${donateVO.getAddress2()}]]+'\n\n\n',
+                        'Contact No : '+[[${donateVO.getMobile()}]]+'  \n\n\n',
+                        'PAN : '+[[${donateVO.getPan()}]] +' \n\n\n',
                         'Amount : ',
-                        {text: '₹ /*[[${TXNAMOUNT}]]*/ \n\n',fontSize: 14, bold: true},
+                        {text: '₹ '+[[${TXNAMOUNT}]]+' \n\n',fontSize: 14, bold: true},
                         'Amount in Words : \n',
-                        `${RsPaise(/*[[${TXNAMOUNT}]]*/)}\n\n\n`,
+                         RsPaise(/*[[${TXNAMOUNT}]]*/)+'\n\n\n',
                         'being general donation by online transfer.\n\n\n',
                         'We thank you for your support!\n\n\n',
                         'The above donations are exempted u/s 80G of the I.T. Act 1961 vide No. 2019-20/A/10017\n\n\n\n\n\n',

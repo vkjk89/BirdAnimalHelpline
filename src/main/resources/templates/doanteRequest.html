@@ -273,7 +273,7 @@ body{font-family: Didact Gothic;font-style: normal;line-height: 1.5;}blockquote{
                         <div>Contact No: </div>
                         <input name="mobile" type="text" placeholder="Enter 10 digit mobile number" pattern="[6789][0-9]{9}"  title="Enter 10 digit mobile number without country code" required><br>
                         <div>PAN number: </div>
-                        <input type="text" placeholder="Enter PAN number" name="pan" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" title="Enter correct PAN number. Check again" required><br>
+                        <input type="text" placeholder="Enter PAN number" name="pan" pattern="[A-Za-z]{5}[0-9]{4}[a-zA-Z]{1}" title="Enter correct PAN number. Check again" style="text-transform:uppercase"  required><br>
                         <div id="details-form-error"></div>
                         <input type="number" readonly name = "finalAmount" id="finalAmount"><br>
                     </div>

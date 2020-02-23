@@ -340,8 +340,3 @@ target/
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
-*.iml
-app.iml
-app.iml
-**app.iml**
-/app.iml

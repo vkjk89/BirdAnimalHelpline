@@ -26,6 +26,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -199,6 +201,9 @@ public class DefaultController {
     public @ResponseBody
     String
     handleDonateCustom(@ModelAttribute DonateVO donateVO, HttpSession session) throws Exception {
+        if(donateVO.getPan() !=null) {
+            donateVO.setPan(donateVO.getPan().toUpperCase());
+        }
         String response = processDonate(donateVO);
         session.setAttribute("donateVO", donateVO);
         return response;
@@ -208,13 +213,26 @@ public class DefaultController {
     public ModelAndView
     handleDonateCallback(@RequestBody String body, HttpSession session) throws Exception {
         logger.info("Body recved : " + body);
+        String recPrefix = "ON/"+getFinYear();
         ModelAndView modelAndView = new ModelAndView("donateCallback");
         String[] parts = body.split("&");
+        String dateFormat = "yyyy-MM-dd HH:mm:ss.S";
+        String newDateFormat = "dd-MMM-yyyy h:mm a";
+        SimpleDateFormat oldDateTimeForm = new SimpleDateFormat(dateFormat);
+        SimpleDateFormat newDateTimeForm = new SimpleDateFormat(newDateFormat);
         Map<String, String> map = new HashMap<>();
         for (String x : parts) {
             String[] ps = x.split("=");
             modelAndView.addObject(ps[0], ps[1]);
             map.put(ps[0], ps[1]);
+        }
+        try {
+//            modelAndView.addObject("TXNDATE", newDateTimeForm.format(oldDateTimeForm.parse(map.get("TXNDATE"))));
+            modelAndView.addObject("TXNDATE", newDateTimeForm.format(new Date()));
+            //map.put("TXNDATE", oldDateTimeForm.format(map.get("TXNDATE")));
+        }
+        catch(Exception e) {
+            e.printStackTrace();
         }
         DonateVO vo = (DonateVO) session.getAttribute("donateVO");
         if (vo == null) {
@@ -226,6 +244,7 @@ public class DefaultController {
             return modelAndView;
         }
         userService.saveDonateInfo(map, vo.getId());
+        vo.setIdStr(recPrefix+"/"+vo.getId());
         modelAndView.addObject("donateVO", vo);
         timer.schedule(new TimerTask() {
             @Override
@@ -395,4 +414,18 @@ public class DefaultController {
         exception.printStackTrace();
     }
         return responseData;*/
+
+
+    private String getFinYear() {
+        LocalDate date = LocalDate.now();
+        LocalDate date2;
+        if(date.getMonthValue() > 3) {
+            date2 = date.plusYears(1);
+            return date.getYear()+"-"+date2.getYear();
+        }
+        else {
+            date2 = date.minusYears(1);
+            return date2.getYear()+"-"+date.getYear();
+        }
+    }
 }

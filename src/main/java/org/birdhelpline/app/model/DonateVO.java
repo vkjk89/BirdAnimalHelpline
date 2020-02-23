@@ -12,6 +12,7 @@ public class DonateVO {
     amount double,
     donate_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP*/
     Long id;
+    String idStr;
     String name;
     String address1;
     String address2;
@@ -20,10 +21,19 @@ public class DonateVO {
     double finalAmount;
     String orderId;
 
+    public String getIdStr() {
+        return idStr;
+    }
+
+    public void setIdStr(String idStr) {
+        this.idStr = idStr;
+    }
+
     @Override
     public String toString() {
         return "DonateVO{" +
                 "id=" + id +
+                ", idStr='" + idStr + '\'' +
                 ", name='" + name + '\'' +
                 ", address1='" + address1 + '\'' +
                 ", address2='" + address2 + '\'' +
