@@ -261,7 +261,7 @@ public class DefaultController {
 
     @GetMapping(value = "/home")
     public String
-    handleHome(@ModelAttribute DonateVO donateVO) throws Exception {
+    handleHome() {
         return "home";
     }
 
