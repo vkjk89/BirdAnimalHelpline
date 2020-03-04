@@ -414,18 +414,17 @@ public class DefaultController {
         exception.printStackTrace();
     }
         return responseData;*/
-
-
+    
     private String getFinYear() {
         LocalDate date = LocalDate.now();
         LocalDate date2;
         if(date.getMonthValue() > 3) {
             date2 = date.plusYears(1);
-            return date.getYear()+"-"+date2.getYear();
+            return date.getYear()+"-"+(date2.getYear()/100);
         }
         else {
             date2 = date.minusYears(1);
-            return date2.getYear()+"-"+date.getYear();
+            return date2.getYear()+"-"+(date.getYear()/100);
         }
     }
 }
