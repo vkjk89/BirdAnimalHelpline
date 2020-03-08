@@ -483,7 +483,7 @@ public class UserDao {
     }
 
     public DonateVO findDonateInfoByOrderId(String orderid) {
-        DonateVO vo = jdbcTemplate.queryForObject("select  id,full_name,address1,address2,pan,mobile,from user where order_id = ?", new Object [] {orderid},((rs, rowNum) -> new DonateVO(
+        DonateVO vo = jdbcTemplate.queryForObject("select  id,full_name,address1,address2,pan,mobile,amount from donate_info where order_id = ?", new Object [] {orderid},((rs, rowNum) -> new DonateVO(
                 rs.getLong("id"),
                 rs.getString("full_name"),
                 rs.getString("address1"),

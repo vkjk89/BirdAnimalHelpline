@@ -204,8 +204,8 @@ public class DefaultController {
         if(donateVO.getPan() !=null) {
             donateVO.setPan(donateVO.getPan().toUpperCase());
         }
-        String response = processDonate(donateVO);
         session.setAttribute("donateVO", donateVO);
+        String response = processDonate(donateVO);
         return response;
     }
 
@@ -216,9 +216,7 @@ public class DefaultController {
         String recPrefix = "ON/"+getFinYear();
         ModelAndView modelAndView = new ModelAndView("donateCallback");
         String[] parts = body.split("&");
-        String dateFormat = "yyyy-MM-dd HH:mm:ss.S";
         String newDateFormat = "dd-MMM-yyyy h:mm a";
-        SimpleDateFormat oldDateTimeForm = new SimpleDateFormat(dateFormat);
         SimpleDateFormat newDateTimeForm = new SimpleDateFormat(newDateFormat);
         Map<String, String> map = new HashMap<>();
         for (String x : parts) {
@@ -241,7 +239,7 @@ public class DefaultController {
 
         if (vo == null) {
             logger.error("Could not save call back info : " + map);
-            return modelAndView;
+            return new ModelAndView("Error");
         }
         userService.saveDonateInfo(map, vo.getId());
         vo.setIdStr(recPrefix+"/"+vo.getId());
@@ -414,7 +412,7 @@ public class DefaultController {
         exception.printStackTrace();
     }
         return responseData;*/
-    
+
     private String getFinYear() {
         LocalDate date = LocalDate.now();
         LocalDate date2;
